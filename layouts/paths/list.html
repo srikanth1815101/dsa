@@ -1,0 +1,280 @@
+{{ define "main" }}
+<div class="container mx-auto px-4 py-12">
+    <!-- Page Header -->
+    <div class="mb-12 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+            Learning <span class="gradient-text">Paths</span>
+        </h1>
+        <p class="text-gray-400 text-lg max-w-3xl mx-auto">
+            Follow structured learning paths designed to take you from beginner to expert. Each path contains curated
+            problems organized by difficulty and topic.
+        </p>
+    </div>
+
+    <!-- Learning Paths Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <!-- Arrays & Strings Path -->
+        <div class="card rounded-xl p-8 hover:scale-105 transition-transform duration-300">
+            <div class="flex items-start justify-between mb-6">
+                <div
+                    class="w-16 h-16 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                    <i data-lucide="list" class="w-8 h-8 text-white"></i>
+                </div>
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-500 bg-opacity-20 text-green-400">
+                    Beginner Friendly
+                </span>
+            </div>
+
+            <h2 class="text-2xl font-bold mb-3">Arrays & Strings</h2>
+            <p class="text-gray-400 mb-6">
+                Master the fundamentals of arrays and string manipulation. Perfect starting point for DSA beginners.
+            </p>
+
+            <div class="space-y-3 mb-6">
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-400">Problems</span>
+                    <span class="font-semibold">15+</span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-400">Estimated Time</span>
+                    <span class="font-semibold">2-3 weeks</span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-400">Difficulty</span>
+                    <span class="font-semibold">Easy to Medium</span>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <div class="flex items-center justify-between text-sm mb-2">
+                    <span class="text-gray-400">Progress</span>
+                    <span class="text-primary font-semibold">0%</span>
+                </div>
+                <div class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-primary to-secondary" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mb-6">
+                <span class="px-2 py-1 rounded text-xs bg-primary bg-opacity-10 text-primary">Two Pointers</span>
+                <span class="px-2 py-1 rounded text-xs bg-primary bg-opacity-10 text-primary">Sliding Window</span>
+                <span class="px-2 py-1 rounded text-xs bg-primary bg-opacity-10 text-primary">Hash Maps</span>
+            </div>
+
+            <a href="/problems/?topic=Array"
+                class="btn-primary w-full text-center inline-flex items-center justify-center space-x-2">
+                <span>Start Learning</span>
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+        </div>
+
+        <!-- Linked Lists Path -->
+        <div class="card rounded-xl p-8 hover:scale-105 transition-transform duration-300">
+            <div class="flex items-start justify-between mb-6">
+                <div
+                    class="w-16 h-16 rounded-xl bg-gradient-to-br from-secondary to-accent flex items-center justify-center">
+                    <i data-lucide="link-2" class="w-8 h-8 text-white"></i>
+                </div>
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-500 bg-opacity-20 text-yellow-400">
+                    Intermediate
+                </span>
+            </div>
+
+            <h2 class="text-2xl font-bold mb-3">Linked Lists</h2>
+            <p class="text-gray-400 mb-6">
+                Deep dive into linked list operations, reversals, and advanced pointer manipulation techniques.
+            </p>
+
+            <div class="space-y-3 mb-6">
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-400">Problems</span>
+                    <span class="font-semibold">12+</span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-400">Estimated Time</span>
+                    <span class="font-semibold">2 weeks</span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-400">Difficulty</span>
+                    <span class="font-semibold">Medium</span>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <div class="flex items-center justify-between text-sm mb-2">
+                    <span class="text-gray-400">Progress</span>
+                    <span class="text-primary font-semibold">0%</span>
+                </div>
+                <div class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-primary to-secondary" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mb-6">
+                <span class="px-2 py-1 rounded text-xs bg-primary bg-opacity-10 text-primary">Fast & Slow
+                    Pointers</span>
+                <span class="px-2 py-1 rounded text-xs bg-primary bg-opacity-10 text-primary">Reversal</span>
+                <span class="px-2 py-1 rounded text-xs bg-primary bg-opacity-10 text-primary">Cycle Detection</span>
+            </div>
+
+            <a href="/problems/?topic=Linked%20List"
+                class="btn-primary w-full text-center inline-flex items-center justify-center space-x-2">
+                <span>Start Learning</span>
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+        </div>
+
+        <!-- Trees & Graphs Path -->
+        <div class="card rounded-xl p-8 hover:scale-105 transition-transform duration-300">
+            <div class="flex items-start justify-between mb-6">
+                <div
+                    class="w-16 h-16 rounded-xl bg-gradient-to-br from-accent to-primary flex items-center justify-center">
+                    <i data-lucide="git-branch" class="w-8 h-8 text-white"></i>
+                </div>
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-500 bg-opacity-20 text-yellow-400">
+                    Intermediate
+                </span>
+            </div>
+
+            <h2 class="text-2xl font-bold mb-3">Trees & Graphs</h2>
+            <p class="text-gray-400 mb-6">
+                Explore hierarchical data structures, traversals, and graph algorithms including BFS and DFS.
+            </p>
+
+            <div class="space-y-3 mb-6">
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-400">Problems</span>
+                    <span class="font-semibold">20+</span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-400">Estimated Time</span>
+                    <span class="font-semibold">3-4 weeks</span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-400">Difficulty</span>
+                    <span class="font-semibold">Medium to Hard</span>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <div class="flex items-center justify-between text-sm mb-2">
+                    <span class="text-gray-400">Progress</span>
+                    <span class="text-primary font-semibold">0%</span>
+                </div>
+                <div class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-primary to-secondary" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mb-6">
+                <span class="px-2 py-1 rounded text-xs bg-primary bg-opacity-10 text-primary">DFS/BFS</span>
+                <span class="px-2 py-1 rounded text-xs bg-primary bg-opacity-10 text-primary">Binary Trees</span>
+                <span class="px-2 py-1 rounded text-xs bg-primary bg-opacity-10 text-primary">Graph Traversal</span>
+            </div>
+
+            <a href="/problems/?topic=Tree"
+                class="btn-primary w-full text-center inline-flex items-center justify-center space-x-2">
+                <span>Start Learning</span>
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+        </div>
+
+        <!-- Dynamic Programming Path -->
+        <div class="card rounded-xl p-8 hover:scale-105 transition-transform duration-300">
+            <div class="flex items-start justify-between mb-6">
+                <div
+                    class="w-16 h-16 rounded-xl bg-gradient-to-br from-red-500 to-primary flex items-center justify-center">
+                    <i data-lucide="zap" class="w-8 h-8 text-white"></i>
+                </div>
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-red-500 bg-opacity-20 text-red-400">
+                    Advanced
+                </span>
+            </div>
+
+            <h2 class="text-2xl font-bold mb-3">Dynamic Programming</h2>
+            <p class="text-gray-400 mb-6">
+                Master the art of optimization with memoization, tabulation, and advanced DP patterns.
+            </p>
+
+            <div class="space-y-3 mb-6">
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-400">Problems</span>
+                    <span class="font-semibold">18+</span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-400">Estimated Time</span>
+                    <span class="font-semibold">4-5 weeks</span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-400">Difficulty</span>
+                    <span class="font-semibold">Hard</span>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <div class="flex items-center justify-between text-sm mb-2">
+                    <span class="text-gray-400">Progress</span>
+                    <span class="text-primary font-semibold">0%</span>
+                </div>
+                <div class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-primary to-secondary" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mb-6">
+                <span class="px-2 py-1 rounded text-xs bg-primary bg-opacity-10 text-primary">Memoization</span>
+                <span class="px-2 py-1 rounded text-xs bg-primary bg-opacity-10 text-primary">Tabulation</span>
+                <span class="px-2 py-1 rounded text-xs bg-primary bg-opacity-10 text-primary">Optimization</span>
+            </div>
+
+            <a href="/problems/?topic=Dynamic%20Programming"
+                class="btn-primary w-full text-center inline-flex items-center justify-center space-x-2">
+                <span>Start Learning</span>
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="mt-20 max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-12">
+            How Learning Paths <span class="gradient-text">Work</span>
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <div
+                    class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl font-bold text-white">1</span>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Choose Your Path</h3>
+                <p class="text-gray-400 text-sm">
+                    Select a learning path based on your current skill level and goals.
+                </p>
+            </div>
+
+            <div class="text-center">
+                <div
+                    class="w-16 h-16 rounded-full bg-gradient-to-br from-secondary to-accent flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl font-bold text-white">2</span>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Solve Problems</h3>
+                <p class="text-gray-400 text-sm">
+                    Work through curated problems in the recommended order.
+                </p>
+            </div>
+
+            <div class="text-center">
+                <div
+                    class="w-16 h-16 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl font-bold text-white">3</span>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Track Progress</h3>
+                <p class="text-gray-400 text-sm">
+                    Monitor your progress and build confidence as you advance.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{{ end }}

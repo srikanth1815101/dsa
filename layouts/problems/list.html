@@ -1,0 +1,643 @@
+{{ define "main" }}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-8 animate-fade-in-up">
+
+        <!-- Enhanced Header Card -->
+        <div
+            class="relative bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 mb-12 border border-gray-200 dark:border-gray-700/50 shadow-sm group overflow-hidden">
+
+            <!-- Animated Background Blobs -->
+            <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-2xl">
+                <div
+                    class="absolute -top-32 -right-32 w-96 h-96 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors duration-700">
+                </div>
+                <div
+                    class="absolute -bottom-32 -left-32 w-96 h-96 bg-secondary/5 rounded-full blur-3xl group-hover:bg-secondary/10 transition-colors duration-700">
+                </div>
+            </div>
+
+            <div class="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
+                <div class="flex-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 bg-gradient-to-br from-primary/10 to-blue-500/10 rounded-xl">
+                            <i data-lucide="list" class="w-6 h-6 text-primary"></i>
+                        </div>
+                        <h1
+                            class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">
+                            Problems
+                        </h1>
+                    </div>
+
+                    <!-- Progress Section -->
+                    <div class="flex items-center gap-6 max-w-md">
+                        <div class="flex-1">
+                            <div class="flex justify-between text-sm font-medium mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Total Progress</span>
+                                <span id="progress-text" class="text-primary font-bold">0 / {{ len .Pages }}</span>
+                            </div>
+                            <div class="h-2.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                                <div id="progress-bar"
+                                    class="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-1000 ease-out w-0 relative">
+                                    <div
+                                        class="absolute inset-0 bg-white/20 animate-[shimmer_2s_infinite] border-t border-white/10">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Header Actions (Icon Only with Tooltips - VIBRANT GRADIENTS) -->
+                <div class="flex items-center gap-2 md:gap-3 self-start md:self-end">
+                    <!-- Git Repo: Indigo Gradient -->
+                    <div class="group/tooltip relative">
+                        <a href="https://github.com/your-repo" target="_blank"
+                            class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 text-white shadow-lg shadow-indigo-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                            <i data-lucide="github" class="w-4 h-4 md:w-5 md:h-5"></i>
+                        </a>
+                        <div
+                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0">
+                            Full Repo
+                            <div
+                                class="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900 dark:border-t-black">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- YouTube Playlist: Red Gradient -->
+                    <div class="group/tooltip relative">
+                        <a href="https://youtube.com/your-playlist" target="_blank"
+                            class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-red-500 to-rose-600 text-white shadow-lg shadow-red-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                            <i data-lucide="youtube" class="w-4 h-4 md:w-5 md:h-5"></i>
+                        </a>
+                        <div
+                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0">
+                            Tutorials
+                            <div
+                                class="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900 dark:border-t-black">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- How to Use Guide: Blue Gradient -->
+                    <div class="group/tooltip relative">
+                        <a href="/guide"
+                            class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-lg shadow-blue-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                            <i data-lucide="book-open" class="w-4 h-4 md:w-5 md:h-5"></i>
+                        </a>
+                        <div
+                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0">
+                            Guide
+                            <div
+                                class="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900 dark:border-t-black">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Share: Cyan Gradient -->
+                    <div class="group/tooltip relative">
+                        <button onclick="copyPageUrl()"
+                            class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-sky-500 text-white shadow-lg shadow-cyan-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                            <i data-lucide="share-2" class="w-4 h-4 md:w-5 md:h-5"></i>
+                        </button>
+                        <div
+                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0">
+                            Share
+                            <div
+                                class="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900 dark:border-t-black">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pills and Filters Container -->
+        <div class="flex flex-col lg:flex-row gap-6 mb-8 justify-between items-start lg:items-center">
+
+            <!-- Pill Tabs -->
+            <div
+                class="bg-white dark:bg-gray-800 p-1 rounded-full border border-gray-200 dark:border-gray-700/50 shadow-sm flex w-full md:inline-flex md:w-auto">
+                <button onclick="switchTab('all')" id="tab-all"
+                    class="flex-1 md:flex-none justify-center px-4 py-2 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 flex items-center gap-1.5 md:gap-2">
+                    <i data-lucide="grid" class="w-3.5 h-3.5 md:w-4 md:h-4"></i>
+                    All
+                </button>
+                <button onclick="switchTab('saved')" id="tab-saved"
+                    class="flex-1 md:flex-none justify-center px-4 py-2 rounded-full text-xs md:text-sm font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-all duration-300 flex items-center gap-1.5 md:gap-2">
+                    <i data-lucide="bookmark" class="w-3.5 h-3.5 md:w-4 md:h-4"></i>
+                    Saved
+                    <span id="saved-count-badge"
+                        class="ml-0.5 md:ml-1 px-1.5 py-0.5 text-[9px] md:text-[10px] bg-primary/10 text-primary rounded-md hidden">0</span>
+                </button>
+                <button onclick="switchTab('revised')" id="tab-revised"
+                    class="flex-1 md:flex-none justify-center px-4 py-2 rounded-full text-xs md:text-sm font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-all duration-300 flex items-center gap-1.5 md:gap-2">
+                    <i data-lucide="history" class="w-3.5 h-3.5 md:w-4 md:h-4"></i>
+                    Revise
+                    <span id="revised-count-badge"
+                        class="ml-0.5 md:ml-1 px-1.5 py-0.5 text-[9px] md:text-[10px] bg-primary/10 text-primary rounded-md hidden">0</span>
+                </button>
+            </div>
+
+            <!-- Search and Filters -->
+            <div class="w-full lg:w-auto flex flex-wrap gap-2 md:gap-3">
+                <div class="relative group w-full md:w-auto md:flex-initial">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i data-lucide="search"
+                            class="h-4 w-4 text-gray-400 group-focus-within:text-primary transition-colors"></i>
+                    </div>
+                    <input type="text" id="searchInput" placeholder="Search problems..."
+                        class="pl-10 pr-4 py-2.5 w-full md:w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm transition-all shadow-sm">
+                </div>
+
+                <div class="relative group flex-1 min-w-[140px]">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i data-lucide="bar-chart-2"
+                            class="h-4 w-4 text-gray-400 group-focus-within:text-primary transition-colors"></i>
+                    </div>
+                    <select id="difficultyFilter"
+                        class="pl-10 pr-8 py-2.5 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm appearance-none cursor-pointer shadow-sm transition-all whitespace-nowrap overflow-hidden text-ellipsis">
+                        <option value="">All Difficulties</option>
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <i data-lucide="chevron-down" class="h-4 w-4 text-gray-400"></i>
+                    </div>
+                </div>
+
+                <div class="relative group flex-1 min-w-[140px]">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i data-lucide="tag"
+                            class="h-4 w-4 text-gray-400 group-focus-within:text-primary transition-colors"></i>
+                    </div>
+                    <select id="topicFilter"
+                        class="pl-10 pr-8 py-2.5 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm appearance-none cursor-pointer shadow-sm transition-all whitespace-nowrap overflow-hidden text-ellipsis">
+                        <option value="">All Topics</option>
+                        {{ $topics := slice }}
+                        {{ range .Pages }}
+                        {{ range .Params.topics }}
+                        {{ $topics = $topics | append . }}
+                        {{ end }}
+                        {{ end }}
+                        {{ range ($topics | uniq | sort) }}
+                        <option value="{{ . }}">{{ . }}</option>
+                        {{ end }}
+                    </select>
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <i data-lucide="chevron-down" class="h-4 w-4 text-gray-400"></i>
+                    </div>
+                </div>
+
+                <button id="clearFiltersBtn" onclick="clearFilters()"
+                    class="hidden md:flex items-center justify-center px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 rounded-xl text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all shadow-sm hover:shadow active:scale-95"
+                    title="Clear Filters">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                    <span class="sr-only">Clear Filters</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Problems List (Cards Stack) -->
+        <div class="relative min-h-[400px]">
+
+            <!-- No Results State -->
+            <div id="noResults"
+                class="hidden absolute inset-0 flex flex-col items-center justify-center p-12 text-center z-10">
+                <div
+                    class="w-20 h-20 bg-gray-50 dark:bg-gray-700/50 rounded-full flex items-center justify-center mb-6">
+                    <i data-lucide="search-x" class="w-10 h-10 text-gray-400"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">No problems found</h3>
+                <p class="text-gray-500 dark:text-gray-400 max-w-xs mx-auto">
+                    Try adjusting your search or filters to find what you're looking for.
+                </p>
+                <button onclick="clearFilters()"
+                    class="mt-6 px-6 py-2.5 bg-primary text-white rounded-xl font-medium hover:bg-primary/90 transition-colors shadow-lg shadow-primary/25">
+                    Clear all filters
+                </button>
+            </div>
+
+            <!-- List Space -->
+            <div id="problems-list" class="space-y-2 relative z-0">
+                {{ range .Pages }}
+
+                <!-- Card Container (Adaptive Grid) - Responsive Alignment -->
+                <div class="problem-item group grid grid-cols-[auto_1fr_auto] md:grid-cols-[50px_1fr_100px_50px_50px] items-center gap-2 md:gap-4 px-3 md:px-6 py-2.5 md:py-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 shadow-sm hover:shadow-md transition-all duration-200"
+                    data-difficulty="{{ .Params.difficulty }}" data-topics="{{ delimit .Params.topics " ," }}"
+                    data-title="{{ .Title | lower }}" data-id="{{ .File.ContentBaseName }}">
+
+                    <!-- 1. Checkbox Column -->
+                    <div class="flex items-center justify-start">
+                        <div class="relative cursor-pointer"
+                            onclick="toggleListCompletion(event, '{{ .File.ContentBaseName }}')">
+                            <input type="checkbox"
+                                class="peer appearance-none w-4 h-4 md:w-5 md:h-5 border-2 border-gray-300 dark:border-gray-600 rounded-md checked:bg-green-500 checked:border-green-500 transition-all cursor-pointer">
+                            <i data-lucide="check"
+                                class="w-3.5 h-3.5 text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity font-bold"></i>
+                        </div>
+                    </div>
+
+                    <!-- 2. Title Column (Link & Tags) -->
+                    <div class="min-w-0 flex items-center gap-3">
+                        <a href="{{ .RelPermalink }}"
+                            class="text-sm md:text-base font-bold text-gray-900 dark:text-gray-100 hover:text-primary transition-colors truncate block flex-shrink-0 max-w-full">
+                            {{ .Title }}
+                        </a>
+
+                        <!-- Desktop Hover Tags (Dynamic JS) -->
+                        <div
+                            class="topic-tags-container hidden md:flex items-center gap-2 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-out flex-shrink overflow-hidden min-w-0">
+                            {{ range .Params.topics }}
+                            <span
+                                class="topic-tag px-2 py-0.5 rounded-md text-[10px] font-semibold bg-primary/10 text-primary border border-primary/20 whitespace-nowrap">
+                                {{ . }}
+                            </span>
+                            {{ end }}
+                            <!-- Overflow Counter -->
+                            <span
+                                class="topic-count hidden px-1.5 py-0.5 rounded-md text-[10px] font-medium text-gray-400 bg-gray-100 dark:bg-gray-700 whitespace-nowrap"></span>
+                        </div>
+                    </div>
+
+                    <!-- 3. Difficulty Column - Adaptive Width -->
+                    <div class="flex justify-start">
+                        {{ if eq .Params.difficulty "Easy" }}
+                        <span
+                            class="inline-block px-1.5 md:px-2.5 py-0.5 md:py-1 rounded-md text-[10px] md:text-xs font-bold uppercase tracking-wider bg-green-100 text-green-700 border border-green-200 dark:bg-green-500/10 dark:text-green-400 dark:border-green-500/20 w-auto md:w-24 text-center shadow-sm">
+                            Easy
+                        </span>
+                        {{ else if eq .Params.difficulty "Medium" }}
+                        <span
+                            class="inline-block px-1.5 md:px-2.5 py-0.5 md:py-1 rounded-md text-[10px] md:text-xs font-bold uppercase tracking-wider bg-yellow-100 text-yellow-700 border border-yellow-200 dark:bg-yellow-500/10 dark:text-yellow-400 dark:border-yellow-500/20 w-auto md:w-24 text-center shadow-sm">
+                            Medium
+                        </span>
+                        {{ else }}
+                        <span
+                            class="inline-block px-1.5 md:px-2.5 py-0.5 md:py-1 rounded-md text-[10px] md:text-xs font-bold uppercase tracking-wider bg-red-100 text-red-700 border border-red-200 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/20 w-auto md:w-24 text-center shadow-sm">
+                            Hard
+                        </span>
+                        {{ end }}
+                    </div>
+
+                    <!-- 4. Revise Button Column (Hidden on Mobile) -->
+                    <div class="hidden md:flex justify-start">
+                        <button onclick="toggleRevision(event, '{{ .File.ContentBaseName }}')"
+                            class="p-2 rounded-lg text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all border border-transparent hover:border-blue-200 dark:hover:border-blue-500/30">
+                            <i data-lucide="history" class="w-5 h-5 revise-icon"
+                                data-id="{{ .File.ContentBaseName }}"></i>
+                        </button>
+                    </div>
+
+                    <!-- 5. Bookmark Button Column (Hidden on Mobile) -->
+                    <div class="hidden md:flex justify-start">
+                        <button onclick="toggleBookmark(event, '{{ .File.ContentBaseName }}')"
+                            class="p-2 rounded-lg text-gray-400 hover:text-yellow-500 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 transition-all border border-transparent hover:border-yellow-200 dark:hover:border-yellow-500/30">
+                            <i data-lucide="bookmark" class="w-5 h-5 bookmark-icon transition-transform hover:scale-110"
+                                data-id="{{ .File.ContentBaseName }}"></i>
+                        </button>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const difficultyFilter = document.getElementById('difficultyFilter');
+    const topicFilter = document.getElementById('topicFilter');
+    const problemItems = document.querySelectorAll('.problem-item');
+    const noResults = document.getElementById('noResults');
+
+    // Tabs
+    const tabAll = document.getElementById('tab-all');
+    const tabSaved = document.getElementById('tab-saved');
+    const tabRevised = document.getElementById('tab-revised');
+
+    const clearFiltersBtn = document.getElementById('clearFiltersBtn');
+
+    let currentTab = 'all'; // 'all', 'saved', 'revised'
+
+    function initTabs() {
+        updateTabUI();
+    }
+
+    function switchTab(tab) {
+        currentTab = tab;
+        updateTabUI();
+        filterProblems();
+    }
+
+    function updateTabUI() {
+        const activeClass = ['bg-primary', 'text-white', 'shadow-md'];
+        const inactiveClass = ['text-gray-500', 'hover:text-gray-900', 'dark:text-gray-400', 'dark:hover:text-white'];
+
+        // Reset all
+        [tabAll, tabSaved, tabRevised].forEach(el => {
+            el.classList.remove(...activeClass);
+            el.classList.add(...inactiveClass);
+        });
+
+        // Set active
+        if (currentTab === 'all') {
+            tabAll.classList.add(...activeClass);
+            tabAll.classList.remove(...inactiveClass);
+        } else if (currentTab === 'saved') {
+            tabSaved.classList.add(...activeClass);
+            tabSaved.classList.remove(...inactiveClass);
+        } else if (currentTab === 'revised') {
+            tabRevised.classList.add(...activeClass);
+            tabRevised.classList.remove(...inactiveClass);
+        }
+
+        updateCounts();
+    }
+
+    function updateCounts() {
+        const bookmarks = JSON.parse(localStorage.getItem('dsa-bookmarks') || '[]');
+        const revised = JSON.parse(localStorage.getItem('dsa-revised') || '[]');
+
+        // Saved Badge
+        const savedBadge = document.getElementById('saved-count-badge');
+        if (savedBadge) {
+            savedBadge.textContent = bookmarks.length;
+            bookmarks.length > 0 ? savedBadge.classList.remove('hidden') : savedBadge.classList.add('hidden');
+        }
+
+        // Revised Badge
+        const revisedBadge = document.getElementById('revised-count-badge');
+        if (revisedBadge) {
+            revisedBadge.textContent = revised.length;
+            revised.length > 0 ? revisedBadge.classList.remove('hidden') : revisedBadge.classList.add('hidden');
+        }
+    }
+
+    function filterProblems() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const difficulty = difficultyFilter.value;
+        const topic = topicFilter.value;
+        const bookmarks = JSON.parse(localStorage.getItem('dsa-bookmarks') || '[]');
+        const revised = JSON.parse(localStorage.getItem('dsa-revised') || '[]');
+
+        let visibleCount = 0;
+
+        // Show/Hide Clear Button
+        if (searchTerm || difficulty || topic) {
+            clearFiltersBtn.classList.remove('hidden');
+            clearFiltersBtn.classList.add('flex');
+        } else {
+            clearFiltersBtn.classList.add('hidden');
+            clearFiltersBtn.classList.remove('flex');
+        }
+
+        problemItems.forEach(item => {
+            const title = item.dataset.title;
+            const itemDifficulty = item.dataset.difficulty;
+            const itemTopics = item.dataset.topics;
+            const itemId = item.dataset.id;
+
+            const matchesSearch = title.includes(searchTerm);
+            const matchesDifficulty = !difficulty || itemDifficulty === difficulty.trim();
+            const matchesTopic = !topic || itemTopics.includes(topic);
+
+            let matchesTab = true;
+            if (currentTab === 'saved') {
+                matchesTab = bookmarks.includes(itemId);
+            } else if (currentTab === 'revised') {
+                matchesTab = revised.includes(itemId);
+            }
+
+            if (matchesSearch && matchesDifficulty && matchesTopic && matchesTab) {
+                item.style.display = 'grid';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        noResults.classList.toggle('hidden', visibleCount > 0);
+
+        // Recalculate tags layout after filtering since visibility changed
+        setTimeout(adjustTopicTags, 50);
+    }
+
+    function clearFilters() {
+        searchInput.value = '';
+        difficultyFilter.value = '';
+        topicFilter.value = '';
+        filterProblems();
+    }
+
+    function copyPageUrl() {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            // Assuming showToast is defined globally or in problem-utils.js
+            if (typeof showToast === 'function') showToast('Link copied to clipboard!', 'success');
+        });
+    }
+
+    // Toggle completion status directly from the list
+    function toggleListCompletion(event, id) {
+        // Prevent row click if any
+        event.stopPropagation();
+
+        let completed = JSON.parse(localStorage.getItem('dsa-completed') || '[]');
+        const index = completed.indexOf(id);
+
+        if (index === -1) {
+            completed.push(id);
+            if (typeof showToast === 'function') showToast('Problem marked as completed!', 'success');
+        } else {
+            completed.splice(index, 1);
+        }
+
+        localStorage.setItem('dsa-completed', JSON.stringify(completed));
+        updateProgress();
+    }
+
+    // Toggle Bookmark (Saved)
+    function toggleBookmark(event, id) {
+        event.stopPropagation();
+
+        let bookmarks = JSON.parse(localStorage.getItem('dsa-bookmarks') || '[]');
+        const index = bookmarks.indexOf(id);
+
+        if (index === -1) {
+            bookmarks.push(id);
+            if (typeof showToast === 'function') showToast('Added to Saved Problems', 'success');
+        } else {
+            bookmarks.splice(index, 1);
+            if (typeof showToast === 'function') showToast('Removed from Saved Problems', 'info');
+        }
+
+        localStorage.setItem('dsa-bookmarks', JSON.stringify(bookmarks));
+        initListState();
+        if (currentTab === 'saved') filterProblems();
+    }
+
+    // Toggle Revision
+    function toggleRevision(event, id) {
+        event.stopPropagation();
+
+        let revised = JSON.parse(localStorage.getItem('dsa-revised') || '[]');
+        const index = revised.indexOf(id);
+
+        if (index === -1) {
+            revised.push(id);
+            if (typeof showToast === 'function') showToast('Added to Revision List', 'success');
+        } else {
+            revised.splice(index, 1);
+            if (typeof showToast === 'function') showToast('Removed from Revision List', 'info');
+        }
+
+        localStorage.setItem('dsa-revised', JSON.stringify(revised));
+        initListState();
+        if (currentTab === 'revised') filterProblems();
+    }
+
+    function updateProgress() {
+        const completed = JSON.parse(localStorage.getItem('dsa-completed') || '[]');
+        const total = problemItems.length;
+        const completedCount = completed.length;
+
+        // Update Text
+        const progressText = document.getElementById('progress-text');
+        if (progressText) progressText.textContent = `${completedCount} / ${total}`;
+
+        // Update Bar
+        const progressBar = document.getElementById('progress-bar');
+        if (progressBar) {
+            const percent = total === 0 ? 0 : (completedCount / total) * 100;
+            progressBar.style.width = `${percent}%`;
+        }
+
+        // Update Checkboxes
+        problemItems.forEach(item => {
+            const id = item.dataset.id;
+            const checkbox = item.querySelector('input[type="checkbox"]');
+            if (checkbox) {
+                checkbox.checked = completed.includes(id);
+            }
+        });
+    }
+
+    function initListState() {
+        updateProgress();
+        updateCounts();
+
+        const bookmarks = JSON.parse(localStorage.getItem('dsa-bookmarks') || '[]');
+        const revised = JSON.parse(localStorage.getItem('dsa-revised') || '[]');
+
+        // Check bookmarks
+        document.querySelectorAll('.bookmark-icon').forEach(icon => {
+            const id = icon.dataset.id;
+            if (bookmarks.includes(id)) {
+                icon.classList.add('fill-current', 'text-yellow-500');
+                icon.classList.remove('text-gray-400');
+                // update parent button color if needed
+            } else {
+                icon.classList.remove('fill-current', 'text-yellow-500');
+                icon.classList.add('text-gray-400');
+            }
+        });
+
+        // Check revised
+        document.querySelectorAll('.revise-icon').forEach(icon => {
+            const id = icon.dataset.id;
+            if (revised.includes(id)) {
+                icon.classList.add('text-blue-500');
+                icon.classList.remove('text-gray-400');
+            } else {
+                icon.classList.remove('text-blue-500');
+                icon.classList.add('text-gray-400');
+            }
+        });
+    }
+
+    // Listeners
+    searchInput.addEventListener('input', filterProblems);
+    difficultyFilter.addEventListener('change', filterProblems);
+    topicFilter.addEventListener('change', filterProblems);
+
+    // Dynamic Topic Tags Adjustment
+    function adjustTopicTags() {
+        requestAnimationFrame(() => {
+            document.querySelectorAll('.problem-item').forEach(item => {
+                const container = item.querySelector('.topic-tags-container');
+                // Skip if hidden or on mobile (not flex)
+                if (!container || container.offsetParent === null) return;
+
+                const tags = Array.from(container.querySelectorAll('.topic-tag'));
+                const counter = container.querySelector('.topic-count');
+
+                // 1. Reset state (show all)
+                tags.forEach(t => t.classList.remove('hidden'));
+                counter.classList.add('hidden');
+
+                // 2. Check overflow
+                if (container.scrollWidth > container.clientWidth) {
+                    const availableWidth = container.clientWidth;
+                    const counterWidth = 30; // Approx width for "+99" badge
+
+                    let fitCount = 0;
+
+                    for (let i = 0; i < tags.length; i++) {
+                        const tag = tags[i];
+                        const isLast = (i === tags.length - 1);
+                        const limit = isLast ? availableWidth : (availableWidth - counterWidth);
+
+                        //offsetLeft is relative to the flex container parent
+                        const tagRight = tag.offsetLeft + tag.offsetWidth;
+
+                        if (tagRight > limit) {
+                            break;
+                        }
+                        fitCount++;
+                    }
+
+                    // 3. Apply Visibility
+                    if (fitCount < tags.length) {
+                        for (let j = fitCount; j < tags.length; j++) {
+                            tags[j].classList.add('hidden');
+                        }
+                        counter.textContent = '+' + (tags.length - fitCount);
+                        counter.classList.remove('hidden');
+                    }
+                }
+            });
+        });
+    }
+
+    // Handle Window Resize
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(adjustTopicTags, 100);
+    });
+
+    // On Load
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+        initTabs();
+        initListState();
+        filterProblems(); // This will trigger adjustTopicTags via timeout
+    });
+
+    // Handle bfcache traversal (Back/Forward navigation)
+    window.addEventListener('pageshow', (event) => {
+        // Always re-initialize state on pageshow to catch updates from the problem page
+        initListState();
+        if (currentTab === 'saved' || currentTab === 'revised') filterProblems();
+    });
+
+    // Add global event listener for storage changes (sync tabs)
+    window.addEventListener('storage', (e) => {
+        if (['dsa-bookmarks', 'dsa-completed', 'dsa-revised'].includes(e.key)) {
+            initListState();
+            if (currentTab === 'saved' || currentTab === 'revised') filterProblems();
+        }
+    });
+</script>
+{{ end }}

@@ -1,0 +1,82 @@
+baseURL = "https://dsa.csrgo.com/"
+languageCode = "en-us"
+title = "CSRGO DSA"
+
+# Enable emoji support
+enableEmoji = true
+
+# Enable Git info
+enableGitInfo = false
+
+# Pagination
+paginate = 12
+
+# Output formats
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+  section = ["HTML", "RSS", "JSON"]
+
+# Taxonomies
+[taxonomies]
+  difficulty = "difficulties"
+  topic = "topics"
+  datastructure = "datastructures"
+  company = "companies"
+
+# Menu configuration
+[[menu.main]]
+  name = "Home"
+  url = "/"
+  weight = 1
+
+[[menu.main]]
+  name = "Problems"
+  url = "/problems/"
+  weight = 2
+
+[[menu.main]]
+  name = "Learning Paths"
+  url = "/paths/"
+  weight = 3
+
+[[menu.main]]
+  name = "Interview Mode"
+  url = "/interview/"
+  weight = 4
+
+# Site parameters
+[params]
+  description = "Master Data Structures and Algorithms with CSRGO DSA - Your comprehensive Java DSA learning platform"
+  author = "CSRGO"
+  
+  # Social links
+  github = "https://github.com/csrgo"
+  twitter = "https://twitter.com/csrgo"
+  linkedin = "https://linkedin.com/company/csrgo"
+  
+  # Logo
+  logo = "/logo.png"
+  favicon = "/favicon.ico"
+  
+  # Brand colors from logo (exact matches)
+  [params.colors]
+    primary = "#FF6B35"      # Orange from logo
+    secondary = "#4A90E2"    # Blue from logo
+    accent = "#9B59B6"       # Purple from logo
+    darkBg = "#0A0E27"       # Dark navy background
+    lightBg = "#F8F9FA"      # Light background
+
+# Markup configuration
+[markup]
+  [markup.highlight]
+    style = "monokai"
+    lineNos = true
+    lineNumbersInTable = true
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+# Privacy settings
+[privacy]
+  [privacy.youtube]
+    privacyEnhanced = true

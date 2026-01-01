@@ -1,0 +1,46 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "static/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "problems"
+    label: "Problems"
+    folder: "content/problems"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Difficulty", name: "difficulty", widget: "select", options: ["Easy", "Medium", "Hard"]}
+      - {label: "Topics", name: "topics", widget: "list", default: []}
+      - {label: "Data Structures", name: "datastructures", widget: "list", default: []}
+      - {label: "Companies", name: "companies", widget: "list", required: false}
+      - {label: "Time Complexity", name: "timeComplexity", widget: "string", required: false}
+      - {label: "Space Complexity", name: "spaceComplexity", widget: "string", required: false}
+      - {label: "Problem Statement", name: "body", widget: "markdown"}
+      - label: "Examples"
+        name: "examples"
+        widget: "list"
+        fields:
+          - {label: "Input", name: "input", widget: "string"}
+          - {label: "Output", name: "output", widget: "string"}
+          - {label: "Explanation", name: "explanation", widget: "text", required: false}
+      - {label: "Constraints", name: "constraints", widget: "list"}
+      - {label: "Java Template", name: "javaTemplate", widget: "text"}
+  
+  - name: "paths"
+    label: "Learning Paths"
+    folder: "content/paths"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Difficulty Level", name: "difficulty", widget: "select", options: ["Beginner", "Intermediate", "Advanced"]}
+      - {label: "Estimated Time", name: "estimatedTime", widget: "string"}
+      - {label: "Problem Count", name: "problemCount", widget: "number"}
+      - {label: "Body", name: "body", widget: "markdown"}

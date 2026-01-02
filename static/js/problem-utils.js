@@ -326,7 +326,7 @@ function updateCompletionUI(id) {
         btn.classList.remove(...activeClasses);
         btn.classList.add(...inactiveClasses);
         if (text) {
-            text.textContent = 'Mark Complete';
+            text.textContent = 'Complete';
             text.classList.remove('text-white');
         }
     }

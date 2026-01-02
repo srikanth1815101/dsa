@@ -69,7 +69,8 @@ paginate = 12
 # Markup configuration
 [markup]
   [markup.highlight]
-    style = "monokai"
+    noClasses = false
+    guessSyntax = true
     lineNos = true
     lineNumbersInTable = true
   [markup.goldmark]

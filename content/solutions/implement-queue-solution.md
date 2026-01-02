@@ -1,5 +1,5 @@
 ---
-title: "Solution: Implement Queue using Stacks"
+title: "Implement Queue using Stacks"
 date: 2024-01-09
 problemUrl: "/problems/implement-queue/"
 ---

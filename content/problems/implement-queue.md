@@ -5,6 +5,7 @@ difficulty: "Easy"
 topics: ["Stack", "Queue", "Design"]
 datastructures: ["Stack", "Queue"]
 companies: ["Amazon", "Microsoft", "Bloomberg"]
+path: "Advanced"
 starterCode: "/dsa/files/MyQueue.java"
 hints:
   - "Use two stacks: one input stack and one output stack."

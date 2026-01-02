@@ -1,10 +1,11 @@
 ---
 title: "Binary Search"
 date: 2024-01-04T10:00:00Z
-difficulty: "Easy"
+difficulty: "Hard"
 topics: ["Array", "Searching", "Binary Search"]
 datastructures: ["Array"]
 companies: ["Google", "Facebook", "Apple"]
+path: "Advanced"
 starterCode: "/dsa/files/BinarySearch.java"
 hints:
   - "The array is sorted, so we can eliminate half the search space at each step."

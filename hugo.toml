@@ -21,6 +21,7 @@ paginate = 12
   difficulty = "difficulties"
   topic = "topics"
   datastructure = "datastructures"
+  paths = "paths"
   company = "companies"
 
 # Menu configuration

@@ -4,7 +4,8 @@ date: 2024-01-07T10:00:00Z
 difficulty: "Easy"
 topics: ["Dynamic Programming", "Math"]
 datastructures: ["Array"]
-companies: ["Amazon", "Google", "Adobe"]
+companies: ["Google", "Facebook", "Apple"]
+path: "Basic"
 starterCode: "/dsa/files/ClimbingStairs.java"
 hints:
   - "Since you can only take 1 or 2 steps, ways(n) = ways(n-1) + ways(n-2)."

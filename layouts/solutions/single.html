@@ -213,12 +213,18 @@
     .code-scroll-wrapper .highlight,
     .code-scroll-wrapper .chroma,
     .code-scroll-wrapper table,
-    .code-scroll-wrapper tbody,
-    .code-scroll-wrapper tr,
-    .code-scroll-wrapper td {
+    .code-scroll-wrapper tbody {
         width: 100%;
         margin: 0 !important;
         padding: 0 !important;
+    }
+
+    /* Remove width: 100% from rows and cells to allow natural sizing */
+    .code-scroll-wrapper tr,
+    .code-scroll-wrapper td {
+        margin: 0 !important;
+        padding: 0 !important;
+        /* width: auto; Default behavior is correct here */
     }
 
     /* Ensure code block respects whitespace */

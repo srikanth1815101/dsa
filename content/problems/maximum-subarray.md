@@ -4,7 +4,8 @@ date: 2024-01-06T10:00:00Z
 difficulty: "Medium"
 topics: ["Array", "Dynamic Programming", "Divide and Conquer"]
 datastructures: ["Array"]
-companies: ["Amazon", "Google", "Apple"]
+companies: ["Google", "Facebook", "Microsoft"]
+path: "Advanced"
 starterCode: "/dsa/files/MaximumSubarray.java"
 hints:
   - "If the sum of a subarray is negative, it cannot contribute to the maximum sum of a larger subarray."

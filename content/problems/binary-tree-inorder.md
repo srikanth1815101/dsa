@@ -5,6 +5,7 @@ difficulty: "Easy"
 topics: ["Tree", "Binary Tree", "DFS"]
 datastructures: ["Binary Tree", "Stack"]
 companies: ["Microsoft", "Amazon", "Google"]
+path: "Basic"
 starterCode: "/dsa/files/BinaryTreeInorder.java"
 hints:
   - "Try utilizing a Stack to simulate recursion."

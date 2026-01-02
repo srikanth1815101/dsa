@@ -5,6 +5,7 @@ difficulty: "Easy"
 topics: ["Array", "Hash Table"]
 datastructures: ["Array", "HashMap"]
 companies: ["Google", "Amazon", "Microsoft"]
+path: "Basic"
 timeComplexity: "O(n)"
 spaceComplexity: "O(n)"
 starterCode: "/dsa/files/TwoSum.java"

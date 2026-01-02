@@ -5,6 +5,7 @@ difficulty: "Easy"
 topics: ["Array", "Sorting", "Two Pointers"]
 datastructures: ["Array"]
 companies: ["Meta", "Amazon", "Microsoft"]
+path: "Advanced"
 starterCode: "/dsa/files/MergeSortedArray.java"
 hints:
   - "You can reverse the order of iteration."

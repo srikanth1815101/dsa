@@ -225,7 +225,8 @@
 
                 <!-- Card Container (Adaptive Grid) - Responsive Alignment -->
                 <div class="problem-item group grid grid-cols-[auto_1fr_auto] md:grid-cols-[50px_1fr_100px_50px_50px] items-center gap-2 md:gap-4 px-3 md:px-6 py-2.5 md:py-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 shadow-sm hover:shadow-md transition-all duration-200"
-                    data-difficulty="{{ .Params.difficulty }}" data-topics="{{ delimit .Params.topics " ," }}"
+                    data-difficulty="{{ .Params.difficulty }}"
+                    data-topics="{{ if .Params.topics }}{{ delimit .Params.topics " ," }}{{ end }}"
                     data-title="{{ .Title | lower }}" data-id="{{ .File.ContentBaseName }}">
 
                     <!-- 1. Checkbox Column -->

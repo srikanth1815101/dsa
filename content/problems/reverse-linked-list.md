@@ -5,6 +5,7 @@ difficulty: "Easy"
 topics: ["Linked List"]
 datastructures: ["Linked List"]
 companies: ["Amazon", "Microsoft", "Apple"]
+path: "Basic"
 starterCode: "/dsa/files/ReverseList.java"
 hints:
   - "Iterate through the list and change the next pointer of each node to point to the previous node."

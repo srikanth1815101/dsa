@@ -5,6 +5,7 @@ difficulty: "Easy"
 topics: ["String", "Hash Table"]
 datastructures: ["HashMap"]
 companies: ["Amazon", "Google", "Microsoft"]
+path: "Basic"
 starterCode: "/dsa/files/FirstUnique.java"
 hints:
   - "Count the frequency of all letters first."

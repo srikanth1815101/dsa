@@ -5,6 +5,7 @@ difficulty: "Easy"
 topics: ["String", "Stack"]
 datastructures: ["Stack"]
 companies: ["Google", "Meta", "Amazon"]
+path: "Basic"
 starterCode: "/dsa/files/ValidParentheses.java"
 hints:
   - "Use a Stack to keep track of opening brackets."

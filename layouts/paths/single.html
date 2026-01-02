@@ -296,18 +296,25 @@
         const bookmarks = JSON.parse(localStorage.getItem('dsa-bookmarks') || '[]');
         const revised = JSON.parse(localStorage.getItem('dsa-revised') || '[]');
 
+        // Get all problem IDs currently on the page (Path specific)
+        const pathProblemIds = Array.from(document.querySelectorAll('.problem-item')).map(item => item.dataset.id);
+
+        // Filter counts to only include problems that exist on this page (in this path)
+        const pathBookmarksCount = bookmarks.filter(id => pathProblemIds.includes(id)).length;
+        const pathRevisedCount = revised.filter(id => pathProblemIds.includes(id)).length;
+
         // Saved Badge
         const savedBadge = document.getElementById('saved-count-badge');
         if (savedBadge) {
-            savedBadge.textContent = bookmarks.length;
-            bookmarks.length > 0 ? savedBadge.classList.remove('hidden') : savedBadge.classList.add('hidden');
+            savedBadge.textContent = pathBookmarksCount;
+            pathBookmarksCount > 0 ? savedBadge.classList.remove('hidden') : savedBadge.classList.add('hidden');
         }
 
         // Revised Badge
         const revisedBadge = document.getElementById('revised-count-badge');
         if (revisedBadge) {
-            revisedBadge.textContent = revised.length;
-            revised.length > 0 ? revisedBadge.classList.remove('hidden') : revisedBadge.classList.add('hidden');
+            revisedBadge.textContent = pathRevisedCount;
+            pathRevisedCount > 0 ? revisedBadge.classList.remove('hidden') : revisedBadge.classList.add('hidden');
         }
     }
 

@@ -1,241 +1,201 @@
 {{ define "main" }}
-<div class="container mx-auto px-4 py-12">
-    <!-- Page Header -->
-    <div class="mb-12 text-center">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans flex items-center justify-center p-4">
+
+    <!-- Hero Card -->
+    <div
+        class="w-full max-w-2xl bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden animate-fade-in-up md:mt-0 mt-20">
+        <!-- Decorative Blobs -->
+        <div class="absolute top-0 right-0 -mr-24 -mt-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse">
+        </div>
         <div
-            class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-6">
-            <i data-lucide="target" class="w-10 h-10 text-white"></i>
-        </div>
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">
-            Interview <span class="gradient-text">Mode</span>
-        </h1>
-        <p class="text-gray-400 text-lg max-w-3xl mx-auto">
-            Simulate real interview conditions with timed challenges, company-specific problem sets, and random problem
-            selection.
-        </p>
-    </div>
-
-    <!-- Interview Modes Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-        <!-- Random Problem -->
-        <div class="card rounded-xl p-8 text-center hover:scale-105 transition-transform duration-300">
-            <div
-                class="w-16 h-16 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-4">
-                <i data-lucide="shuffle" class="w-8 h-8 text-white"></i>
-            </div>
-            <h3 class="text-xl font-bold mb-3">Random Problem</h3>
-            <p class="text-gray-400 text-sm mb-6">
-                Get a random problem to solve. Perfect for daily practice.
-            </p>
-            <button onclick="getRandomProblem()" class="btn-primary w-full">
-                Start Challenge
-            </button>
+            class="absolute bottom-0 left-0 -ml-24 -mb-24 w-64 h-64 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-700">
         </div>
 
-        <!-- Timed Challenge -->
-        <div class="card rounded-xl p-8 text-center hover:scale-105 transition-transform duration-300">
+        <div class="relative z-10 text-center">
+            <!-- Icon -->
             <div
-                class="w-16 h-16 rounded-xl bg-gradient-to-br from-secondary to-accent flex items-center justify-center mx-auto mb-4">
-                <i data-lucide="timer" class="w-8 h-8 text-white"></i>
+                class="mx-auto w-24 h-24 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center mb-8 shadow-lg transform rotate-3 hover:rotate-6 transition-transform duration-500">
+                <i data-lucide="target" class="w-12 h-12 text-white"></i>
             </div>
-            <h3 class="text-xl font-bold mb-3">Timed Challenge</h3>
-            <p class="text-gray-400 text-sm mb-6">
-                Solve problems with a countdown timer. Build speed and accuracy.
-            </p>
-            <button onclick="startTimedChallenge()" class="btn-primary w-full">
-                Start Timer
-            </button>
-        </div>
 
-        <!-- Mock Interview -->
-        <div class="card rounded-xl p-8 text-center hover:scale-105 transition-transform duration-300">
-            <div
-                class="w-16 h-16 rounded-xl bg-gradient-to-br from-accent to-primary flex items-center justify-center mx-auto mb-4">
-                <i data-lucide="briefcase" class="w-8 h-8 text-white"></i>
-            </div>
-            <h3 class="text-xl font-bold mb-3">Mock Interview</h3>
-            <p class="text-gray-400 text-sm mb-6">
-                Complete a full interview session with multiple problems.
+            <h1 class="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-4 tracking-tight">
+                Interview Mode
+            </h1>
+
+            <p class="text-lg text-gray-600 dark:text-gray-300 mb-10 leading-relaxed max-w-lg mx-auto">
+                Simulate real interview pressure. Solve random problems against the clock.
+                <span class="block mt-2 font-medium text-primary">Are you ready?</span>
             </p>
-            <button onclick="startMockInterview()" class="btn-primary w-full">
-                Begin Interview
+
+            <button onclick="openConfigModal()"
+                class="group relative inline-flex items-center justify-center gap-3 px-10 py-4 bg-gradient-to-r from-gray-900 to-gray-800 dark:from-white dark:to-gray-200 text-white dark:text-gray-900 rounded-2xl font-bold text-xl hover:shadow-2xl hover:scale-[1.02] active:scale-95 transition-all duration-300 w-full sm:w-auto">
+                <span>Start Interview</span>
+                <i data-lucide="arrow-right" class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
             </button>
         </div>
     </div>
 
-    <!-- Company-Specific Preparation -->
-    <div class="mb-16">
-        <h2 class="text-3xl font-bold mb-8 text-center">
-            Company-Specific <span class="gradient-text">Preparation</span>
-        </h2>
+</div>
 
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {{ $companies := slice "Google" "Amazon" "Microsoft" "Meta" "Apple" "Netflix" "Tesla" "Adobe" }}
-            {{ range $companies }}
-            <a href="/problems/?company={{ . }}"
-                class="card rounded-xl p-6 text-center hover:scale-105 transition-transform duration-300">
-                <div
-                    class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-3">
-                    <i data-lucide="building" class="w-6 h-6 text-white"></i>
-                </div>
-                <h4 class="font-semibold">{{ . }}</h4>
-                <p class="text-xs text-gray-400 mt-1">Practice problems</p>
-            </a>
-            {{ end }}
+<!-- Configuration Modal -->
+<div id="config-modal"
+    class="fixed inset-0 z-[60] hidden items-center justify-center bg-gray-900/60 backdrop-blur-sm px-4">
+    <div
+        class="bg-white dark:bg-gray-800 w-full max-w-lg p-6 md:p-8 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 relative animate-fade-in-up">
+
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Configure Session</h2>
+            <button onclick="closeConfigModal()"
+                class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors">
+                <i data-lucide="x" class="w-5 h-5 text-gray-500"></i>
+            </button>
         </div>
-    </div>
 
-    <!-- Difficulty-Based Practice -->
-    <div class="mb-16">
-        <h2 class="text-3xl font-bold mb-8 text-center">
-            Practice by <span class="gradient-text">Difficulty</span>
-        </h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <div class="card rounded-xl p-8 text-center">
-                <div
-                    class="w-16 h-16 rounded-xl bg-green-500 bg-opacity-20 flex items-center justify-center mx-auto mb-4">
-                    <i data-lucide="smile" class="w-8 h-8 text-green-400"></i>
+        <div class="space-y-6">
+            <!-- Problem Count -->
+            <div>
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Number of Problems</label>
+                <div class="flex gap-3">
+                    <button onclick="selectOption('count', 1)"
+                        class="config-btn flex-1 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-700 font-bold text-gray-600 dark:text-gray-400 hover:border-primary hover:text-primary transition-all active"
+                        data-group="count" data-value="1">1</button>
+                    <button onclick="selectOption('count', 3)"
+                        class="config-btn flex-1 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-700 font-bold text-gray-600 dark:text-gray-400 hover:border-primary hover:text-primary transition-all"
+                        data-group="count" data-value="3">3</button>
+                    <button onclick="selectOption('count', 5)"
+                        class="config-btn flex-1 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-700 font-bold text-gray-600 dark:text-gray-400 hover:border-primary hover:text-primary transition-all"
+                        data-group="count" data-value="5">5</button>
                 </div>
-                <h3 class="text-xl font-bold mb-3">Easy</h3>
-                <p class="text-gray-400 text-sm mb-6">
-                    Build fundamentals and confidence
-                </p>
-                <a href="/problems/?difficulty=Easy" class="btn-outline w-full text-center block py-3">
-                    Browse Easy
-                </a>
             </div>
 
-            <div class="card rounded-xl p-8 text-center">
-                <div
-                    class="w-16 h-16 rounded-xl bg-yellow-500 bg-opacity-20 flex items-center justify-center mx-auto mb-4">
-                    <i data-lucide="meh" class="w-8 h-8 text-yellow-400"></i>
+            <!-- Duration -->
+            <div>
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Time Limit
+                    (Minutes)</label>
+                <div class="flex gap-3">
+                    <button onclick="selectOption('time', 15)"
+                        class="config-btn flex-1 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-700 font-bold text-gray-600 dark:text-gray-400 hover:border-primary hover:text-primary transition-all"
+                        data-group="time" data-value="15">15</button>
+                    <button onclick="selectOption('time', 30)"
+                        class="config-btn flex-1 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-700 font-bold text-gray-600 dark:text-gray-400 hover:border-primary hover:text-primary transition-all active"
+                        data-group="time" data-value="30">30</button>
+                    <button onclick="selectOption('time', 45)"
+                        class="config-btn flex-1 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-700 font-bold text-gray-600 dark:text-gray-400 hover:border-primary hover:text-primary transition-all"
+                        data-group="time" data-value="45">45</button>
                 </div>
-                <h3 class="text-xl font-bold mb-3">Medium</h3>
-                <p class="text-gray-400 text-sm mb-6">
-                    Challenge yourself with complex problems
-                </p>
-                <a href="/problems/?difficulty=Medium" class="btn-outline w-full text-center block py-3">
-                    Browse Medium
-                </a>
             </div>
 
-            <div class="card rounded-xl p-8 text-center">
-                <div
-                    class="w-16 h-16 rounded-xl bg-red-500 bg-opacity-20 flex items-center justify-center mx-auto mb-4">
-                    <i data-lucide="frown" class="w-8 h-8 text-red-400"></i>
+            <!-- Difficulty -->
+            <div>
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Difficulty</label>
+                <div class="flex gap-3">
+                    <button onclick="selectOption('diff', 'Any')"
+                        class="config-btn flex-1 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-700 font-bold text-gray-600 dark:text-gray-400 hover:border-primary hover:text-primary transition-all active"
+                        data-group="diff" data-value="Any">Any</button>
+                    <button onclick="selectOption('diff', 'Easy')"
+                        class="config-btn flex-1 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-700 font-bold text-gray-600 dark:text-gray-400 hover:border-primary hover:text-primary transition-all"
+                        data-group="diff" data-value="Easy">Easy</button>
+                    <button onclick="selectOption('diff', 'Medium')"
+                        class="config-btn flex-1 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-700 font-bold text-gray-600 dark:text-gray-400 hover:border-primary hover:text-primary transition-all"
+                        data-group="diff" data-value="Medium">Med</button>
+                    <button onclick="selectOption('diff', 'Hard')"
+                        class="config-btn flex-1 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-700 font-bold text-gray-600 dark:text-gray-400 hover:border-primary hover:text-primary transition-all"
+                        data-group="diff" data-value="Hard">Hard</button>
                 </div>
-                <h3 class="text-xl font-bold mb-3">Hard</h3>
-                <p class="text-gray-400 text-sm mb-6">
-                    Master advanced algorithms and patterns
-                </p>
-                <a href="/problems/?difficulty=Hard" class="btn-outline w-full text-center block py-3">
-                    Browse Hard
-                </a>
             </div>
         </div>
-    </div>
 
-    <!-- Tips Section -->
-    <div class="card rounded-xl p-8 max-w-4xl mx-auto">
-        <h2 class="text-2xl font-bold mb-6 gradient-text">Interview Preparation Tips</h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="flex items-start space-x-3">
-                <div
-                    class="w-8 h-8 rounded-lg bg-primary bg-opacity-20 flex items-center justify-center flex-shrink-0 mt-1">
-                    <i data-lucide="check" class="w-5 h-5 text-primary"></i>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-1">Practice Consistently</h4>
-                    <p class="text-sm text-gray-400">Solve at least one problem daily to maintain momentum</p>
-                </div>
-            </div>
-
-            <div class="flex items-start space-x-3">
-                <div
-                    class="w-8 h-8 rounded-lg bg-primary bg-opacity-20 flex items-center justify-center flex-shrink-0 mt-1">
-                    <i data-lucide="check" class="w-5 h-5 text-primary"></i>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-1">Think Out Loud</h4>
-                    <p class="text-sm text-gray-400">Practice explaining your thought process clearly</p>
-                </div>
-            </div>
-
-            <div class="flex items-start space-x-3">
-                <div
-                    class="w-8 h-8 rounded-lg bg-primary bg-opacity-20 flex items-center justify-center flex-shrink-0 mt-1">
-                    <i data-lucide="check" class="w-5 h-5 text-primary"></i>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-1">Time Management</h4>
-                    <p class="text-sm text-gray-400">Allocate 30-45 minutes per problem during practice</p>
-                </div>
-            </div>
-
-            <div class="flex items-start space-x-3">
-                <div
-                    class="w-8 h-8 rounded-lg bg-primary bg-opacity-20 flex items-center justify-center flex-shrink-0 mt-1">
-                    <i data-lucide="check" class="w-5 h-5 text-primary"></i>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-1">Review Solutions</h4>
-                    <p class="text-sm text-gray-400">Study optimal solutions even after solving correctly</p>
-                </div>
-            </div>
+        <div class="flex flex-col sm:flex-row gap-4 mt-8 pt-6 border-t border-gray-100 dark:border-gray-700">
+            <button onclick="startSession()"
+                class="flex-1 py-3.5 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-bold text-lg hover:shadow-lg hover:scale-[1.02] transition-all transform active:scale-95 shadow-primary/25">
+                Start Session
+            </button>
+            <button onclick="startDefaults()"
+                class="flex-1 py-3.5 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-bold hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                Quick Start (Default)
+            </button>
         </div>
     </div>
 </div>
 
-<!-- Modal for Timer -->
-<div id="timer-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-    <div class="card rounded-xl p-8 max-w-md w-full">
-        <h3 class="text-2xl font-bold mb-4 gradient-text">Set Timer Duration</h3>
-        <div class="space-y-4">
-            <button onclick="setTimer(30)" class="w-full btn-outline py-3">30 Minutes</button>
-            <button onclick="setTimer(45)" class="w-full btn-outline py-3">45 Minutes</button>
-            <button onclick="setTimer(60)" class="w-full btn-outline py-3">60 Minutes</button>
-            <button onclick="closeModal()"
-                class="w-full text-gray-400 hover:text-white transition-colors py-3">Cancel</button>
-        </div>
-    </div>
-</div>
+<style>
+    .config-btn.active {
+        border-color: #FF6B35;
+        color: #FF6B35;
+        background-color: rgba(255, 107, 53, 0.05);
+    }
+
+    .dark .config-btn.active {
+        background-color: rgba(255, 107, 53, 0.1);
+    }
+</style>
 
 <script>
-    function getRandomProblem() {
-        // Get all problem links
+    let config = {
+        count: 1,
+        time: 30,
+        diff: 'Any'
+    };
+
+    function openConfigModal() {
+        document.getElementById('config-modal').classList.remove('hidden');
+        document.getElementById('config-modal').classList.add('flex');
+    }
+
+    function closeConfigModal() {
+        document.getElementById('config-modal').classList.add('hidden');
+        document.getElementById('config-modal').classList.remove('flex');
+    }
+
+    function selectOption(group, value) {
+        config[group] = value;
+        // Update UI
+        document.querySelectorAll(`.config-btn[data-group="${group}"]`).forEach(btn => {
+            if (btn.dataset.value == value) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    function startDefaults() {
+        // Defaults: 1 problem, 30 mins, Any
+        // Just redirect to random problem for now (MVP)
+        // In full version, this would go to /interview/session?mode=quick
+        findAndRedirect();
+    }
+
+    function startSession() {
+        // Use config
+        console.log("Starting session with:", config);
+        findAndRedirect(config);
+    }
+
+    function findAndRedirect(cfg) {
+        // Build query for problems
+        // Since this is a static site, we can't filter server side. 
+        // We'll fetch the index and filter client side, then pick one.
+
         fetch('/problems/index.json')
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => {
-                if (data && data.length > 0) {
-                    const randomIndex = Math.floor(Math.random() * data.length);
-                    window.location.href = data[randomIndex].permalink;
+                let filtered = data;
+                if (cfg && cfg.diff && cfg.diff !== 'Any') {
+                    filtered = data.filter(p => p.difficulty === cfg.diff);
+                }
+
+                if (filtered.length > 0) {
+                    const random = filtered[Math.floor(Math.random() * filtered.length)];
+                    window.location.href = random.permalink;
+                } else {
+                    alert('No problems found with these settings! Try "Any".');
                 }
             })
-            .catch(() => {
-                // Fallback: just go to problems page
+            .catch(e => {
+                console.error(e);
                 window.location.href = '/problems/';
             });
-    }
-
-    function startTimedChallenge() {
-        document.getElementById('timer-modal').classList.remove('hidden');
-    }
-
-    function setTimer(minutes) {
-        localStorage.setItem('timerDuration', minutes);
-        closeModal();
-        getRandomProblem();
-    }
-
-    function closeModal() {
-        document.getElementById('timer-modal').classList.add('hidden');
-    }
-
-    function startMockInterview() {
-        alert('Mock Interview mode will present you with 2-3 problems to solve in sequence. This feature will redirect you to a curated set of problems.');
-        window.location.href = '/problems/';
     }
 </script>
 {{ end }}

@@ -48,6 +48,13 @@
                             <i id="theme-icon" data-lucide="sun" stroke-width="2" class="w-6 h-6"></i>
                         </button>
 
+                        <!-- Profile Button -->
+                        <a href="/profile/"
+                            class="p-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-fuchsia-400 transition-colors duration-200"
+                            aria-label="User Profile">
+                            <i data-lucide="user" stroke-width="2" class="w-6 h-6"></i>
+                        </a>
+
                         <!-- Mobile Menu Button -->
                         <button onclick="toggleMobileMenu()"
                             class="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-fuchsia-400 transition-colors duration-200"
@@ -67,7 +74,85 @@
                     <span>{{ .Name }}</span>
                 </a>
                 {{ end }}
+                <a href="/profile/"
+                    class="block px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                    <span>Profile</span>
+                </a>
             </div>
         </div>
     </div>
 </header>
+
+<!-- Nickname Modal (Global) -->
+<div id="nickname-modal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center bg-gray-900/60 backdrop-blur-md px-4">
+    <div
+        class="bg-white dark:bg-gray-800 w-full max-w-md p-8 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 relative overflow-hidden animate-fade-in-up">
+        <!-- decorative blobs -->
+        <div class="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 bg-primary/20 rounded-full blur-2xl"></div>
+        <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-32 h-32 bg-secondary/20 rounded-full blur-2xl"></div>
+
+        <div class="relative z-10 text-center">
+            <div
+                class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl mx-auto flex items-center justify-center mb-6 shadow-lg rotate-3">
+                <i data-lucide="sparkles" class="w-8 h-8 text-white"></i>
+            </div>
+
+            <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-2">Welcome!</h2>
+            <p class="text-gray-600 dark:text-gray-300 mb-8">What should we call you?</p>
+
+            <form onsubmit="saveNickname(event)" class="space-y-4">
+                <input type="text" id="nickname-input" required maxlength="20" placeholder="Enter your nickname"
+                    class="w-full px-5 py-4 rounded-xl bg-gray-50 dark:bg-gray-900 border-2 border-gray-100 dark:border-gray-700 focus:border-primary dark:focus:border-primary outline-none transition-all text-center font-bold text-lg dark:text-white placeholder-gray-400">
+
+                <button type="submit"
+                    class="w-full py-4 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-bold text-lg hover:shadow-lg hover:scale-[1.02] transition-all transform active:scale-95 shadow-primary/25">
+                    Start Journey
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Nickname Logic
+    function checkNickname() {
+        const nickname = localStorage.getItem('dsa-nickname');
+        const modal = document.getElementById('nickname-modal');
+        // Do not block if we are already on a page but the logic runs (avoid flicker)
+        // But for first time, we force it.
+        // Exception: Dont show if we just cleared it on profile page to edit
+        // Actually editing removes it so we DO want to show it.
+        if (!nickname) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.getElementById('nickname-input').focus();
+        } else {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    }
+
+    function saveNickname(e) {
+        e.preventDefault();
+        const input = document.getElementById('nickname-input');
+        const name = input.value.trim();
+        if (name) {
+            localStorage.setItem('dsa-nickname', name);
+            // Hide modal
+            document.getElementById('nickname-modal').classList.add('hidden');
+            document.getElementById('nickname-modal').classList.remove('flex');
+            // If on profile page, reload to update name
+            if (window.location.pathname.includes('/profile')) {
+                window.location.reload();
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Run check
+        checkNickname();
+        // Also update Lucide again for the new icon
+        if (window.lucide) window.lucide.createIcons();
+    });
+</script>

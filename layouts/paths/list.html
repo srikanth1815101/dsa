@@ -6,63 +6,143 @@
         <!-- VIEW 1: PATHS INDEX (CARDS) -->
         <!-- This renders for /paths/ -->
 
-        <!-- Header -->
-        <div class="mb-12">
-            <h1
-                class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight mb-4">
-                {{ .Title }}
-            </h1>
-            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl">
-                Structured guides to master Data Structures and Algorithms. Follow these paths to build your expertise
-                step by step.
-            </p>
+        <!-- Modern Hero Section -->
+        <div
+            class="relative py-12 md:py-20 mb-12 overflow-hidden rounded-2xl sm:rounded-3xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-xl">
+            <!-- decorative blobs -->
+            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-primary/10 rounded-full blur-3xl opacity-50">
+            </div>
+            <div
+                class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-secondary/10 rounded-full blur-3xl opacity-50">
+            </div>
+
+            <div class="relative z-10 px-6 md:px-12 text-center max-w-4xl mx-auto">
+                <span
+                    class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-4 border border-primary/20">
+                    Structured Learning
+                </span>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">
+                    <span
+                        class="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400">
+                        Master Data Structures
+                    </span>
+                    <br class="hidden md:block" />
+                    <span
+                        class="bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-secondary animate-gradient-x">
+                        & Algorithms
+                    </span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto mb-8">
+                    Curated learning paths designed to take you from beginner to expert.
+                    Track your progress, solve hand-picked problems, and crack your dream interview.
+                </p>
+            </div>
         </div>
 
         <!-- Paths Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {{ $pathPages := where .Site.RegularPages "Section" "paths" }}
             {{ range $pathPages }}
 
-            {{/* Calculate Count dynamically */}}
+            {{/* Data Gathering */}}
             {{ $pathTitle := .Title }}
             {{ $problems := where site.RegularPages "Params.path" $pathTitle }}
             {{ $count := len $problems }}
 
-            <a href="{{ .RelPermalink }}"
-                class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/50 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden flex flex-col h-full">
+            {{/* Create comma-separated list of IDs for JS using 'scratch' or string manipulation */}}
+            {{ $idsSlice := slice }}
+            {{ range $problems }}
+            {{ $idsSlice = $idsSlice | append .File.ContentBaseName }}
+            {{ end }}
+            {{ $idsString := delimit $idsSlice "," }}
 
+            {{ $colors := dict
+            "Basic" (dict "gradient" "from-emerald-400 to-teal-600" "bgGradient" "from-emerald-50 to-teal-50"
+            "darkBgGradient" "from-emerald-900/20 to-teal-900/20" "text" "text-emerald-600")
+            "Advanced" (dict "gradient" "from-blue-400 to-indigo-600" "bgGradient" "from-blue-50 to-indigo-50"
+            "darkBgGradient" "from-blue-900/20 to-indigo-900/20" "text" "text-blue-600")
+            "Mastery" (dict "gradient" "from-orange-400 to-red-600" "bgGradient" "from-orange-50 to-red-50"
+            "darkBgGradient" "from-orange-900/20 to-red-900/20" "text" "text-orange-600")
+            }}
+
+            {{/* Fallback Color */}}
+            {{ $defaultColor := dict "gradient" "from-purple-600 to-pink-600" "bgGradient" "from-purple-50 to-pink-50"
+            "darkBgGradient" "from-purple-900/20 to-pink-900/20" "text" "text-purple-600" }}
+
+            {{ $theme := index $colors .Title | default $defaultColor }}
+
+            <div class="group relative flex flex-col h-full" data-problem-ids="{{ $idsString }}">
+
+                <!-- Card Container (CSRGO Style) -->
                 <div
-                    class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -mr-8 -mt-8 group-hover:bg-primary/10 transition-colors duration-500">
-                </div>
+                    class="relative flex-1 bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col">
 
-                <div class="relative z-10 flex-1">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div
-                            class="p-2.5 bg-primary/10 rounded-xl text-primary group-hover:scale-110 transition-transform duration-300">
-                            <!-- Dynamic Icon from Frontmatter -->
-                            <i data-lucide="{{ .Params.icon | default " map" }}" class="w-6 h-6"></i>
+                    <!-- Hover Background Gradient -->
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br {{ $theme.bgGradient }} dark:{{ $theme.darkBgGradient }} opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    </div>
+
+                    <div class="relative z-10 flex flex-col h-full">
+
+                        <!-- Header -->
+                        <div class="flex items-center justify-between mb-4 sm:mb-6">
+                            <div
+                                class="p-2.5 sm:p-3 bg-gradient-to-r {{ $theme.gradient }} rounded-lg sm:rounded-xl shadow-lg transform group-hover:scale-110 transition-all duration-300">
+                                <i data-lucide="{{ .Params.icon | default " map" }}"
+                                    class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
+                            </div>
+
+                            <!-- Problem Count Badge -->
+                            <div class="flex items-center space-x-1.5">
+                                <div class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full animate-pulse"></div>
+                                <span
+                                    class="px-2 py-1 bg-gray-100 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300 text-xs font-bold rounded-full border border-gray-200 dark:border-gray-600/50">
+                                    {{ $count }} Problems
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Title -->
+                        <h2
+                            class="text-xl sm:text-2xl font-black mb-3 text-gray-900 dark:text-white group-hover:{{ $theme.text }} dark:group-hover:{{ $theme.text }} transition-colors">
+                            {{ .Title }}
+                        </h2>
+
+                        <!-- Description -->
+                        <p class="text-sm text-gray-700 dark:text-gray-300 mb-6 leading-relaxed flex-1">
+                            {{ .Params.description }}
+                        </p>
+
+                        <!-- Progress Section -->
+                        <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700/50">
+                            <div class="flex justify-between items-end mb-2">
+                                <span
+                                    class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Progress</span>
+                                <span class="path-card-percent text-xs font-bold {{ $theme.text }}">0%</span>
+                            </div>
+
+                            <div class="h-1.5 w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden mb-4">
+                                <div
+                                    class="path-card-progress h-full bg-gradient-to-r {{ $theme.gradient }} w-0 transition-all duration-1000 ease-out rounded-full relative">
+                                </div>
+                            </div>
+
+                            <!-- Button -->
+                            <a href="{{ .RelPermalink }}"
+                                class="path-card-btn w-full inline-flex items-center justify-center space-x-2 bg-gradient-to-r {{ $theme.gradient }} text-white px-4 py-3 rounded-xl font-bold text-sm hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-95 group/btn">
+                                <span class="btn-text">Start Path</span>
+                                <i data-lucide="arrow-right"
+                                    class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
+                            </a>
                         </div>
                     </div>
-                    <h2
-                        class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
-                        {{ .Title }}
-                    </h2>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
-                        {{ .Params.description }}
-                    </p>
-                    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-6">
-                        <i data-lucide="list-video" class="w-4 h-4 mr-1.5"></i>
-                        {{ $count }} Problems
+
+                    <!-- Outer Glow Effect -->
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
                     </div>
                 </div>
-
-                <div class="relative z-10 mt-auto pt-4 border-t border-gray-100 dark:border-gray-700/50">
-                    <span
-                        class="inline-flex items-center text-sm font-semibold text-primary group-hover:translate-x-1 transition-transform">
-                        View Problems <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
-                    </span>
-                </div>
-            </a>
+            </div>
             {{ end }}
         </div>
 
@@ -255,12 +335,80 @@
         lucide.createIcons();
         if (typeof initListState === 'function') {
             initListState();
-        } else {
-            // Fallback Init
-            updatePathProgress();
-            updateIcons();
         }
     });
+
+    // -------------------------------------------------------------------------
+    // Shared Logic
+    // -------------------------------------------------------------------------
+
+    function initListState() {
+        // Run logic for Single Path View (View 2)
+        updatePathProgress();
+        updateIcons();
+
+        // Run logic for Paths Index View (View 1)
+        updatePathsIndexProgress();
+
+        // Delay layout adjustments
+        setTimeout(adjustTopicTags, 100);
+    }
+
+    // Listen for storage changes to sync tabs/windows
+    window.addEventListener('storage', (e) => {
+        if (['dsa-bookmarks', 'dsa-completed', 'dsa-revised'].includes(e.key)) {
+            initListState();
+        }
+    });
+
+    // -------------------------------------------------------------------------
+    // VIEW 1: Paths Index Logic (Cards)
+    // -------------------------------------------------------------------------
+
+    function updatePathsIndexProgress() {
+        const pathCards = document.querySelectorAll('[data-problem-ids]');
+        if (pathCards.length === 0) return; // Not on index page
+
+        const completed = JSON.parse(localStorage.getItem('dsa-completed') || '[]');
+
+        pathCards.forEach(card => {
+            const rawIds = card.dataset.problemIds || "";
+            if (!rawIds) return;
+
+            const ids = rawIds.split(',').filter(s => s.length > 0);
+            const total = ids.length;
+            if (total === 0) return;
+
+            // Count completed for this specific path
+            let count = 0;
+            ids.forEach(id => {
+                if (completed.includes(id)) count++;
+            });
+
+            const percent = Math.round((count / total) * 100);
+
+            // Update UI
+            const progressBar = card.querySelector('.path-card-progress');
+            const percentText = card.querySelector('.path-card-percent');
+            const btnText = card.querySelector('.btn-text');
+
+            if (progressBar) progressBar.style.width = `${percent}%`;
+            if (percentText) percentText.textContent = `${percent}%`;
+
+            // Change button text if started
+            if (count > 0 && count < total) {
+                if (btnText) btnText.textContent = "Continue Path";
+            } else if (count === total) {
+                if (btnText) btnText.textContent = "Review Path";
+            } else {
+                if (btnText) btnText.textContent = "Start Path";
+            }
+        });
+    }
+
+    // -------------------------------------------------------------------------
+    // VIEW 2: Single Path Logic (Problems List)
+    // -------------------------------------------------------------------------
 
     // Toggle completion status
     function toggleListCompletion(event, id) {
@@ -278,6 +426,8 @@
         localStorage.setItem('dsa-completed', JSON.stringify(completed));
         updateCheckboxes();
         updatePathProgress();
+        // Also update index progress if we happen to be on a page showing both (unlikely but good practice)
+        updatePathsIndexProgress();
     }
 
     // Toggle Bookmark
@@ -358,7 +508,7 @@
         });
     }
 
-    // Update Path Page Progress
+    // Update Path Page Progress (Single Path View)
     function updatePathProgress() {
         // Only run if elements exist (in path view)
         const progressText = document.getElementById('path-progress-text');
@@ -387,13 +537,6 @@
 
         // Ensure checkboxes are synced as well
         updateCheckboxes();
-    }
-
-    function initListState() {
-        updatePathProgress();
-        updateIcons();
-        // Delay slightly to allow layout to settle
-        setTimeout(adjustTopicTags, 100);
     }
 
     // Dynamic Topic Tags Adjustment
@@ -450,13 +593,6 @@
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(adjustTopicTags, 100);
-    });
-
-    // Listen for storage changes
-    window.addEventListener('storage', (e) => {
-        if (['dsa-bookmarks', 'dsa-completed', 'dsa-revised'].includes(e.key)) {
-            initListState();
-        }
     });
 
     function copyPageUrl() {

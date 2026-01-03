@@ -1,0 +1,108 @@
+{{ define "main" }}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20 pt-24 md:pt-32">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 animate-fade-in-up">
+
+        <!-- Welcome Header -->
+        <div class="mb-10 text-center md:text-left">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-4">
+                Hello, <span id="profile-name"
+                    class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">User</span>! 👋
+            </h1>
+            <p class="text-lg text-gray-600 dark:text-gray-300">
+                Here's what you've achieved so far on your journey.
+            </p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <!-- Problems Solved -->
+            <div
+                class="bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-xl relative overflow-hidden group hover:scale-[1.02] transition-transform duration-300">
+                <div
+                    class="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-colors">
+                </div>
+                <div class="relative z-10">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="p-2 bg-gradient-to-br from-primary to-orange-600 rounded-xl text-white shadow-lg">
+                            <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-700 dark:text-gray-200">Problems Solved</h3>
+                    </div>
+                    <p class="text-4xl font-black text-gray-900 dark:text-white mt-4" id="stat-solved">0</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Keep pushing!</p>
+                </div>
+            </div>
+
+            <!-- Learning Paths -->
+            <div
+                class="bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-xl relative overflow-hidden group hover:scale-[1.02] transition-transform duration-300">
+                <div
+                    class="absolute bottom-0 left-0 -ml-16 -mb-16 w-32 h-32 bg-secondary/10 rounded-full blur-2xl group-hover:bg-secondary/20 transition-colors">
+                </div>
+                <div class="relative z-10">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="p-2 bg-gradient-to-br from-blue-500 to-secondary rounded-xl text-white shadow-lg">
+                            <i data-lucide="map" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-700 dark:text-gray-200">Path Progress</h3>
+                    </div>
+                    <p class="text-4xl font-black text-gray-900 dark:text-white mt-4" id="stat-paths">0%</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Overall completion</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Identity Section -->
+        <div
+            class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-md rounded-2xl p-8 border border-gray-200 dark:border-gray-700/50 text-center">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Not <span
+                    id="profile-name-small">you</span>?</h3>
+            <p class="text-gray-500 dark:text-gray-400 mb-6 text-sm">You can change your display name at any time.</p>
+            <button onclick="editNickname()"
+                class="px-6 py-2.5 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                Change Nickname
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        loadProfileData();
+    });
+
+    function loadProfileData() {
+        // 1. Nickname
+        const name = localStorage.getItem('dsa-nickname') || 'Learner';
+        document.getElementById('profile-name').textContent = name;
+        document.getElementById('profile-name-small').textContent = name;
+
+        // 2. Problems Solved
+        const completed = JSON.parse(localStorage.getItem('dsa-completed') || '[]');
+        document.getElementById('stat-solved').textContent = completed.length;
+
+        // 3. Path Progress (Approximate global progress for now)
+        // In a real app we'd calculate specifically against path totals, 
+        // but for now let's just show a placeholder or basic math if we had total count.
+        // We'll leave it as "0%" formatted or maybe "X Problems" if we don't know total.
+        // Actually, let's just leave it as 0% or maybe create a helper if we want accurate global %.
+        // For this iteration: just show total problems again or "N/A"
+
+        // Let's count specific major paths if possible? 
+        // Since we don't have total count readily available in JS without scraping DOM, 
+        // we'll just show "InProgress" text for now.
+        document.getElementById('stat-paths').innerHTML = '<span class="text-2xl">Tracking...</span>';
+
+        // Attempt to calculate if we can access data-problem-ids from a hidden element or similar.
+        // But for simplicity in this static site:
+        document.getElementById('stat-paths').textContent = completed.length > 0 ? "Active" : "Start Now";
+    }
+
+    function editNickname() {
+        // Re-trigger the global modal
+        localStorage.removeItem('dsa-nickname');
+        window.location.reload();
+    }
+</script>
+{{ end }}

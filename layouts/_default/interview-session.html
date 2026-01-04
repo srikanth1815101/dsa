@@ -461,7 +461,7 @@
         list.innerHTML = session.problems.map((p, i) => {
             const isActive = i === currentProblemIndex;
             return `
-            <button onclick="loadProblem(${i})" 
+            <button onclick="loadProblem(${i})" ${isActive ? 'id="active-problem-item"' : ''}
                 class="w-full text-left px-3 py-3 rounded-lg text-sm font-medium transition-all mb-1.5 flex items-start gap-3 group relative overflow-hidden
                 ${isActive
                     ? 'bg-blue-50 dark:bg-blue-900/10 text-primary border border-blue-100 dark:border-blue-900/30 shadow-sm'
@@ -481,6 +481,14 @@
             </button>
         `}).join('');
         lucide.createIcons();
+
+        // Auto-scroll to active
+        setTimeout(() => {
+            const active = document.getElementById('active-problem-item');
+            if (active) {
+                active.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }, 50);
     }
 
     function getStatusIcon(status, isActive) {

@@ -1,98 +1,193 @@
 {{ define "main" }}
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans flex items-center justify-center p-4">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-8 animate-fade-in-up">
 
-    <!-- Header Section -->
-    <div class="text-center mb-12 animate-fade-in-up">
-        <h1 class="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-4 tracking-tight">
-            Interview Practice
-        </h1>
-        <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Simulate real technical interviews. Choose your mode and start solving.
-        </p>
-    </div>
-
-    <!-- Options Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full animate-fade-in-up delay-100">
-
-        <!-- Quick Interview Card -->
-        <button onclick="startDefaults()"
-            class="group relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 rounded-3xl p-8 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 text-left flex flex-col h-full">
+        <!-- HERO SECTION (Matches /paths) -->
+        <div
+            class="relative py-12 md:py-20 mb-12 overflow-hidden rounded-2xl sm:rounded-3xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-xl">
+            <!-- decorative blobs -->
+            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-primary/10 rounded-full blur-3xl opacity-50">
+            </div>
             <div
-                class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity">
+                class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-secondary/10 rounded-full blur-3xl opacity-50">
             </div>
 
-            <div
-                class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-                <i data-lucide="zap" class="w-7 h-7"></i>
+            <div class="relative z-10 px-6 md:px-12 text-center max-w-4xl mx-auto">
+                <span
+                    class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-4 border border-primary/20">
+                    Interview Practice
+                </span>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">
+                    <span
+                        class="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400">
+                        Ace Your Next
+                    </span>
+                    <br class="hidden md:block" />
+                    <span
+                        class="bg-clip-text text-transparent bg-gradient-to-r from-secondary via-pink-500 to-primary animate-gradient-x">
+                        Technical Interview
+                    </span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto mb-8">
+                    Simulate real coding interviews with our customizable environment.
+                    Practice time management, problem-solving, and get ready for the real deal.
+                </p>
             </div>
+        </div>
 
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Quick Interview</h2>
-            <p class="text-gray-500 dark:text-gray-400 mb-8 flex-1">
-                Jump straight into a random problem. 30 minutes. No setup required.
-            </p>
+        <!-- OPTIONS GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20 animate-fade-in-up delay-100">
 
-            <div class="flex items-center text-primary font-bold group-hover:translate-x-1 transition-transform">
-                Start Immediately <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
-            </div>
-        </button>
+            <!-- 1. Quick Interview Card -->
+            <button onclick="startDefaults()" class="group relative flex flex-col h-full text-left">
+                <div
+                    class="relative flex-1 bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col h-full">
 
-        <!-- Custom Interview Card -->
-        <button onclick="openConfigModal()"
-            class="group relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 rounded-3xl p-8 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 text-left flex flex-col h-full">
-            <div
-                class="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity">
-            </div>
+                    <!-- Hover Bg -->
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    </div>
 
-            <div
-                class="w-14 h-14 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center mb-6 group-hover:bg-secondary group-hover:text-white transition-colors duration-300">
-                <i data-lucide="sliders" class="w-7 h-7"></i>
-            </div>
+                    <div class="relative z-10 flex flex-col h-full">
+                        <div
+                            class="p-3 bg-gradient-to-r from-amber-400 to-orange-600 rounded-xl shadow-lg w-fit mb-6 transform group-hover:scale-110 transition-all duration-300">
+                            <i data-lucide="zap" class="w-6 h-6 text-white"></i>
+                        </div>
 
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Custom Session</h2>
-            <p class="text-gray-500 dark:text-gray-400 mb-8 flex-1">
-                Configure difficulty, time limit, and topics to match your target role.
-            </p>
+                        <h2
+                            class="text-2xl font-black mb-3 text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-500 transition-colors">
+                            Quick Interview
+                        </h2>
+                        <p class="text-sm text-gray-700 dark:text-gray-300 mb-6 leading-relaxed flex-1">
+                            Jump straight into a session. 1 Problem, 30 Minutes, Any Difficulty. Best for daily
+                            practice.
+                        </p>
 
-            <div class="flex items-center text-secondary font-bold group-hover:translate-x-1 transition-transform">
-                Configure Session <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
-            </div>
-        </button>
+                        <div
+                            class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700/50 flex items-center text-amber-600 dark:text-amber-500 font-bold text-sm group-hover:translate-x-2 transition-transform">
+                            Start Immediately <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </button>
+
+            <!-- 2. Custom Session Card -->
+            <button onclick="openConfigModal()" class="group relative flex flex-col h-full text-left">
+                <div
+                    class="relative flex-1 bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col h-full">
+
+                    <!-- Hover Bg -->
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    </div>
+
+                    <div class="relative z-10 flex flex-col h-full">
+                        <div
+                            class="p-3 bg-gradient-to-r from-blue-400 to-indigo-600 rounded-xl shadow-lg w-fit mb-6 transform group-hover:scale-110 transition-all duration-300">
+                            <i data-lucide="sliders" class="w-6 h-6 text-white"></i>
+                        </div>
+
+                        <h2
+                            class="text-2xl font-black mb-3 text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            Custom Session
+                        </h2>
+                        <p class="text-sm text-gray-700 dark:text-gray-300 mb-6 leading-relaxed flex-1">
+                            Design your interview. Choose specific topics, difficulty levels, companies, and time
+                            limits.
+                        </p>
+
+                        <div
+                            class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700/50 flex items-center text-blue-600 dark:text-blue-400 font-bold text-sm group-hover:translate-x-2 transition-transform">
+                            Configure Session <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </button>
+
+            <!-- 3. Past Interviews Card -->
+            <a href="/interview/history/" class="group relative flex flex-col h-full text-left">
+                <div
+                    class="relative flex-1 bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-6 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col h-full">
+
+                    <!-- Hover Bg -->
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    </div>
+
+                    <div class="relative z-10 flex flex-col h-full">
+                        <div
+                            class="p-3 bg-gradient-to-r from-purple-400 to-pink-600 rounded-xl shadow-lg w-fit mb-6 transform group-hover:scale-110 transition-all duration-300">
+                            <i data-lucide="history" class="w-6 h-6 text-white"></i>
+                        </div>
+
+                        <h2
+                            class="text-2xl font-black mb-3 text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                            Past Interviews
+                        </h2>
+                        <p class="text-sm text-gray-700 dark:text-gray-300 mb-6 leading-relaxed flex-1">
+                            Review your past sessions, check your performance improvement, and revisit solved problems.
+                        </p>
+
+                        <div
+                            class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700/50 flex items-center text-purple-600 dark:text-purple-400 font-bold text-sm group-hover:translate-x-2 transition-transform">
+                            View History <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+        </div>
 
     </div>
 </div>
 
+<!-- Configuration Modal (Same as before, styles tweaked slightly) -->
 <!-- Configuration Modal -->
 <div id="config-modal"
     class="fixed inset-0 z-[60] hidden items-center justify-center bg-gray-900/60 backdrop-blur-sm px-4">
     <div
-        class="bg-white dark:bg-gray-800 w-full max-w-2xl p-6 md:p-8 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 relative animate-fade-in-up transform transition-all">
+        class="bg-white dark:bg-gray-800 w-full max-w-2xl p-6 md:p-8 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 relative animate-fade-in-up transform transition-all overflow-hidden group">
 
-        <div class="flex justify-between items-center mb-8">
+        <!-- Decorative bg blobs for modal -->
+        <div
+            class="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none">
+        </div>
+
+        <div class="flex justify-between items-center mb-8 relative z-10">
             <div>
-                <h2 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight">Custom Session</h2>
-                <p class="text-gray-500 dark:text-gray-400 mt-1">Design your specific interview scenario.</p>
+                <h2 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-3">
+                    <div class="p-2 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg shadow-lg">
+                        <i data-lucide="sliders" class="w-6 h-6 text-white"></i>
+                    </div>
+                    Custom Session
+                </h2>
+                <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm ml-1">Design your specific interview scenario.
+                </p>
             </div>
             <button onclick="closeConfigModal()"
-                class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors">
+                class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors group/close">
                 <i data-lucide="x"
-                    class="w-6 h-6 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"></i>
+                    class="w-6 h-6 text-gray-400 group-hover/close:text-gray-600 dark:text-gray-500 dark:group-hover/close:text-gray-300 transition-colors"></i>
             </button>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
 
             <!-- Column 1: Core Settings -->
             <div class="space-y-6">
                 <!-- Count -->
                 <div>
-                    <label
-                        class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase tracking-wide">
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
                         Problems
                     </label>
-                    <div class="relative">
+                    <div class="relative group/input">
                         <input type="number" id="cfg-count" value="1" min="1" max="10"
-                            class="w-full pl-12 pr-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none font-bold text-gray-900 dark:text-white transition-all">
-                        <div class="absolute left-4 top-3.5 text-gray-400">
+                            class="w-full pl-12 pr-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none font-bold text-gray-900 dark:text-white transition-all group-hover/input:border-blue-300 dark:group-hover/input:border-blue-700">
+                        <div
+                            class="absolute left-4 top-3.5 text-gray-400 group-focus-within/input:text-blue-500 transition-colors">
                             <i data-lucide="hash" class="w-5 h-5"></i>
                         </div>
                     </div>
@@ -100,14 +195,14 @@
 
                 <!-- Time -->
                 <div>
-                    <label
-                        class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase tracking-wide">
-                        Time Limit (Minutes)
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
+                        Time (Minutes)
                     </label>
-                    <div class="relative">
+                    <div class="relative group/input">
                         <input type="number" id="cfg-time" value="30" min="5" max="180"
-                            class="w-full pl-12 pr-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none font-bold text-gray-900 dark:text-white transition-all">
-                        <div class="absolute left-4 top-3.5 text-gray-400">
+                            class="w-full pl-12 pr-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none font-bold text-gray-900 dark:text-white transition-all group-hover/input:border-blue-300 dark:group-hover/input:border-blue-700">
+                        <div
+                            class="absolute left-4 top-3.5 text-gray-400 group-focus-within/input:text-blue-500 transition-colors">
                             <i data-lucide="clock" class="w-5 h-5"></i>
                         </div>
                     </div>
@@ -115,19 +210,19 @@
 
                 <!-- Difficulty -->
                 <div>
-                    <label
-                        class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase tracking-wide">
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
                         Difficulty
                     </label>
-                    <div class="relative">
-                        <select id="cfg-diff"
-                            class="w-full pl-12 pr-10 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none font-bold text-gray-900 dark:text-white appearance-none transition-all cursor-pointer">
+                    <div class="relative group/input">
+                        <select id="cfg-diff" onchange="updateAvailableCount()"
+                            class="w-full pl-12 pr-10 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none font-bold text-gray-900 dark:text-white appearance-none transition-all cursor-pointer group-hover/input:border-blue-300 dark:group-hover/input:border-blue-700">
                             <option value="Any">Any Difficulty</option>
                             <option value="Easy">Easy</option>
                             <option value="Medium">Medium</option>
                             <option value="Hard">Hard</option>
                         </select>
-                        <div class="absolute left-4 top-3.5 text-gray-400">
+                        <div
+                            class="absolute left-4 top-3.5 text-gray-400 group-focus-within/input:text-blue-500 transition-colors">
                             <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
                         </div>
                         <div class="absolute right-4 top-3.5 text-gray-400 pointer-events-none">
@@ -141,16 +236,16 @@
             <div class="space-y-6">
                 <!-- Topics -->
                 <div>
-                    <label
-                        class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase tracking-wide">
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
                         Topic
                     </label>
-                    <div class="relative">
-                        <select id="cfg-topic"
-                            class="w-full pl-12 pr-10 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none font-bold text-gray-900 dark:text-white appearance-none transition-all cursor-pointer">
+                    <div class="relative group/input">
+                        <select id="cfg-topic" onchange="updateAvailableCount()"
+                            class="w-full pl-12 pr-10 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none font-bold text-gray-900 dark:text-white appearance-none transition-all cursor-pointer group-hover/input:border-blue-300 dark:group-hover/input:border-blue-700">
                             <option value="Any">Any Topic</option>
                         </select>
-                        <div class="absolute left-4 top-3.5 text-gray-400">
+                        <div
+                            class="absolute left-4 top-3.5 text-gray-400 group-focus-within/input:text-blue-500 transition-colors">
                             <i data-lucide="layers" class="w-5 h-5"></i>
                         </div>
                         <div class="absolute right-4 top-3.5 text-gray-400 pointer-events-none">
@@ -161,32 +256,42 @@
 
                 <!-- Company -->
                 <div>
-                    <label
-                        class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 uppercase tracking-wide">
-                        Company
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
+                        Company Filter
                     </label>
-                    <div class="relative">
-                        <select id="cfg-company"
-                            class="w-full pl-12 pr-10 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none font-bold text-gray-900 dark:text-white appearance-none transition-all cursor-pointer">
+                    <div class="relative group/input">
+                        <select id="cfg-company" onchange="updateAvailableCount()"
+                            class="w-full pl-12 pr-10 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none font-bold text-gray-900 dark:text-white appearance-none transition-all cursor-pointer group-hover/input:border-blue-300 dark:group-hover/input:border-blue-700">
                             <option value="Any">Any Company</option>
                         </select>
-                        <div class="absolute left-4 top-3.5 text-gray-400">
+                        <div
+                            class="absolute left-4 top-3.5 text-gray-400 group-focus-within/input:text-blue-500 transition-colors">
                             <i data-lucide="building-2" class="w-5 h-5"></i>
                         </div>
                         <div class="absolute right-4 top-3.5 text-gray-400 pointer-events-none">
                             <i data-lucide="chevron-down" class="w-5 h-5"></i>
                         </div>
                     </div>
-                    <p class="text-xs text-gray-400 mt-2">Filter problems asked by specific companies.</p>
+                    <p class="text-[10px] text-gray-400 mt-2 font-medium">Only problems tagged with this
+                        company.</p>
                 </div>
             </div>
 
         </div>
 
+        <!-- Validation Message -->
+        <div id="availability-message"
+            class="relative z-10 mt-6 text-center text-sm font-bold min-h-[20px] transition-all duration-300">
+            <!-- JS will inject e.g. "12 matching problems found" -->
+            <span class="flex items-center justify-center gap-2 text-gray-400">
+                <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Checking availability...
+            </span>
+        </div>
+
         <!-- Actions -->
-        <div class="mt-10 pt-6 border-t border-gray-100 dark:border-gray-700 flex gap-4">
-            <button onclick="startSession()"
-                class="flex-1 py-4 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-bold text-lg hover:shadow-xl hover:scale-[1.01] transition-all transform active:scale-95 shadow-primary/25 flex items-center justify-center gap-2">
+        <div class="mt-6 pt-6 border-t border-gray-100 dark:border-gray-700 flex gap-4 relative z-10">
+            <button onclick="startSession()" id="btn-start-session"
+                class="flex-1 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-lg hover:shadow-xl hover:shadow-blue-500/20 hover:scale-[1.01] transition-all transform active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed">
                 <span>Start Session</span>
                 <i data-lucide="arrow-right" class="w-5 h-5"></i>
             </button>
@@ -210,9 +315,15 @@
                 const options = await window.InterviewManager.fetchFilterOptions();
                 populateSelect('cfg-topic', options.topics);
                 populateSelect('cfg-company', options.companies);
+
+                // Initial check
+                updateAvailableCount();
             } catch (e) {
                 console.error("Failed to load options", e);
             }
+        } else {
+            // Re-check just in case
+            updateAvailableCount();
         }
     }
 
@@ -232,6 +343,35 @@
             opt.textContent = item;
             select.appendChild(opt);
         });
+    }
+
+    async function updateAvailableCount() {
+        const diff = document.getElementById('cfg-diff').value;
+        const topic = document.getElementById('cfg-topic').value;
+        const company = document.getElementById('cfg-company').value;
+
+        const msgEl = document.getElementById('availability-message');
+        const btn = document.getElementById('btn-start-session');
+
+        msgEl.innerHTML = `<span class="flex items-center justify-center gap-2 text-gray-400"><i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Checking...</span>`;
+        // lucide.createIcons(); // optional if using pure html inside
+
+        const filters = {
+            difficulty: diff,
+            topic: topic,
+            company: company
+        };
+
+        const count = await window.InterviewManager.getProblemCount(filters);
+
+        if (count > 0) {
+            msgEl.innerHTML = `<span class="text-green-600 dark:text-green-400 flex items-center justify-center gap-2"><i data-lucide="check-circle" class="w-4 h-4"></i> ${count} problem(s) available</span>`;
+            btn.disabled = false;
+        } else {
+            msgEl.innerHTML = `<span class="text-red-500 flex items-center justify-center gap-2"><i data-lucide="alert-circle" class="w-4 h-4"></i> No problems found with these filters</span>`;
+            btn.disabled = true;
+        }
+        lucide.createIcons();
     }
 
     async function startSession() {

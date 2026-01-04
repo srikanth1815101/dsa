@@ -3,7 +3,22 @@
 <!-- We'll use a fixed layout here -->
 <script src="/js/interview-manager.js"></script>
 
+</style>
+
 <style>
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
     /* Override global scrollbar for interview mode to be distraction-free */
     ::-webkit-scrollbar-thumb {
         background: #cbd5e1 !important;
@@ -125,9 +140,23 @@
                     </article>
                 </div>
 
-                <!-- STICKY ACTION BAR (Icon Only) -->
+                <!-- STICKY ACTION BAR (Icon Only - Mobile Only) -->
                 <div
-                    class="p-3 border-t border-gray-100 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md flex items-center justify-between shrink-0 z-30">
+                    class="lg:hidden p-3 border-t border-gray-100 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md flex items-center justify-between shrink-0 z-30 gap-3">
+
+                    <!-- Prev -->
+                    <div class="group/btn relative">
+                        <button onclick="prevProblem()" id="btn-prev"
+                            class="p-3 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all hidden shadow-sm">
+                            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        </button>
+                        <div
+                            class="absolute bottom-full left-0 mb-2 px-2 py-1 text-[10px] font-bold text-white bg-gray-900 rounded opacity-0 group-hover/btn:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                            Previous Problem
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
                     <div class="flex items-center gap-2">
                         <!-- Solved -->
                         <div class="group/btn relative">
@@ -157,7 +186,7 @@
                     <!-- Next -->
                     <div class="group/btn relative">
                         <button onclick="nextProblem()" id="btn-next"
-                            class="p-3 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-primary hover:text-white dark:hover:bg-primary transition-all hidden shadow-sm hover:shadow-lg hover:shadow-primary/20">
+                            class="p-3 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 shadow-lg hover:shadow-xl hover:scale-105 transition-all hidden">
                             <i data-lucide="arrow-right" class="w-5 h-5"></i>
                         </button>
                         <div
@@ -198,11 +227,57 @@
                 </div>
 
                 <div
-                    class="p-5 border-t border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50 space-y-4 backdrop-blur-sm shrink-0 hidden lg:block">
-                    <!-- Deprecated buttons area (kept structure if needed for other things, but empty for now or maybe just a tip) -->
-                    <p class="text-xs text-center text-gray-400 font-medium">
-                        Use the scratchpad for rough work. <br>Contents are auto-saved.
-                    </p>
+                    class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50 backdrop-blur-sm shrink-0 hidden lg:flex items-center justify-between gap-3">
+
+                    <!-- Prev -->
+                    <div class="group/btn relative">
+                        <button onclick="prevProblem()" id="btn-prev-desktop"
+                            class="p-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all shadow-sm hidden">
+                            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        </button>
+                        <div
+                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-[10px] font-bold text-white bg-gray-900 rounded opacity-0 group-hover/btn:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                            Previous
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <!-- Solve -->
+                        <div class="group/btn relative">
+                            <button onclick="markProblem('solved')" id="btn-solve-desktop"
+                                class="p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 hover:bg-green-50 dark:hover:bg-green-900/20 hover:text-green-600 dark:hover:text-green-400 hover:border-green-200 dark:hover:border-green-800 transition-all shadow-sm">
+                                <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                            </button>
+                            <div
+                                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-[10px] font-bold text-white bg-gray-900 rounded opacity-0 group-hover/btn:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                                Mark Solved
+                            </div>
+                        </div>
+
+                        <!-- Attempt -->
+                        <div class="group/btn relative">
+                            <button onclick="markProblem('attempted')" id="btn-attempt-desktop"
+                                class="p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 hover:text-yellow-600 dark:hover:text-yellow-400 hover:border-yellow-200 dark:hover:border-yellow-800 transition-all shadow-sm">
+                                <i data-lucide="minus-circle" class="w-5 h-5"></i>
+                            </button>
+                            <div
+                                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-[10px] font-bold text-white bg-gray-900 rounded opacity-0 group-hover/btn:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                                Mark Attempted
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Next -->
+                    <div class="group/btn relative">
+                        <button onclick="nextProblem()" id="btn-next-desktop"
+                            class="p-3 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 shadow-lg hover:shadow-xl hover:scale-105 transition-all hidden">
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                        <div
+                            class="absolute bottom-full right-0 mb-2 px-2 py-1 text-[10px] font-bold text-white bg-gray-900 rounded opacity-0 group-hover/btn:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                            Next
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -523,13 +598,29 @@
             lucide.createIcons();
         }
 
-        // Show Next button if valid
-        const nextBtn = document.getElementById('btn-next');
-        if (index < session.problems.length - 1) {
-            nextBtn.classList.remove('hidden');
-        } else {
-            nextBtn.classList.add('hidden');
-        }
+        // Show Next/Prev buttons (Disable if invalid)
+        const nextBtns = [document.getElementById('btn-next'), document.getElementById('btn-next-desktop')];
+        const prevBtns = [document.getElementById('btn-prev'), document.getElementById('btn-prev-desktop')];
+
+        // Helper
+        const setBtnState = (btns, isDisabled) => {
+            btns.forEach(b => {
+                if (!b) return;
+                b.classList.remove('hidden');
+                b.disabled = isDisabled;
+                if (isDisabled) {
+                    b.classList.add('opacity-30', 'cursor-not-allowed', 'pointer-events-none');
+                } else {
+                    b.classList.remove('opacity-30', 'cursor-not-allowed', 'pointer-events-none');
+                }
+            });
+        };
+
+        // Next Logic
+        setBtnState(nextBtns, index >= session.problems.length - 1);
+
+        // Prev Logic
+        setBtnState(prevBtns, index === 0);
     }
 
     function renderProblemList() {
@@ -598,29 +689,45 @@
     }
 
     function updateStatusButtons(status) {
+        // Mobile Buttons (Icon Only)
         const btnSolve = document.getElementById('btn-solve');
         const btnAttempt = document.getElementById('btn-attempt');
 
-        // Reset classes (to default idle icon-only state)
-        const defaultSolve = "p-3 rounded-xl border border-gray-200 dark:border-gray-800 text-gray-400 dark:text-gray-500 hover:bg-green-50 dark:hover:bg-green-900/20 hover:text-green-600 dark:hover:text-green-400 hover:border-green-200 dark:hover:border-green-800/50 transition-all";
-        const defaultAttempt = "p-3 rounded-xl border border-gray-200 dark:border-gray-800 text-gray-400 dark:text-gray-500 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 hover:text-yellow-600 dark:hover:text-yellow-400 hover:border-yellow-200 dark:hover:border-yellow-800/50 transition-all";
+        // Desktop Buttons (Icon Only now)
+        const btnSolveD = document.getElementById('btn-solve-desktop');
+        const btnAttemptD = document.getElementById('btn-attempt-desktop');
 
-        btnSolve.className = defaultSolve;
-        btnAttempt.className = defaultAttempt;
+        // Default Classes (Shared mostly, but desktop has borders)
+        const defaultStyle = "p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 hover:bg-green-50 dark:hover:bg-green-900/20 hover:text-green-600 dark:hover:text-green-400 hover:border-green-200 dark:hover:border-green-800 transition-all shadow-sm";
+        const defaultAttemptStyle = "p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 hover:text-yellow-600 dark:hover:text-yellow-400 hover:border-yellow-200 dark:hover:border-yellow-800 transition-all shadow-sm";
+
+        // Reset
+        if (btnSolve) btnSolve.className = defaultStyle;
+        if (btnAttempt) btnAttempt.className = defaultAttemptStyle;
+        if (btnSolveD) btnSolveD.className = defaultStyle;
+        if (btnAttemptD) btnAttemptD.className = defaultAttemptStyle;
 
         if (status === 'solved') {
-            // Active Solved State (Green Filled)
-            btnSolve.className = "p-3 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 text-white shadow-lg shadow-green-500/20 hover:scale-105 transition-all";
+            const activeClass = "p-3 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 text-white shadow-lg shadow-green-500/20 hover:scale-105 transition-all text-white";
+            if (btnSolve) btnSolve.className = activeClass;
+            if (btnSolveD) btnSolveD.className = activeClass;
         }
         if (status === 'attempted') {
-            // Active Attempted State (Yellow Filled)
-            btnAttempt.className = "p-3 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 text-white shadow-lg shadow-yellow-500/20 hover:scale-105 transition-all";
+            const activeClass = "p-3 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 text-white shadow-lg shadow-yellow-500/20 hover:scale-105 transition-all text-white";
+            if (btnAttempt) btnAttempt.className = activeClass;
+            if (btnAttemptD) btnAttemptD.className = activeClass;
         }
     }
 
     function nextProblem() {
         if (currentProblemIndex < session.problems.length - 1) {
             loadProblem(currentProblemIndex + 1);
+        }
+    }
+
+    function prevProblem() {
+        if (currentProblemIndex > 0) {
+            loadProblem(currentProblemIndex - 1);
         }
     }
 

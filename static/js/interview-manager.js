@@ -37,47 +37,56 @@ class InterviewManager {
         localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.db));
     }
 
+    async getProblems() {
+        if (this._cachedProblems) return this._cachedProblems;
+        try {
+            const res = await fetch('/problems/index.json');
+            this._cachedProblems = await res.json();
+            return this._cachedProblems;
+        } catch (e) {
+            console.error("Failed to fetch problems", e);
+            return [];
+        }
+    }
+
+    filterProblems(problems, filters) {
+        let pool = problems;
+        if (filters.difficulty && filters.difficulty !== 'Any') {
+            pool = pool.filter(p => p.difficulty === filters.difficulty);
+        }
+        if (filters.company && filters.company !== 'Any') {
+            pool = pool.filter(p => p.companies && p.companies.includes(filters.company));
+        }
+        if (filters.topic && filters.topic !== 'Any') {
+            pool = pool.filter(p => p.topics && p.topics.includes(filters.topic));
+        }
+        return pool;
+    }
+
+    async getProblemCount(filters) {
+        const problems = await this.getProblems();
+        const filtered = this.filterProblems(problems, filters);
+        return filtered.length;
+    }
+
     /**
      * Start a new interview session
      * @param {Object} config - { count, duration: minutes, difficulty, topics }
      */
     async startSession(config) {
         // 1. Fetch all problems
-        let problems = [];
-        try {
-            const res = await fetch('/problems/index.json');
-            problems = await res.json();
-        } catch (e) {
-            console.error("Failed to load problems", e);
+        const problems = await this.getProblems();
+
+        if (!problems || problems.length === 0) {
             alert("Could not load problem bank. Please refresh.");
             return;
         }
 
         // 2. Filter problems
-        let pool = problems;
-        if (config.difficulty && config.difficulty !== 'Any') {
-            pool = pool.filter(p => p.difficulty === config.difficulty);
-        }
-
-        // Filter by Company
-        if (config.company && config.company !== 'Any') {
-            pool = pool.filter(p => p.companies && p.companies.includes(config.company));
-        }
-
-        // Filter by Topic (assuming config.topic is a single string for now)
-        if (config.topic && config.topic !== 'Any') {
-            pool = pool.filter(p => p.topics && p.topics.includes(config.topic));
-        }
-
-        // Filter by Time (ensure we have enough problems that fit roughly? No, just random is fine)
+        const pool = this.filterProblems(problems, config);
 
         if (pool.length === 0) {
             alert(`No problems found matching your criteria. Try broader filters.`);
-            return;
-        }
-
-        if (pool.length === 0) {
-            alert(`No problems found for difficulty: ${config.difficulty}. Try 'Any'.`);
             return;
         }
 
@@ -258,26 +267,20 @@ class InterviewManager {
      * Fetch available filter options (companies, topics, etc.)
      */
     async fetchFilterOptions() {
-        try {
-            const res = await fetch('/problems/index.json');
-            const problems = await res.json();
+        const problems = await this.getProblems();
 
-            const companies = new Set();
-            const topics = new Set();
+        const companies = new Set();
+        const topics = new Set();
 
-            problems.forEach(p => {
-                if (p.companies) p.companies.forEach(c => companies.add(c));
-                if (p.topics) p.topics.forEach(t => topics.add(t));
-            });
+        problems.forEach(p => {
+            if (p.companies) p.companies.forEach(c => companies.add(c));
+            if (p.topics) p.topics.forEach(t => topics.add(t));
+        });
 
-            return {
-                companies: Array.from(companies).sort(),
-                topics: Array.from(topics).sort()
-            };
-        } catch (e) {
-            console.error("Failed to fetch filter options", e);
-            return { companies: [], topics: [] };
-        }
+        return {
+            companies: Array.from(companies).sort(),
+            topics: Array.from(topics).sort()
+        };
     }
 }
 

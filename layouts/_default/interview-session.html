@@ -371,9 +371,26 @@
             const constraints = doc.querySelector('#problem-constraints');
 
             if (prose) {
+                let starterCodeBtn = '';
+                if (prob.starterCode) {
+                    starterCodeBtn = `
+                        <div class="group/tooltip relative">
+                            <a href="${prob.starterCode}" download class="flex items-center justify-center p-2 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all shadow-blue-500/20">
+                                <i data-lucide="code-2" class="w-4 h-4"></i>
+                            </a>
+                            <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0">
+                                Starter Code
+                                <div class="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900 dark:border-t-black"></div>
+                            </div>
+                        </div>`;
+                }
+
                 let contentHTML = `
-                    <h1 class="text-3xl font-black mb-4 text-gray-900 dark:text-white">${prob.title}</h1>
-                    <div class="flex gap-2 mb-8">
+                    <div class="flex items-start justify-between gap-4 mb-4">
+                        <h1 class="text-3xl font-black text-gray-900 dark:text-white leading-tight">${prob.title}</h1>
+                        ${starterCodeBtn}
+                    </div>
+                    <div class="flex items-center gap-2 mb-8">
                         <span class="px-2 py-0.5 rounded text-xs font-bold border ${getBadgeColor(prob.difficulty)}">${prob.difficulty}</span>
                     </div>
                     ${prose.innerHTML}
@@ -445,6 +462,7 @@
             loader.classList.add('hidden');
             container.classList.remove('hidden');
             // Re-run Prism or syntax highlighting if needed (not active in this setup, assumes static CSS)
+            lucide.createIcons();
         }
 
         // Show Next button if valid

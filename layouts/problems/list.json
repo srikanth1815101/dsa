@@ -8,6 +8,7 @@
         "companies": {{ .Params.companies | jsonify }},
         "topics": {{ .Params.topics | jsonify }},
         "summary": {{ .Summary | jsonify }},
+        "starterCode": {{ .Params.starterCode | jsonify }},
         "content" : {{ .Content | jsonify }}
     }
     {{- end }}

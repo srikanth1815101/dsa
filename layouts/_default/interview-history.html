@@ -1,0 +1,117 @@
+{{ define "main" }}
+<script src="/js/interview-manager.js"></script>
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
+    <div class="max-w-3xl mx-auto space-y-8 animate-fade-in-up">
+
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-black text-gray-900 dark:text-white">Interview Journal</h1>
+                <p class="text-gray-500 dark:text-gray-400">Track your progress and revisit past attempts.</p>
+            </div>
+            <a href="/interview/"
+                class="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-all text-gray-600 dark:text-gray-300">
+                <i data-lucide="plus" class="w-6 h-6"></i>
+            </a>
+        </div>
+
+        <div id="history-container" class="space-y-6">
+            <!-- Injected -->
+            <div class="text-center py-12 text-gray-400">
+                <i data-lucide="loader-2" class="w-8 h-8 animate-spin mx-auto mb-2"></i>
+                <p>Loading history...</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const manager = window.InterviewManager;
+
+    (function () {
+        renderHistory();
+        lucide.createIcons();
+    })();
+
+    function renderHistory() {
+        const db = manager.db;
+        const container = document.getElementById('history-container');
+
+        if (!db.sessions || Object.keys(db.sessions).length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-12 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-3xl">
+                    <div class="bg-gray-100 dark:bg-gray-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="ghost" class="w-8 h-8 text-gray-400"></i>
+                    </div>
+                    <p class="text-gray-500 dark:text-gray-400 font-medium">No interviews yet.</p>
+                    <a href="/interview/" class="inline-block mt-4 text-primary font-bold hover:underline">Start your first session</a>
+                </div>
+            `;
+            return;
+        }
+
+        const sessions = Object.values(db.sessions).sort((a, b) => b.createdAt - a.createdAt);
+
+        container.innerHTML = sessions.map(s => {
+            const date = new Date(s.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            const solved = s.problems.filter(p => p.status === 'solved').length;
+            const total = s.problems.length;
+            const isCompleted = s.state.status === 'completed';
+
+            return `
+            <div class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700/50 hover:shadow-lg transition-all">
+                <div class="absolute top-6 right-6 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    ${!isCompleted ? `
+                        <a href="/interview/session/?id=${s.id}" class="p-2 bg-green-100 text-green-700 rounded-lg text-xs font-bold hover:bg-green-200 transition-colors">Resume</a>
+                    ` : ''}
+                    <button onclick="deleteSession('${s.id}')" class="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg transition-colors">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <a href="${isCompleted ? '/interview/review/?id=' + s.id : '/interview/session/?id=' + s.id}" class="block">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full ${isCompleted ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-500' : 'bg-green-50 dark:bg-green-900/20 text-green-500'} flex items-center justify-center shrink-0">
+                            ${isCompleted ? '<i data-lucide="check-circle" class="w-6 h-6"></i>' : '<i data-lucide="play-circle" class="w-6 h-6"></i>'}
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 dark:text-white text-lg flex items-center gap-2">
+                                ${s.config.difficulty || 'Mixed'} Interview
+                                ${!isCompleted ? '<span class="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] uppercase font-bold tracking-wider">Active</span>' : ''}
+                            </h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">${date} • ${manager.formatTime(s.config.duration * 60)} mins</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-6">
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl font-black text-gray-900 dark:text-gray-100">${solved}<span class="text-gray-400 text-lg">/${total}</span></span>
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Solved</span>
+                        </div>
+                        <div class="h-8 w-px bg-gray-100 dark:bg-gray-700"></div>
+                        <div class="flex -space-x-2">
+                            ${s.problems.slice(0, 3).map((p, i) => `
+                                <div class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-800 flex items-center justify-center text-[10px] font-bold text-white
+                                    ${p.status === 'solved' ? 'bg-green-500' : p.status === 'attempted' ? 'bg-yellow-500' : 'bg-gray-300 dark:bg-gray-600'}">
+                                    P${i + 1}
+                                </div>
+                            `).join('')}
+                             ${s.problems.length > 3 ? `<div class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-800 bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-[10px] font-bold text-gray-500">+${s.problems.length - 3}</div>` : ''}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            `;
+        }).join('');
+        lucide.createIcons();
+    }
+
+    function deleteSession(id) {
+        if (confirm("Delete this interview record?")) {
+            delete manager.db.sessions[id];
+            manager.saveDB();
+            renderHistory();
+        }
+    }
+</script>
+{{ end }}

@@ -1,0 +1,14 @@
+[
+    {{- range $index, $e := .Pages }}
+    {{- if $index }},{{ end }}
+    {
+        "title": {{ .Title | jsonify }},
+        "permalink": {{ .RelPermalink | jsonify }},
+        "difficulty": {{ .Params.difficulty | jsonify }},
+        "companies": {{ .Params.companies | jsonify }},
+        "topics": {{ .Params.topics | jsonify }},
+        "summary": {{ .Summary | jsonify }},
+        "content" : {{ .Content | jsonify }}
+    }
+    {{- end }}
+]

@@ -5,6 +5,8 @@ title = "CSRGO DSA"
 # Enable emoji support
 enableEmoji = true
 
+# Trigger rebuild
+
 # Enable Git info
 enableGitInfo = false
 

@@ -631,7 +631,7 @@
 <body>
     {{ partial "header.html" . }}
 
-    <main class="pt-24 md:pt-28 min-h-screen">
+    <main class="{{ if .IsHome }}min-h-screen{{ else }}pt-24 md:pt-28 min-h-screen{{ end }}">
         {{ block "main" . }}{{ end }}
     </main>
 

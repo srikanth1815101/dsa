@@ -29,15 +29,18 @@
                         <div>
                             <h1
                                 class="text-2xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight mb-1">
-                                Session Review
+                                <span id="session-title">Session Review</span>
+                                <span class="inline-block w-0 overflow-visible align-middle">
+                                    <button onclick="startEditSession()"
+                                        class="ml-2 p-1.5 text-gray-400 hover:text-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg transition-all transform hover:scale-110 -translate-y-0.5 md:-translate-y-1"
+                                        title="Rename Session">
+                                        <i data-lucide="pencil" class="w-4 h-4 md:w-5 md:h-5"></i>
+                                    </button>
+                                </span>
                             </h1>
                             <div
                                 class="flex items-center justify-center md:justify-start gap-2 text-sm text-gray-500 dark:text-gray-400 font-medium">
-                                <span class="flex h-2 w-2 relative">
-                                    <span
-                                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                                </span>
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-green-500"></i>
                                 Completed Successfully
                             </div>
                         </div>
@@ -108,24 +111,24 @@
 
                 <!-- RIGHT: Premium Action Buttons -->
                 <div
-                    class="flex items-center justify-center gap-3 self-center lg:self-center mt-6 lg:mt-0 w-full lg:w-auto">
+                    class="flex items-center justify-center gap-2 sm:gap-3 self-center lg:self-center mt-6 lg:mt-0 w-full lg:w-auto">
                     <!-- New Session -->
-                    <div class="group/tooltip relative">
+                    <div class="group/tooltip relative flex-1 sm:flex-none">
                         <a href="/interview/"
-                            class="flex items-center gap-2 p-3 md:px-6 md:py-3 rounded-xl bg-gradient-to-br from-primary to-blue-600 text-white shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 font-bold text-sm"
+                            class="flex items-center justify-center gap-1.5 md:gap-2 px-3 py-2.5 md:px-6 md:py-3 rounded-xl bg-gradient-to-br from-primary to-blue-600 text-white shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 font-bold text-xs sm:text-sm whitespace-nowrap"
                             aria-label="New Session">
-                            <i data-lucide="plus-circle" class="w-5 h-5"></i>
-                            <span class="hidden md:inline">New Session</span>
+                            <i data-lucide="plus-circle" class="w-4 h-4 md:w-5 md:h-5"></i>
+                            <span>New Session</span>
                         </a>
                     </div>
 
                     <!-- History -->
-                    <div class="group/tooltip relative">
+                    <div class="group/tooltip relative flex-1 sm:flex-none">
                         <a href="/interview/history/"
-                            class="flex items-center gap-2 p-3 md:px-6 md:py-3 rounded-xl bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 font-bold text-sm"
+                            class="flex items-center justify-center gap-1.5 md:gap-2 px-3 py-2.5 md:px-6 md:py-3 rounded-xl bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 font-bold text-xs sm:text-sm whitespace-nowrap"
                             aria-label="History">
-                            <i data-lucide="history" class="w-5 h-5"></i>
-                            <span class="hidden md:inline">History</span>
+                            <i data-lucide="history" class="w-4 h-4 md:w-5 md:h-5"></i>
+                            <span>History</span>
                         </a>
                     </div>
                 </div>
@@ -440,11 +443,89 @@
             disp.innerHTML = '<span class="text-gray-400 italic">Take a moment to jot down what went well or what you found challenging...</span>';
         }
 
-        // Return to View Mode
         document.getElementById('reflection-input-container').classList.add('hidden');
         disp.classList.remove('hidden');
-
-        showReviewToast('Reflection Saved!', 'success');
+        showReviewToast('Reflection Saved', 'success');
     }
+
+    // --- Edit Session Logic ---
+    function startEditSession() {
+        const modal = document.getElementById('edit-session-modal');
+        const input = document.getElementById('edit-session-input');
+        input.value = session.title;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        setTimeout(() => input.focus(), 100);
+    }
+
+    function closeEditModal() {
+        const modal = document.getElementById('edit-session-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+
+    function confirmEditSession() {
+        const input = document.getElementById('edit-session-input');
+        const newTitle = input.value.trim();
+        if (newTitle) {
+            session.title = newTitle;
+            manager.saveDB();
+
+            // Update UI
+            document.getElementById('session-title').textContent = newTitle;
+
+            closeEditModal();
+            showReviewToast('Session Renamed', 'success');
+        }
+    }
+
+    // Initialize Title on Load
+    (function () {
+        const checkSession = setInterval(() => {
+            if (typeof session !== 'undefined' && session) {
+                if (session.title) {
+                    document.getElementById('session-title').textContent = session.title;
+                }
+                clearInterval(checkSession);
+            }
+        }, 50);
+    })();
 </script>
+
+<!-- EDIT SESSION MODAL -->
+<div id="edit-session-modal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center bg-gray-900/60 backdrop-blur-md px-4 animate-fade-in">
+    <div
+        class="bg-white dark:bg-gray-800 w-full max-w-sm p-6 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 relative overflow-hidden animate-scale-up">
+
+        <!-- Decorative Gradient Blob -->
+        <div
+            class="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none">
+        </div>
+
+        <div class="text-center relative z-10">
+            <div
+                class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl mx-auto flex items-center justify-center mb-4">
+                <i data-lucide="pencil" class="w-6 h-6 text-indigo-500"></i>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Rename Session</h3>
+
+            <input type="text" id="edit-session-input"
+                class="w-full mb-6 px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white font-bold text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 placeholder-gray-400"
+                placeholder="Enter session name..." onkeydown="if(event.key === 'Enter') confirmEditSession()">
+
+            <div class="flex gap-3">
+                <button onclick="closeEditModal()"
+                    class="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                    Cancel
+                </button>
+                <button onclick="confirmEditSession()"
+                    class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold text-sm hover:shadow-lg hover:shadow-indigo-500/20 hover:scale-[1.02] transition-all">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 {{ end }}

@@ -11,7 +11,8 @@ enableEmoji = true
 enableGitInfo = false
 
 # Pagination
-paginate = 12
+[pagination]
+  pagerSize = 12
 
 # Output formats
 [outputs]
@@ -41,6 +42,16 @@ paginate = 12
   name = "Interview"
   url = "/interview/"
   weight = 3
+
+[[menu.main]]
+  name = "Guide"
+  url = "/guide/"
+  weight = 4
+
+[[menu.main]]
+  name = "About"
+  url = "/about/"
+  weight = 5
 
 # Site parameters
 [params]

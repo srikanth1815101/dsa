@@ -113,8 +113,40 @@ class InterviewManager {
         const now = Date.now();
         const durationSeconds = (config.duration || 30) * 60;
 
+        // Generate Meaningful Title
+        const sessionCount = Object.keys(this.db.sessions).length + 1;
+        let title = "Interview Session";
+
+        const hour = new Date().getHours();
+        const timeOfDay = hour < 12 ? "Morning" : hour < 17 ? "Afternoon" : "Evening";
+        const adjectives = [
+            "Warmup", "Drill", "Blitz", "Sprint", "Focus",
+            "Challenge", "Marathon", "Gauntlet", "Review", "Practice",
+            "Grind", "Quest", "Mission", "Circuit", "Program"
+        ];
+        const randomAdj = adjectives[Math.floor(Math.random() * adjectives.length)];
+
+        if (config.mode === 'quick') {
+            title = `Quick ${timeOfDay} ${randomAdj}`;
+        } else {
+            // Custom Session: Use filters if explicitly selected
+            let prefixes = [];
+            if (config.company && config.company !== 'Any') prefixes.push(config.company);
+            if (config.topic && config.topic !== 'Any') prefixes.push(config.topic);
+            if (config.difficulty && config.difficulty !== 'Any') prefixes.push(config.difficulty);
+
+            // Fallback to "Custom" if no specific filters
+            const prefix = prefixes.length > 0 ? prefixes.join(' ') : "Custom";
+
+            title = `${prefix} ${timeOfDay} ${randomAdj}`;
+        }
+
+        // Add Unique Identifier
+        title = `${title} #${sessionCount}`;
+
         const session = {
             id,
+            title,
             createdAt: now,
             config,
             state: {

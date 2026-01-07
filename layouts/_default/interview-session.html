@@ -181,6 +181,18 @@
                                 Mark Attempted
                             </div>
                         </div>
+
+                        <!-- Skipped -->
+                        <div class="group/btn relative">
+                            <button onclick="markProblem('skipped')" id="btn-skip"
+                                class="p-3 rounded-xl border border-gray-200 dark:border-gray-800 text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-all">
+                                <i data-lucide="circle-x" class="w-5 h-5"></i>
+                            </button>
+                            <div
+                                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-[10px] font-bold text-white bg-gray-900 rounded opacity-0 group-hover/btn:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                                Mark Skipped
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Next -->
@@ -263,6 +275,18 @@
                             <div
                                 class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-[10px] font-bold text-white bg-gray-900 rounded opacity-0 group-hover/btn:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
                                 Mark Attempted
+                            </div>
+                        </div>
+
+                        <!-- Skipped -->
+                        <div class="group/btn relative">
+                            <button onclick="markProblem('skipped')" id="btn-skip-desktop"
+                                class="p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-all shadow-sm">
+                                <i data-lucide="circle-x" class="w-5 h-5"></i>
+                            </button>
+                            <div
+                                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-[10px] font-bold text-white bg-gray-900 rounded opacity-0 group-hover/btn:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                                Mark Skipped
                             </div>
                         </div>
                     </div>
@@ -661,6 +685,7 @@
     function getStatusIcon(status, isActive) {
         if (status === 'solved') return `<div class="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded p-0.5"><i data-lucide="check" class="w-3.5 h-3.5"></i></div>`;
         if (status === 'attempted') return `<div class="bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 rounded p-0.5"><i data-lucide="minus" class="w-3.5 h-3.5"></i></div>`;
+        if (status === 'skipped') return `<div class="bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 rounded p-0.5"><i data-lucide="x" class="w-3.5 h-3.5"></i></div>`;
 
         // Default / Pending
         if (isActive) {
@@ -680,32 +705,45 @@
         manager.updateProblem(currentProblemIndex, { status });
         renderProblemList();
         updateStatusButtons(status);
-        lucide.createIcons(); // Re-init icons for the list
+        lucide.createIcons();
 
         // Sound effect (simulated visual for now)
         if (status === 'solved') {
             // confetti?
         }
+
+        // Auto Advance
+        if (currentProblemIndex < session.problems.length - 1) {
+            setTimeout(() => {
+                nextProblem();
+            }, 400);
+        }
     }
 
     function updateStatusButtons(status) {
-        // Mobile Buttons (Icon Only)
+        // Mobile Buttons
         const btnSolve = document.getElementById('btn-solve');
         const btnAttempt = document.getElementById('btn-attempt');
+        const btnSkip = document.getElementById('btn-skip');
 
-        // Desktop Buttons (Icon Only now)
+        // Desktop Buttons
         const btnSolveD = document.getElementById('btn-solve-desktop');
         const btnAttemptD = document.getElementById('btn-attempt-desktop');
+        const btnSkipD = document.getElementById('btn-skip-desktop');
 
-        // Default Classes (Shared mostly, but desktop has borders)
+        // Default Classes
         const defaultStyle = "p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 hover:bg-green-50 dark:hover:bg-green-900/20 hover:text-green-600 dark:hover:text-green-400 hover:border-green-200 dark:hover:border-green-800 transition-all shadow-sm";
         const defaultAttemptStyle = "p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 hover:text-yellow-600 dark:hover:text-yellow-400 hover:border-yellow-200 dark:hover:border-yellow-800 transition-all shadow-sm";
+        const defaultSkipStyle = "p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-all shadow-sm";
 
         // Reset
         if (btnSolve) btnSolve.className = defaultStyle;
         if (btnAttempt) btnAttempt.className = defaultAttemptStyle;
+        if (btnSkip) btnSkip.className = defaultSkipStyle;
+
         if (btnSolveD) btnSolveD.className = defaultStyle;
         if (btnAttemptD) btnAttemptD.className = defaultAttemptStyle;
+        if (btnSkipD) btnSkipD.className = defaultSkipStyle;
 
         if (status === 'solved') {
             const activeClass = "p-3 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 text-white shadow-lg shadow-green-500/20 hover:scale-105 transition-all text-white";
@@ -716,6 +754,11 @@
             const activeClass = "p-3 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 text-white shadow-lg shadow-yellow-500/20 hover:scale-105 transition-all text-white";
             if (btnAttempt) btnAttempt.className = activeClass;
             if (btnAttemptD) btnAttemptD.className = activeClass;
+        }
+        if (status === 'skipped') {
+            const activeClass = "p-3 rounded-xl bg-gradient-to-br from-gray-500 to-gray-600 text-white shadow-lg shadow-gray-500/20 hover:scale-105 transition-all text-white";
+            if (btnSkip) btnSkip.className = activeClass;
+            if (btnSkipD) btnSkipD.className = activeClass;
         }
     }
 

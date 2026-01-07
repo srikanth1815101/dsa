@@ -396,7 +396,8 @@
             duration: time,
             difficulty: diff,
             topic: topic,
-            company: company
+            company: company,
+            mode: 'custom'
         };
 
         try {
@@ -411,7 +412,7 @@
 
     function startDefaults() {
         // Quick start: 1 problem, 30 mins, Any difficulty
-        const config = { count: 1, duration: 30, difficulty: 'Any' };
+        const config = { count: 1, duration: 30, difficulty: 'Any', mode: 'quick' };
         window.InterviewManager.startSession(config);
     }
 </script>

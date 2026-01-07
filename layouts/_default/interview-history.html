@@ -1,21 +1,50 @@
 {{ define "main" }}
 <script src="/js/interview-manager.js"></script>
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
-    <div class="max-w-3xl mx-auto space-y-8 animate-fade-in-up">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-8 animate-fade-in-up">
 
-        <div class="flex items-center justify-between">
-            <div>
-                <h1 class="text-3xl font-black text-gray-900 dark:text-white">Interview Journal</h1>
-                <p class="text-gray-500 dark:text-gray-400">Track your progress and revisit past attempts.</p>
+        <!-- HEADER SECTION -->
+        <div
+            class="relative bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 mb-8 border border-gray-200 dark:border-gray-700/50 shadow-sm overflow-hidden group">
+
+            <!-- Animated Background Blobs -->
+            <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-2xl">
+                <div
+                    class="absolute -top-32 -right-32 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl group-hover:bg-purple-500/10 transition-colors duration-700">
+                </div>
+                <div
+                    class="absolute -bottom-32 -left-32 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl group-hover:bg-blue-500/10 transition-colors duration-700">
+                </div>
             </div>
-            <a href="/interview/"
-                class="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-all text-gray-600 dark:text-gray-300">
-                <i data-lucide="plus" class="w-6 h-6"></i>
-            </a>
+
+            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
+                            <i data-lucide="history" class="w-6 h-6 text-purple-600 dark:text-purple-400"></i>
+                        </div>
+                        <h1 class="text-2xl md:text-3xl font-black text-gray-900 dark:text-white tracking-tight">
+                            Interview Journal
+                        </h1>
+                    </div>
+                    <p class="text-gray-500 dark:text-gray-400 max-w-xl">
+                        Track your progress, review past performance, and revisit your interview simulations.
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="/interview/"
+                        class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm shadow-lg shadow-blue-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        New Session
+                    </a>
+                </div>
+            </div>
         </div>
 
+        <!-- HISTORY GRID -->
         <div id="history-container" class="space-y-6">
-            <!-- Injected -->
+            <!-- Loading State -->
             <div class="text-center py-12 text-gray-400">
                 <i data-lucide="loader-2" class="w-8 h-8 animate-spin mx-auto mb-2"></i>
                 <p>Loading history...</p>
@@ -25,16 +54,122 @@
     </div>
 </div>
 
+<!-- DELETE SESSION MODAL -->
+<div id="delete-session-modal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center bg-gray-900/60 backdrop-blur-md px-4 animate-fade-in">
+    <div
+        class="bg-white dark:bg-gray-800 w-full max-w-sm p-6 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 relative overflow-hidden animate-scale-up">
+
+        <!-- Decorative Gradient Blob -->
+        <div
+            class="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 bg-red-500/10 rounded-full blur-2xl pointer-events-none">
+        </div>
+
+        <div class="text-center relative z-10">
+            <div
+                class="w-12 h-12 bg-red-50 dark:bg-red-900/20 rounded-xl mx-auto flex items-center justify-center mb-4">
+                <i data-lucide="trash-2" class="w-6 h-6 text-red-500"></i>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Delete Session?</h3>
+            <p class="text-gray-500 dark:text-gray-400 text-sm mb-6">
+                Are you sure you want to permanently delete this interview record? This action cannot be undone.
+            </p>
+
+            <div class="flex gap-3">
+                <button onclick="closeDeleteModal()"
+                    class="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                    Cancel
+                </button>
+                <button onclick="confirmDeleteSession()"
+                    class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-red-500 to-rose-600 text-white font-bold text-sm hover:shadow-lg hover:shadow-red-500/20 hover:scale-[1.02] transition-all">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- EDIT SESSION MODAL -->
+<div id="edit-session-modal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center bg-gray-900/60 backdrop-blur-md px-4 animate-fade-in">
+    <div
+        class="bg-white dark:bg-gray-800 w-full max-w-sm p-6 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 relative overflow-hidden animate-scale-up">
+
+        <!-- Decorative Gradient Blob -->
+        <div
+            class="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none">
+        </div>
+
+        <div class="text-center relative z-10">
+            <div
+                class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl mx-auto flex items-center justify-center mb-4">
+                <i data-lucide="pencil" class="w-6 h-6 text-indigo-500"></i>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Rename Session</h3>
+
+            <input type="text" id="edit-session-input"
+                class="w-full mb-6 px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white font-bold text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 placeholder-gray-400"
+                placeholder="Enter session name..." onkeydown="if(event.key === 'Enter') confirmEditSession()">
+
+            <div class="flex gap-3">
+                <button onclick="closeEditModal()"
+                    class="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                    Cancel
+                </button>
+                <button onclick="confirmEditSession()"
+                    class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold text-sm hover:shadow-lg hover:shadow-indigo-500/20 hover:scale-[1.02] transition-all">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     const manager = window.InterviewManager;
+    let resizeTimeout;
 
     (function () {
         renderHistory();
         lucide.createIcons();
+
+        // Re-render on resize to adjust bubble count
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                renderHistory();
+            }, 200);
+        });
     })();
 
     function renderHistory() {
         const db = manager.db;
+        const now = Date.now();
+        let dirty = false;
+
+        // Auto-expire active sessions that exceeded duration
+        // This handles cases where the user closed the tab and time elapsed
+        if (db.sessions) {
+            Object.values(db.sessions).forEach(s => {
+                if (s.state.status === 'active') {
+                    const durationMs = (s.config.duration || 30) * 60 * 1000;
+                    // Check if strictly past deadline (startedAt + duration)
+                    if (now - s.state.startedAt > durationMs) {
+                        s.state.status = 'completed';
+                        // Set endedAt to the theoretical completion time
+                        s.state.endedAt = s.state.startedAt + durationMs;
+                        dirty = true;
+                    }
+                }
+            });
+
+            if (dirty) {
+                manager.saveDB();
+            }
+        }
+
         const container = document.getElementById('history-container');
 
         if (!db.sessions || Object.keys(db.sessions).length === 0) {
@@ -52,65 +187,179 @@
 
         const sessions = Object.values(db.sessions).sort((a, b) => b.createdAt - a.createdAt);
 
+        // Dynamic Limit Calculation
+        const w = window.innerWidth;
+        let limit;
+
+        // Calculate available space for bubbles
+        // Mobile: Screen - (Padding + Stats + Actions + Gap)
+        // Desktop: Screen - (Padding + Stats + Actions + Gaps + Separators)
+        const bubbleWidth = 24; // Effective width per bubble (overlap)
+
+        if (w < 768) {
+            // Mobile: 
+            // Fixed widths ≈ 220px (Padding ~32, Stats ~100, Action ~50, Margins ~40)
+            const available = w - 220;
+            limit = Math.max(3, Math.floor(available / bubbleWidth));
+        } else {
+            // Desktop/Tablet:
+            // Fixed widths ≈ 450px (Padding ~48, Stats ~120, Actions ~200, Margins ~80)
+            const available = w - 450;
+            limit = Math.max(5, Math.floor(available / bubbleWidth));
+        }
+
+        // Cap at reasonable max to prevent infinite line
+        limit = Math.min(limit, 15);
+
         container.innerHTML = sessions.map(s => {
             const date = new Date(s.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
             const solved = s.problems.filter(p => p.status === 'solved').length;
             const total = s.problems.length;
             const isCompleted = s.state.status === 'completed';
+            const difficulty = s.config.difficulty || 'Mixed';
+
+            // Card Styling
+            const statusColor = isCompleted ? 'text-gray-500 bg-gray-100 dark:bg-gray-700/50' : 'text-green-600 bg-green-50 dark:bg-green-500/10 border border-green-200 dark:border-green-500/20';
+            const icon = isCompleted ? 'check-circle' : 'play-circle';
 
             return `
-            <div class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700/50 hover:shadow-lg transition-all">
-                <div class="absolute top-6 right-6 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    ${!isCompleted ? `
-                        <a href="/interview/session/?id=${s.id}" class="p-2 bg-green-100 text-green-700 rounded-lg text-xs font-bold hover:bg-green-200 transition-colors">Resume</a>
-                    ` : ''}
-                    <button onclick="deleteSession('${s.id}')" class="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg transition-colors">
-                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                    </button>
-                </div>
-
-                <a href="${isCompleted ? '/interview/review/?id=' + s.id : '/interview/session/?id=' + s.id}" class="block">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 rounded-full ${isCompleted ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-500' : 'bg-green-50 dark:bg-green-900/20 text-green-500'} flex items-center justify-center shrink-0">
-                            ${isCompleted ? '<i data-lucide="check-circle" class="w-6 h-6"></i>' : '<i data-lucide="play-circle" class="w-6 h-6"></i>'}
+            <div class="group relative bg-white dark:bg-gray-800 rounded-2xl p-4 md:p-6 border border-gray-100 dark:border-gray-700/50 hover:border-gray-300 dark:hover:border-gray-600 shadow-sm hover:shadow-xl transition-all duration-300">
+                
+                <!-- Header Link -->
+                <a href="${isCompleted ? '/interview/review/?id=' + s.id : '/interview/session/?id=' + s.id}" class="block mb-4 md:mb-6">
+                    <span class="absolute inset-0 z-0 md:hidden" aria-hidden="true"></span>
+                    <div class="flex items-start gap-3 md:gap-4">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center shrink-0 ${statusColor}">
+                            <i data-lucide="${icon}" class="w-5 h-5 md:w-6 md:h-6"></i>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-gray-900 dark:text-white text-lg flex items-center gap-2">
-                                ${s.config.difficulty || 'Mixed'} Interview
-                                ${!isCompleted ? '<span class="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] uppercase font-bold tracking-wider">Active</span>' : ''}
-                            </h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">${date} • ${manager.formatTime(s.config.duration * 60)} mins</p>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-0.5 md:mb-1">
+                                <h3 class="font-bold text-gray-900 dark:text-white text-base md:text-lg truncate pr-2">
+                                    ${s.title || (difficulty + ' Interview')}
+                                </h3>
+                                ${!isCompleted ? '<span class="relative flex h-2 w-2 flex-shrink-0"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></span>' : `
+                                    <button onclick="event.preventDefault(); event.stopPropagation(); startEditSession('${s.id}', '${s.title.replace(/'/g, "\\'")}')" class="relative z-10 p-1 text-gray-400 hover:text-indigo-500 transition-all transform hover:scale-110" title="Rename Session">
+                                        <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                `}
+                            </div>
+                            <div class="flex items-center gap-3 text-[10px] md:text-xs font-medium text-gray-500 dark:text-gray-400">
+                                <span class="flex items-center gap-1">
+                                    <i data-lucide="calendar" class="w-3 h-3"></i> ${date}
+                                </span>
+                                <span>•</span>
+                                <span class="flex items-center gap-1">
+                                    <i data-lucide="clock" class="w-3 h-3"></i> ${manager.formatTime(s.config.duration * 60)}
+                                </span>
+                            </div>
                         </div>
                     </div>
+                </a>
 
-                    <div class="flex items-center gap-6">
+                <!-- Footer (Stats | Bubbles | Actions) -->
+                <div class="flex flex-wrap md:flex-nowrap items-center justify-between gap-y-4 pt-3 md:pt-4 border-t border-gray-50 dark:border-gray-700/30">
+                    
+                    <!-- Stats & Bubbles -->
+                    <div class="flex items-center gap-4 md:gap-6">
                         <div class="flex items-center gap-2">
-                            <span class="text-2xl font-black text-gray-900 dark:text-gray-100">${solved}<span class="text-gray-400 text-lg">/${total}</span></span>
-                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Solved</span>
+                            <span class="text-xl md:text-2xl font-black text-gray-900 dark:text-gray-100">${solved}<span class="text-gray-400 text-base md:text-lg">/${total}</span></span>
+                            <span class="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-wider hidden sm:block">Solved</span>
                         </div>
-                        <div class="h-8 w-px bg-gray-100 dark:bg-gray-700"></div>
+                        
+                        <div class="h-6 md:h-8 w-px bg-gray-100 dark:bg-gray-700"></div>
+                        
                         <div class="flex -space-x-2">
-                            ${s.problems.slice(0, 3).map((p, i) => `
-                                <div class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-800 flex items-center justify-center text-[10px] font-bold text-white
+                            ${s.problems.slice(0, limit).map((p, i) => `
+                                <div class="w-7 h-7 md:w-8 md:h-8 rounded-full border-2 border-white dark:border-gray-800 flex items-center justify-center text-[10px] font-bold text-white
                                     ${p.status === 'solved' ? 'bg-green-500' : p.status === 'attempted' ? 'bg-yellow-500' : 'bg-gray-300 dark:bg-gray-600'}">
                                     P${i + 1}
                                 </div>
                             `).join('')}
-                             ${s.problems.length > 3 ? `<div class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-800 bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-[10px] font-bold text-gray-500">+${s.problems.length - 3}</div>` : ''}
+                             ${s.problems.length > limit ? `<div class="w-7 h-7 md:w-8 md:h-8 rounded-full border-2 border-white dark:border-gray-800 bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-[10px] font-bold text-gray-500">+${s.problems.length - limit}</div>` : ''}
                         </div>
                     </div>
-                </a>
+
+                    <!-- Actions -->
+                    <div class="flex items-center gap-4 md:gap-6 ml-auto md:ml-0">
+                         <!-- Separator -->
+                        <div class="hidden md:block h-6 md:h-8 w-px bg-gray-100 dark:bg-gray-700"></div>
+
+                        <div class="flex items-center gap-2">
+                            ${!isCompleted ? `
+                                <a href="/interview/session/?id=${s.id}" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg text-xs font-bold shadow-md shadow-green-500/20 hover:shadow-lg hover:shadow-green-500/30 hover:-translate-y-0.5 transition-all">
+                                    <i data-lucide="play" class="w-3 h-3 fill-current"></i> Resume
+                                </a>
+                            ` : `
+                                <a href="/interview/review/?id=${s.id}" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-lg text-xs font-bold shadow-md shadow-purple-500/20 hover:shadow-lg hover:shadow-purple-500/30 hover:-translate-y-0.5 transition-all">
+                                    <i data-lucide="bar-chart-2" class="w-3 h-3"></i> Review
+                                </a>
+                            `}
+                            <button onclick="event.preventDefault(); event.stopPropagation(); startDeleteSession('${s.id}')" class="relative z-10 p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg transition-colors" title="Delete">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
             `;
         }).join('');
         lucide.createIcons();
     }
 
-    function deleteSession(id) {
-        if (confirm("Delete this interview record?")) {
-            delete manager.db.sessions[id];
+    let sessionToDeleteId = null;
+    let sessionToEditId = null;
+
+    function startEditSession(id, currentTitle) {
+        sessionToEditId = id;
+        const modal = document.getElementById('edit-session-modal');
+        const input = document.getElementById('edit-session-input');
+        input.value = currentTitle;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        setTimeout(() => input.focus(), 100);
+    }
+
+    function closeEditModal() {
+        sessionToEditId = null;
+        const modal = document.getElementById('edit-session-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+
+    function confirmEditSession() {
+        if (sessionToEditId) {
+            const input = document.getElementById('edit-session-input');
+            const newTitle = input.value.trim();
+            if (newTitle) {
+                manager.db.sessions[sessionToEditId].title = newTitle;
+                manager.saveDB();
+                renderHistory();
+                closeEditModal();
+            }
+        }
+    }
+
+    function startDeleteSession(id) {
+        sessionToDeleteId = id;
+        const modal = document.getElementById('delete-session-modal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+
+    function closeDeleteModal() {
+        sessionToDeleteId = null;
+        const modal = document.getElementById('delete-session-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+
+    function confirmDeleteSession() {
+        if (sessionToDeleteId) {
+            delete manager.db.sessions[sessionToDeleteId];
             manager.saveDB();
             renderHistory();
+            closeDeleteModal();
         }
     }
 </script>

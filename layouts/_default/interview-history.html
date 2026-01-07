@@ -238,7 +238,7 @@
                                     ${s.title || (difficulty + ' Interview')}
                                 </h3>
                                 ${!isCompleted ? '<span class="relative flex h-2 w-2 flex-shrink-0"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></span>' : `
-                                    <button onclick="event.preventDefault(); event.stopPropagation(); startEditSession('${s.id}', '${s.title.replace(/'/g, "\\'")}')" class="relative z-10 p-1 text-gray-400 hover:text-indigo-500 transition-all transform hover:scale-110" title="Rename Session">
+                                    <button onclick="event.preventDefault(); event.stopPropagation(); startEditSession('${s.id}')" class="relative z-10 p-1 text-gray-400 hover:text-indigo-500 transition-all transform hover:scale-110" title="Rename Session">
                                         <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
                                     </button>
                                 `}
@@ -310,8 +310,9 @@
     let sessionToDeleteId = null;
     let sessionToEditId = null;
 
-    function startEditSession(id, currentTitle) {
+    function startEditSession(id) {
         sessionToEditId = id;
+        const currentTitle = manager.db.sessions[id].title;
         const modal = document.getElementById('edit-session-modal');
         const input = document.getElementById('edit-session-input');
         input.value = currentTitle;

@@ -1,52 +1,112 @@
 {{ define "main" }}
 <script src="/js/interview-manager.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-8 animate-fade-in-up">
 
-        <!-- HEADER SECTION -->
+        <!-- Enhanced Header Card -->
         <div
-            class="relative bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 mb-8 border border-gray-200 dark:border-gray-700/50 shadow-sm overflow-hidden group">
+            class="relative bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 mb-12 border border-gray-200 dark:border-gray-700/50 shadow-sm group overflow-hidden">
+
             <!-- Animated Background Blobs -->
             <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-2xl">
                 <div
-                    class="absolute -top-32 -right-32 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl group-hover:bg-yellow-500/10 transition-colors duration-700">
+                    class="absolute -top-32 -right-32 w-96 h-96 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors duration-700">
                 </div>
                 <div
-                    class="absolute -bottom-32 -left-32 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl group-hover:bg-orange-500/10 transition-colors duration-700">
+                    class="absolute -bottom-32 -left-32 w-96 h-96 bg-secondary/5 rounded-full blur-3xl group-hover:bg-secondary/10 transition-colors duration-700">
                 </div>
             </div>
 
-            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div>
-                    <div class="flex items-center gap-3 mb-2">
-                        <div class="p-2 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg">
-                            <i data-lucide="book-open" class="w-6 h-6 text-yellow-600 dark:text-yellow-400"></i>
+            <div class="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
+                <div class="flex-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 bg-gradient-to-br from-primary/10 to-blue-500/10 rounded-xl">
+                            <i data-lucide="notebook-pen" class="w-6 h-6 text-primary"></i>
                         </div>
-                        <h1 class="text-2xl md:text-3xl font-black text-gray-900 dark:text-white tracking-tight">
+                        <h1
+                            class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">
                             Personal Notes
                         </h1>
                     </div>
-                    <p class="text-gray-500 dark:text-gray-400 max-w-xl">
+
+                    <p class="text-gray-500 dark:text-gray-400 max-w-xl text-lg leading-relaxed">
                         A collection of your thoughts, problem strategies, and interview reflections.
                     </p>
+                </div>
+
+                <!-- Stats / Decoration -->
+                <div class="hidden md:flex items-center gap-2">
+                    <button onclick="openDownloadModal()"
+                        class="px-4 py-2 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg border border-primary/20 font-bold text-sm transition-all flex items-center gap-2">
+                        <i data-lucide="download" class="w-4 h-4"></i> Download PDF
+                    </button>
+
                 </div>
             </div>
         </div>
 
-        <!-- TABS -->
-        <div class="flex gap-4 mb-6 border-b border-gray-200 dark:border-gray-700">
-            <button id="tab-problems" onclick="switchTab('problems')"
-                class="pb-3 px-4 text-sm font-bold border-b-2 border-primary text-primary transition-colors">
-                Problem Notes
-            </button>
-            <button id="tab-reflections" onclick="switchTab('reflections')"
-                class="pb-3 px-4 text-sm font-bold border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors">
-                Reflections
-            </button>
+        <!-- TABS & CONTROLS -->
+        <div class="flex flex-col lg:flex-row gap-6 mb-8 justify-between items-start lg:items-center">
+
+            <!-- Pill Tabs -->
+            <div
+                class="bg-white dark:bg-gray-800 p-1 rounded-full border border-gray-200 dark:border-gray-700/50 shadow-sm flex w-full md:inline-flex md:w-auto">
+                <button onclick="switchTab('problems')" id="tab-problems"
+                    class="flex-1 md:flex-none justify-center px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 flex items-center gap-2">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    Problem Notes
+                </button>
+                <button onclick="switchTab('reflections')" id="tab-reflections"
+                    class="flex-1 md:flex-none justify-center px-6 py-2 rounded-full text-sm font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-all duration-300 flex items-center gap-2">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                    Reflections
+                </button>
+            </div>
+
+            <!-- Search and Filters -->
+            <div class="w-full lg:w-auto flex flex-wrap gap-3">
+                <div class="relative group w-full md:w-auto md:flex-initial">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i data-lucide="search"
+                            class="h-4 w-4 text-gray-400 group-focus-within:text-primary transition-colors"></i>
+                    </div>
+                    <input type="text" id="searchInput" placeholder="Search notes..."
+                        class="pl-10 pr-4 py-2.5 w-full md:w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm transition-all shadow-sm">
+                </div>
+
+                <div class="relative group flex-1 min-w-[140px]" id="difficultyFilterContainer">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i data-lucide="bar-chart-2"
+                            class="h-4 w-4 text-gray-400 group-focus-within:text-primary transition-colors"></i>
+                    </div>
+                    <select id="difficultyFilter"
+                        class="pl-10 pr-8 py-2.5 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm appearance-none cursor-pointer shadow-sm transition-all whitespace-nowrap overflow-hidden text-ellipsis">
+                        <option value="">All Difficulties</option>
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <i data-lucide="chevron-down" class="h-4 w-4 text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- CONTENT CONTAINERS -->
         <div id="container-problems" class="space-y-4">
+            <!-- No Results State -->
+            <div id="noResults" class="hidden text-center py-12">
+                <div
+                    class="bg-gray-50 dark:bg-gray-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="search-x" class="w-8 h-8 text-gray-400"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">No matches found</h3>
+                <p class="text-gray-500 dark:text-gray-400">Try adjusting your search.</p>
+            </div>
+
             <!-- Problem Notes List -->
             <div id="problem-notes-list" class="space-y-3">
                 <div class="py-12 text-center text-gray-400">
@@ -57,6 +117,16 @@
         </div>
 
         <div id="container-reflections" class="hidden space-y-4">
+            <!-- No Results State Reflections -->
+            <div id="noResultsReflections" class="hidden text-center py-12">
+                <div
+                    class="bg-gray-50 dark:bg-gray-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="search-x" class="w-8 h-8 text-gray-400"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">No matches found</h3>
+                <p class="text-gray-500 dark:text-gray-400">Try adjusting your search.</p>
+            </div>
+
             <!-- Reflections List -->
             <div id="reflections-list" class="space-y-3">
                 <div class="py-12 text-center text-gray-400">
@@ -70,49 +140,128 @@
 </div>
 
 <script>
-    const manager = window.InterviewManager;
+    let manager;
 
-    (function () {
-        loadData();
-        lucide.createIcons();
-    })();
+    // UI Elements
+    const tabProblems = document.getElementById('tab-problems');
+    const tabReflections = document.getElementById('tab-reflections');
+    const containerProblems = document.getElementById('container-problems');
+    const containerReflections = document.getElementById('container-reflections');
 
-    function switchTab(tab) {
-        const problemsTab = document.getElementById('tab-problems');
-        const reflectionsTab = document.getElementById('tab-reflections');
-        const problemsContainer = document.getElementById('container-problems');
-        const reflectionsContainer = document.getElementById('container-reflections');
+    const searchInput = document.getElementById('searchInput');
+    const difficultyFilter = document.getElementById('difficultyFilter');
+    const difficultyFilterContainer = document.getElementById('difficultyFilterContainer');
 
-        if (tab === 'problems') {
-            problemsTab.classList.add('border-primary', 'text-primary');
-            problemsTab.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
-            reflectionsTab.classList.remove('border-primary', 'text-primary');
-            reflectionsTab.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+    const problemListEl = document.getElementById('problem-notes-list');
+    const reflectionListEl = document.getElementById('reflections-list');
+    const noResultsEl = document.getElementById('noResults');
+    const noResultsReflectionsEl = document.getElementById('noResultsReflections');
 
-            problemsContainer.classList.remove('hidden');
-            reflectionsContainer.classList.add('hidden');
-        } else {
-            reflectionsTab.classList.add('border-primary', 'text-primary');
-            reflectionsTab.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
-            problemsTab.classList.remove('border-primary', 'text-primary');
-            problemsTab.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+    let currentTab = 'problems'; // 'problems' or 'reflections'
+    let notesItems = []; // Array of processed note objects
+    let reflectionItems = []; // Array of processed reflection objects
 
-            reflectionsContainer.classList.remove('hidden');
-            problemsContainer.classList.add('hidden');
+    // Toggle Note Expansion
+    // Made global so onclick works
+    window.toggleNote = function (id) {
+        const content = document.getElementById(`content-${id}`);
+        const icon = document.getElementById(`icon-${id}`);
+        // Check if currently open by checking max-height style or class
+        // We will use a class marker 'expanded' logic or just check style
+        const isClosed = content.style.maxHeight === '0px' || !content.style.maxHeight;
+
+        // Close ALL currently open notes first
+        document.querySelectorAll('[id^="content-"]').forEach(el => {
+            // Reset to closed state
+            el.style.maxHeight = '0px';
+            el.style.opacity = '0';
+
+            const otherId = el.id.replace('content-', '');
+            const otherIcon = document.getElementById(`icon-${otherId}`);
+            if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+
+            // Remove expanded class from parent container
+            if (el.parentElement) {
+                el.parentElement.classList.remove('expanded');
+            }
+        });
+
+        // Clear persistence
+        localStorage.removeItem('dsa-notes-expanded');
+
+        // If we were opening the clicked note, open it now
+        if (isClosed) {
+            // We need to set it to scrollHeight, but the padding is on the inner element now
+            // content.scrollHeight will capture the height of children
+            content.style.maxHeight = content.scrollHeight + "px";
+            content.style.opacity = '1';
+            icon.style.transform = 'rotate(180deg)';
+
+            // Add expanded class to parent container for hover logic
+            if (content.parentElement) {
+                content.parentElement.classList.add('expanded');
+            }
+
+            // Persist expanded state
+            localStorage.setItem('dsa-notes-expanded', id);
         }
     }
 
-    // Toggle Note Expansion
-    function toggleNote(id) {
-        const content = document.getElementById(`content-${id}`);
-        const icon = document.getElementById(`icon-${id}`);
+    document.addEventListener('DOMContentLoaded', () => {
+        manager = window.InterviewManager;
 
-        if (content.classList.contains('hidden')) {
-            content.classList.remove('hidden');
-            icon.style.transform = 'rotate(180deg)';
+        // Restore tab state
+        const storedTab = localStorage.getItem('dsa-notes-tab');
+        if (storedTab && (storedTab === 'problems' || storedTab === 'reflections')) {
+            currentTab = storedTab;
+        }
+
+        loadData();
+        updateTabUI();
+
+        // Event Listeners
+        searchInput.addEventListener('input', filterContent);
+        difficultyFilter.addEventListener('change', filterContent);
+
+        lucide.createIcons();
+    });
+
+    // Make switchTab global so it works with onclick
+    window.switchTab = function (tab) {
+        currentTab = tab;
+        localStorage.setItem('dsa-notes-tab', tab);
+        updateTabUI();
+        filterContent();
+    }
+
+    function updateTabUI() {
+        const activeClass = ['bg-primary', 'text-white', 'shadow-md'];
+        const inactiveClass = ['text-gray-500', 'hover:text-gray-900', 'dark:text-gray-400', 'dark:hover:text-white'];
+
+        if (currentTab === 'problems') {
+            tabProblems.classList.add(...activeClass);
+            tabProblems.classList.remove(...inactiveClass);
+
+            tabReflections.classList.remove(...activeClass);
+            tabReflections.classList.add(...inactiveClass);
+
+            containerProblems.classList.remove('hidden');
+            containerReflections.classList.add('hidden');
+
+            // Show difficulty filter
+            difficultyFilterContainer.classList.remove('hidden');
         } else {
-            content.classList.add('hidden');
-            icon.style.transform = 'rotate(0deg)';
+            tabReflections.classList.add(...activeClass);
+            tabReflections.classList.remove(...inactiveClass);
+
+            tabProblems.classList.remove(...activeClass);
+            tabProblems.classList.add(...inactiveClass);
+
+            containerReflections.classList.remove('hidden');
+            containerProblems.classList.add('hidden');
+
+            // Hide difficulty filter for reflections
+            difficultyFilterContainer.classList.add('hidden');
         }
     }
 
@@ -120,12 +269,8 @@
         // 1. Load Problem Notes
         const notesRaw = localStorage.getItem('dsa-notes');
         const notesData = notesRaw ? JSON.parse(notesRaw) : {};
-        const problemNotesContainer = document.getElementById('problem-notes-list');
 
-        if (Object.keys(notesData).length === 0) {
-            renderEmptyState(problemNotesContainer, 'No problem notes yet.', 'dsa');
-        } else {
-            // Need problem meta for titles
+        if (Object.keys(notesData).length > 0) {
             const allProblems = await manager.getProblems();
             const probMap = {};
             allProblems.forEach(p => {
@@ -133,104 +278,283 @@
                 probMap[id] = p;
             });
 
-            const items = Object.entries(notesData).map(([id, content]) => {
+            notesItems = Object.entries(notesData).map(([id, content]) => {
                 const prob = probMap[id];
                 return {
                     id,
                     title: prob ? prob.title : id,
                     content,
                     difficulty: prob ? prob.difficulty : 'Unknown',
-                    permalink: prob ? prob.permalink : '#'
+                    permalink: prob ? prob.permalink : '#',
+                    topics: prob ? (prob.topics || []) : []
                 };
             }).filter(item => item.content.trim() !== '');
-
-            if (items.length === 0) {
-                renderEmptyState(problemNotesContainer, 'No problem notes found.', 'dsa');
-            } else {
-                problemNotesContainer.innerHTML = items.map(item => `
-                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700/50 shadow-sm overflow-hidden transition-all duration-300">
-                        <!-- Header / Toggle -->
-                        <button onclick="toggleNote('note-${item.id}')" class="w-full flex items-center justify-between p-4 bg-gray-50/50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors text-left">
-                            <div class="flex items-center gap-3">
-                                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider shrink-0 w-16 text-center ${getBadgeStyle(item.difficulty)}">
-                                    ${item.difficulty}
-                                </span>
-                                <span class="font-bold text-gray-900 dark:text-white line-clamp-1">
-                                    ${item.title}
-                                </span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <i data-lucide="chevron-down" id="icon-note-${item.id}" class="w-5 h-5 text-gray-400 transition-transform duration-300"></i>
-                            </div>
-                        </button>
-                        
-                        <!-- Content -->
-                        <div id="content-note-${item.id}" class="hidden p-5 border-t border-gray-100 dark:border-gray-700/50 bg-white dark:bg-gray-800">
-                            <div class="prose prose-sm dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 whitespace-pre-wrap">
-${item.content}
-                            </div>
-                            <div class="mt-4 pt-3 flex justify-end">
-                                <a href="${item.permalink}" class="text-xs font-bold text-gray-400 hover:text-primary transition-colors flex items-center gap-1">
-                                    View Problem <i data-lucide="external-link" class="w-3 h-3"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            }
+        } else {
+            notesItems = [];
         }
 
         // 2. Load Reflections
         const db = manager.db;
-        const reflectionsContainer = document.getElementById('reflections-list');
-
-        if (!db.sessions) {
-            renderEmptyState(reflectionsContainer, 'No interview reflections yet.', 'interview');
-        } else {
-            const sessions = Object.values(db.sessions)
+        if (db.sessions) {
+            reflectionItems = Object.values(db.sessions)
                 .filter(s => s.notes && s.notes.reflection && s.notes.reflection.trim() !== '')
-                .sort((a, b) => b.createdAt - a.createdAt);
+                .sort((a, b) => b.createdAt - a.createdAt)
+                .map(s => ({
+                    id: s.id,
+                    title: s.title || 'Session Reflection',
+                    content: s.notes.reflection,
+                    date: new Date(s.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }),
+                    problems: (s.problems || []).map(p => ({
+                        title: p.title,
+                        status: p.status, // 'solved', 'attempted', 'skipped'
+                        permalink: p.permalink || '#'
+                    }))
+                }));
+        } else {
+            reflectionItems = [];
+        }
 
-            if (sessions.length === 0) {
-                renderEmptyState(reflectionsContainer, 'No reflections saved.', 'interview');
+        // Initial Render
+        renderNotes(notesItems);
+        renderReflections(reflectionItems);
+
+        // Restore expanded state
+        const expandedId = localStorage.getItem('dsa-notes-expanded');
+        if (expandedId) {
+            // Wait for DOM to be ready
+            setTimeout(() => {
+                const targetContent = document.getElementById('content-' + expandedId);
+                // Verify it exists (it might have been filtered out or deleted)
+                if (targetContent) {
+                    toggleNote(expandedId);
+                }
+            }, 100);
+        }
+    }
+
+    function renderNotes(items) {
+        if (items.length === 0) {
+            // Only show empty state if we really have NO data, not just filtered out
+            if (notesItems.length === 0) {
+                renderEmptyState(problemListEl, 'No problem notes yet.', 'dsa');
+                lucide.createIcons();
             } else {
-                reflectionsContainer.innerHTML = sessions.map(s => {
-                    const date = new Date(s.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-                    return `
-                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700/50 shadow-sm overflow-hidden transition-all duration-300">
-                        <!-- Header -->
-                        <button onclick="toggleNote('session-${s.id}')" class="w-full flex items-center justify-between p-4 bg-gray-50/50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors text-left">
-                            <div class="flex items-center gap-3">
-                                <div class="flex items-center gap-2 text-purple-600 dark:text-purple-400">
-                                    <i data-lucide="sparkles" class="w-4 h-4"></i>
-                                    <span class="font-bold text-gray-900 dark:text-white">
-                                        ${s.title || 'Session Reflection'}
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <span class="text-xs font-medium text-gray-400">${date}</span>
-                                <i data-lucide="chevron-down" id="icon-session-${s.id}" class="w-5 h-5 text-gray-400 transition-transform duration-300"></i>
-                            </div>
-                        </button>
+                problemListEl.innerHTML = ''; // Cleared by filter, will show noResults block instead
+            }
+            return;
+        }
+
+        problemListEl.innerHTML = items.map(item => `
+            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700/50 shadow-sm overflow-hidden transition-all duration-300 group problem-item">
+                <!-- Header / Toggle -->
+                <button onclick="toggleNote('note-${item.id}')" class="w-full grid grid-cols-[1fr_auto] md:grid-cols-[1fr_80px_30px] items-center gap-3 p-4 bg-gray-50/50 dark:bg-gray-800/50 transition-colors text-left relative z-10">
+                    
+                    <!-- 1. Title & Tags -->
+                    <div class="min-w-0 flex items-center gap-3 overflow-hidden">
+                        <span class="font-bold text-gray-900 dark:text-white truncate transition-colors">
+                            ${item.title}
+                        </span>
                         
-                        <!-- Content -->
-                        <div id="content-session-${s.id}" class="hidden p-5 border-t border-gray-100 dark:border-gray-700/50 bg-white dark:bg-gray-800">
-                            <div class="prose prose-sm dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 whitespace-pre-wrap">
-${s.notes.reflection}
-                            </div>
-                            <div class="mt-4 pt-3 flex justify-end">
-                                <a href="/interview/review/?id=${s.id}" class="text-xs font-bold text-gray-400 hover:text-purple-500 transition-colors flex items-center gap-1">
-                                    View Session <i data-lucide="external-link" class="w-3 h-3"></i>
-                                </a>
-                            </div>
+                        <!-- Desktop Hover Tags -->
+                        <div class="topic-tags-container hidden md:flex items-center gap-2 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-out flex-shrink overflow-hidden min-w-0">
+                            ${item.topics.map(t => `
+                                <span class="topic-tag px-2 py-0.5 rounded-md text-[10px] font-semibold bg-primary/10 text-primary border border-primary/20 whitespace-nowrap">
+                                    ${t}
+                                </span>
+                            `).join('')}
+                            <span class="topic-count hidden px-1.5 py-0.5 rounded-md text-[10px] font-medium text-gray-400 bg-gray-100 dark:bg-gray-700 whitespace-nowrap"></span>
                         </div>
                     </div>
-                    `;
-                }).join('');
-            }
-        }
+
+                    <!-- 2. Difficulty -->
+                    <div class="flex justify-end md:justify-start">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider text-center ${getBadgeStyle(item.difficulty)}">
+                            ${item.difficulty}
+                        </span>
+                    </div>
+
+                    <!-- 3. Chevron -->
+                    <div class="flex justify-end">
+                        <i data-lucide="chevron-down" id="icon-note-${item.id}" class="w-5 h-5 text-gray-400 transition-transform duration-300"></i>
+                    </div>
+                </button>
+                
+                <!-- Content Wrapper (Smooth Transition) -->
+                <div id="content-note-${item.id}" class="max-h-0 opacity-0 overflow-hidden transition-all duration-500 ease-in-out">
+                    <!-- Inner Content (Padding & Border) -->
+                    <div class="p-5 border-t border-gray-100 dark:border-gray-700/50 bg-white dark:bg-gray-800">
+                        <div class="prose prose-sm dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 whitespace-pre-wrap">
+${item.content}
+                        </div>
+                        <div class="mt-6 pt-4 flex justify-end">
+                            <a href="${item.permalink}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700/50 text-gray-700 dark:text-gray-200 rounded-lg text-sm font-semibold hover:bg-primary hover:text-white transition-all shadow-sm hover:shadow-md">
+                                View Problem <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
         lucide.createIcons();
+        setTimeout(adjustTopicTags, 50);
+    }
+
+    // Dynamic Topic Tags Adjustment (Ported from problems page)
+    function adjustTopicTags() {
+        requestAnimationFrame(() => {
+            document.querySelectorAll('.problem-item').forEach(item => {
+                const container = item.querySelector('.topic-tags-container');
+                if (!container || container.offsetParent === null) return;
+
+                const tags = Array.from(container.querySelectorAll('.topic-tag'));
+                const counter = container.querySelector('.topic-count');
+
+                // 1. Reset state (show all)
+                tags.forEach(t => t.classList.remove('hidden'));
+                counter.classList.add('hidden');
+
+                // 2. Check overflow
+                if (container.scrollWidth > container.clientWidth) {
+                    const availableWidth = container.clientWidth;
+                    const counterWidth = 30;
+
+                    let fitCount = 0;
+                    for (let i = 0; i < tags.length; i++) {
+                        const tag = tags[i];
+                        const isLast = (i === tags.length - 1);
+                        const limit = isLast ? availableWidth : (availableWidth - counterWidth);
+                        const tagRight = tag.offsetLeft + tag.offsetWidth;
+
+                        if (tagRight > limit) {
+                            break;
+                        }
+                        fitCount++;
+                    }
+
+                    // 3. Apply Visibility
+                    if (fitCount < tags.length) {
+                        for (let j = fitCount; j < tags.length; j++) {
+                            tags[j].classList.add('hidden');
+                        }
+                        counter.textContent = '+' + (tags.length - fitCount);
+                        counter.classList.remove('hidden');
+                    }
+                }
+            });
+        });
+    }
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(adjustTopicTags, 100);
+    });
+
+    function renderReflections(items) {
+        if (items.length === 0) {
+            if (reflectionItems.length === 0) {
+                renderEmptyState(reflectionListEl, 'No interview reflections yet.', 'interview');
+                lucide.createIcons();
+            } else {
+                reflectionListEl.innerHTML = '';
+            }
+            return;
+        }
+
+        reflectionListEl.innerHTML = items.map(item => `
+            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700/50 shadow-sm overflow-hidden transition-all duration-300 group problem-item">
+                <!-- Header -->
+                <button onclick="toggleNote('session-${item.id}')" class="w-full grid grid-cols-[1fr_auto] md:grid-cols-[1fr_auto_30px] items-center gap-3 p-4 bg-gray-50/50 dark:bg-gray-800/50 transition-colors text-left relative z-10">
+                    
+                    <!-- 1. Title & Problem Bubbles -->
+                    <div class="min-w-0 flex items-center gap-3 overflow-hidden">
+                        <span class="font-bold text-gray-900 dark:text-white transition-colors truncate">
+                            ${item.title}
+                        </span>
+
+                        <!-- Problem Bubbles (Hover) -->
+                        <div class="topic-tags-container hidden md:flex items-center -space-x-2 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 group-[.expanded]:!opacity-0 group-[.expanded]:pointer-events-none transition-all duration-300 ease-out flex-shrink overflow-hidden min-w-0 pl-2">
+                            ${item.problems.map((p, i) => `
+                                <div class="topic-tag w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center text-[10px] font-bold text-white border-2 border-white dark:border-gray-800 shrink-0 relative z-[${10 - i}]
+                                    ${p.status === 'solved' ? 'bg-green-500' : p.status === 'attempted' ? 'bg-yellow-500' : 'bg-gray-300 dark:bg-gray-600'}"
+                                    title="${p.title} (${p.status})">
+                                    P${i + 1}
+                                </div>
+                            `).join('')}
+                            <span class="topic-count hidden px-1.5 py-0.5 rounded-md text-[10px] font-semibold text-gray-500 bg-gray-100 dark:bg-gray-700 whitespace-nowrap border-2 border-white dark:border-gray-800 ml-2"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- 2. Date -->
+                     <div class="flex justify-end md:justify-start">
+                        <span class="text-xs font-medium text-gray-400 whitespace-nowrap">${item.date}</span>
+                    </div>
+
+                    <!-- 3. Chevron -->
+                    <div class="flex justify-end">
+                        <i data-lucide="chevron-down" id="icon-session-${item.id}" class="w-5 h-5 text-gray-400 transition-transform duration-300"></i>
+                    </div>
+                </button>
+                
+                <!-- Content Wrapper (Smooth Transition) -->
+                <div id="content-session-${item.id}" class="max-h-0 opacity-0 overflow-hidden transition-all duration-500 ease-in-out">
+                    <!-- Inner Content (Padding & Border) -->
+                    <div class="p-5 border-t border-gray-100 dark:border-gray-700/50 bg-white dark:bg-gray-800">
+                        <!-- Problem List -->
+                        <div class="mb-5 flex flex-wrap gap-x-4 gap-y-2">
+                             ${item.problems.map((p, i) => `
+                                <div class="flex items-center gap-2">
+                                    <div class="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold text-white
+                                        ${p.status === 'solved' ? 'bg-green-500' : p.status === 'attempted' ? 'bg-yellow-500' : 'bg-gray-400'}"
+                                        title="${p.status}">
+                                        P${i + 1}
+                                    </div>
+                                    <span class="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                                        ${p.title}
+                                    </span>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div class="prose prose-sm dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 whitespace-pre-wrap">
+${item.content}
+                        </div>
+                        <div class="mt-6 pt-4 flex justify-end">
+                            <a href="/interview/review/?id=${item.id}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700/50 text-gray-700 dark:text-gray-200 rounded-lg text-sm font-semibold hover:bg-purple-600 hover:text-white transition-all shadow-sm hover:shadow-md">
+                                View Session <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        lucide.createIcons();
+        setTimeout(adjustTopicTags, 50); // Re-run for reflection tabs too
+    }
+
+    function filterContent() {
+        const term = searchInput.value.toLowerCase();
+        const diff = difficultyFilter.value;
+
+        if (currentTab === 'problems') {
+            const filtered = notesItems.filter(item => {
+                const matchesTerm = item.title.toLowerCase().includes(term) || item.content.toLowerCase().includes(term);
+                const matchesDiff = !diff || item.difficulty === diff;
+                return matchesTerm && matchesDiff;
+            });
+            renderNotes(filtered);
+            noResultsEl.classList.toggle('hidden', filtered.length > 0 || notesItems.length === 0);
+        } else {
+            const filtered = reflectionItems.filter(item => {
+                const matchesTerm = item.title.toLowerCase().includes(term) ||
+                    item.content.toLowerCase().includes(term) ||
+                    (item.problems && item.problems.some(p => p.title.toLowerCase().includes(term)));
+                return matchesTerm;
+            });
+            renderReflections(filtered);
+            noResultsReflectionsEl.classList.toggle('hidden', filtered.length > 0 || reflectionItems.length === 0);
+        }
     }
 
     function renderEmptyState(container, message, type) {
@@ -254,5 +578,469 @@ ${s.notes.reflection}
         return 'bg-red-100 text-red-700 border-red-200 dark:bg-red-500/10 dark:text-red-400';
     }
 
+
+    // --- MODAL & PDF LOGIC ---
+
+    function openDownloadModal() {
+        document.getElementById('downloadModal').classList.remove('hidden');
+    }
+
+    function closeDownloadModal() {
+        document.getElementById('downloadModal').classList.add('hidden');
+    }
+
+    // Helper: Strip HTML
+    function stripHtml(html) {
+        if (!html) return '';
+        let text = html
+            .replace(/<br\s*\/?>/gi, '\n')
+            .replace(/<\/p>/gi, '\n\n')
+            .replace(/<p>/gi, '')
+            .replace(/<ul>/gi, '\n')
+            .replace(/<\/ul>/gi, '')
+            .replace(/<li>/gi, '  • ')
+            .replace(/<\/li>/gi, '\n')
+            .replace(/<pre>/gi, '\n[Code Block]\n')
+            .replace(/<\/pre>/gi, '\n')
+            .replace(/<[^>]+>/g, '');
+        const textarea = document.createElement('textarea');
+        textarea.innerHTML = text;
+        return textarea.value.trim();
+    }
+
+    // Helper: Load Image
+    function loadImage(url) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = () => resolve(null);
+            img.src = url;
+        });
+    }
+
+    async function downloadPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // --- 1. CONFIG ---
+        const scope = document.querySelector('input[name="notesScope"]:checked').value;
+        const inclStatement = document.getElementById('includeStatement').checked;
+        const inclComplexity = document.getElementById('includeComplexity').checked;
+        const inclExamples = document.getElementById('includeExamples').checked;
+        const inclConstraints = document.getElementById('includeConstraints').checked;
+        closeDownloadModal();
+
+        const logoImg = await loadImage('/logo.png');
+        const nickname = localStorage.getItem('dsa-nickname') || "User";
+
+        // Colors
+        const colPrimary = [79, 70, 229];   // Indigo 600
+        const colTextMain = [17, 24, 39];    // Gray 900
+        const colTextMuted = [107, 114, 128]; // Gray 500
+        const colBgAccent = [249, 250, 251];  // Gray 50
+        const colLine = [229, 231, 235];      // Gray 200
+
+        // Status Colors for Reflections
+        const statusColors = {
+            'solved': { bg: [22, 163, 74], txt: [255, 255, 255] },     // Green
+            'attempted': { bg: [234, 179, 8], txt: [255, 255, 255] },  // Yellow
+            'skipped': { bg: [239, 68, 68], txt: [255, 255, 255] },    // Red
+            'default': { bg: [156, 163, 175], txt: [255, 255, 255] }
+        };
+
+        // --- 2. DATA ---
+        let dataToPrint = [];
+        const allProblems = await manager.getProblems();
+        const probMap = {};
+        allProblems.forEach(p => probMap[p.id || p.permalink.replace(/\/$/, '').split('/').pop()] = p);
+
+        const getItems = (srcArray, type) => {
+            srcArray.forEach(item => {
+                dataToPrint.push({
+                    type: type,
+                    title: item.title,
+                    content: item.content,
+                    difficulty: item.difficulty,
+                    date: item.date || new Date().toLocaleDateString(),
+                    meta: (type === 'Problem Note' ? (probMap[item.id] || {}) : {}),
+                    problems: item.problems
+                });
+            });
+        };
+
+        if (scope === 'all' || scope === 'problems') getItems(notesItems, 'Problem Note');
+        if (scope === 'all' || scope === 'reflections') getItems(reflectionItems, 'Reflection');
+
+        if (dataToPrint.length === 0) { alert("No notes to print."); return; }
+
+        // --- 3. LAYOUT ---
+        const pageW = doc.internal.pageSize.getWidth();
+        const pageH = doc.internal.pageSize.getHeight();
+        const margin = 20;
+        const contentW = pageW - (margin * 2);
+        let y = 0;
+        let pageNum = 1;
+
+        // --- HEADER ---
+        const drawHeader = () => {
+            // White Bg
+            doc.setFillColor(255, 255, 255);
+            doc.rect(0, 0, pageW, 30, 'F');
+
+            if (logoImg) {
+                // Ratio matching website: Logo (w-8 h-8) | Sep (h-6) | Text
+                const logoSize = 10;
+                const logoRatio = logoImg.width / logoImg.height;
+                const renderW = logoSize * logoRatio;
+
+                doc.addImage(logoImg, 'PNG', margin, 10, renderW, logoSize);
+
+                // Separator
+                doc.setDrawColor(220, 220, 220); // Gray-200
+                doc.setLineWidth(0.5);
+                doc.line(margin + renderW + 4, 11, margin + renderW + 4, 19);
+
+                // Brand
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(16);
+                doc.setTextColor(...colTextMain);
+                doc.text("CSRGO DSA", margin + renderW + 8, 18); // Aligned vertically
+
+                // User Note Tagline
+                doc.setFont("helvetica", "normal");
+                doc.setFontSize(11);
+                doc.setTextColor(...colTextMuted);
+                // "Srik's Personal Notes"
+                const nameText = nickname.endsWith('s') ? `${nickname}' Personal Notes` : `${nickname}'s Personal Notes`;
+                doc.text(nameText, margin + renderW + 8 + 40, 18);
+            }
+
+            // Date Right
+            doc.setFontSize(9);
+            doc.setTextColor(...colTextMuted);
+            doc.text(new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }), pageW - margin, 18, { align: 'right' });
+
+            // Bottom Gradient Border
+            const gradH = 1;
+            const steps = 60;
+            // Purple to Blue gradient
+            const c1 = [126, 34, 206]; // Purple-700
+            const c2 = [37, 99, 235];  // Blue-600
+
+            for (let i = 0; i < steps; i++) {
+                const t = i / steps;
+                const r = Math.round(c1[0] + t * (c2[0] - c1[0]));
+                const g = Math.round(c1[1] + t * (c2[1] - c1[1]));
+                const b = Math.round(c1[2] + t * (c2[2] - c1[2]));
+                doc.setFillColor(r, g, b);
+                doc.rect((i * (pageW / steps)), 29, (pageW / steps) + 1, gradH, 'F');
+            }
+        };
+
+        const drawFooter = () => {
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(9);
+            doc.setTextColor(150, 150, 150);
+            doc.text(`${pageNum}`, pageW / 2, pageH - 10, { align: 'center' });
+            pageNum++;
+        };
+
+        const drawWatermark = () => {
+            if (logoImg) {
+                const size = 50;
+                doc.saveGraphicsState();
+                doc.setGState(new doc.GState({ opacity: 0.04 }));
+                doc.addImage(logoImg, 'PNG', (pageW - size) / 2, (pageH - size) / 2, size, size);
+                doc.restoreGraphicsState();
+            }
+        };
+
+        const checkOverflow = (h) => {
+            if (y + h > pageH - margin) {
+                drawFooter();
+                doc.addPage();
+                drawHeader();
+                drawWatermark();
+                y = 40;
+                return true;
+            }
+            return false;
+        };
+
+        // --- RENDER LOOP ---
+        for (let i = 0; i < dataToPrint.length; i++) {
+            // ONE NOTE PER PAGE
+            if (i > 0) {
+                drawFooter(); // Footer for prev page
+                doc.addPage();
+            } else {
+                // First page setup
+                // No addPage needed for first, just init
+            }
+
+            // Re-draw header/watermark for this new page
+            drawHeader();
+            drawWatermark();
+            y = 45; // Start content below header
+
+            const item = dataToPrint[i];
+
+            // --- TITLE BLOCK ---
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(22);
+            doc.setTextColor(...colTextMain);
+            doc.text(item.title, margin, y);
+            y += 10;
+
+            // Difficulty / Subtitle
+            if (item.type === 'Problem Note') {
+                // Badge
+                doc.setFontSize(10);
+                const badgeText = item.difficulty.toUpperCase();
+                let badgeBg = [229, 231, 235];
+                let badgeTxt = [55, 65, 81];
+                if (item.difficulty === 'Easy') { badgeBg = [220, 252, 231]; badgeTxt = [21, 128, 61]; }
+                if (item.difficulty === 'Medium') { badgeBg = [254, 249, 195]; badgeTxt = [161, 98, 7]; }
+                if (item.difficulty === 'Hard') { badgeBg = [254, 226, 226]; badgeTxt = [185, 28, 28]; }
+
+                const badgeW = doc.getTextWidth(badgeText) + 10;
+                doc.setFillColor(...badgeBg);
+                doc.roundedRect(margin, y, badgeW, 7, 2, 2, 'F');
+                doc.setTextColor(...badgeTxt);
+                doc.text(badgeText, margin + 5, y + 5);
+
+                y += 15;
+            } else {
+                doc.setFontSize(11);
+                doc.setTextColor(...colTextMuted);
+                doc.text("REFLECTION SESSION", margin, y);
+                y += 10;
+            }
+
+            // --- PROBLEM META ---
+            if (item.type === 'Problem Note' && item.meta) {
+                // 1. Statement
+                if (inclStatement && item.meta.summary) {
+                    const summaryTxt = stripHtml(item.meta.summary);
+                    const splitSum = doc.splitTextToSize(summaryTxt, contentW - 10);
+                    const boxH = (splitSum.length * 5) + 15;
+
+                    checkOverflow(boxH);
+
+                    doc.setFillColor(...colBgAccent);
+                    doc.roundedRect(margin, y, contentW, boxH, 3, 3, 'F');
+
+                    doc.setFont("helvetica", "bold");
+                    doc.setFontSize(9);
+                    doc.setTextColor(79, 70, 229);
+                    doc.text("PROBLEM", margin + 5, y + 7);
+
+                    doc.setFont("helvetica", "normal");
+                    doc.setFontSize(10);
+                    doc.setTextColor(...colTextMain);
+                    doc.text(splitSum, margin + 5, y + 14);
+
+                    y += boxH + 8;
+                }
+
+                // 2. Info Row (Complexity + Constraints + Examples)
+                if (inclComplexity || inclConstraints || inclExamples) {
+                    checkOverflow(30);
+
+                    let infoY = y;
+
+                    // Complexity
+                    if (inclComplexity) {
+                        doc.setFont("helvetica", "bold");
+                        doc.setFontSize(10);
+                        doc.setTextColor(30, 30, 30);
+                        doc.text("Complexity", margin, infoY);
+                        infoY += 5;
+                        doc.setFont("helvetica", "normal");
+                        doc.setTextColor(...colTextMuted);
+                        const t = `Time: ${item.meta.timeComplexity || '-'}`;
+                        const s = `Space: ${item.meta.spaceComplexity || '-'}`;
+                        doc.text(`${t}  |  ${s}`, margin, infoY);
+                        infoY += 10;
+                    }
+
+                    // Constraints (just count or short)
+                    if (inclConstraints && item.meta.constraints) {
+                        doc.setFont("helvetica", "bold");
+                        doc.setTextColor(30, 30, 30);
+                        doc.text("Constraints", margin, infoY);
+                        infoY += 5;
+                        doc.setFont("helvetica", "normal");
+                        doc.setTextColor(...colTextMuted);
+                        const cTxt = item.meta.constraints.slice(0, 2).map(c => stripHtml(c)).join('; ');
+                        const truncC = cTxt.length > 80 ? cTxt.substring(0, 80) + '...' : cTxt;
+                        doc.text(truncC, margin, infoY);
+                        infoY += 10;
+                    }
+
+                    y = infoY + 5;
+                }
+            }
+
+            // --- REFLECTION BUBBLES ---
+            if (item.type === 'Reflection' && item.problems) {
+                checkOverflow(item.problems.length * 12);
+
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(10);
+                doc.setTextColor(30, 30, 30);
+                doc.text("PROBLEMS REVIEWED", margin, y);
+                y += 8;
+
+                item.problems.forEach((p, idx) => {
+                    checkOverflow(15);
+
+                    // Bubble "P{i}"
+                    const tag = `P${idx + 1}`;
+                    const status = (p.status || 'default').toLowerCase();
+                    const col = statusColors[status] || statusColors['default'];
+
+                    doc.setFillColor(...col.bg);
+                    doc.roundedRect(margin, y - 4, 10, 6, 2, 2, 'F');
+
+                    doc.setFontSize(8);
+                    doc.setTextColor(255, 255, 255);
+                    doc.text(tag, margin + 5, y, { align: 'center' });
+
+                    // Title
+                    doc.setFontSize(10);
+                    doc.setTextColor(...colTextMain);
+                    doc.text(p.title, margin + 14, y);
+
+                    y += 10;
+                });
+                y += 5;
+            }
+
+            // --- MY NOTES ---
+            if (item.content) {
+                y += 5;
+                doc.setDrawColor(...colLine);
+                doc.line(margin, y, margin + 40, y);
+                y += 10;
+
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(12);
+                doc.setTextColor(...colTextMain);
+                doc.text("My Notes", margin, y);
+                y += 8;
+
+                const cleanContent = stripHtml(item.content);
+                const splitContent = doc.splitTextToSize(cleanContent, contentW);
+
+                // Render line by line to handle page breaks naturally
+                doc.setFont("helvetica", "normal");
+                doc.setFontSize(11); // Good reading size
+                doc.setTextColor(55, 65, 81);
+
+                const lineHeight = 6;
+
+                for (let l = 0; l < splitContent.length; l++) {
+                    if (checkOverflow(lineHeight)) {
+                        // layout resets y to top margin
+                    }
+                    doc.text(splitContent[l], margin, y);
+                    y += lineHeight;
+                }
+            }
+        }
+
+        drawFooter(); // Final footer
+        doc.save(`${nickname}_DSA_Notes.pdf`);
+    }
 </script>
+<!-- Download Modal -->
+<div id="downloadModal" class="fixed inset-0 z-50 hidden">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm" onclick="closeDownloadModal()"></div>
+
+    <!-- Modal Content -->
+    <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transform transition-all p-6">
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                <i data-lucide="file-down" class="w-5 h-5 text-primary"></i>
+                Download Notes
+            </h3>
+            <button onclick="closeDownloadModal()"
+                class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <!-- Scope Selection -->
+        <div class="mb-6">
+            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Include Content</label>
+            <div class="space-y-3">
+                <label
+                    class="flex items-center gap-3 p-3 rounded-lg border border-gray-100 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-700/30 cursor-pointer hover:border-primary/30 transition-colors">
+                    <input type="radio" name="notesScope" value="all" checked
+                        class="w-4 h-4 text-primary bg-gray-100 border-gray-300 focus:ring-primary dark:bg-gray-700">
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-200">All Notes (Problems &
+                        Reflections)</span>
+                </label>
+                <label
+                    class="flex items-center gap-3 p-3 rounded-lg border border-gray-100 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-700/30 cursor-pointer hover:border-primary/30 transition-colors">
+                    <input type="radio" name="notesScope" value="problems"
+                        class="w-4 h-4 text-primary bg-gray-100 border-gray-300 focus:ring-primary dark:bg-gray-700">
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Problem Notes Only</span>
+                </label>
+                <label
+                    class="flex items-center gap-3 p-3 rounded-lg border border-gray-100 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-700/30 cursor-pointer hover:border-primary/30 transition-colors">
+                    <input type="radio" name="notesScope" value="reflections"
+                        class="w-4 h-4 text-primary bg-gray-100 border-gray-300 focus:ring-primary dark:bg-gray-700">
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Reflections Only</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Metadata Selection -->
+        <div class="mb-8">
+            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Enrich with Data</label>
+            <div class="grid grid-cols-2 gap-3">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" id="includeStatement"
+                        class="w-4 h-4 rounded text-primary focus:ring-primary border-gray-300 dark:bg-gray-700"
+                        checked>
+                    <span class="text-sm text-gray-600 dark:text-gray-300">Problem Statement</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" id="includeComplexity"
+                        class="w-4 h-4 rounded text-primary focus:ring-primary border-gray-300 dark:bg-gray-700"
+                        checked>
+                    <span class="text-sm text-gray-600 dark:text-gray-300">Time/Space Complexity</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" id="includeExamples"
+                        class="w-4 h-4 rounded text-primary focus:ring-primary border-gray-300 dark:bg-gray-700">
+                    <span class="text-sm text-gray-600 dark:text-gray-300">Examples</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" id="includeConstraints"
+                        class="w-4 h-4 rounded text-primary focus:ring-primary border-gray-300 dark:bg-gray-700">
+                    <span class="text-sm text-gray-600 dark:text-gray-300">Constraints</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-3">
+            <button onclick="closeDownloadModal()"
+                class="flex-1 px-4 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-bold rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors text-sm">
+                Cancel
+            </button>
+            <button onclick="downloadPDF()"
+                class="flex-1 px-4 py-2.5 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all text-sm flex items-center justify-center gap-2">
+                <i data-lucide="download" class="w-4 h-4"></i> Download PDF
+            </button>
+        </div>
+    </div>
+</div>
+
+
 {{ end }}

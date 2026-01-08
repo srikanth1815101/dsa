@@ -671,6 +671,25 @@
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenu.classList.toggle('hidden');
         }
+
+        // Fix: Close mobile menu on page show (handles bfcache/back swiping)
+        window.addEventListener('pageshow', () => {
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Close menu when a link is clicked
+        document.addEventListener('DOMContentLoaded', () => {
+            const items = document.querySelectorAll('#mobile-menu a');
+            items.forEach(link => {
+                link.addEventListener('click', () => {
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        });
     </script>
 </body>
 

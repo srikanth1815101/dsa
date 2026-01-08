@@ -20,6 +20,9 @@
                 {{ range .Site.Menus.main }}
                 <li><a href="{{ .URL }}" class="hover:text-blue-400">{{ .Name }}</a></li>
                 {{ end }}
+                {{ range .Site.Menus.footer }}
+                <li><a href="{{ .URL }}" class="hover:text-blue-400">{{ .Name }}</a></li>
+                {{ end }}
             </ul>
         </div>
         <!-- Legal -->

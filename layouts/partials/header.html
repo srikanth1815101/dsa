@@ -139,10 +139,16 @@
             // Hide modal
             document.getElementById('nickname-modal').classList.add('hidden');
             document.getElementById('nickname-modal').classList.remove('flex');
-            // If on profile page, reload to update name
-            if (window.location.pathname.includes('/profile')) {
-                window.location.reload();
-            }
+
+            // If we are setting it for the first time (implied by modal being open and now saving)
+            // Redirect to Guide as per onboarding flow
+            // Exception: If we are specifically editing it from profile page, maybe just reload?
+            // The constraint: "when user is came first time to site after name, navigates to guide page"
+            // We can check if it was empty before.
+            // But here we just set it.
+            // We can rely on the fact that if this modal was shown via checkNickname(), it meant nickname was missing.
+            // So this IS the first time setup (or after clear).
+            window.location.href = '/guide/';
         }
     }
 

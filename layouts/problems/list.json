@@ -9,6 +9,11 @@
       "topics": {{ .Params.topics | jsonify }},
       "summary": {{ .Summary | jsonify }},
       "starterCode": {{ .Params.starterCode | jsonify }},
+      "timeComplexity": {{ .Params.timeComplexity | jsonify }},
+      "spaceComplexity": {{ .Params.spaceComplexity | jsonify }},
+      "constraints": {{ .Params.constraints | jsonify }},
+      "examples": {{ .Params.examples | jsonify }},
+      "hints": {{ .Params.hints | jsonify }},
       "content": {{ .Content | jsonify }}
   }
   {{- end -}}

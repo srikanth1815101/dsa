@@ -44,14 +44,19 @@ enableGitInfo = false
   weight = 3
 
 [[menu.main]]
-  name = "Guide"
-  url = "/guide/"
+  name = "Notes"
+  url = "/notes/"
   weight = 4
 
-[[menu.main]]
+[[menu.footer]]
+  name = "Guide"
+  url = "/guide/"
+  weight = 1
+
+[[menu.footer]]
   name = "About"
   url = "/about/"
-  weight = 5
+  weight = 2
 
 # Site parameters
 [params]

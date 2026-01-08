@@ -39,3 +39,17 @@ Our goal isn't just to help you solve 100 problems, but to help you **master the
 > "Amateurs practice until they get it right. Professionals practice until they can't get it wrong."
 
 Consistent use of our **Interview Mode** ensures that when you step into a real interview, it feels just like another practice session.
+
+<div class="mt-12 text-center">
+    <button onclick="finishGuide()" 
+        class="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold text-xl rounded-2xl shadow-xl shadow-blue-500/20 hover:scale-105 transition-transform">
+        Get Started 🚀
+    </button>
+</div>
+
+<script>
+function finishGuide() {
+    // User has read the guide. Move to home.
+    window.location.href = '/';
+}
+</script>

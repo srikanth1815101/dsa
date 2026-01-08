@@ -711,7 +711,7 @@ ${item.content}
                 doc.setFontSize(11);
                 doc.setTextColor(...colTextMuted);
                 // "Srik's Personal Notes"
-                const nameText = nickname.endsWith('s') ? `${nickname}' Personal Notes` : `${nickname}'s Personal Notes`;
+                const nameText = nickname.endsWith('s') ? nickname + "\u0027 Personal Notes" : nickname + "\u0027s Personal Notes";
                 doc.text(nameText, margin + renderW + 8 + 40, 18);
             }
 

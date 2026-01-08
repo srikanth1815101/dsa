@@ -7,7 +7,7 @@
 
         <!-- Enhanced Header Card -->
         <div
-            class="relative bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 mb-12 border border-gray-200 dark:border-gray-700/50 shadow-sm group overflow-hidden">
+            class="relative bg-white dark:bg-gray-800 rounded-2xl p-4 md:p-8 mb-8 md:mb-12 border border-gray-200 dark:border-gray-700/50 shadow-sm group overflow-hidden">
 
             <!-- Animated Background Blobs -->
             <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-2xl">
@@ -19,54 +19,54 @@
                 </div>
             </div>
 
-            <div class="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
+            <div class="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8">
                 <div class="flex-1">
-                    <div class="flex items-center gap-3 mb-4">
+                    <div class="flex items-center gap-3 mb-3 md:mb-4">
                         <div class="p-2 bg-gradient-to-br from-primary/10 to-blue-500/10 rounded-xl">
-                            <i data-lucide="notebook-pen" class="w-6 h-6 text-primary"></i>
+                            <i data-lucide="notebook-pen" class="w-5 h-5 md:w-6 md:h-6 text-primary"></i>
                         </div>
                         <h1
-                            class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">
+                            class="text-2xl md:text-3xl lg:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">
                             Personal Notes
                         </h1>
                     </div>
 
-                    <p class="text-gray-500 dark:text-gray-400 max-w-xl text-lg leading-relaxed">
+                    <p class="text-gray-500 dark:text-gray-400 max-w-xl text-base md:text-lg leading-relaxed">
                         A collection of your thoughts, problem strategies, and interview reflections.
                     </p>
                 </div>
 
                 <!-- Stats / Decoration -->
-                <div class="hidden md:flex items-center gap-2">
-                    <button onclick="openDownloadModal()"
-                        class="px-4 py-2 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg border border-primary/20 font-bold text-sm transition-all flex items-center gap-2">
-                        <i data-lucide="download" class="w-4 h-4"></i> Download PDF
+                <div class="flex items-center gap-2 md:self-end">
+                    <button onclick="window.openDownloadModal()"
+                        class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm shadow-lg shadow-blue-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                        <span>Download PDF</span>
                     </button>
-
                 </div>
             </div>
         </div>
 
         <!-- TABS & CONTROLS -->
-        <div class="flex flex-col lg:flex-row gap-6 mb-8 justify-between items-start lg:items-center">
+        <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 mb-8 justify-between items-stretch lg:items-center">
 
             <!-- Pill Tabs -->
             <div
-                class="bg-white dark:bg-gray-800 p-1 rounded-full border border-gray-200 dark:border-gray-700/50 shadow-sm flex w-full md:inline-flex md:w-auto">
+                class="bg-white dark:bg-gray-800 p-1 rounded-full border border-gray-200 dark:border-gray-700/50 shadow-sm flex flex-row w-full md:w-auto">
                 <button onclick="switchTab('problems')" id="tab-problems"
-                    class="flex-1 md:flex-none justify-center px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 flex items-center gap-2">
+                    class="flex-1 md:flex-none justify-center px-4 md:px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 flex items-center gap-2">
                     <i data-lucide="book-open" class="w-4 h-4"></i>
                     Problem Notes
                 </button>
                 <button onclick="switchTab('reflections')" id="tab-reflections"
-                    class="flex-1 md:flex-none justify-center px-6 py-2 rounded-full text-sm font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-all duration-300 flex items-center gap-2">
+                    class="flex-1 md:flex-none justify-center px-4 md:px-6 py-2 rounded-full text-sm font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-all duration-300 flex items-center gap-2">
                     <i data-lucide="sparkles" class="w-4 h-4"></i>
                     Reflections
                 </button>
             </div>
 
             <!-- Search and Filters -->
-            <div class="w-full lg:w-auto flex flex-wrap gap-3">
+            <div class="w-full lg:w-auto flex flex-col md:flex-row gap-3">
                 <div class="relative group w-full md:w-auto md:flex-initial">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i data-lucide="search"
@@ -76,7 +76,7 @@
                         class="pl-10 pr-4 py-2.5 w-full md:w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm transition-all shadow-sm">
                 </div>
 
-                <div class="relative group flex-1 min-w-[140px]" id="difficultyFilterContainer">
+                <div class="relative group w-full md:w-auto min-w-[140px]" id="difficultyFilterContainer">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i data-lucide="bar-chart-2"
                             class="h-4 w-4 text-gray-400 group-focus-within:text-primary transition-colors"></i>
@@ -143,87 +143,118 @@
 <script src="/js/notes-features.js"></script>
 
 <!-- Download Modal -->
-<div id="downloadModal" class="fixed inset-0 z-50 hidden">
-    <!-- Overlay -->
-    <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm" onclick="closeDownloadModal()"></div>
-
-    <!-- Modal Content -->
+<div id="downloadModal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center bg-gray-900/60 backdrop-blur-md px-4 py-4 sm:py-8 overflow-y-auto">
     <div
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transform transition-all p-6">
-        <div class="flex items-center justify-between mb-6">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                <i data-lucide="file-down" class="w-5 h-5 text-primary"></i>
-                Download Notes
-            </h3>
+        class="bg-white dark:bg-gray-800 w-full max-w-xl rounded-2xl md:rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 relative animate-fade-in-up transform transition-all overflow-hidden group my-auto">
+
+        <!-- Decorative bg blobs -->
+        <div
+            class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none">
+        </div>
+
+        <!-- Sticky Header -->
+        <div
+            class="sticky top-0 z-20 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md px-5 py-3 md:px-6 md:py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center shrink-0">
+            <div>
+                <h2
+                    class="text-lg md:text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-2 md:gap-3">
+                    <div
+                        class="p-1.5 md:p-2 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg shadow-lg shrink-0">
+                        <i data-lucide="file-down" class="w-4 h-4 md:w-5 md:h-5 text-white"></i>
+                    </div>
+                    Download Notes
+                </h2>
+            </div>
             <button onclick="closeDownloadModal()"
-                class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
-                <i data-lucide="x" class="w-5 h-5"></i>
+                class="p-1.5 -mr-1.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors group/close">
+                <i data-lucide="x"
+                    class="w-5 h-5 text-gray-400 group-hover/close:text-gray-600 dark:text-gray-500 dark:group-hover/close:text-gray-300 transition-colors"></i>
             </button>
         </div>
 
-        <!-- Scope Selection -->
-        <div class="mb-6">
-            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Include Content</label>
-            <div class="space-y-3">
-                <label
-                    class="flex items-center gap-3 p-3 rounded-lg border border-gray-100 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-700/30 cursor-pointer hover:border-primary/30 transition-colors">
-                    <input type="radio" name="notesScope" value="all" checked
-                        class="w-4 h-4 text-primary bg-gray-100 border-gray-300 focus:ring-primary dark:bg-gray-700">
-                    <span class="text-sm font-medium text-gray-700 dark:text-gray-200">All Notes (Problems &
-                        Reflections)</span>
-                </label>
-                <label
-                    class="flex items-center gap-3 p-3 rounded-lg border border-gray-100 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-700/30 cursor-pointer hover:border-primary/30 transition-colors">
-                    <input type="radio" name="notesScope" value="problems"
-                        class="w-4 h-4 text-primary bg-gray-100 border-gray-300 focus:ring-primary dark:bg-gray-700">
-                    <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Problem Notes Only</span>
-                </label>
-                <label
-                    class="flex items-center gap-3 p-3 rounded-lg border border-gray-100 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-700/30 cursor-pointer hover:border-primary/30 transition-colors">
-                    <input type="radio" name="notesScope" value="reflections"
-                        class="w-4 h-4 text-primary bg-gray-100 border-gray-300 focus:ring-primary dark:bg-gray-700">
-                    <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Reflections Only</span>
-                </label>
+        <!-- Scrollable Content -->
+        <div class="px-5 py-4 md:p-6 relative z-10 overflow-y-auto custom-scrollbar">
+
+            <!-- Scope Section -->
+            <div class="mb-6">
+                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Include
+                    Content</label>
+                <div class="grid grid-cols-1 gap-2.5">
+                    <!-- All Notes -->
+                    <label
+                        class="group relative flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        <input type="radio" name="notesScope" value="all" checked
+                            class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600">
+                        <div class="flex-1">
+                            <span class="block text-sm font-bold text-gray-900 dark:text-white">All Notes</span>
+                            <span class="block text-xs text-gray-500">Includes both problem solutions and
+                                reflections</span>
+                        </div>
+                    </label>
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <label
+                            class="group relative flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                            <input type="radio" name="notesScope" value="problems"
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600">
+                            <span class="text-sm font-bold text-gray-900 dark:text-white">Problem Notes</span>
+                        </label>
+                        <label
+                            class="group relative flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                            <input type="radio" name="notesScope" value="reflections"
+                                class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
+                            <span class="text-sm font-bold text-gray-900 dark:text-white">Reflections</span>
+                        </label>
+                    </div>
+                </div>
             </div>
+
+            <!-- Metadata Section -->
+            <div class="mb-2">
+                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Enrich with
+                    Data</label>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <label
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        <input type="checkbox" id="includeStatement" checked
+                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Problem Statement</span>
+                    </label>
+                    <label
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        <input type="checkbox" id="includeComplexity" checked
+                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Time/Space Complexity</span>
+                    </label>
+                    <label
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        <input type="checkbox" id="includeExamples"
+                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Examples</span>
+                    </label>
+                    <label
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        <input type="checkbox" id="includeConstraints"
+                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Constraints</span>
+                    </label>
+                </div>
+            </div>
+
         </div>
 
-        <!-- Metadata Selection -->
-        <div class="mb-8">
-            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Enrich with Data</label>
-            <div class="grid grid-cols-2 gap-3">
-                <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" id="includeStatement"
-                        class="w-4 h-4 rounded text-primary focus:ring-primary border-gray-300 dark:bg-gray-700"
-                        checked>
-                    <span class="text-sm text-gray-600 dark:text-gray-300">Problem Statement</span>
-                </label>
-                <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" id="includeComplexity"
-                        class="w-4 h-4 rounded text-primary focus:ring-primary border-gray-300 dark:bg-gray-700"
-                        checked>
-                    <span class="text-sm text-gray-600 dark:text-gray-300">Time/Space Complexity</span>
-                </label>
-                <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" id="includeExamples"
-                        class="w-4 h-4 rounded text-primary focus:ring-primary border-gray-300 dark:bg-gray-700">
-                    <span class="text-sm text-gray-600 dark:text-gray-300">Examples</span>
-                </label>
-                <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" id="includeConstraints"
-                        class="w-4 h-4 rounded text-primary focus:ring-primary border-gray-300 dark:bg-gray-700">
-                    <span class="text-sm text-gray-600 dark:text-gray-300">Constraints</span>
-                </label>
-            </div>
-        </div>
-
-        <!-- Actions -->
-        <div class="flex gap-3">
+        <!-- Sticky Footer -->
+        <div
+            class="p-4 md:p-6 border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50 backdrop-blur-sm relative z-20 shrink-0 flex gap-3">
             <button onclick="closeDownloadModal()"
-                class="flex-1 px-4 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-bold rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors text-sm">
+                class="flex-1 py-3 md:py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
                 Cancel
             </button>
             <button onclick="downloadPDF()"
-                class="flex-1 px-4 py-2.5 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-all text-sm flex items-center justify-center gap-2">
+                class="flex-[2] py-3 md:py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm hover:shadow-xl hover:shadow-blue-500/20 hover:scale-[1.01] transition-all transform active:scale-95 flex items-center justify-center gap-2">
                 <i data-lucide="download" class="w-4 h-4"></i> Download PDF
             </button>
         </div>

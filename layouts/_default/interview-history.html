@@ -131,7 +131,18 @@
     const manager = window.InterviewManager;
     let resizeTimeout;
 
-    (function () {
+    (async function () {
+        // Wait for DB ready
+        let retries = 0;
+        while (!window.dsaDB || !manager) {
+            if (retries > 20) break;
+            await new Promise(r => setTimeout(r, 100));
+            retries++;
+        }
+
+        // Wait for Manager to load initial data
+        if (manager) await manager._ready;
+
         renderHistory();
         lucide.createIcons();
 
@@ -144,29 +155,26 @@
         });
     })();
 
-    function renderHistory() {
+    async function renderHistory() {
         const db = manager.db;
         const now = Date.now();
-        let dirty = false;
 
         // Auto-expire active sessions that exceeded duration
-        // This handles cases where the user closed the tab and time elapsed
         if (db.sessions) {
+            const updates = [];
             Object.values(db.sessions).forEach(s => {
                 if (s.state.status === 'active') {
                     const durationMs = (s.config.duration || 30) * 60 * 1000;
-                    // Check if strictly past deadline (startedAt + duration)
                     if (now - s.state.startedAt > durationMs) {
                         s.state.status = 'completed';
-                        // Set endedAt to the theoretical completion time
                         s.state.endedAt = s.state.startedAt + durationMs;
-                        dirty = true;
+                        updates.push(manager.saveSession(s));
                     }
                 }
             });
 
-            if (dirty) {
-                manager.saveDB();
+            if (updates.length > 0) {
+                await Promise.all(updates);
             }
         }
 
@@ -328,15 +336,18 @@
         modal.classList.remove('flex');
     }
 
-    function confirmEditSession() {
+    async function confirmEditSession() {
         if (sessionToEditId) {
             const input = document.getElementById('edit-session-input');
             const newTitle = input.value.trim();
             if (newTitle) {
-                manager.db.sessions[sessionToEditId].title = newTitle;
-                manager.saveDB();
-                renderHistory();
-                closeEditModal();
+                const s = manager.db.sessions[sessionToEditId];
+                if (s) {
+                    s.title = newTitle;
+                    await manager.saveSession(s);
+                    renderHistory();
+                    closeEditModal();
+                }
             }
         }
     }
@@ -355,10 +366,9 @@
         modal.classList.remove('flex');
     }
 
-    function confirmDeleteSession() {
+    async function confirmDeleteSession() {
         if (sessionToDeleteId) {
-            delete manager.db.sessions[sessionToDeleteId];
-            manager.saveDB();
+            await manager.deleteSession(sessionToDeleteId);
             renderHistory();
             closeDeleteModal();
         }

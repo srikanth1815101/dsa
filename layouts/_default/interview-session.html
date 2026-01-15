@@ -357,7 +357,7 @@
             return;
         }
 
-        session = manager.loadSession(sessionId);
+        session = await manager.loadSession(sessionId);
         if (!session) {
             alert("Session not found.");
             window.location.href = '/interview/';
@@ -494,7 +494,7 @@
     async function loadProblem(index) {
         currentProblemIndex = index;
         session.state.currentProblemIndex = index;
-        manager.saveDB(); // Persist view
+        await manager.saveSession(session); // Persist view
 
         // UI Updates
         renderProblemList();

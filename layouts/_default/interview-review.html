@@ -215,26 +215,52 @@
     const sessionId = urlParams.get('id');
     let session = null;
 
-    (function () {
+    (async function () {
         if (!sessionId) {
             window.location.href = '/interview/history/';
             return;
         }
 
-        session = manager.loadSession(sessionId);
+        // Wait for manager DB or try load
+        // Initial load might be async now if manager uses DB directly
+        // But manager.loadSession() is currently synchronous if data is in memory?
+        // Actually refactored Manager uses dsaDB internally but loadSession might be async?
+        // Let's check manager: loadSession(id) { return this.db.sessions[id] || null; }
+        // So we need to ensure manager is ready.
+
+        // Retry loop for manager readiness
+        let retries = 0;
+        while (!window.dsaDB || !manager) {
+            if (retries > 10) break;
+            await new Promise(r => setTimeout(r, 200));
+            retries++;
+        }
+
+        session = await manager.loadSession(sessionId);
+
+        // If not found in memory (refresh), try fetching from DB directly via manager or db
+        if (!session && window.dsaDB) {
+            const sess = await window.dsaDB.getSession(sessionId);
+            if (sess) {
+                session = sess;
+                // Manually inject into manager so other manager methods work
+                if (manager.db && manager.db.sessions) manager.db.sessions[sessionId] = sess;
+            }
+        }
+
         if (!session) {
             window.location.href = '/interview/history/';
             return;
         }
 
         renderSummary();
-        renderProblems();
+        renderProblems(); // Async call
 
         if (session.notes && session.notes.reflection) {
             document.getElementById('reflection-text').value = session.notes.reflection;
         }
 
-        lucide.createIcons();
+        if (window.lucide) lucide.createIcons();
     })();
 
     function renderSummary() {
@@ -242,18 +268,28 @@
         document.getElementById('total-time').textContent = manager.formatTime(totalSec);
         document.getElementById('problem-count').textContent = session.problems.length;
         document.getElementById('solved-count').textContent = session.problems.filter(p => p.status === 'solved').length;
+        document.getElementById('session-title').textContent = session.title || 'Session Review';
         document.getElementById('difficulty-label').textContent = session.config.difficulty || 'Mixed';
     }
 
-    function renderProblems() {
+    async function renderProblems() {
         const container = document.getElementById('problem-list');
-        const bookmarks = JSON.parse(localStorage.getItem('dsa-bookmarks') || '[]');
-        const revised = JSON.parse(localStorage.getItem('dsa-revised') || '[]');
+
+        // Fetch current states from DB
+        let bookmarks = new Set();
+        let revised = new Set();
+        try {
+            const problems = await window.dsaDB.getAllProblems();
+            problems.forEach(p => {
+                if (p.bookmarked) bookmarks.add(p.id);
+                if (p.revised) revised.add(p.id);
+            });
+        } catch (e) { console.error(e); }
 
         container.innerHTML = session.problems.map((p, i) => {
             const id = p.id || p.permalink.replace(/\/$/, '').split('/').pop();
-            const isBookmarked = bookmarks.includes(id);
-            const isRevised = revised.includes(id);
+            const isBookmarked = bookmarks.has(id);
+            const isRevised = revised.has(id);
 
             let notesHTML = '';
             if (p.notes) {
@@ -328,7 +364,7 @@
             txt.value = '';
         }
 
-        lucide.createIcons();
+        if (window.lucide) lucide.createIcons();
     }
 
     function getBadgeStyle(diff) {
@@ -344,50 +380,50 @@
     }
 
     /* --- Action Toggles --- */
-    function toggleReviewBookmark(e, id, btn) {
+    async function toggleReviewBookmark(e, id, btn) {
         e.stopPropagation();
-        let bookmarks = JSON.parse(localStorage.getItem('dsa-bookmarks') || '[]');
-        const index = bookmarks.indexOf(id);
-        // Fix: Select SVG if Lucide has replaced it, otherwise fallback to I
+        if (!window.dsaDB) return;
+
         const icon = btn.querySelector('svg') || btn.querySelector('i');
 
-        if (index === -1) {
-            bookmarks.push(id);
-            showReviewToast('Added to Saved Problems', 'success');
-            // Update UI to Active
-            btn.classList.remove('text-gray-400', 'hover:bg-gray-100', 'dark:hover:bg-gray-700', 'hover:text-yellow-500');
-            btn.classList.add('text-yellow-500', 'bg-yellow-50', 'dark:bg-yellow-900/20');
-            if (icon) icon.classList.add('fill-current');
-        } else {
-            bookmarks.splice(index, 1);
-            showReviewToast('Removed from Saved Problems', 'info');
-            // Update UI to Inactive
-            btn.classList.remove('text-yellow-500', 'bg-yellow-50', 'dark:bg-yellow-900/20');
-            btn.classList.add('text-gray-400', 'hover:bg-gray-100', 'dark:hover:bg-gray-700', 'hover:text-yellow-500');
-            if (icon) icon.classList.remove('fill-current');
-        }
-        localStorage.setItem('dsa-bookmarks', JSON.stringify(bookmarks));
+        try {
+            const prob = await window.dsaDB.getProblem(id);
+            const newState = !prob.bookmarked;
+            await window.dsaDB.updateField(id, 'bookmarked', newState);
+
+            if (newState) {
+                showReviewToast('Added to Saved Problems', 'success');
+                btn.classList.remove('text-gray-400', 'hover:bg-gray-100', 'dark:hover:bg-gray-700', 'hover:text-yellow-500');
+                btn.classList.add('text-yellow-500', 'bg-yellow-50', 'dark:bg-yellow-900/20');
+                if (icon) icon.classList.add('fill-current');
+            } else {
+                showReviewToast('Removed from Saved Problems', 'success');
+                btn.classList.remove('text-yellow-500', 'bg-yellow-50', 'dark:bg-yellow-900/20');
+                btn.classList.add('text-gray-400', 'hover:bg-gray-100', 'dark:hover:bg-gray-700', 'hover:text-yellow-500');
+                if (icon) icon.classList.remove('fill-current');
+            }
+        } catch (e) { console.error(e); }
     }
 
-    function toggleReviewRevision(e, id, btn) {
+    async function toggleReviewRevision(e, id, btn) {
         e.stopPropagation();
-        let revised = JSON.parse(localStorage.getItem('dsa-revised') || '[]');
-        const index = revised.indexOf(id);
+        if (!window.dsaDB) return;
 
-        if (index === -1) {
-            revised.push(id);
-            showReviewToast('Added to Revision List', 'success');
-            // Update UI to Active
-            btn.classList.remove('text-gray-400', 'hover:bg-gray-100');
-            btn.classList.add('text-blue-500', 'bg-blue-50', 'dark:bg-blue-900/20');
-        } else {
-            revised.splice(index, 1);
-            showReviewToast('Removed from Revision List', 'info');
-            // Update UI to Inactive
-            btn.classList.remove('text-blue-500', 'bg-blue-50', 'dark:bg-blue-900/20');
-            btn.classList.add('text-gray-400', 'hover:bg-gray-100');
-        }
-        localStorage.setItem('dsa-revised', JSON.stringify(revised));
+        try {
+            const prob = await window.dsaDB.getProblem(id);
+            const newState = !prob.revised;
+            await window.dsaDB.updateField(id, 'revised', newState);
+
+            if (newState) {
+                showReviewToast('Added to Revision List', 'success');
+                btn.classList.remove('text-gray-400', 'hover:bg-gray-100');
+                btn.classList.add('text-blue-500', 'bg-blue-50', 'dark:bg-blue-900/20');
+            } else {
+                showReviewToast('Removed from Revision List', 'info');
+                btn.classList.remove('text-blue-500', 'bg-blue-50', 'dark:bg-blue-900/20');
+                btn.classList.add('text-gray-400', 'hover:bg-gray-100');
+            }
+        } catch (e) { console.error(e); }
     }
 
     function showReviewToast(message, type = 'info') {
@@ -413,14 +449,12 @@
         document.getElementById('reflection-input-container').classList.remove('hidden');
         const txt = document.getElementById('reflection-text');
         txt.focus();
-        // Force a resize calculation after making visible
         autoResize(txt);
     }
 
     function cancelEditReflection() {
         document.getElementById('reflection-input-container').classList.add('hidden');
         document.getElementById('reflection-display').classList.remove('hidden');
-        // Reset value
         if (session.notes && session.notes.reflection) {
             document.getElementById('reflection-text').value = session.notes.reflection;
         } else {
@@ -428,17 +462,18 @@
         }
     }
 
-    function saveReflection() {
+    async function saveReflection() {
         const text = document.getElementById('reflection-text').value;
         session.notes = session.notes || {};
         session.notes.reflection = text;
-        manager.saveDB();
 
-        // Update Display
+        // Use Manager (which now uses DB)
+        await manager.saveSession(session);
+
         const disp = document.getElementById('reflection-display');
         if (text.trim()) {
             disp.textContent = text;
-            disp.classList.remove('italic', 'text-gray-400'); // Remove placeholder style
+            disp.classList.remove('italic', 'text-gray-400');
         } else {
             disp.innerHTML = '<span class="text-gray-400 italic">Take a moment to jot down what went well or what you found challenging...</span>';
         }
@@ -464,32 +499,20 @@
         modal.classList.remove('flex');
     }
 
-    function confirmEditSession() {
+    async function confirmEditSession() {
         const input = document.getElementById('edit-session-input');
         const newTitle = input.value.trim();
         if (newTitle) {
             session.title = newTitle;
-            manager.saveDB();
+            await manager.saveSession(session);
 
-            // Update UI
             document.getElementById('session-title').textContent = newTitle;
-
             closeEditModal();
             showReviewToast('Session Renamed', 'success');
         }
     }
 
-    // Initialize Title on Load
-    (function () {
-        const checkSession = setInterval(() => {
-            if (typeof session !== 'undefined' && session) {
-                if (session.title) {
-                    document.getElementById('session-title').textContent = session.title;
-                }
-                clearInterval(checkSession);
-            }
-        }, 50);
-    })();
+    // Initialize Title on Load (handled in async wrapper)
 </script>
 
 <!-- EDIT SESSION MODAL -->

@@ -331,10 +331,15 @@
     </div>
 </div>
 <script>
+    // Global caches for local state
+    let stateBookmarks = new Set();
+    let stateCompleted = new Set();
+    let stateRevised = new Set();
+
     document.addEventListener('DOMContentLoaded', () => {
-        lucide.createIcons();
+        if (window.lucide) lucide.createIcons();
         if (typeof initListState === 'function') {
-            initListState();
+            initListState(true);
         }
     });
 
@@ -342,7 +347,28 @@
     // Shared Logic
     // -------------------------------------------------------------------------
 
-    function initListState() {
+    async function initListState(fetchData = true) {
+        if (fetchData) {
+            if (!window.dsaDB) {
+                setTimeout(() => initListState(true), 100);
+                return;
+            }
+            try {
+                const problems = await window.dsaDB.getAllProblems();
+                stateBookmarks = new Set();
+                stateCompleted = new Set();
+                stateRevised = new Set();
+
+                problems.forEach(p => {
+                    if (p.bookmarked) stateBookmarks.add(p.id);
+                    if (p.completed) stateCompleted.add(p.id);
+                    if (p.revised) stateRevised.add(p.id);
+                });
+            } catch (e) {
+                console.error("Error syncing paths list state:", e);
+            }
+        }
+
         // Run logic for Single Path View (View 2)
         updatePathProgress();
         updateIcons();
@@ -354,13 +380,6 @@
         setTimeout(adjustTopicTags, 100);
     }
 
-    // Listen for storage changes to sync tabs/windows
-    window.addEventListener('storage', (e) => {
-        if (['dsa-bookmarks', 'dsa-completed', 'dsa-revised'].includes(e.key)) {
-            initListState();
-        }
-    });
-
     // -------------------------------------------------------------------------
     // VIEW 1: Paths Index Logic (Cards)
     // -------------------------------------------------------------------------
@@ -368,8 +387,6 @@
     function updatePathsIndexProgress() {
         const pathCards = document.querySelectorAll('[data-problem-ids]');
         if (pathCards.length === 0) return; // Not on index page
-
-        const completed = JSON.parse(localStorage.getItem('dsa-completed') || '[]');
 
         pathCards.forEach(card => {
             const rawIds = card.dataset.problemIds || "";
@@ -382,7 +399,7 @@
             // Count completed for this specific path
             let count = 0;
             ids.forEach(id => {
-                if (completed.includes(id)) count++;
+                if (stateCompleted.has(id)) count++;
             });
 
             const percent = Math.round((count / total) * 100);
@@ -411,82 +428,87 @@
     // -------------------------------------------------------------------------
 
     // Toggle completion status
-    function toggleListCompletion(event, id) {
+    async function toggleListCompletion(event, id) {
         event.stopPropagation();
-        let completed = JSON.parse(localStorage.getItem('dsa-completed') || '[]');
-        const index = completed.indexOf(id);
+        if (!window.dsaDB) return;
 
-        if (index === -1) {
-            completed.push(id);
-            if (typeof showToast === 'function') showToast('Problem marked as completed!', 'success');
-        } else {
-            completed.splice(index, 1);
-        }
+        try {
+            const problem = await window.dsaDB.getProblem(id);
+            const newState = !problem.completed;
+            await window.dsaDB.updateField(id, 'completed', newState);
 
-        localStorage.setItem('dsa-completed', JSON.stringify(completed));
-        updateCheckboxes();
-        updatePathProgress();
-        // Also update index progress if we happen to be on a page showing both (unlikely but good practice)
-        updatePathsIndexProgress();
+            if (newState) {
+                stateCompleted.add(id);
+                if (typeof showToast === 'function') showToast('Problem marked as completed!', 'success');
+            } else {
+                stateCompleted.delete(id);
+            }
+            // Update both views logic
+            updateCheckboxes();
+            updatePathProgress();
+            updatePathsIndexProgress();
+        } catch (e) { console.error(e); }
     }
 
     // Toggle Bookmark
-    function toggleBookmark(event, id) {
+    async function toggleBookmark(event, id) {
         event.stopPropagation();
-        let bookmarks = JSON.parse(localStorage.getItem('dsa-bookmarks') || '[]');
-        const index = bookmarks.indexOf(id);
+        if (!window.dsaDB) return;
 
-        if (index === -1) {
-            bookmarks.push(id);
-            if (typeof showToast === 'function') showToast('Added to Saved Problems', 'success');
-        } else {
-            bookmarks.splice(index, 1);
-            if (typeof showToast === 'function') showToast('Removed from Saved Problems', 'info');
-        }
+        try {
+            const problem = await window.dsaDB.getProblem(id);
+            const newState = !problem.bookmarked;
+            await window.dsaDB.updateField(id, 'bookmarked', newState);
 
-        localStorage.setItem('dsa-bookmarks', JSON.stringify(bookmarks));
-        updateIcons();
+            if (newState) {
+                stateBookmarks.add(id);
+                if (typeof showToast === 'function') showToast('Added to Saved Problems', 'success');
+            } else {
+                stateBookmarks.delete(id);
+                if (typeof showToast === 'function') showToast('Removed from Saved Problems', 'info');
+            }
+            updateIcons();
+        } catch (e) { console.error(e); }
     }
 
     // Toggle Revision
-    function toggleRevision(event, id) {
+    async function toggleRevision(event, id) {
         event.stopPropagation();
-        let revised = JSON.parse(localStorage.getItem('dsa-revised') || '[]');
-        const index = revised.indexOf(id);
+        if (!window.dsaDB) return;
 
-        if (index === -1) {
-            revised.push(id);
-            if (typeof showToast === 'function') showToast('Added to Revision List', 'success');
-        } else {
-            revised.splice(index, 1);
-            if (typeof showToast === 'function') showToast('Removed from Revision List', 'info');
-        }
+        try {
+            const problem = await window.dsaDB.getProblem(id);
+            const newState = !problem.revised;
+            await window.dsaDB.updateField(id, 'revised', newState);
 
-        localStorage.setItem('dsa-revised', JSON.stringify(revised));
-        updateIcons();
+            if (newState) {
+                stateRevised.add(id);
+                if (typeof showToast === 'function') showToast('Added to Revision List', 'success');
+            } else {
+                stateRevised.delete(id);
+                if (typeof showToast === 'function') showToast('Removed from Revision List', 'info');
+            }
+            updateIcons();
+        } catch (e) { console.error(e); }
     }
 
     // Update Checkboxes
     function updateCheckboxes() {
-        const completed = JSON.parse(localStorage.getItem('dsa-completed') || '[]');
         document.querySelectorAll('.problem-item').forEach(item => {
             const id = item.dataset.id;
             const checkbox = item.querySelector('input[type="checkbox"]');
             if (checkbox) {
-                checkbox.checked = completed.includes(id);
+                checkbox.checked = stateCompleted.has(id);
             }
         });
     }
 
     // Update Icons (Bookmark & Revision)
     function updateIcons() {
-        const bookmarks = JSON.parse(localStorage.getItem('dsa-bookmarks') || '[]');
-        const revised = JSON.parse(localStorage.getItem('dsa-revised') || '[]');
-
         // Check bookmarks
         document.querySelectorAll('.bookmark-icon').forEach(icon => {
             const id = icon.dataset.id;
-            if (bookmarks.includes(id)) {
+            if (stateBookmarks.has(id)) {
                 icon.classList.add('fill-current', 'text-yellow-500');
                 icon.classList.remove('text-gray-400');
             } else {
@@ -498,7 +520,7 @@
         // Check revised
         document.querySelectorAll('.revise-icon').forEach(icon => {
             const id = icon.dataset.id;
-            if (revised.includes(id)) {
+            if (stateRevised.has(id)) {
                 icon.classList.add('text-blue-500');
                 icon.classList.remove('text-gray-400');
             } else {
@@ -517,13 +539,10 @@
 
         if (!progressText || !progressBar || problemItems.length === 0) return;
 
-        const completed = JSON.parse(localStorage.getItem('dsa-completed') || '[]');
         const total = problemItems.length;
-
-        // Count how many of THIS path's problems are completed
         let pathCompletedCount = 0;
         problemItems.forEach(item => {
-            if (completed.includes(item.dataset.id)) {
+            if (stateCompleted.has(item.dataset.id)) {
                 pathCompletedCount++;
             }
         });

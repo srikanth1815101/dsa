@@ -139,51 +139,69 @@ function updateTabUI() {
 async function loadData() {
     if (!manager) manager = window.InterviewManager; // Double check
 
-    // 1. Load Problem Notes
-    const notesRaw = localStorage.getItem('dsa-notes');
-    const notesData = notesRaw ? JSON.parse(notesRaw) : {};
+    // 1. Load Problem Notes (from DB)
+    if (!window.dsaDB) {
+        // Wait retry if DB not ready
+        setTimeout(loadData, 200);
+        return;
+    }
 
-    if (Object.keys(notesData).length > 0) {
-        const allProblems = await manager.getProblems();
-        const probMap = {};
-        allProblems.forEach(p => {
-            const id = p.id || p.permalink.replace(/\/$/, '').split('/').pop();
-            probMap[id] = p;
-        });
+    try {
+        const problemsFromDB = await window.dsaDB.getAllProblems();
+        // Filter those with notes
+        const notesData = problemsFromDB.filter(p => p.note && p.note.trim() !== '');
 
-        notesItems = Object.entries(notesData).map(([id, content]) => {
-            const prob = probMap[id];
-            return {
-                id,
-                title: prob ? prob.title : id,
-                content,
-                difficulty: prob ? prob.difficulty : 'Unknown',
-                permalink: prob ? prob.permalink : '#',
-                topics: prob ? (prob.topics || []) : []
-            };
-        }).filter(item => item.content.trim() !== '');
-    } else {
+        if (notesData.length > 0) {
+            const allProblems = await manager.getProblems(); // Helper to fetch problem metadata
+            const probMap = {};
+            allProblems.forEach(p => {
+                const id = p.id || p.permalink.replace(/\/$/, '').split('/').pop();
+                probMap[id] = p;
+            });
+
+            notesItems = notesData.map(dbItem => {
+                const id = dbItem.id;
+                const prob = probMap[id];
+                return {
+                    id,
+                    title: prob ? prob.title : id,
+                    content: dbItem.note,
+                    difficulty: prob ? prob.difficulty : 'Unknown',
+                    permalink: prob ? prob.permalink : '#',
+                    topics: prob ? (prob.topics || []) : []
+                };
+            });
+        } else {
+            notesItems = [];
+        }
+    } catch (e) {
+        console.error("Error loading notes from DB", e);
         notesItems = [];
     }
 
-    // 2. Load Reflections
-    const db = manager.db;
-    if (db && db.sessions) {
-        reflectionItems = Object.values(db.sessions)
-            .filter(s => s.notes && s.notes.reflection && s.notes.reflection.trim() !== '')
-            .sort((a, b) => b.createdAt - a.createdAt)
-            .map(s => ({
-                id: s.id,
-                title: s.title || 'Session Reflection',
-                content: s.notes.reflection,
-                date: new Date(s.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }),
-                problems: (s.problems || []).map(p => ({
-                    title: p.title,
-                    status: p.status, // 'solved', 'attempted', 'skipped'
-                    permalink: p.permalink || '#'
-                }))
-            }));
-    } else {
+    // 2. Load Reflections (from DB)
+    try {
+        const sessions = await window.dsaDB.getAllSessions();
+        if (sessions) {
+            reflectionItems = sessions
+                .filter(s => s.notes && s.notes.reflection && s.notes.reflection.trim() !== '')
+                .sort((a, b) => b.createdAt - a.createdAt)
+                .map(s => ({
+                    id: s.id,
+                    title: s.title || 'Session Reflection',
+                    content: s.notes.reflection,
+                    date: new Date(s.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }),
+                    problems: (s.problems || []).map(p => ({
+                        title: p.title,
+                        status: p.status, // 'solved', 'attempted', 'skipped'
+                        permalink: p.permalink || '#'
+                    }))
+                }));
+        } else {
+            reflectionItems = [];
+        }
+    } catch (e) {
+        console.error("Error loading reflections from DB", e);
         reflectionItems = [];
     }
 

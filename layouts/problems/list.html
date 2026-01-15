@@ -320,7 +320,16 @@
 
     const clearFiltersBtn = document.getElementById('clearFiltersBtn');
 
-    let currentTab = 'all'; // 'all', 'saved', 'revised'
+    // Initialize tab from URL param or default to 'all'
+    const urlParams = new URLSearchParams(window.location.search);
+    const validTabs = ['all', 'saved', 'revised'];
+    const paramTab = urlParams.get('tab');
+    let currentTab = validTabs.includes(paramTab) ? paramTab : 'all';
+
+    // State Caches (Sets of IDs)
+    let stateBookmarks = new Set();
+    let stateCompleted = new Set();
+    let stateRevised = new Set();
 
     function initTabs() {
         updateTabUI();
@@ -358,21 +367,20 @@
     }
 
     function updateCounts() {
-        const bookmarks = JSON.parse(localStorage.getItem('dsa-bookmarks') || '[]');
-        const revised = JSON.parse(localStorage.getItem('dsa-revised') || '[]');
-
         // Saved Badge
         const savedBadge = document.getElementById('saved-count-badge');
         if (savedBadge) {
-            savedBadge.textContent = bookmarks.length;
-            bookmarks.length > 0 ? savedBadge.classList.remove('hidden') : savedBadge.classList.add('hidden');
+            const count = stateBookmarks.size;
+            savedBadge.textContent = count;
+            count > 0 ? savedBadge.classList.remove('hidden') : savedBadge.classList.add('hidden');
         }
 
         // Revised Badge
         const revisedBadge = document.getElementById('revised-count-badge');
         if (revisedBadge) {
-            revisedBadge.textContent = revised.length;
-            revised.length > 0 ? revisedBadge.classList.remove('hidden') : revisedBadge.classList.add('hidden');
+            const count = stateRevised.size;
+            revisedBadge.textContent = count;
+            count > 0 ? revisedBadge.classList.remove('hidden') : revisedBadge.classList.add('hidden');
         }
     }
 
@@ -380,8 +388,6 @@
         const searchTerm = searchInput.value.toLowerCase();
         const difficulty = difficultyFilter.value;
         const topic = topicFilter.value;
-        const bookmarks = JSON.parse(localStorage.getItem('dsa-bookmarks') || '[]');
-        const revised = JSON.parse(localStorage.getItem('dsa-revised') || '[]');
 
         let visibleCount = 0;
 
@@ -406,9 +412,9 @@
 
             let matchesTab = true;
             if (currentTab === 'saved') {
-                matchesTab = bookmarks.includes(itemId);
+                matchesTab = stateBookmarks.has(itemId);
             } else if (currentTab === 'revised') {
-                matchesTab = revised.includes(itemId);
+                matchesTab = stateRevised.has(itemId);
             }
 
             if (matchesSearch && matchesDifficulty && matchesTopic && matchesTab) {
@@ -434,74 +440,83 @@
 
     function copyPageUrl() {
         navigator.clipboard.writeText(window.location.href).then(() => {
-            // Assuming showToast is defined globally or in problem-utils.js
             if (typeof showToast === 'function') showToast('Link copied to clipboard!', 'success');
         });
     }
 
-    // Toggle completion status directly from the list
-    function toggleListCompletion(event, id) {
-        // Prevent row click if any
+    // Toggle completion status
+    async function toggleListCompletion(event, id) {
         event.stopPropagation();
+        if (!window.dsaDB) return;
 
-        let completed = JSON.parse(localStorage.getItem('dsa-completed') || '[]');
-        const index = completed.indexOf(id);
+        try {
+            const problem = await window.dsaDB.getProblem(id);
+            const newState = !problem.completed;
+            await window.dsaDB.updateField(id, 'completed', newState);
 
-        if (index === -1) {
-            completed.push(id);
-            if (typeof showToast === 'function') showToast('Problem marked as completed!', 'success');
-        } else {
-            completed.splice(index, 1);
+            if (newState) {
+                stateCompleted.add(id);
+                if (typeof showToast === 'function') showToast('Problem marked as completed!', 'success');
+            } else {
+                stateCompleted.delete(id);
+            }
+            updateProgress();
+        } catch (e) {
+            console.error(e);
         }
-
-        localStorage.setItem('dsa-completed', JSON.stringify(completed));
-        updateProgress();
     }
 
     // Toggle Bookmark (Saved)
-    function toggleBookmark(event, id) {
+    async function toggleBookmark(event, id) {
         event.stopPropagation();
+        if (!window.dsaDB) return;
 
-        let bookmarks = JSON.parse(localStorage.getItem('dsa-bookmarks') || '[]');
-        const index = bookmarks.indexOf(id);
+        try {
+            const problem = await window.dsaDB.getProblem(id);
+            const newState = !problem.bookmarked;
+            await window.dsaDB.updateField(id, 'bookmarked', newState);
 
-        if (index === -1) {
-            bookmarks.push(id);
-            if (typeof showToast === 'function') showToast('Added to Saved Problems', 'success');
-        } else {
-            bookmarks.splice(index, 1);
-            if (typeof showToast === 'function') showToast('Removed from Saved Problems', 'info');
+            if (newState) {
+                stateBookmarks.add(id);
+                if (typeof showToast === 'function') showToast('Added to Saved Problems', 'success');
+            } else {
+                stateBookmarks.delete(id);
+                if (typeof showToast === 'function') showToast('Removed from Saved Problems', 'info');
+            }
+            initListState(false); // Update UI only, dont re-fetch
+            if (currentTab === 'saved') filterProblems();
+        } catch (e) {
+            console.error(e);
         }
-
-        localStorage.setItem('dsa-bookmarks', JSON.stringify(bookmarks));
-        initListState();
-        if (currentTab === 'saved') filterProblems();
     }
 
     // Toggle Revision
-    function toggleRevision(event, id) {
+    async function toggleRevision(event, id) {
         event.stopPropagation();
+        if (!window.dsaDB) return;
 
-        let revised = JSON.parse(localStorage.getItem('dsa-revised') || '[]');
-        const index = revised.indexOf(id);
+        try {
+            const problem = await window.dsaDB.getProblem(id);
+            const newState = !problem.revised;
+            await window.dsaDB.updateField(id, 'revised', newState);
 
-        if (index === -1) {
-            revised.push(id);
-            if (typeof showToast === 'function') showToast('Added to Revision List', 'success');
-        } else {
-            revised.splice(index, 1);
-            if (typeof showToast === 'function') showToast('Removed from Revision List', 'info');
+            if (newState) {
+                stateRevised.add(id);
+                if (typeof showToast === 'function') showToast('Added to Revision List', 'success');
+            } else {
+                stateRevised.delete(id);
+                if (typeof showToast === 'function') showToast('Removed from Revision List', 'info');
+            }
+            initListState(false);
+            if (currentTab === 'revised') filterProblems();
+        } catch (e) {
+            console.error(e);
         }
-
-        localStorage.setItem('dsa-revised', JSON.stringify(revised));
-        initListState();
-        if (currentTab === 'revised') filterProblems();
     }
 
     function updateProgress() {
-        const completed = JSON.parse(localStorage.getItem('dsa-completed') || '[]');
         const total = problemItems.length;
-        const completedCount = completed.length;
+        const completedCount = stateCompleted.size;
 
         // Update Text
         const progressText = document.getElementById('progress-text');
@@ -519,25 +534,36 @@
             const id = item.dataset.id;
             const checkbox = item.querySelector('input[type="checkbox"]');
             if (checkbox) {
-                checkbox.checked = completed.includes(id);
+                checkbox.checked = stateCompleted.has(id);
             }
         });
     }
 
-    function initListState() {
+    async function initListState(fetchData = true) {
+        if (fetchData) {
+            if (!window.dsaDB) {
+                setTimeout(() => initListState(true), 200);
+                return;
+            }
+            try {
+                const problems = await window.dsaDB.getAllProblems();
+                stateBookmarks = new Set(problems.filter(p => p.bookmarked).map(p => p.id));
+                stateCompleted = new Set(problems.filter(p => p.completed).map(p => p.id));
+                stateRevised = new Set(problems.filter(p => p.revised).map(p => p.id));
+            } catch (e) {
+                console.error("Error syncing list state:", e);
+            }
+        }
+
         updateProgress();
         updateCounts();
-
-        const bookmarks = JSON.parse(localStorage.getItem('dsa-bookmarks') || '[]');
-        const revised = JSON.parse(localStorage.getItem('dsa-revised') || '[]');
 
         // Check bookmarks
         document.querySelectorAll('.bookmark-icon').forEach(icon => {
             const id = icon.dataset.id;
-            if (bookmarks.includes(id)) {
+            if (stateBookmarks.has(id)) {
                 icon.classList.add('fill-current', 'text-yellow-500');
                 icon.classList.remove('text-gray-400');
-                // update parent button color if needed
             } else {
                 icon.classList.remove('fill-current', 'text-yellow-500');
                 icon.classList.add('text-gray-400');
@@ -547,7 +573,7 @@
         // Check revised
         document.querySelectorAll('.revise-icon').forEach(icon => {
             const id = icon.dataset.id;
-            if (revised.includes(id)) {
+            if (stateRevised.has(id)) {
                 icon.classList.add('text-blue-500');
                 icon.classList.remove('text-gray-400');
             } else {
@@ -555,6 +581,8 @@
                 icon.classList.add('text-gray-400');
             }
         });
+
+        filterProblems(); // Re-apply filters with new state
     }
 
     // Listeners
@@ -567,38 +595,29 @@
         requestAnimationFrame(() => {
             document.querySelectorAll('.problem-item').forEach(item => {
                 const container = item.querySelector('.topic-tags-container');
-                // Skip if hidden or on mobile (not flex)
                 if (!container || container.offsetParent === null) return;
 
                 const tags = Array.from(container.querySelectorAll('.topic-tag'));
                 const counter = container.querySelector('.topic-count');
 
-                // 1. Reset state (show all)
                 tags.forEach(t => t.classList.remove('hidden'));
                 counter.classList.add('hidden');
 
-                // 2. Check overflow
                 if (container.scrollWidth > container.clientWidth) {
                     const availableWidth = container.clientWidth;
-                    const counterWidth = 30; // Approx width for "+99" badge
-
+                    const counterWidth = 30;
                     let fitCount = 0;
 
                     for (let i = 0; i < tags.length; i++) {
                         const tag = tags[i];
                         const isLast = (i === tags.length - 1);
                         const limit = isLast ? availableWidth : (availableWidth - counterWidth);
-
-                        //offsetLeft is relative to the flex container parent
                         const tagRight = tag.offsetLeft + tag.offsetWidth;
 
-                        if (tagRight > limit) {
-                            break;
-                        }
+                        if (tagRight > limit) break;
                         fitCount++;
                     }
 
-                    // 3. Apply Visibility
                     if (fitCount < tags.length) {
                         for (let j = fitCount; j < tags.length; j++) {
                             tags[j].classList.add('hidden');
@@ -611,7 +630,6 @@
         });
     }
 
-    // Handle Window Resize
     let resizeTimer;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
@@ -620,25 +638,14 @@
 
     // On Load
     document.addEventListener('DOMContentLoaded', () => {
-        lucide.createIcons();
+        if (window.lucide) lucide.createIcons();
         initTabs();
-        initListState();
-        filterProblems(); // This will trigger adjustTopicTags via timeout
+        initListState(true);
     });
 
-    // Handle bfcache traversal (Back/Forward navigation)
+    // Handle bfcache traversal
     window.addEventListener('pageshow', (event) => {
-        // Always re-initialize state on pageshow to catch updates from the problem page
-        initListState();
-        if (currentTab === 'saved' || currentTab === 'revised') filterProblems();
-    });
-
-    // Add global event listener for storage changes (sync tabs)
-    window.addEventListener('storage', (e) => {
-        if (['dsa-bookmarks', 'dsa-completed', 'dsa-revised'].includes(e.key)) {
-            initListState();
-            if (currentTab === 'saved' || currentTab === 'revised') filterProblems();
-        }
+        initListState(true);
     });
 </script>
 {{ end }}

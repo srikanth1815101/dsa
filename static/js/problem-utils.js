@@ -1,6 +1,7 @@
 /**
  * Problem Page Utilities
  * Handles Timer, Bookmarks, Completion Status, and Interactions
+ * Updated to use IndexedDB (dsaDB)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -99,37 +100,33 @@ function pad(val) {
 }
 
 /* --- Local Storage & State Management --- */
-function initializeProblemState() {
+async function initializeProblemState() {
     const problemId = getProblemId();
     if (!problemId) return;
 
-    // Bookmarks
-    const bookmarkBtn = document.getElementById('bookmark-btn');
-    if (bookmarkBtn) {
-        updateBookmarkUI(problemId);
-        // Event listener removed; using inline onclick
+    if (!window.dsaDB) {
+        console.error("Database not waiting, retrying...");
+        setTimeout(initializeProblemState, 100);
+        return;
     }
 
-    // Revision
-    const revisionBtn = document.getElementById('revision-btn');
-    if (revisionBtn) {
-        updateRevisionUI(problemId);
-        // Event listener removed; using inline onclick
-    }
+    // Load initial state
+    try {
+        const problem = await window.dsaDB.getProblem(problemId);
 
-    // Completion
-    const completeBtn = document.getElementById('mark-complete-btn');
-    if (completeBtn) {
-        updateCompletionUI(problemId);
-        // Event listener removed; using inline onclick
+        // Update UIs based on DB state
+        updateBookmarkUIState(problem.bookmarked);
+        updateRevisionUIState(problem.revised);
+        updateCompletionUIState(problem.completed);
+        updateNotesUIState(problem.note);
+
+    } catch (e) {
+        console.error("Failed to load problem state", e);
     }
 
     // Hint Toggle Logic
     const hintBtn = document.getElementById('hint-btn');
     const hintDropdown = document.getElementById('hint-dropdown');
-
-    // Notes Logic initialization
-    loadNotes(problemId);
 
     if (hintBtn && hintDropdown) {
         // Toggle on icon click
@@ -146,23 +143,9 @@ function initializeProblemState() {
                 }
             }
         });
-    } else {
-        // Hint elements not found (optional handling)
     }
 
-    // Storage Listener for Sync
-    window.addEventListener('storage', (e) => {
-        const id = getProblemId();
-        if (!id) return;
-
-        if (e.key === 'dsa-bookmarks') {
-            updateBookmarkUI(id);
-        } else if (e.key === 'dsa-completed') {
-            updateCompletionUI(id);
-        } else if (e.key === 'dsa-revised') {
-            updateRevisionUI(id);
-        }
-    });
+    // Storage Listener for Sync (Optional: implementing cross-tab sync with BroadcastChannel or just simple polling if needed, skipping for now as IDB doesn't fire storage events)
 }
 
 function getProblemId() {
@@ -176,32 +159,34 @@ function getProblemId() {
 }
 
 // Bookmark Logic
-function toggleBookmark(e, id) {
+async function toggleBookmark(e, id) {
     if (id) {
         e.stopPropagation();
         e.preventDefault();
     } else {
         id = e;
     }
+    // fallback if called with event as first arg and no id
+    if (!id || typeof id !== 'string') id = getProblemId();
 
-    let bookmarks = JSON.parse(localStorage.getItem('dsa-bookmarks') || '[]');
-    const index = bookmarks.indexOf(id);
+    try {
+        const problem = await window.dsaDB.getProblem(id);
+        const newState = !problem.bookmarked;
+        await window.dsaDB.updateField(id, 'bookmarked', newState);
 
-    if (index === -1) {
-        bookmarks.push(id);
-        showToast('Problem bookmarked!', 'success');
-    } else {
-        bookmarks.splice(index, 1);
-        showToast('Bookmark removed.', 'info');
+        if (newState) {
+            showToast('Problem bookmarked!', 'success');
+        } else {
+            showToast('Bookmark removed.', 'info');
+        }
+        updateBookmarkUIState(newState);
+    } catch (err) {
+        console.error(err);
+        showToast('Error updating bookmark', 'error');
     }
-
-    localStorage.setItem('dsa-bookmarks', JSON.stringify(bookmarks));
-    updateBookmarkUI(id);
 }
 
-function updateBookmarkUI(id) {
-    const bookmarks = JSON.parse(localStorage.getItem('dsa-bookmarks') || '[]');
-    const isBookmarked = bookmarks.includes(id);
+function updateBookmarkUIState(isBookmarked) {
     const btn = document.getElementById('bookmark-btn');
     if (!btn) return;
 
@@ -227,32 +212,32 @@ function updateBookmarkUI(id) {
 }
 
 // Revision Logic
-function toggleRevision(e, id) {
+async function toggleRevision(e, id) {
     if (id) {
         e.stopPropagation();
         e.preventDefault();
     } else {
         id = e;
     }
+    if (!id || typeof id !== 'string') id = getProblemId();
 
-    let revised = JSON.parse(localStorage.getItem('dsa-revised') || '[]');
-    const index = revised.indexOf(id);
+    try {
+        const problem = await window.dsaDB.getProblem(id);
+        const newState = !problem.revised;
+        await window.dsaDB.updateField(id, 'revised', newState);
 
-    if (index === -1) {
-        revised.push(id);
-        showToast('Added to Revision list!', 'success');
-    } else {
-        revised.splice(index, 1);
-        showToast('Removed from Revision list.', 'info');
+        if (newState) {
+            showToast('Added to Revision list!', 'success');
+        } else {
+            showToast('Removed from Revision list.', 'info');
+        }
+        updateRevisionUIState(newState);
+    } catch (err) {
+        console.error(err);
     }
-
-    localStorage.setItem('dsa-revised', JSON.stringify(revised));
-    updateRevisionUI(id);
 }
 
-function updateRevisionUI(id) {
-    const revised = JSON.parse(localStorage.getItem('dsa-revised') || '[]');
-    const isRevised = revised.includes(id);
+function updateRevisionUIState(isRevised) {
     const btn = document.getElementById('revision-btn');
     if (!btn) return;
 
@@ -271,40 +256,35 @@ function updateRevisionUI(id) {
 }
 
 // Completion Logic
-function toggleCompletion(e, id) {
+async function toggleCompletion(e, id) {
     if (id) {
-        // Called as (event, id)
         e.stopPropagation();
         e.preventDefault();
     } else if (typeof e === 'string') {
-        // Called as (id)
         id = e;
     } else {
-        // Fallback or called as event only? 
-        // If called as (e) from listener, we rely on problemId from closure? 
-        // No, the listener is () => toggleCompletion(problemId). So e is id.
         id = e;
     }
+    if (!id || typeof id !== 'string') id = getProblemId();
 
-    let completed = JSON.parse(localStorage.getItem('dsa-completed') || '[]');
-    const index = completed.indexOf(id);
+    try {
+        const problem = await window.dsaDB.getProblem(id);
+        const newState = !problem.completed;
+        await window.dsaDB.updateField(id, 'completed', newState);
 
-    if (index === -1) {
-        completed.push(id);
-        showToast('Problem marked as complete!', 'success');
-        triggerConfetti();
-    } else {
-        completed.splice(index, 1);
-        showToast('Problem marked as incomplete.', 'info');
+        if (newState) {
+            showToast('Problem marked as complete!', 'success');
+            triggerConfetti();
+        } else {
+            showToast('Problem marked as incomplete.', 'info');
+        }
+        updateCompletionUIState(newState);
+    } catch (err) {
+        console.error(err);
     }
-
-    localStorage.setItem('dsa-completed', JSON.stringify(completed));
-    updateCompletionUI(id);
 }
 
-function updateCompletionUI(id) {
-    const completed = JSON.parse(localStorage.getItem('dsa-completed') || '[]');
-    const isCompleted = completed.includes(id);
+function updateCompletionUIState(isCompleted) {
     const btn = document.getElementById('mark-complete-btn');
     const text = document.getElementById('mark-complete-text');
 
@@ -332,11 +312,8 @@ function updateCompletionUI(id) {
     }
 }
 
-
-
 // Notes Logic
-// Notes Logic
-function saveNotes() {
+async function saveNotes() {
     const id = getProblemId();
     if (!id) return;
 
@@ -344,52 +321,46 @@ function saveNotes() {
     if (!textarea) return;
 
     const content = textarea.value;
-    let notes = JSON.parse(localStorage.getItem('dsa-notes') || '{}');
 
-    notes[id] = content;
-    localStorage.setItem('dsa-notes', JSON.stringify(notes));
+    try {
+        await window.dsaDB.updateField(id, 'note', content);
 
-    // Update Display
+        updateNotesUIState(content);
+
+        // Hide Input
+        const inputContainer = document.getElementById('notes-input-container');
+        const editBtn = document.getElementById('edit-notes-btn');
+        if (inputContainer) inputContainer.classList.add('hidden');
+        if (editBtn) editBtn.classList.remove('hidden');
+
+        // UI Feedback
+        const status = document.getElementById('notes-status');
+        if (status) {
+            status.classList.remove('opacity-0');
+            setTimeout(() => status.classList.add('opacity-0'), 2000);
+        }
+
+        showToast('Notes saved successfully!', 'success');
+
+    } catch (err) {
+        console.error(err);
+        showToast('Failed to save notes', 'error');
+    }
+}
+
+function updateNotesUIState(content) {
     const display = document.getElementById('notes-display');
+    const textarea = document.getElementById('problem-notes');
+
+    if (textarea) textarea.value = content || '';
+
     if (display) {
         display.textContent = content || 'Click to add notes...';
         if (!content) display.innerHTML = '<span class="text-gray-400 italic">Click to add notes...</span>';
         display.classList.remove('hidden');
     }
 
-    // Hide Input
-    const inputContainer = document.getElementById('notes-input-container');
-    const editBtn = document.getElementById('edit-notes-btn');
-    if (inputContainer) inputContainer.classList.add('hidden');
-    if (editBtn) editBtn.classList.remove('hidden');
-
-    // UI Feedback
-    const status = document.getElementById('notes-status');
-    if (status) {
-        status.classList.remove('opacity-0');
-        setTimeout(() => status.classList.add('opacity-0'), 2000);
-    }
-
-    showToast('Notes saved successfully!', 'success');
-}
-
-function loadNotes(id) {
-    const textarea = document.getElementById('problem-notes');
-    const display = document.getElementById('notes-display');
-    if (!textarea) return;
-
-    const notes = JSON.parse(localStorage.getItem('dsa-notes') || '{}');
-    const content = notes[id] || '';
-
-    textarea.value = content;
-
-    if (display) {
-        display.textContent = content || 'Click to add notes...';
-        if (!content) display.innerHTML = '<span class="text-gray-400 italic">Click to add notes...</span>';
-    }
-
-    // Trigger auto-resize after setting content
-    autoResize(textarea);
+    if (textarea) autoResize(textarea);
 }
 
 function enableEditNotes() {
@@ -409,16 +380,17 @@ function enableEditNotes() {
     }
 }
 
-function cancelEditNotes() {
+async function cancelEditNotes() {
     const id = getProblemId();
+
+    // Revert value
+    const problem = await window.dsaDB.getProblem(id);
     const textarea = document.getElementById('problem-notes');
+    if (textarea) textarea.value = problem.note || '';
+
     const display = document.getElementById('notes-display');
     const inputContainer = document.getElementById('notes-input-container');
     const editBtn = document.getElementById('edit-notes-btn');
-
-    // Revert value
-    const notes = JSON.parse(localStorage.getItem('dsa-notes') || '{}');
-    if (textarea) textarea.value = notes[id] || '';
 
     if (display) display.classList.remove('hidden');
     if (inputContainer) inputContainer.classList.add('hidden');
@@ -432,8 +404,10 @@ function autoResize(el) {
     el.style.height = el.scrollHeight + 'px';
 }
 
-// Expose for onclick/oninput
-// Expose for onclick/oninput
+/* --- Expose functions for onclick events --- */
+window.toggleBookmark = toggleBookmark;
+window.toggleRevision = toggleRevision;
+window.toggleCompletion = toggleCompletion;
 window.saveNotes = saveNotes;
 window.enableEditNotes = enableEditNotes;
 window.cancelEditNotes = cancelEditNotes;
@@ -461,6 +435,7 @@ function showToast(message, type = 'info') {
 
 function triggerConfetti() {
     // Confetti! (Functionality placeholder)
+    console.log("Confetti!");
 }
 
 /* --- Expose functions for onclick events --- */

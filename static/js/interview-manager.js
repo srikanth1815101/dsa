@@ -1,40 +1,53 @@
 /**
  * InterviewManager
  * Handles all logic for the Interview Mode (session creation, timer, persistence).
+ * Refactored to use IndexedDB (dsaDB)
  */
 class InterviewManager {
     constructor() {
-        this.STORAGE_KEY = 'interview_db';
-        this.db = this.loadDB();
-
-        // Auto-save timer
-        this.saveInterval = null;
-
         // Active session state (in-memory)
         this.currentSession = null;
         this.onTick = null; // Callback for UI updates
-    }
 
-    /**
-     * Load the database from localStorage or initialize defaults.
-     */
-    loadDB() {
-        const raw = localStorage.getItem(this.STORAGE_KEY);
-        if (raw) {
-            try {
-                return JSON.parse(raw);
-            } catch (e) {
-                console.error("Failed to parse interview DB", e);
-            }
-        }
-        return {
+        this.db = {
             sessions: {},
             activeSessionId: null
         };
+
+        this._ready = this.initDB();
     }
 
-    saveDB() {
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.db));
+    async initDB() {
+        if (!window.dsaDB) {
+            console.warn("dsaDB not ready yet, waiting...");
+            await new Promise(resolve => setTimeout(resolve, 500));
+        }
+
+        try {
+            const sessionsArr = await window.dsaDB.getAllSessions();
+            this.db.sessions = {};
+            sessionsArr.forEach(s => {
+                this.db.sessions[s.id] = s;
+                if (s.state.status === 'active') {
+                    this.db.activeSessionId = s.id;
+                }
+            });
+            console.log("InterviewManager: DB Loaded", Object.keys(this.db.sessions).length, "sessions");
+        } catch (e) {
+            console.error("Failed to load sessions from DB", e);
+        }
+    }
+
+    async saveSession(session) {
+        if (!session) return;
+        // Update in-memory
+        this.db.sessions[session.id] = session;
+        // Persist to IDB
+        try {
+            await window.dsaDB.saveSession(session);
+        } catch (e) {
+            console.error("Failed to save session", e);
+        }
     }
 
     async getProblems() {
@@ -74,6 +87,8 @@ class InterviewManager {
      * @param {Object} config - { count, duration: minutes, difficulty, topics }
      */
     async startSession(config) {
+        await this._ready; // Ensure DB is loaded
+
         // 1. Fetch all problems
         const problems = await this.getProblems();
 
@@ -164,9 +179,8 @@ class InterviewManager {
         };
 
         // 5. Save and Activate
-        this.db.sessions[id] = session;
         this.db.activeSessionId = id;
-        this.saveDB();
+        await this.saveSession(session);
 
         // 6. Redirect
         window.location.href = `/interview/session/?id=${id}`;
@@ -175,9 +189,23 @@ class InterviewManager {
     /**
      * Load a session by ID
      */
-    loadSession(id) {
+    async loadSession(id) {
         if (!id) return null;
-        const session = this.db.sessions[id];
+        await this._ready;
+
+        // Try from cache first
+        let session = this.db.sessions[id];
+
+        // If not in cache (maybe opened via direct link before init), try fetch
+        if (!session) {
+            try {
+                session = await window.dsaDB.getSession(id);
+                if (session) this.db.sessions[id] = session;
+            } catch (e) {
+                console.error("Session load error", e);
+            }
+        }
+
         if (!session) return null;
 
         // Drift check (if tab was closed)
@@ -196,6 +224,9 @@ class InterviewManager {
                 }
             }
             session.state.lastTickAt = now;
+
+            // Allow awaiting this update, but don't block return
+            this.saveSession(session);
         }
 
         this.currentSession = session;
@@ -207,7 +238,7 @@ class InterviewManager {
      */
     startTimer(onTickCallback, onFinishCallback) {
         this.onTick = onTickCallback;
-        if (this.currentSession.state.status !== 'active') return;
+        if (!this.currentSession || this.currentSession.state.status !== 'active') return;
 
         // Clear existing
         if (this.timerInterval) clearInterval(this.timerInterval);
@@ -247,7 +278,7 @@ class InterviewManager {
                     }
                 }
 
-                this.saveDB(); // Persist every second (or debounced)
+                this.saveSession(session); // Persist every second
                 if (this.onTick) this.onTick(session);
             }
         }, 1000);
@@ -261,7 +292,21 @@ class InterviewManager {
         const prob = this.currentSession.problems[index];
         if (prob) {
             Object.assign(prob, updates);
-            this.saveDB();
+            this.saveSession(this.currentSession);
+        }
+    }
+
+    /**
+     * Delete a session
+     */
+    async deleteSession(id) {
+        if (!id) return;
+        delete this.db.sessions[id];
+        if (this.db.activeSessionId === id) this.db.activeSessionId = null;
+        try {
+            await window.dsaDB.deleteSession(id);
+        } catch (e) {
+            console.error("Failed to delete session", e);
         }
     }
 
@@ -273,7 +318,7 @@ class InterviewManager {
         this.currentSession.state.status = 'completed';
         this.currentSession.state.endedAt = Date.now();
         this.db.activeSessionId = null; // No longer active
-        this.saveDB();
+        this.saveSession(this.currentSession);
 
         // Redirect if not already on review
         if (!window.location.href.includes('review')) {

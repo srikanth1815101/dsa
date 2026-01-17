@@ -74,9 +74,14 @@ document.addEventListener('DOMContentLoaded', () => {
     noResultsEl = document.getElementById('noResults');
     noResultsReflectionsEl = document.getElementById('noResultsReflections');
 
-    // Restore tab state
+    // Restore tab state from URL or LocalStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlTab = urlParams.get('tab');
     const storedTab = localStorage.getItem('dsa-notes-tab');
-    if (storedTab && (storedTab === 'problems' || storedTab === 'reflections')) {
+
+    if (urlTab && (urlTab === 'problems' || urlTab === 'reflections')) {
+        currentTab = urlTab;
+    } else if (storedTab && (storedTab === 'problems' || storedTab === 'reflections')) {
         currentTab = storedTab;
     }
 

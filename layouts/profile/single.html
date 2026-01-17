@@ -1,4 +1,7 @@
 {{ define "main" }}
+<script src="/js/interview-manager.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20 pt-24 md:pt-32">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fade-in-up">
 
@@ -17,77 +20,117 @@
             </p>
         </div>
 
-        <!-- Dashboard Grid 1: Stats & Learning (3 Cols) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
 
-            <!-- Card 1: Problems Solved (Primary Theme) -->
+        <!-- Card Container -->
+
+
+        <!-- Hover Background Gradient -->
+        <!-- Profile Dashboard Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+
+            <!-- Card 1: Problems Solved (Blue Theme) -->
             <div class="group relative flex flex-col h-full">
                 <div
-                    class="relative flex-1 bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col">
-                    <!-- Hover Radiant -->
+                    class="relative flex-1 bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col">
+
                     <div
                         class="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     </div>
 
                     <div class="relative z-10 flex flex-col h-full">
-                        <div class="flex items-center gap-4 mb-4">
+                        <!-- Header -->
+                        <div class="flex items-center justify-between mb-4 sm:mb-6">
                             <div
-                                class="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg transform group-hover:scale-110 transition-all duration-300">
-                                <i data-lucide="check-circle-2" class="w-6 h-6 text-white"></i>
+                                class="p-2.5 sm:p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg sm:rounded-xl shadow-lg transform group-hover:scale-110 transition-all duration-300">
+                                <i data-lucide="check-circle-2" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
                             </div>
-                            <h3
-                                class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                                Problems Solved</h3>
+                            <!-- Badge: Last Updated -->
+                            <span id="stat-problems-last-active"
+                                class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold rounded-full border border-blue-200 dark:border-blue-800/50">
+                                -
+                            </span>
                         </div>
-                        <div class="flex items-baseline gap-2 mb-2">
-                            <p class="text-5xl font-black text-gray-900 dark:text-white tracking-tight"
-                                id="stat-solved">0/0</p>
-                        </div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Problems Solved</p>
 
-                        <!-- Percentage Badge -->
+                        <!-- Title & Main Stat -->
+                        <h2
+                            class="text-xl sm:text-2xl font-black mb-1 text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            Problems
+                        </h2>
+
+                        <div class="mb-4 flex items-baseline gap-2">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-3xl font-black text-gray-900 dark:text-white tracking-tight"
+                                    id="stat-solved-count">0</span>
+                                <span class="text-xl font-bold text-gray-400 dark:text-gray-500">/</span>
+                                <span class="text-xl font-bold text-gray-400 dark:text-gray-500"
+                                    id="stat-total-count">0</span>
+                            </div>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Solved</p>
+                        </div>
+
+                        <!-- Review Style Stats Row -->
+                        <div
+                            class="flex flex-nowrap items-center justify-between mb-6 flex-1 w-full overflow-x-auto no-scrollbar">
+                            <!-- Saved -->
+                            <a href="/problems/?tab=saved" class="flex items-center gap-2 shrink-0 group/stat">
+                                <div
+                                    class="p-1.5 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-blue-600 dark:text-blue-400 shrink-0 group-hover/stat:bg-blue-100 dark:group-hover/stat:bg-blue-900/30 transition-colors">
+                                    <i data-lucide="bookmark" class="w-3.5 h-3.5"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <p
+                                        class="text-[9px] font-bold text-gray-400 uppercase tracking-wider leading-none mb-0.5 truncate">
+                                        Saved</p>
+                                    <p class="text-sm font-bold text-gray-900 dark:text-white leading-none truncate group-hover/stat:text-blue-600 dark:group-hover/stat:text-blue-400 transition-colors"
+                                        id="stat-bookmarked">0</p>
+                                </div>
+                            </a>
+
+                            <!-- Separator -->
+                            <div class="block w-px h-6 bg-gray-200 dark:bg-gray-700/50 shrink-0"></div>
+
+                            <!-- Revise -->
+                            <a href="/problems/?tab=revised" class="flex items-center gap-2 shrink-0 group/stat">
+                                <div
+                                    class="p-1.5 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg text-indigo-600 dark:text-indigo-400 shrink-0 group-hover/stat:bg-indigo-100 dark:group-hover/stat:bg-indigo-900/30 transition-colors">
+                                    <i data-lucide="list-restart" class="w-3.5 h-3.5"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <p
+                                        class="text-[9px] font-bold text-gray-400 uppercase tracking-wider leading-none mb-0.5 truncate">
+                                        Revise</p>
+                                    <p class="text-sm font-bold text-gray-900 dark:text-white leading-none truncate group-hover/stat:text-indigo-600 dark:group-hover/stat:text-indigo-400 transition-colors"
+                                        id="stat-revise">0</p>
+                                </div>
+                            </a>
+
+                            <!-- Separator -->
+                            <div class="block w-px h-6 bg-gray-200 dark:bg-gray-700/50 shrink-0"></div>
+
+                            <!-- % Done -->
+                            <div class="flex items-center gap-2 shrink-0">
+                                <div
+                                    class="p-1.5 bg-violet-50 dark:bg-violet-900/20 rounded-lg text-violet-600 dark:text-violet-400 shrink-0">
+                                    <i data-lucide="percent" class="w-3.5 h-3.5"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <p
+                                        class="text-[9px] font-bold text-gray-400 uppercase tracking-wider leading-none mb-0.5 truncate">
+                                        Done</p>
+                                    <p class="text-sm font-bold text-gray-900 dark:text-white leading-none truncate"
+                                        id="stat-percentage-card">0%</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Action Button -->
                         <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700/50">
-                            <div class="mb-4">
-                                <span id="stat-percentage"
-                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-bold bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
-                                    0% Completed
-                                </span>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-2 mb-4">
-                                <a href="/problems/?tab=saved"
-                                    class="flex items-center gap-3 p-2.5 rounded-xl bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors border border-blue-100 dark:border-blue-800/30 group/stat">
-                                    <div
-                                        class="p-2 bg-white dark:bg-blue-900/50 rounded-lg shadow-sm group-hover/stat:scale-110 transition-transform">
-                                        <i data-lucide="bookmark" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <span
-                                            class="text-[10px] font-bold text-blue-600 dark:text-blue-300 uppercase tracking-wider">Saved</span>
-                                        <span class="text-lg font-black text-gray-900 dark:text-white leading-none"
-                                            id="stat-bookmarked">0</span>
-                                    </div>
-                                </a>
-
-                                <a href="/problems/?tab=revised"
-                                    class="flex items-center gap-3 p-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition-colors border border-indigo-100 dark:border-indigo-800/30 group/stat">
-                                    <div
-                                        class="p-2 bg-white dark:bg-indigo-900/50 rounded-lg shadow-sm group-hover/stat:scale-110 transition-transform">
-                                        <i data-lucide="list-restart"
-                                            class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <span
-                                            class="text-[10px] font-bold text-indigo-600 dark:text-indigo-300 uppercase tracking-wider">Revise</span>
-                                        <span class="text-lg font-black text-gray-900 dark:text-white leading-none"
-                                            id="stat-revise">0</span>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <a href="/problems/?tab=all"
-                                class="flex items-center justify-center w-full py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl font-bold text-sm shadow-lg shadow-gray-200 dark:shadow-none hover:bg-gray-800 dark:hover:bg-gray-100 transition-all active:scale-95">
-                                Solve Problems <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                            <a href="/problems/"
+                                class="w-full inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-3 rounded-xl font-bold text-sm hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-95 group/btn">
+                                <span>Solve Problems</span>
+                                <i data-lucide="arrow-right"
+                                    class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
                             </a>
                         </div>
                     </div>
@@ -95,237 +138,281 @@
             </div>
 
             <!-- Card 2: Interview History (Purple Theme) -->
-            <a href="/interview/history/" class="group relative flex flex-col h-full">
+            <div class="group relative flex flex-col h-full">
                 <div
-                    class="relative flex-1 bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col">
+                    class="relative flex-1 bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col">
+
                     <div
                         class="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     </div>
 
                     <div class="relative z-10 flex flex-col h-full">
-                        <div class="flex items-center gap-4 mb-4">
+                        <div class="flex items-center justify-between mb-4 sm:mb-6">
                             <div
-                                class="p-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl shadow-lg transform group-hover:scale-110 transition-all duration-300">
-                                <i data-lucide="history" class="w-6 h-6 text-white"></i>
+                                class="p-2.5 sm:p-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg sm:rounded-xl shadow-lg transform group-hover:scale-110 transition-all duration-300">
+                                <i data-lucide="history" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
                             </div>
-                            <h3
-                                class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
-                                Interview History</h3>
+                            <!-- Badge: Last Updated -->
+                            <span id="stat-interview-last"
+                                class="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs font-bold rounded-full border border-purple-200 dark:border-purple-800/50">
+                                -
+                            </span>
                         </div>
 
-                        <!-- Stats Grid -->
-                        <div class="grid grid-cols-2 gap-3 mb-4 flex-1">
-                            <!-- Sessions -->
-                            <div
-                                class="bg-purple-50 dark:bg-purple-900/20 rounded-2xl p-3 border border-purple-100 dark:border-purple-600/30 flex flex-col justify-center relative group/stat">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <i data-lucide="hash" class="w-3.5 h-3.5 text-purple-400 dark:text-purple-300"></i>
-                                    <p
-                                        class="text-[10px] font-bold text-purple-600 dark:text-purple-300 uppercase tracking-wider">
-                                        Sessions</p>
-                                </div>
-                                <p class="text-2xl font-black text-gray-900 dark:text-white" id="stat-interview-count">0
-                                </p>
-                            </div>
-
-                            <!-- Avg Score -->
-                            <div
-                                class="bg-pink-50 dark:bg-pink-900/20 rounded-2xl p-3 border border-pink-100 dark:border-pink-600/30 flex flex-col justify-center relative group/stat">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <i data-lucide="percent" class="w-3.5 h-3.5 text-pink-400 dark:text-pink-300"></i>
-                                    <p
-                                        class="text-[10px] font-bold text-pink-600 dark:text-pink-300 uppercase tracking-wider">
-                                        Avg. Score</p>
-                                </div>
-                                <p class="text-2xl font-black text-gray-900 dark:text-white truncate"
-                                    id="stat-interview-score">0%</p>
-                            </div>
-
-                            <!-- Total Time -->
-                            <div
-                                class="bg-indigo-50 dark:bg-indigo-900/20 rounded-2xl p-3 border border-indigo-100 dark:border-indigo-600/30 flex flex-col justify-center relative group/stat">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <i data-lucide="clock" class="w-3.5 h-3.5 text-indigo-400 dark:text-indigo-300"></i>
-                                    <p
-                                        class="text-[10px] font-bold text-indigo-600 dark:text-indigo-300 uppercase tracking-wider">
-                                        Total Time</p>
-                                </div>
-                                <p class="text-xl font-black text-gray-900 dark:text-white truncate"
-                                    id="stat-interview-time">0m</p>
-                            </div>
-
-                            <!-- Last Active -->
-                            <div
-                                class="bg-violet-50 dark:bg-violet-900/20 rounded-2xl p-3 border border-violet-100 dark:border-violet-600/30 flex flex-col justify-center relative group/stat">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <i data-lucide="calendar-clock"
-                                        class="w-3.5 h-3.5 text-violet-400 dark:text-violet-300"></i>
-                                    <p
-                                        class="text-[10px] font-bold text-violet-600 dark:text-violet-300 uppercase tracking-wider">
-                                        Last Active</p>
-                                </div>
-                                <p class="text-xl font-black text-gray-900 dark:text-white truncate"
-                                    id="stat-interview-last">-</p>
-                            </div>
+                        <h2
+                            class="text-xl sm:text-2xl font-black mb-1 text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                            Interviews
+                        </h2>
+                        <div class="mb-4 flex items-baseline gap-2">
+                            <span class="text-3xl font-black text-gray-900 dark:text-white tracking-tight"
+                                id="stat-interview-count">0</span>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Sessions</p>
                         </div>
 
+                        <!-- Review Style Stats Row -->
                         <div
-                            class="mt-auto flex items-center text-purple-600 dark:text-purple-400 text-xs font-bold uppercase tracking-wider">
-                            View All <i data-lucide="arrow-right"
-                                class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                            class="flex flex-nowrap items-center justify-between mb-6 flex-1 w-full overflow-x-auto no-scrollbar">
+                            <!-- Time -->
+                            <div class="flex items-center gap-2 shrink-0">
+                                <div
+                                    class="p-1.5 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg text-indigo-600 dark:text-indigo-400 shrink-0">
+                                    <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <p
+                                        class="text-[9px] font-bold text-gray-400 uppercase tracking-wider leading-none mb-0.5 truncate">
+                                        Time</p>
+                                    <p class="text-sm font-bold text-gray-900 dark:text-white leading-none truncate"
+                                        id="stat-interview-time">0m</p>
+                                </div>
+                            </div>
+
+                            <!-- Separator -->
+                            <div class="block w-px h-6 bg-gray-200 dark:bg-gray-700/50 shrink-0"></div>
+
+                            <!-- Solved % -->
+                            <div class="flex items-center gap-2 shrink-0">
+                                <div
+                                    class="p-1.5 bg-green-50 dark:bg-green-900/20 rounded-lg text-green-600 dark:text-green-400 shrink-0">
+                                    <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <p
+                                        class="text-[9px] font-bold text-gray-400 uppercase tracking-wider leading-none mb-0.5 truncate">
+                                        Solved</p>
+                                    <p class="text-sm font-bold text-gray-900 dark:text-white leading-none truncate"
+                                        id="stat-interview-solved-perc">0%</p>
+                                </div>
+                            </div>
+
+                            <!-- Separator -->
+                            <div class="block w-px h-6 bg-gray-200 dark:bg-gray-700/50 shrink-0"></div>
+
+                            <!-- Attempted % -->
+                            <div class="flex items-center gap-2 shrink-0">
+                                <div
+                                    class="p-1.5 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg text-yellow-600 dark:text-yellow-400 shrink-0">
+                                    <i data-lucide="minus-circle" class="w-3.5 h-3.5"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <p
+                                        class="text-[9px] font-bold text-gray-400 uppercase tracking-wider leading-none mb-0.5 truncate">
+                                        Attmpt</p>
+                                    <p class="text-sm font-bold text-gray-900 dark:text-white leading-none truncate"
+                                        id="stat-interview-attempted-perc">0%</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700/50">
+                            <a href="/interview/history/"
+                                class="w-full inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-3 rounded-xl font-bold text-sm hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-95 group/btn">
+                                <span>View History</span>
+                                <i data-lucide="arrow-right"
+                                    class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-            </a>
+            </div>
 
-            <!-- Card 4: My Notes (Moved to Row 1) -->
-            <a href="/notes/" class="group relative flex flex-col h-full">
+            <!-- Card 3: My Notes (Orange Theme) -->
+            <div class="group relative flex flex-col h-full">
                 <div
-                    class="relative flex-1 bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col">
+                    class="relative flex-1 bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col">
+
                     <div
-                        class="absolute inset-0 bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        class="absolute inset-0 bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     </div>
 
                     <div class="relative z-10 flex flex-col h-full">
-                        <div class="flex items-center gap-4 mb-4">
+                        <div class="flex items-center justify-between mb-4 sm:mb-6">
                             <div
-                                class="p-3 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-xl shadow-lg transform group-hover:scale-110 transition-all duration-300">
-                                <i data-lucide="book-open" class="w-6 h-6 text-white"></i>
+                                class="p-2.5 sm:p-3 bg-gradient-to-r from-orange-500 to-amber-600 rounded-lg sm:rounded-xl shadow-lg transform group-hover:scale-110 transition-all duration-300">
+                                <i data-lucide="book-open" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
                             </div>
-                            <h3
-                                class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
-                                My Notes</h3>
+                            <!-- Badge: Last Updated -->
+                            <span id="stat-notes-last"
+                                class="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-xs font-bold rounded-full border border-orange-200 dark:border-orange-800/50">
+                                -
+                            </span>
                         </div>
 
-                        <!-- Notes Stats Grid -->
-                        <div class="grid grid-cols-2 gap-3 mb-4 flex-1">
+                        <h2
+                            class="text-xl sm:text-2xl font-black mb-1 text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+                            My Notes
+                        </h2>
+                        <div class="mb-4 flex items-baseline gap-2">
+                            <span class="text-3xl font-black text-gray-900 dark:text-white tracking-tight"
+                                id="stat-notes-count">0</span>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total Notes</p>
+                        </div>
+
+                        <!-- Review Style Stats Row -->
+                        <div
+                            class="flex flex-nowrap items-center justify-between mb-6 flex-1 w-full overflow-x-auto no-scrollbar">
                             <!-- Problem Notes -->
-                            <div
-                                class="bg-yellow-50 dark:bg-yellow-900/20 rounded-2xl p-3 border border-yellow-100 dark:border-yellow-600/30 flex flex-col justify-center relative group/stat">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <i data-lucide="file-text"
-                                        class="w-3.5 h-3.5 text-yellow-500 dark:text-yellow-300"></i>
-                                    <p
-                                        class="text-[10px] font-bold text-yellow-600 dark:text-yellow-300 uppercase tracking-wider">
-                                        Problems</p>
+                            <a href="/notes/?tab=problems" class="flex items-center gap-2 shrink-0 group/stat">
+                                <div
+                                    class="p-1.5 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg text-yellow-600 dark:text-yellow-400 shrink-0 group-hover/stat:bg-yellow-100 dark:group-hover/stat:bg-yellow-900/30 transition-colors">
+                                    <i data-lucide="book" class="w-3.5 h-3.5"></i>
                                 </div>
-                                <p class="text-2xl font-black text-gray-900 dark:text-white" id="stat-notes-problems">0
-                                </p>
-                            </div>
+                                <div class="min-w-0">
+                                    <p
+                                        class="text-[9px] font-bold text-gray-400 uppercase tracking-wider leading-none mb-0.5 truncate">
+                                        Problems</p>
+                                    <p class="text-sm font-bold text-gray-900 dark:text-white leading-none truncate group-hover/stat:text-yellow-600 dark:group-hover/stat:text-yellow-400 transition-colors"
+                                        id="stat-notes-problems">0</p>
+                                </div>
+                            </a>
+
+                            <!-- Separator -->
+                            <div class="block w-px h-6 bg-gray-200 dark:bg-gray-700/50 shrink-0"></div>
 
                             <!-- Interview Notes -->
-                            <div
-                                class="bg-orange-50 dark:bg-orange-900/20 rounded-2xl p-3 border border-orange-100 dark:border-orange-600/30 flex flex-col justify-center relative group/stat">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <i data-lucide="message-square"
-                                        class="w-3.5 h-3.5 text-orange-400 dark:text-orange-300"></i>
+                            <a href="/notes/?tab=reflections" class="flex items-center gap-2 shrink-0 group/stat">
+                                <div
+                                    class="p-1.5 bg-orange-50 dark:bg-orange-900/20 rounded-lg text-orange-600 dark:text-orange-400 shrink-0 group-hover/stat:bg-orange-100 dark:group-hover/stat:bg-orange-900/30 transition-colors">
+                                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                                </div>
+                                <div class="min-w-0">
                                     <p
-                                        class="text-[10px] font-bold text-orange-600 dark:text-orange-300 uppercase tracking-wider">
+                                        class="text-[9px] font-bold text-gray-400 uppercase tracking-wider leading-none mb-0.5 truncate">
                                         Interviews</p>
+                                    <p class="text-sm font-bold text-gray-900 dark:text-white leading-none truncate group-hover/stat:text-orange-600 dark:group-hover/stat:text-orange-400 transition-colors"
+                                        id="stat-notes-interviews">0</p>
                                 </div>
-                                <p class="text-2xl font-black text-gray-900 dark:text-white" id="stat-notes-interviews">
-                                    0</p>
-                            </div>
+                            </a>
 
-                            <!-- Total Notes -->
-                            <div
-                                class="bg-amber-50 dark:bg-amber-900/20 rounded-2xl p-3 border border-amber-100 dark:border-amber-600/30 flex flex-col justify-center relative group/stat">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <i data-lucide="layers" class="w-3.5 h-3.5 text-amber-500 dark:text-amber-300"></i>
-                                    <p
-                                        class="text-[10px] font-bold text-amber-600 dark:text-amber-300 uppercase tracking-wider">
-                                        Total</p>
-                                </div>
-                                <p class="text-xl font-black text-gray-900 dark:text-white" id="stat-notes-count">0</p>
-                            </div>
+                            <!-- Separator -->
+                            <div class="block w-px h-6 bg-gray-200 dark:bg-gray-700/50 shrink-0"></div>
 
-                            <!-- Last Updated -->
-                            <div
-                                class="bg-red-50 dark:bg-red-900/20 rounded-2xl p-3 border border-red-100 dark:border-red-600/30 flex flex-col justify-center relative group/stat">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <i data-lucide="clock" class="w-3.5 h-3.5 text-red-500 dark:text-red-300"></i>
-                                    <p
-                                        class="text-[10px] font-bold text-red-600 dark:text-red-300 uppercase tracking-wider">
-                                        Updated</p>
+                            <!-- Download Notes -->
+                            <button onclick="window.openDownloadModal(); event.preventDefault();"
+                                class="flex items-center gap-2 shrink-0 group/stat text-left">
+                                <div
+                                    class="p-1.5 bg-green-50 dark:bg-green-900/20 rounded-lg text-green-600 dark:text-green-400 shrink-0 group-hover/stat:bg-green-100 dark:group-hover/stat:bg-green-900/30 transition-colors">
+                                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
                                 </div>
-                                <p class="text-sm font-black text-gray-900 dark:text-white truncate"
-                                    id="stat-notes-last">-</p>
-                            </div>
+                                <div class="min-w-0">
+                                    <p
+                                        class="text-[9px] font-bold text-gray-400 uppercase tracking-wider leading-none mb-0.5 truncate">
+                                        Export</p>
+                                    <p
+                                        class="text-sm font-bold text-gray-900 dark:text-white leading-none truncate group-hover/stat:text-green-600 dark:group-hover/stat:text-green-400 transition-colors">
+                                        PDF</p>
+                                </div>
+                            </button>
                         </div>
 
-                        <div
-                            class="mt-auto flex items-center text-orange-600 dark:text-orange-400 text-xs font-bold uppercase tracking-wider">
-                            Open Notebook <i data-lucide="arrow-right"
-                                class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                        <!-- Action Button: Download Notes -->
+                        <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700/50">
+                            <a href="/notes/"
+                                class="w-full inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-orange-500 to-amber-600 text-white px-4 py-3 rounded-xl font-bold text-sm hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-95 group/btn">
+                                <span>View Notes</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-            </a>
+            </div>
 
         </div>
 
-        <!-- Dashboard Grid 2: Tools (2 Cols) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <!-- Dashboard Grid 2: Tools (3 Cols) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
 
-            <!-- Card 3: Platform Guide (Moved to Row 2) -->
+            <!-- Card 4: Platform Guide -->
             <a href="/guide/" class="group relative flex flex-col h-full">
                 <div
-                    class="relative flex-1 bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col">
+                    class="relative flex-1 bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col">
                     <div
                         class="absolute inset-0 bg-gradient-to-br from-cyan-50 to-sky-50 dark:from-cyan-900/20 dark:to-sky-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     </div>
 
                     <div class="relative z-10 flex flex-col h-full">
-                        <div class="flex items-center gap-4 mb-4">
+                        <div class="flex items-center justify-between mb-4 sm:mb-6">
                             <div
-                                class="p-3 bg-gradient-to-r from-cyan-500 to-sky-600 rounded-xl shadow-lg transform group-hover:scale-110 transition-all duration-300">
-                                <i data-lucide="map" class="w-6 h-6 text-white"></i>
+                                class="p-2.5 sm:p-3 bg-gradient-to-r from-cyan-500 to-sky-600 rounded-lg sm:rounded-xl shadow-lg transform group-hover:scale-110 transition-all duration-300">
+                                <i data-lucide="map" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
                             </div>
-                            <h3
-                                class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
-                                Platform Guide</h3>
                         </div>
+
+                        <h2
+                            class="text-xl sm:text-2xl font-black mb-1 text-gray-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                            Guide
+                        </h2>
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Platform Help</p>
+
                         <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-4 flex-1">
                             Learn how to use "Interview Mode" effectively and navigate the platform.
                         </p>
-                        <div
-                            class="mt-auto flex items-center text-cyan-600 dark:text-cyan-400 text-xs font-bold uppercase tracking-wider">
-                            Read Guide <i data-lucide="arrow-right"
-                                class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+
+                        <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700/50">
+                            <span
+                                class="w-full inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-cyan-500 to-sky-600 text-white px-4 py-3 rounded-xl font-bold text-sm hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-95 group/btn">
+                                <span>Read Guide</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
             </a>
 
-            <!-- Card 5: Data Management (Moved to Row 2) -->
+            <!-- Card 5: Data Sync -->
             <div class="group relative flex flex-col h-full">
                 <div
-                    class="relative flex-1 bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col">
+                    class="relative flex-1 bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col">
                     <div
                         class="absolute inset-0 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     </div>
 
                     <div class="relative z-10 flex flex-col h-full">
-                        <div class="flex items-center gap-4 mb-4">
+                        <div class="flex items-center justify-between mb-4 sm:mb-6">
                             <div
-                                class="p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl shadow-lg transform group-hover:scale-110 transition-all duration-300">
-                                <i data-lucide="database" class="w-6 h-6 text-white"></i>
+                                class="p-2.5 sm:p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg sm:rounded-xl shadow-lg transform group-hover:scale-110 transition-all duration-300">
+                                <i data-lucide="database" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
                             </div>
-                            <h3
-                                class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
-                                Data Management</h3>
                         </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6 flex-1">
-                            Backup or restore your progress to ensure your data is safe.
+
+                        <h2
+                            class="text-xl sm:text-2xl font-black mb-1 text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                            Data Sync
+                        </h2>
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Backup & Restore</p>
+
+                        <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-4 flex-1">
+                            Backup your progress to a JSON file or restore from a backup.
                         </p>
 
-                        <div class="mt-auto grid grid-cols-2 gap-3">
+                        <div
+                            class="mt-auto grid grid-cols-2 gap-3 pt-4 border-t border-gray-100 dark:border-gray-700/50">
                             <button onclick="exportData()"
-                                class="flex items-center justify-center gap-2 px-4 py-2.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-green-200 dark:hover:bg-green-800/50 transition-all">
+                                class="flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl font-bold text-sm hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-95">
                                 <i data-lucide="download" class="w-4 h-4"></i> Export
                             </button>
                             <button onclick="document.getElementById('import-file').click()"
-                                class="flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-blue-200 dark:hover:bg-blue-800/50 transition-all">
+                                class="flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-bold text-sm hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-95">
                                 <i data-lucide="upload" class="w-4 h-4"></i> Import
                             </button>
                             <input type="file" id="import-file" class="hidden" accept=".json"
@@ -335,223 +422,781 @@
                 </div>
             </div>
 
+            <!-- Card 6: Account -->
+            <div class="group relative flex flex-col h-full">
+                <div
+                    class="relative flex-1 bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-rose-50 to-red-50 dark:from-rose-900/20 dark:to-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    </div>
+
+                    <div class="relative z-10 flex flex-col h-full">
+                        <div class="flex items-center justify-between mb-4 sm:mb-6">
+                            <div
+                                class="p-2.5 sm:p-3 bg-gradient-to-r from-rose-500 to-red-600 rounded-lg sm:rounded-xl shadow-lg transform group-hover:scale-110 transition-all duration-300">
+                                <i data-lucide="user-cog" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
+                            </div>
+                        </div>
+
+                        <h2
+                            class="text-xl sm:text-2xl font-black mb-1 text-gray-900 dark:text-white group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
+                            Account
+                        </h2>
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Settings</p>
+
+                        <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-4 flex-1">
+                            Manage your profile identity or reset all data.
+                        </p>
+
+                        <div class="mt-auto flex flex-col gap-3 pt-4 border-t border-gray-100 dark:border-gray-700/50">
+                            <button onclick="editNickname()"
+                                class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-slate-700 to-gray-800 text-white rounded-xl font-bold text-sm hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-95">
+                                Change Name
+                            </button>
+                            <button onclick="resetAccount()"
+                                class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-rose-500 to-red-600 text-white rounded-xl font-bold text-sm hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-95">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i> Reset Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- Identity Management -->
-        <div
-            class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-2xl p-8 border border-gray-200 dark:border-gray-700/50 text-center max-w-2xl mx-auto">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Not <span
-                    id="profile-name-small">you</span>?</h3>
-            <p class="text-gray-500 dark:text-gray-400 mb-6 text-sm">Update your display name to personalize your
-                experience.</p>
-            <button onclick="editNickname()"
-                class="px-6 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white font-bold hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors shadow-sm">
-                Change Nickname
-            </button>
-        </div>
 
-    </div>
-</div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        loadProfileData();
-        lucide.createIcons();
-    });
 
-    async function loadProfileData() {
-        // 1. Nickname
-        const name = localStorage.getItem('dsa-nickname') || 'Learner';
-        const nameEl = document.getElementById('profile-name');
-        const nameSmallEl = document.getElementById('profile-name-small');
-        if (nameEl) nameEl.textContent = name;
-        if (nameSmallEl) nameSmallEl.textContent = name;
+        <script>
 
-        // 2. Load DB Stats
-        if (window.dsaDB) {
-            try {
-                // Problems
-                const problems = await window.dsaDB.getAllProblems();
-                const completedCount = problems.filter(p => p.completed).length;
-                const bookmarkedCount = problems.filter(p => p.bookmarked).length;
-                const revisedCount = problems.filter(p => p.revised).length;
+            // Initialize PDF Libraries and Manager
+            let manager;
+            document.addEventListener('DOMContentLoaded', () => {
+                manager = window.InterviewManager;
+                loadProfileData();
+                if (window.lucide) lucide.createIcons();
+            });
 
-                // Problem Notes Stats
-                const problemNotes = problems.filter(p => p.note && p.note.trim().length > 0);
-                const problemNotesCount = problemNotes.length;
-                let lastProblemNoteTime = 0;
-                problemNotes.forEach(p => {
-                    if (p.lastUpdated && p.lastUpdated > lastProblemNoteTime) lastProblemNoteTime = p.lastUpdated;
-                });
+            async function resetAccount() {
+                showConfirm(
+                    "⚠️ DANGER ZONE",
+                    "Are you absolutely sure you want to delete ALL data?<br><br>This will permanently delete:<br>• All solved problems history<br>• All saved problems<br>• All sessions & notes<br>• Your nickname<br><br>This action CANNOT be undone.",
+                    async () => {
+                        // Double confirm
+                        showConfirm(
+                            "Final Confirmation",
+                            "Delete EVERYTHING and reset account? This is your last chance to cancel.",
+                            async () => {
+                                try {
+                                    localStorage.clear();
+                                    if (window.dsaDB) {
+                                        try { window.dsaDB.db.close(); } catch (e) { }
+                                    }
+                                    const req = indexedDB.deleteDatabase('DSA_DB');
+                                    req.onsuccess = () => {
+                                        showAlert("Reset Complete", "Account reset successfully. Reloading...", "success", () => window.location.reload());
+                                    };
+                                    req.onerror = () => {
+                                        showAlert("Error", "Could not delete database. Clear manually.", "error", () => window.location.reload());
+                                    };
+                                } catch (e) {
+                                    showAlert("Error", "Reset failed: " + e.message, "error");
+                                }
+                            },
+                            "Delete Everything (Nuclear)",
+                            "red" // specialized red button
+                        );
+                    },
+                    "Yes, Delete All Data",
+                    "red"
+                );
+            }
 
-                // Fetch total problems count from static index
-                let totalProblems = 0;
-                try {
-                    const res = await fetch('/problems/index.json');
-                    const allProblems = await res.json();
-                    totalProblems = allProblems.length;
-                } catch (e) {
-                    console.error("Failed to fetch total problems", e);
-                    totalProblems = completedCount; // Fallback
-                }
+            async function loadProfileData() {
+                // 1. Nickname
+                const name = localStorage.getItem('dsa-nickname') || 'Learner';
+                const nameEl = document.getElementById('profile-name');
+                const nameSmallEl = document.getElementById('profile-name-small');
+                if (nameEl) nameEl.textContent = name;
+                if (nameSmallEl) nameSmallEl.textContent = name;
 
-                const solvedEl = document.getElementById('stat-solved');
-                if (solvedEl) solvedEl.textContent = `${completedCount}/${totalProblems}`;
+                // 2. Load DB Stats
+                if (window.dsaDB) {
+                    try {
+                        // --- PROBLEMS STATS ---
+                        const problems = await window.dsaDB.getAllProblems();
+                        const completedCount = problems.filter(p => p.completed).length;
+                        const bookmarkedCount = problems.filter(p => p.bookmarked).length;
+                        const revisedCount = problems.filter(p => p.revised).length;
 
-                // Update Percentage
-                const percentageEl = document.getElementById('stat-percentage');
-                if (percentageEl) {
-                    const p = totalProblems > 0 ? Math.round((completedCount / totalProblems) * 100) : 0;
-                    percentageEl.textContent = `${p}% Completed`;
-                }
-
-                const bookmarkedEl = document.getElementById('stat-bookmarked');
-                if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
-
-                const revisedEl = document.getElementById('stat-revise');
-                if (revisedEl) revisedEl.textContent = revisedCount;
-
-                // Sessions
-                const sessions = await window.dsaDB.getAllSessions();
-
-                // Interview Notes Stats
-                let interviewNotesCount = 0;
-                let lastInterviewNoteTime = 0;
-
-                const sessionCount = sessions.length;
-                let totalSeconds = 0;
-                let lastSessionTime = 0;
-                let totalQs = 0;
-                let totalSolvedInSessions = 0;
-
-                sessions.forEach(s => {
-                    if (s.createdAt > lastSessionTime) lastSessionTime = s.createdAt;
-
-                    // Check for interview reflection note
-                    if (s.notes && s.notes.reflection && s.notes.reflection.trim().length > 0) {
-                        interviewNotesCount++;
-                        // Use session creation time as proxy for note time if specific update time not available
-                        // Or if we implemented updatedTime for sessions, use that. 
-                        // For now we use createdAt as strict proxy for when the session (and likely note) was done.
-                        if (s.createdAt > lastInterviewNoteTime) lastInterviewNoteTime = s.createdAt;
-                    }
-
-                    if (s.problems) {
-                        totalQs += s.problems.length;
-                        s.problems.forEach(p => {
-                            totalSeconds += (p.timeSpentSeconds || 0);
-                            if (p.status === 'solved') totalSolvedInSessions++;
+                        // Last Active (Problems)
+                        let lastProblemActive = 0;
+                        problems.forEach(p => {
+                            const t = p.lastUpdated || p.completedAt || 0;
+                            if (t > lastProblemActive) lastProblemActive = t;
                         });
+
+                        // Fetch total problems count
+                        let totalProblems = 0;
+                        try {
+                            const res = await fetch('/problems/index.json');
+                            const allProblems = await res.json();
+                            totalProblems = allProblems.length;
+                        } catch (e) {
+                            console.error("Failed to fetch total problems", e);
+                            totalProblems = completedCount;
+                        }
+
+                        // Update Problems Card
+                        if (document.getElementById('stat-solved-count')) document.getElementById('stat-solved-count').textContent = completedCount;
+                        if (document.getElementById('stat-total-count')) document.getElementById('stat-total-count').textContent = totalProblems;
+
+                        if (document.getElementById('stat-bookmarked')) document.getElementById('stat-bookmarked').textContent = bookmarkedCount;
+                        if (document.getElementById('stat-revise')) document.getElementById('stat-revise').textContent = revisedCount;
+
+                        if (document.getElementById('stat-percentage-card')) {
+                            const p = totalProblems > 0 ? Math.round((completedCount / totalProblems) * 100) : 0;
+                            document.getElementById('stat-percentage-card').textContent = `${p}%`;
+                        }
+
+                        if (document.getElementById('stat-problems-last-active')) {
+                            document.getElementById('stat-problems-last-active').textContent = lastProblemActive ? timeAgo(lastProblemActive) : '-';
+                        }
+
+
+                        // --- INTERVIEW STATS ---
+                        const sessions = await window.dsaDB.getAllSessions();
+                        const sessionCount = sessions.length;
+
+                        let totalSeconds = 0;
+                        let lastSessionTime = 0;
+
+                        // For solved/attempted %
+                        let totalInterviewProblems = 0;
+                        let solvedInterviewProblems = 0;
+                        let attemptedInterviewProblems = 0;
+
+                        sessions.forEach(s => {
+                            // Time
+                            if (s.problems) {
+                                s.problems.forEach(p => {
+                                    totalSeconds += (p.timeSpentSeconds || 0);
+                                    totalInterviewProblems++;
+                                    if (p.status === 'solved') solvedInterviewProblems++;
+                                    if (p.status === 'attempted') attemptedInterviewProblems++;
+                                });
+                            }
+                            // Last Active
+                            if (s.createdAt > lastSessionTime) lastSessionTime = s.createdAt;
+                        });
+
+                        // Update Interview Card
+                        if (document.getElementById('stat-interview-count')) document.getElementById('stat-interview-count').textContent = sessionCount;
+                        if (document.getElementById('stat-interview-time')) document.getElementById('stat-interview-time').textContent = formatTime(totalSeconds);
+
+                        if (document.getElementById('stat-interview-last')) {
+                            document.getElementById('stat-interview-last').textContent = lastSessionTime ? timeAgo(lastSessionTime) : '-';
+                        }
+
+                        if (document.getElementById('stat-interview-solved-perc')) {
+                            const sp = totalInterviewProblems > 0 ? Math.round((solvedInterviewProblems / totalInterviewProblems) * 100) : 0;
+                            document.getElementById('stat-interview-solved-perc').textContent = `${sp}%`;
+                        }
+
+                        if (document.getElementById('stat-interview-attempted-perc')) {
+                            const ap = totalInterviewProblems > 0 ? Math.round((attemptedInterviewProblems / totalInterviewProblems) * 100) : 0;
+                            document.getElementById('stat-interview-attempted-perc').textContent = `${ap}%`;
+                        }
+
+
+                        // --- NOTES STATS ---
+                        // Problem Notes
+                        const problemNotes = problems.filter(p => p.note && p.note.trim().length > 0);
+                        const problemNotesCount = problemNotes.length;
+
+                        // Interview Reflections
+                        const reflectionNotes = sessions.filter(s => s.notes && s.notes.reflection && s.notes.reflection.trim().length > 0);
+                        const reflectionNotesCount = reflectionNotes.length;
+
+                        const totalNotesCount = problemNotesCount + reflectionNotesCount;
+
+                        // Last Updated Note
+                        let lastNoteTime = 0;
+                        problemNotes.forEach(p => { if ((p.lastUpdated || 0) > lastNoteTime) lastNoteTime = p.lastUpdated; });
+                        sessions.forEach(s => { if ((s.createdAt || 0) > lastNoteTime && s.notes && s.notes.reflection) lastNoteTime = s.createdAt; });
+
+                        // Update Notes Card
+                        if (document.getElementById('stat-notes-count')) document.getElementById('stat-notes-count').textContent = totalNotesCount;
+                        if (document.getElementById('stat-notes-problems')) document.getElementById('stat-notes-problems').textContent = problemNotesCount;
+                        if (document.getElementById('stat-notes-interviews')) document.getElementById('stat-notes-interviews').textContent = reflectionNotesCount;
+
+                        if (document.getElementById('stat-notes-last')) {
+                            document.getElementById('stat-notes-last').textContent = lastNoteTime ? timeAgo(lastNoteTime) : '-';
+                        }
+
+                    } catch (e) {
+                        console.error("Error loading profile stats:", e);
                     }
+                }
+            }
+
+            // --- CUSTOM MODAL HANDLERS ---
+            let onConfirmCallback = null;
+
+            function showModal(title, message, type = 'info') {
+                const modal = document.getElementById('actionModal');
+                const titleEl = document.getElementById('actionModalTitle');
+                const msgEl = document.getElementById('actionModalMessage');
+                const confirmBtn = document.getElementById('actionModalConfirmBtn');
+                const inputEl = document.getElementById('actionModalInputContainer');
+
+                titleEl.textContent = title;
+                msgEl.innerHTML = message; // Allow HTML for line breaks
+                inputEl.classList.add('hidden');
+
+                // Reset Button Style
+                confirmBtn.className = "px-4 py-2 rounded-lg text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30";
+
+                // Animation
+                modal.classList.remove('hidden');
+                // Small delay to allow display:block to apply before opacity transition
+                requestAnimationFrame(() => {
+                    modal.classList.remove('opacity-0');
+                    modal.children[0].classList.remove('scale-95');
+                    modal.children[0].classList.add('scale-100');
                 });
 
-                // Update Notes Card Stats
-                const totalNotesCount = problemNotesCount + interviewNotesCount;
-                const lastNoteTime = Math.max(lastProblemNoteTime, lastInterviewNoteTime);
+                return { modal, titleEl, msgEl, confirmBtn, inputEl };
+            }
 
-                const noteProbEl = document.getElementById('stat-notes-problems');
-                if (noteProbEl) noteProbEl.textContent = problemNotesCount;
+            function closeActionModal() {
+                const modal = document.getElementById('actionModal');
+                modal.classList.add('opacity-0');
+                modal.children[0].classList.add('scale-95');
+                modal.children[0].classList.remove('scale-100');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    // Reset callbacks
+                    onConfirmCallback = null;
+                }, 300);
+            }
 
-                const noteIntEl = document.getElementById('stat-notes-interviews');
-                if (noteIntEl) noteIntEl.textContent = interviewNotesCount;
+            function showAlert(title, message, type = 'info', callback = null) {
+                const { confirmBtn } = showModal(title, message, type);
+                // For Alert, Confirmation Button is just "OK"
+                confirmBtn.textContent = "OK";
+                confirmBtn.onclick = () => {
+                    closeActionModal();
+                    if (callback) callback();
+                };
+            }
 
-                const notesEl = document.getElementById('stat-notes-count');
-                if (notesEl) notesEl.textContent = totalNotesCount; // Total count
+            function showConfirm(title, message, onConfirm, btnText = "Confirm", btnColor = "blue") {
+                const { confirmBtn } = showModal(title, message);
+                confirmBtn.textContent = btnText;
 
-                const noteLastEl = document.getElementById('stat-notes-last');
-                if (noteLastEl) noteLastEl.textContent = lastNoteTime ? timeAgo(lastNoteTime) : '-';
-
-                const sessCountEl = document.getElementById('stat-interview-count');
-                if (sessCountEl) sessCountEl.textContent = sessionCount;
-
-                const sessTimeEl = document.getElementById('stat-interview-time');
-                if (sessTimeEl) sessTimeEl.textContent = formatTime(totalSeconds);
-
-                const sessLastEl = document.getElementById('stat-interview-last');
-                if (sessLastEl) sessLastEl.textContent = lastSessionTime ? timeAgo(lastSessionTime) : '-';
-
-                const sessScoreEl = document.getElementById('stat-interview-score');
-                if (sessScoreEl) {
-                    const score = totalQs > 0 ? Math.round((totalSolvedInSessions / totalQs) * 100) : 0;
-                    sessScoreEl.textContent = `${score}%`;
+                if (btnColor === 'red') {
+                    confirmBtn.className = "px-4 py-2 rounded-lg text-sm font-bold text-white bg-rose-600 hover:bg-rose-700 transition-colors shadow-lg shadow-rose-500/30";
                 }
 
-                // Removed stats-interview-qs update
-
-            } catch (e) {
-                console.error("Error loading stats:", e);
+                confirmBtn.onclick = () => {
+                    if (onConfirm) onConfirm();
+                    closeActionModal();
+                };
             }
-        }
-    }
 
-    function formatTime(seconds) {
-        if (!seconds) return '0m';
-        const h = Math.floor(seconds / 3600);
-        const m = Math.floor((seconds % 3600) / 60);
-        if (h > 0) return `${h}h ${m}m`;
-        return `${m}m`;
-    }
+            function showPrompt(title, message, defaultValue, onConfirm) {
+                const { confirmBtn, inputEl } = showModal(title, message);
+                inputEl.classList.remove('hidden');
+                const inputField = document.getElementById('actionModalInput');
+                inputField.value = defaultValue;
+                inputField.focus();
 
-    function timeAgo(timestamp) {
-        const seconds = Math.floor((Date.now() - timestamp) / 1000);
-        let interval = seconds / 31536000;
-        if (interval > 1) return Math.floor(interval) + "y ago";
-        interval = seconds / 2592000;
-        if (interval > 1) return Math.floor(interval) + "mo ago";
-        interval = seconds / 86400;
-        if (interval > 1) return Math.floor(interval) + "d ago";
-        interval = seconds / 3600;
-        if (interval > 1) return Math.floor(interval) + "h ago";
-        interval = seconds / 60;
-        if (interval > 1) return Math.floor(interval) + "m ago";
-        return "Just now";
-    }
+                confirmBtn.textContent = "Save";
+                confirmBtn.onclick = () => {
+                    if (onConfirm) onConfirm(inputField.value);
+                    closeActionModal();
+                };
 
-    function editNickname() {
-        localStorage.removeItem('dsa-nickname');
-        window.location.reload();
-    }
-
-    /* --- Data Management --- */
-    async function exportData() {
-        if (!window.dsaDB) {
-            alert('Database not ready');
-            return;
-        }
-        try {
-            const json = await window.dsaDB.exportData();
-            const blob = new Blob([json], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `dsa-backup-${new Date().toISOString().slice(0, 10)}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        } catch (e) {
-            console.error(e);
-            alert('Export failed');
-        }
-    }
-
-    async function importData(input) {
-        if (!input.files || !input.files[0]) return;
-        const file = input.files[0];
-
-        const reader = new FileReader();
-        reader.onload = async (e) => {
-            try {
-                const json = e.target.result;
-                await window.dsaDB.importData(json);
-                alert('Import successful! Reloading...');
-                window.location.reload();
-            } catch (err) {
-                console.error(err);
-                alert('Import failed: ' + err.message);
+                // Enter key support
+                inputField.onkeydown = (e) => {
+                    if (e.key === 'Enter') confirmBtn.click();
+                };
             }
-        };
-        reader.readAsText(file);
-    }
-</script>
-{{ end }}
+            function formatTime(seconds) {
+                if (!seconds) return '0m';
+                const h = Math.floor(seconds / 3600);
+                const m = Math.floor((seconds % 3600) / 60);
+                if (h > 0) return `${h}h ${m}m`;
+                return `${m}m`;
+            }
+
+            function timeAgo(timestamp) {
+                if (!timestamp) return '-';
+                const seconds = Math.floor((Date.now() - timestamp) / 1000);
+                let interval = seconds / 31536000;
+                if (interval > 1) return Math.floor(interval) + "y ago";
+                interval = seconds / 2592000;
+                if (interval > 1) return Math.floor(interval) + "mo ago";
+                interval = seconds / 86400;
+                if (interval > 1) return Math.floor(interval) + "d ago";
+                interval = seconds / 3600;
+                if (interval > 1) return Math.floor(interval) + "h ago";
+                interval = seconds / 60;
+                if (interval > 1) return Math.floor(interval) + "m ago";
+                return "Just now";
+            }
+
+            function editNickname() {
+                const current = localStorage.getItem('dsa-nickname') || '';
+                showPrompt(
+                    "Change Nickname",
+                    "Enter your new display name:",
+                    current,
+                    (newName) => {
+                        if (newName && newName.trim()) {
+                            localStorage.setItem('dsa-nickname', newName.trim());
+                            loadProfileData();
+                            showAlert("Success", "Nickname updated successfully!", "success");
+                        }
+                    }
+                );
+            }
+
+            // --- EXPORT / IMPORT DATA ---
+            async function exportData() {
+                if (!window.dsaDB) return;
+                try {
+                    const data = await window.dsaDB.exportData();
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `dsa-backup-${new Date().toISOString().split('T')[0]}.json`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    showAlert("Success", "Data exported successfully!", "success");
+                } catch (e) {
+                    showAlert("Export Failed", e.message, "error");
+                }
+            }
+
+            async function importData(input) {
+                if (!input.files || !input.files[0] || !window.dsaDB) return;
+                const file = input.files[0];
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        await window.dsaDB.importData(data);
+                        showAlert("Success", "Data imported successfully! Reloading...", "success", () => window.location.reload());
+                    } catch (err) {
+                        showAlert("Import Failed", err.message, "error");
+                    }
+                };
+                reader.readAsText(file);
+            }
+
+            // --- DOWNLOAD NOTES MODAL & LOGIC (Ported) ---
+            window.openDownloadModal = function () {
+                document.getElementById('downloadModal').classList.remove('hidden');
+            }
+
+            window.closeDownloadModal = function () {
+                document.getElementById('downloadModal').classList.add('hidden');
+            }
+
+            function stripHtml(html) {
+                if (!html) return '';
+                let text = html
+                    .replace(/<br\s*\/?>/gi, '\n')
+                    .replace(/<\/p>/gi, '\n\n')
+                    .replace(/<p>/gi, '')
+                    .replace(/<ul>/gi, '\n')
+                    .replace(/<\/ul>/gi, '')
+                    .replace(/<li>/gi, '  • ')
+                    .replace(/<\/li>/gi, '\n')
+                    .replace(/<pre>/gi, '\n[Code Block]\n')
+                    .replace(/<\/pre>/gi, '\n')
+                    .replace(/<[^>]+>/g, '');
+                const textarea = document.createElement('textarea');
+                textarea.innerHTML = text;
+                return textarea.value.trim();
+            }
+
+            function loadImage(url) {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = () => resolve(img);
+                    img.onerror = () => resolve(null);
+                    img.src = url;
+                });
+            }
+
+            window.downloadPDF = async function () {
+                if (!window.jspdf) {
+                    console.error("jspdf not loaded");
+                    alert("PDF Library not loaded. Please refresh.");
+                    return;
+                }
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                // Config
+                const scope = document.querySelector('input[name="notesScope"]:checked').value;
+                const inclStatement = document.getElementById('includeStatement').checked;
+                const inclComplexity = document.getElementById('includeComplexity').checked;
+                const inclExamples = document.getElementById('includeExamples').checked;
+                const inclConstraints = document.getElementById('includeConstraints').checked;
+                closeDownloadModal();
+
+                // Load Data
+                let notesItems = [];
+                let reflectionItems = [];
+
+                // 1. Problems
+                if (scope === 'all' || scope === 'problems') {
+                    const problems = await window.dsaDB.getAllProblems();
+                    const notesData = problems.filter(p => p.note && p.note.trim() !== '');
+                    // Need full metadata? "manager.getProblems()" might effectively be "fetch /problems/index.json"
+                    // Let's deduce metadata from 'notesData' if it has it, or fetch index
+                    let allProblems = [];
+                    try {
+                        const res = await fetch('/problems/index.json');
+                        allProblems = await res.json();
+                    } catch (e) { }
+                    const probMap = {};
+                    allProblems.forEach(p => probMap[p.id || p.permalink.split('/').filter(Boolean).pop()] = p);
+
+                    notesItems = notesData.map(dbItem => {
+                        const prob = probMap[dbItem.id] || {};
+                        return {
+                            type: 'Problem Note',
+                            title: prob.title || dbItem.id,
+                            content: dbItem.note,
+                            difficulty: prob.difficulty || 'Unknown',
+                            meta: prob,
+                            date: new Date(dbItem.lastUpdated || Date.now()).toLocaleDateString()
+                        };
+                    });
+                }
+
+                // 2. Reflections
+                if (scope === 'all' || scope === 'reflections') {
+                    const sessions = await window.dsaDB.getAllSessions();
+                    reflectionItems = sessions
+                        .filter(s => s.notes && s.notes.reflection && s.notes.reflection.trim() !== '')
+                        .map(s => ({
+                            type: 'Reflection',
+                            title: s.title || 'Session Reflection',
+                            content: s.notes.reflection,
+                            date: new Date(s.createdAt).toLocaleDateString(),
+                            problems: (s.problems || [])
+                        }));
+                }
+
+                const dataToPrint = [...notesItems, ...reflectionItems];
+                if (dataToPrint.length === 0) { alert("No notes to print."); return; }
+
+                // --- PDF GENERATION (Simplified Port) ---
+                // We reuse the logic but need to be careful about scope variables
+                const logoImg = await loadImage('/logo.png');
+                const nickname = localStorage.getItem('dsa-nickname') || "User";
+
+                const pageW = doc.internal.pageSize.getWidth();
+                const pageH = doc.internal.pageSize.getHeight();
+                const margin = 20;
+                const contentW = pageW - (margin * 2);
+                let y = 0;
+                let pageNum = 1;
+
+                const statusColors = {
+                    'solved': { bg: [22, 163, 74], txt: [255, 255, 255] },
+                    'attempted': { bg: [234, 179, 8], txt: [255, 255, 255] },
+                    'skipped': { bg: [239, 68, 68], txt: [255, 255, 255] },
+                    'default': { bg: [156, 163, 175], txt: [255, 255, 255] }
+                };
+
+                const drawHeader = () => {
+                    doc.setFillColor(255, 255, 255);
+                    doc.rect(0, 0, pageW, 30, 'F');
+                    if (logoImg) {
+                        const logoSize = 10;
+                        const logoRatio = logoImg.width / logoImg.height;
+                        const renderW = logoSize * logoRatio;
+                        doc.addImage(logoImg, 'PNG', margin, 10, renderW, logoSize);
+                        doc.setDrawColor(220, 220, 220);
+                        doc.setLineWidth(0.5);
+                        doc.line(margin + renderW + 4, 11, margin + renderW + 4, 19);
+                        doc.setFont("helvetica", "bold"); doc.setFontSize(16); doc.setTextColor(17, 24, 39);
+                        doc.text("CSRGO DSA", margin + renderW + 8, 18);
+                        doc.setFont("helvetica", "normal"); doc.setFontSize(11); doc.setTextColor(107, 114, 128);
+                        const nameText = nickname.endsWith('s') ? nickname + "\u0027 Personal Notes" : nickname + "\u0027s Personal Notes";
+                        doc.text(nameText, margin + renderW + 8 + 40, 18);
+                    }
+                    doc.setFontSize(9); doc.setTextColor(107, 114, 128);
+                    doc.text(new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }), pageW - margin, 18, { align: 'right' });
+
+                    // Gradient Line
+                    const steps = 60; const c1 = [126, 34, 206]; const c2 = [37, 99, 235];
+                    for (let i = 0; i < steps; i++) {
+                        const t = i / steps;
+                        const r = Math.round(c1[0] + t * (c2[0] - c1[0]));
+                        const g = Math.round(c1[1] + t * (c2[1] - c1[1]));
+                        const b = Math.round(c1[2] + t * (c2[2] - c1[2]));
+                        doc.setFillColor(r, g, b);
+                        doc.rect((i * (pageW / steps)), 29, (pageW / steps) + 1, 1, 'F');
+                    }
+                };
+
+                const drawFooter = () => {
+                    doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.setTextColor(150, 150, 150);
+                    doc.text(`${pageNum}`, pageW / 2, pageH - 10, { align: 'center' });
+                    pageNum++;
+                };
+
+                const checkOverflow = (h) => {
+                    if (y + h > pageH - margin) {
+                        drawFooter(); doc.addPage(); drawHeader(); y = 40; return true;
+                    } return false;
+                };
+
+                for (let i = 0; i < dataToPrint.length; i++) {
+                    if (i > 0) { drawFooter(); doc.addPage(); }
+                    drawHeader(); y = 45;
+                    const item = dataToPrint[i];
+
+                    doc.setFont("helvetica", "bold"); doc.setFontSize(22); doc.setTextColor(17, 24, 39);
+                    doc.text(item.title, margin, y); y += 10;
+
+                    if (item.type === 'Problem Note') {
+                        // Badge
+                        doc.setFontSize(10);
+                        const badgeText = (item.difficulty || 'Unknown').toUpperCase();
+                        let badgeBg = [229, 231, 235]; let badgeTxt = [55, 65, 81];
+                        if (item.difficulty === 'Easy') { badgeBg = [220, 252, 231]; badgeTxt = [21, 128, 61]; }
+                        if (item.difficulty === 'Medium') { badgeBg = [254, 249, 195]; badgeTxt = [161, 98, 7]; }
+                        if (item.difficulty === 'Hard') { badgeBg = [254, 226, 226]; badgeTxt = [185, 28, 28]; }
+                        const badgeW = doc.getTextWidth(badgeText) + 10;
+                        doc.setFillColor(...badgeBg); doc.roundedRect(margin, y, badgeW, 7, 2, 2, 'F');
+                        doc.setTextColor(...badgeTxt); doc.text(badgeText, margin + 5, y + 5); y += 15;
+
+                        // Meta
+                        if (item.meta) {
+                            if (inclStatement && item.meta.summary) {
+                                const summaryTxt = stripHtml(item.meta.summary);
+                                const splitSum = doc.splitTextToSize(summaryTxt, contentW - 10);
+                                const boxH = (splitSum.length * 5) + 15;
+                                checkOverflow(boxH);
+                                doc.setFillColor(249, 250, 251); doc.roundedRect(margin, y, contentW, boxH, 3, 3, 'F');
+                                doc.setFont("helvetica", "bold"); doc.setFontSize(9); doc.setTextColor(79, 70, 229);
+                                doc.text("PROBLEM", margin + 5, y + 7);
+                                doc.setFont("helvetica", "normal"); doc.setFontSize(10); doc.setTextColor(17, 24, 39);
+                                doc.text(splitSum, margin + 5, y + 14); y += boxH + 8;
+                            }
+                            if (inclComplexity || inclConstraints || inclExamples) {
+                                checkOverflow(30);
+                                if (inclComplexity) {
+                                    doc.setFont("helvetica", "bold"); doc.setFontSize(10); doc.setTextColor(30); doc.text("Complexity", margin, y); y += 5;
+                                    doc.setFont("helvetica", "normal"); doc.setTextColor(107);
+                                    doc.text(`Time: ${item.meta.timeComplexity || '-'} | Space: ${item.meta.spaceComplexity || '-'}`, margin, y); y += 10;
+                                }
+                            }
+                        }
+                    } else {
+                        doc.setFontSize(11); doc.setTextColor(107, 114, 128); doc.text("REFLECTION SESSION", margin, y); y += 10;
+                        if (item.problems) {
+                            checkOverflow(item.problems.length * 8 + 10);
+                            doc.setFont("helvetica", "bold"); doc.setFontSize(10); doc.setTextColor(30); doc.text("PROBLEMS", margin, y); y += 6;
+                            doc.setFont("helvetica", "normal");
+                            item.problems.forEach(p => {
+                                doc.text(`• ${p.title} (${p.status})`, margin + 2, y); y += 5;
+                            });
+                            y += 5;
+                        }
+                    }
+
+                    // Content
+                    checkOverflow(50);
+                    doc.setFont("helvetica", "normal"); doc.setFontSize(11); doc.setTextColor(55, 65, 81);
+                    const splitContent = doc.splitTextToSize(item.content, contentW);
+                    doc.text(splitContent, margin, y);
+                    y += (splitContent.length * 6);
+                }
+
+                drawFooter();
+                doc.save(`dsa-notes-${new Date().toISOString().split('T')[0]}.pdf`);
+            }
+
+
+
+        </script>
+
+        <!-- Download Modal -->
+        <div id="downloadModal"
+            class="fixed inset-0 z-[100] hidden items-center justify-center bg-gray-900/60 backdrop-blur-md px-4 py-4 sm:py-8 overflow-y-auto">
+            <div
+                class="bg-white dark:bg-gray-800 w-full max-w-xl rounded-2xl md:rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 relative animate-fade-in-up transform transition-all overflow-hidden group my-auto">
+
+                <!-- Decorative bg blobs -->
+                <div
+                    class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none">
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none">
+                </div>
+
+                <!-- Sticky Header -->
+                <div
+                    class="sticky top-0 z-20 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md px-5 py-3 md:px-6 md:py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center shrink-0">
+                    <div>
+                        <h2
+                            class="text-lg md:text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-2 md:gap-3">
+                            <div
+                                class="p-1.5 md:p-2 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg shadow-lg shrink-0">
+                                <i data-lucide="file-down" class="w-4 h-4 md:w-5 md:h-5 text-white"></i>
+                            </div>
+                            Download Notes
+                        </h2>
+                    </div>
+                    <button onclick="closeDownloadModal()"
+                        class="p-1.5 -mr-1.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors group/close">
+                        <i data-lucide="x"
+                            class="w-5 h-5 text-gray-400 group-hover/close:text-gray-600 dark:text-gray-500 dark:group-hover/close:text-gray-300 transition-colors"></i>
+                    </button>
+                </div>
+
+                <!-- Scrollable Content -->
+                <div class="px-5 py-4 md:p-6 relative z-10 overflow-y-auto custom-scrollbar">
+
+                    <!-- Scope Section -->
+                    <div class="mb-6">
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Include
+                            Content</label>
+                        <div class="grid grid-cols-1 gap-2.5">
+                            <!-- All Notes -->
+                            <label
+                                class="group relative flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                                <input type="radio" name="notesScope" value="all" checked
+                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600">
+                                <div class="flex-1">
+                                    <span class="block text-sm font-bold text-gray-900 dark:text-white">All
+                                        Notes</span>
+                                    <span class="block text-xs text-gray-500">Includes both problem solutions and
+                                        reflections</span>
+                                </div>
+                            </label>
+                            <div class="grid grid-cols-2 gap-2.5">
+                                <label
+                                    class="group relative flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                                    <input type="radio" name="notesScope" value="problems"
+                                        class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600">
+                                    <span class="text-sm font-bold text-gray-900 dark:text-white">Problem
+                                        Notes</span>
+                                </label>
+                                <label
+                                    class="group relative flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                                    <input type="radio" name="notesScope" value="reflections"
+                                        class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
+                                    <span class="text-sm font-bold text-gray-900 dark:text-white">Reflections</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Metadata Section -->
+                    <div class="mb-2">
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Enrich
+                            with
+                            Data</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <label
+                                class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                                <input type="checkbox" id="includeStatement" checked
+                                    class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Problem
+                                    Statement</span>
+                            </label>
+                            <label
+                                class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                                <input type="checkbox" id="includeComplexity" checked
+                                    class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Time/Space
+                                    Complexity</span>
+                            </label>
+                            <label
+                                class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                                <input type="checkbox" id="includeExamples"
+                                    class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Examples</span>
+                            </label>
+                            <label
+                                class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                                <input type="checkbox" id="includeConstraints"
+                                    class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Constraints</span>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Sticky Footer -->
+                <div
+                    class="p-4 md:p-6 border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50 backdrop-blur-sm relative z-20 shrink-0 flex gap-3">
+                    <button onclick="closeDownloadModal()"
+                        class="flex-1 py-3 md:py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
+                        Cancel
+                    </button>
+                    <button onclick="downloadPDF()"
+                        class="flex-[2] py-3 md:py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm hover:shadow-xl hover:shadow-blue-500/20 hover:scale-[1.01] transition-all transform active:scale-95 flex items-center justify-center gap-2">
+                        <i data-lucide="download" class="w-4 h-4"></i> Download PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Modal -->
+        <div id="actionModal"
+            class="fixed inset-0 z-50 hidden flex items-center justify-center bg-gray-900/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+            <div
+                class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden transform scale-95 transition-transform duration-300 border border-gray-100 dark:border-gray-700">
+                <!-- Modal Header -->
+                <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center"
+                    id="actionModalHeader">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white" id="actionModalTitle">Action</h3>
+                    <button onclick="closeActionModal()"
+                        class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <i data-lucide="x" class="w-5 h-5 text-gray-400"></i>
+                    </button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="p-6">
+                    <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4" id="actionModalMessage">
+                        Message goes here...</p>
+
+                    <!-- Input Container (Hidden by default) -->
+                    <div id="actionModalInputContainer" class="hidden mb-4">
+                        <input type="text" id="actionModalInput"
+                            class="w-full px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex justify-end gap-3" id="actionModalButtons">
+                        <button onclick="closeActionModal()"
+                            class="px-4 py-2 rounded-lg text-sm font-bold text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
+                            Cancel
+                        </button>
+                        <button id="actionModalConfirmBtn"
+                            class="px-4 py-2 rounded-lg text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30">
+                            Confirm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{ end }}

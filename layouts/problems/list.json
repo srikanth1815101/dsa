@@ -4,6 +4,6 @@
 "difficulty": "{{ .Params.difficulty }}",
 "companies": {{ .Params.companies | jsonify }},
 "topics": {{ .Params.topics | jsonify }},
-"permalink": "{{ .Permalink }}",
+"permalink": "{{ .RelPermalink }}",
 "starterCode": "{{ .Params.starterCode }}"
 }{{ end }}]

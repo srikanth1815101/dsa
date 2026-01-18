@@ -2,7 +2,7 @@
 <script src="/js/interview-manager.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20 pt-24 md:pt-32">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20 pt-4 md:pt-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fade-in-up">
 
         <!-- Welcome Header -->
@@ -26,7 +26,7 @@
 
         <!-- Hover Background Gradient -->
         <!-- Profile Dashboard Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
 
             <!-- Card 1: Problems Solved (Blue Theme) -->
             <div class="group relative flex flex-col h-full">
@@ -337,10 +337,7 @@
                 </div>
             </div>
 
-        </div>
-
-        <!-- Dashboard Grid 2: Tools (3 Cols) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <!-- Continued Grid Items (Tools) -->
 
             <!-- Card 4: Platform Guide -->
             <a href="/guide/" class="group relative flex flex-col h-full">
@@ -472,49 +469,126 @@
             // Initialize PDF Libraries and Manager
             let manager;
             document.addEventListener('DOMContentLoaded', () => {
+                // Force top scroll on reset
+                if (localStorage.getItem('dsa-welcome-reset')) {
+                    window.scrollTo(0, 0);
+                    // Standardize scroll restoration for this session to avoid jumps
+                    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+                    localStorage.removeItem('dsa-welcome-reset'); // Consume flag
+                }
+
                 manager = window.InterviewManager;
                 loadProfileData();
                 if (window.lucide) lucide.createIcons();
             });
 
+            function getRandomNickname() {
+                const adjectives = ["Code", "Algo", "Binary", "Data", "Logic", "Syntax", "Pixel", "Stack", "Git", "Null"];
+                const nouns = ["Voyager", "Explorer", "Master", "Bard", "Sorcerer", "Hunter", "Surfer", "Ninja", "Wizard", "Pioneer"];
+                const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+                const noun = nouns[Math.floor(Math.random() * nouns.length)];
+                return `${adj} ${noun}`;
+            }
+
+            // Helper for Title Case
+            function toTitleCase(str) {
+                if (!str) return '';
+                return str.toLowerCase().replace(/(?:^|\s)\w/g, function (match) {
+                    return match.toUpperCase();
+                });
+            }
+
             async function resetAccount() {
                 showConfirm(
                     "⚠️ DANGER ZONE",
                     "Are you absolutely sure you want to delete ALL data?<br><br>This will permanently delete:<br>• All solved problems history<br>• All saved problems<br>• All sessions & notes<br>• Your nickname<br><br>This action CANNOT be undone.",
-                    async () => {
-                        // Double confirm
-                        showConfirm(
-                            "Final Confirmation",
-                            "Delete EVERYTHING and reset account? This is your last chance to cancel.",
-                            async () => {
+                    async (shouldBackup) => {
+                        try {
+                            if (shouldBackup) {
+                                // Trigger export and wait strictly for it to start/finish
+                                await exportData();
+                                // We need to pause a bit to ensure download starts before nuke
+                                await new Promise(r => setTimeout(r, 1500));
+                            }
+
+                            // 1. Clear LocalStorage
+                            localStorage.clear();
+
+                            // 2. Set Random Nickname
+                            const newName = getRandomNickname();
+                            localStorage.setItem('dsa-nickname', newName);
+
+                            // 3. WIPE DATA INTERNALLY (Guaranteed Valid Reset)
+                            if (window.dsaDB) {
                                 try {
-                                    localStorage.clear();
-                                    if (window.dsaDB) {
-                                        try { window.dsaDB.db.close(); } catch (e) { }
-                                    }
-                                    const req = indexedDB.deleteDatabase('DSA_DB');
-                                    req.onsuccess = () => {
-                                        showAlert("Reset Complete", "Account reset successfully. Reloading...", "success", () => window.location.reload());
-                                    };
-                                    req.onerror = () => {
-                                        showAlert("Error", "Could not delete database. Clear manually.", "error", () => window.location.reload());
-                                    };
+                                    await window.dsaDB.clearAll(); // Wipe all stores
+                                    console.log("Internal DB stores cleared");
                                 } catch (e) {
-                                    showAlert("Error", "Reset failed: " + e.message, "error");
+                                    console.warn("Internal wipe failed", e);
                                 }
-                            },
-                            "Delete Everything (Nuclear)",
-                            "red" // specialized red button
-                        );
+
+                                // 4. Close DB Connection explicitly
+                                try {
+                                    if (window.dsaDB.db) window.dsaDB.db.close();
+                                    window.dsaDB.db = null;
+                                } catch (e) { console.warn('DB Close warning', e); }
+                            }
+
+                            // 5. Delete Database with Timeout
+                            const deleteReq = indexedDB.deleteDatabase('DSA_DB');
+
+                            let isComplete = false;
+
+                            deleteReq.onsuccess = () => {
+                                isComplete = true;
+                                console.log("Database deleted successfully");
+                                localStorage.setItem('dsa-welcome-reset', 'true');
+                                showAlert(
+                                    "Reset Complete",
+                                    `Account has been successfully reset.<br><br>Your new identity is <b>${newName}</b>.<br><br>Click OK to restart.`,
+                                    "success",
+                                    () => {
+                                        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+                                        window.scrollTo(0, 0);
+                                        window.location.reload();
+                                    }
+                                );
+                            };
+
+                            deleteReq.onerror = (e) => {
+                                isComplete = true;
+                                console.error("Database delete failed", e);
+                                showAlert("Error", "Could not delete database. Please clear browser site data manually.", "error", () => window.location.reload());
+                            };
+
+                            deleteReq.onblocked = () => {
+                                isComplete = true;
+                                console.warn("Database delete blocked");
+                                showAlert("Reset Blocked", "Another tab is keeping the database open. Please close other tabs and try again.", "warning", () => window.location.reload());
+                            };
+
+                            // Timeout fallback if stuck
+                            setTimeout(() => {
+                                if (!isComplete) {
+                                    showAlert("Reset Timeout", "Database deletion is taking too long. Local data cleared, but database might persist. Please close other tabs and reload.", "warning", () => window.location.reload());
+                                }
+                            }, 4000);
+
+                        } catch (e) {
+                            console.error("Reset logic error", e);
+                            showAlert("Critical Error", "Reset failed: " + e.message, "error");
+                        }
                     },
                     "Yes, Delete All Data",
-                    "red"
+                    "red",
+                    { label: "Download backup JSON data before reset", checked: true }
                 );
             }
 
             async function loadProfileData() {
                 // 1. Nickname
-                const name = localStorage.getItem('dsa-nickname') || 'Learner';
+                let rawName = localStorage.getItem('dsa-nickname') || 'Learner';
+                const name = toTitleCase(rawName);
                 const nameEl = document.getElementById('profile-name');
                 const nameSmallEl = document.getElementById('profile-name-small');
                 if (nameEl) nameEl.textContent = name;
@@ -641,18 +715,27 @@
             }
 
             // --- CUSTOM MODAL HANDLERS ---
+            // --- CUSTOM MODAL HANDLERS ---
             let onConfirmCallback = null;
+            let modalCloseTimer = null;
 
             function showModal(title, message, type = 'info') {
+                if (modalCloseTimer) {
+                    clearTimeout(modalCloseTimer);
+                    modalCloseTimer = null;
+                }
+
                 const modal = document.getElementById('actionModal');
                 const titleEl = document.getElementById('actionModalTitle');
                 const msgEl = document.getElementById('actionModalMessage');
                 const confirmBtn = document.getElementById('actionModalConfirmBtn');
                 const inputEl = document.getElementById('actionModalInputContainer');
+                const checkboxEl = document.getElementById('actionModalCheckboxContainer'); // Ensure we can access this
 
                 titleEl.textContent = title;
                 msgEl.innerHTML = message; // Allow HTML for line breaks
                 inputEl.classList.add('hidden');
+                if (checkboxEl) checkboxEl.classList.add('hidden'); // Reset checkbox visibility
 
                 // Reset Button Style
                 confirmBtn.className = "px-4 py-2 rounded-lg text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30";
@@ -674,10 +757,13 @@
                 modal.classList.add('opacity-0');
                 modal.children[0].classList.add('scale-95');
                 modal.children[0].classList.remove('scale-100');
-                setTimeout(() => {
+                if (modalCloseTimer) clearTimeout(modalCloseTimer);
+
+                modalCloseTimer = setTimeout(() => {
                     modal.classList.add('hidden');
                     // Reset callbacks
                     onConfirmCallback = null;
+                    modalCloseTimer = null;
                 }, 300);
             }
 
@@ -691,16 +777,32 @@
                 };
             }
 
-            function showConfirm(title, message, onConfirm, btnText = "Confirm", btnColor = "blue") {
+            function showConfirm(title, message, onConfirm, btnText = "Confirm", btnColor = "blue", checkboxOptions = null) {
                 const { confirmBtn } = showModal(title, message);
                 confirmBtn.textContent = btnText;
+
+                // Handle Checkbox
+                const checkboxContainer = document.getElementById('actionModalCheckboxContainer');
+                const checkbox = document.getElementById('actionModalCheckbox');
+                const checkboxLabel = document.getElementById('actionModalCheckboxLabel');
+
+                if (checkboxOptions) {
+                    checkboxContainer.classList.remove('hidden');
+                    checkboxLabel.textContent = checkboxOptions.label;
+                    checkbox.checked = checkboxOptions.checked !== false; // Default true if not specified
+                } else {
+                    checkboxContainer.classList.add('hidden');
+                }
 
                 if (btnColor === 'red') {
                     confirmBtn.className = "px-4 py-2 rounded-lg text-sm font-bold text-white bg-rose-600 hover:bg-rose-700 transition-colors shadow-lg shadow-rose-500/30";
                 }
 
-                confirmBtn.onclick = () => {
-                    if (onConfirm) onConfirm();
+                confirmBtn.onclick = async () => {
+                    const isChecked = checkboxOptions ? checkbox.checked : false;
+                    // If checkbox is for Backup, we might want to keep modal open or show progress? 
+                    // For now, onConfirm handles it.
+                    if (onConfirm) await onConfirm(isChecked);
                     closeActionModal();
                 };
             }
@@ -755,7 +857,9 @@
                     current,
                     (newName) => {
                         if (newName && newName.trim()) {
-                            localStorage.setItem('dsa-nickname', newName.trim());
+                            // Enforce Title Case on Save
+                            const formattedName = toTitleCase(newName.trim());
+                            localStorage.setItem('dsa-nickname', formattedName);
                             loadProfileData();
                             showAlert("Success", "Nickname updated successfully!", "success");
                         }
@@ -767,8 +871,11 @@
             async function exportData() {
                 if (!window.dsaDB) return;
                 try {
-                    const data = await window.dsaDB.exportData();
-                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    const dataStr = await window.dsaDB.exportData(); // returns string
+                    // Check if dataStr is already string, if not stringify (just in case db.js changes)
+                    const finalStr = typeof dataStr === 'string' ? dataStr : JSON.stringify(dataStr, null, 2);
+
+                    const blob = new Blob([finalStr], { type: 'application/json' });
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
@@ -789,8 +896,11 @@
                 const reader = new FileReader();
                 reader.onload = async (e) => {
                     try {
-                        const data = JSON.parse(e.target.result);
-                        await window.dsaDB.importData(data);
+                        const jsonContent = e.target.result;
+                        // Validate JSON locally first to give better error before passing to DB logic? 
+                        // Or just pass to dsaDB.importData which does parsing.
+                        // Let's pass directly, dsaDB will parse.
+                        await window.dsaDB.importData(jsonContent);
                         showAlert("Success", "Data imported successfully! Reloading...", "success", () => window.location.reload());
                     } catch (err) {
                         showAlert("Import Failed", err.message, "error");
@@ -1182,6 +1292,19 @@
                     <div id="actionModalInputContainer" class="hidden mb-4">
                         <input type="text" id="actionModalInput"
                             class="w-full px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                    </div>
+
+                    <!-- Checkbox Container (Hidden by default) -->
+                    <div id="actionModalCheckboxContainer"
+                        class="hidden mb-4 flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-100 dark:border-gray-600">
+                        <div class="relative flex items-center">
+                            <input type="checkbox" id="actionModalCheckbox"
+                                class="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-gray-300 transition-all checked:border-blue-500 checked:bg-blue-500 hover:border-blue-400 dark:border-gray-600 dark:checked:bg-blue-500">
+                            <i data-lucide="check"
+                                class="pointer-events-none absolute left-1/2 top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 transition-opacity peer-checked:opacity-100"></i>
+                        </div>
+                        <label for="actionModalCheckbox" id="actionModalCheckboxLabel"
+                            class="cursor-pointer select-none text-sm font-medium text-gray-700 dark:text-gray-200"></label>
                     </div>
 
                     <!-- Actions -->

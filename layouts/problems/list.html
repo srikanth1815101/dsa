@@ -222,17 +222,17 @@
             <!-- List Space -->
             <div id="problems-list" class="space-y-2 relative z-0">
                 {{ range .Pages }}
+                {{ $id := "" }}{{ with .File }}{{ $id = .ContentBaseName }}{{ end }}
 
                 <!-- Card Container (Adaptive Grid) - Responsive Alignment -->
                 <div class="problem-item group grid grid-cols-[auto_1fr_auto] md:grid-cols-[50px_1fr_100px_50px_50px] items-center gap-2 md:gap-4 px-3 md:px-6 py-2.5 md:py-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 shadow-sm hover:shadow-md transition-all duration-200"
                     data-difficulty="{{ .Params.difficulty }}"
                     data-topics="{{ if .Params.topics }}{{ delimit .Params.topics " ," }}{{ end }}"
-                    data-title="{{ .Title | lower }}" data-id="{{ .File.ContentBaseName }}">
+                    data-title="{{ .Title | lower }}" data-id="{{ $id }}">
 
                     <!-- 1. Checkbox Column -->
                     <div class="flex items-center justify-start">
-                        <div class="relative cursor-pointer"
-                            onclick="toggleListCompletion(event, '{{ .File.ContentBaseName }}')">
+                        <div class="relative cursor-pointer" onclick="toggleListCompletion(event, '{{ $id }}')">
                             <input type="checkbox"
                                 class="peer appearance-none w-4 h-4 md:w-5 md:h-5 border-2 border-gray-300 dark:border-gray-600 rounded-md checked:bg-green-500 checked:border-green-500 transition-all cursor-pointer">
                             <i data-lucide="check"
@@ -284,19 +284,18 @@
 
                     <!-- 4. Revise Button Column (Hidden on Mobile) -->
                     <div class="hidden md:flex justify-start">
-                        <button onclick="toggleRevision(event, '{{ .File.ContentBaseName }}')"
+                        <button onclick="toggleRevision(event, '{{ $id }}')"
                             class="p-2 rounded-lg text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all border border-transparent hover:border-blue-200 dark:hover:border-blue-500/30">
-                            <i data-lucide="list-restart" class="w-5 h-5 revise-icon"
-                                data-id="{{ .File.ContentBaseName }}"></i>
+                            <i data-lucide="list-restart" class="w-5 h-5 revise-icon" data-id="{{ $id }}"></i>
                         </button>
                     </div>
 
                     <!-- 5. Bookmark Button Column (Hidden on Mobile) -->
                     <div class="hidden md:flex justify-start">
-                        <button onclick="toggleBookmark(event, '{{ .File.ContentBaseName }}')"
+                        <button onclick="toggleBookmark(event, '{{ $id }}')"
                             class="p-2 rounded-lg text-gray-400 hover:text-yellow-500 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 transition-all border border-transparent hover:border-yellow-200 dark:hover:border-yellow-500/30">
                             <i data-lucide="bookmark" class="w-5 h-5 bookmark-icon transition-transform hover:scale-110"
-                                data-id="{{ .File.ContentBaseName }}"></i>
+                                data-id="{{ $id }}"></i>
                         </button>
                     </div>
                 </div>

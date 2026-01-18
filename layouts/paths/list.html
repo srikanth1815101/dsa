@@ -52,22 +52,30 @@
             {{/* Create comma-separated list of IDs for JS using 'scratch' or string manipulation */}}
             {{ $idsSlice := slice }}
             {{ range $problems }}
-            {{ $idsSlice = $idsSlice | append .File.ContentBaseName }}
+            {{ with .File }}{{ $idsSlice = $idsSlice | append .ContentBaseName }}{{ end }}
             {{ end }}
             {{ $idsString := delimit $idsSlice "," }}
 
             {{ $colors := dict
             "Basic" (dict "gradient" "from-emerald-400 to-teal-600" "bgGradient" "from-emerald-50 to-teal-50"
-            "darkBgGradient" "from-emerald-900/20 to-teal-900/20" "text" "text-emerald-600")
+            "darkBgGradient" "from-emerald-900/20 to-teal-900/20" "text" "text-emerald-600"
+            "badgeBg" "bg-emerald-100 dark:bg-emerald-900/30" "badgeText" "text-emerald-700 dark:text-emerald-400"
+            "badgeBorder" "border-emerald-200 dark:border-emerald-800/50")
             "Advanced" (dict "gradient" "from-blue-400 to-indigo-600" "bgGradient" "from-blue-50 to-indigo-50"
-            "darkBgGradient" "from-blue-900/20 to-indigo-900/20" "text" "text-blue-600")
+            "darkBgGradient" "from-blue-900/20 to-indigo-900/20" "text" "text-blue-600"
+            "badgeBg" "bg-blue-100 dark:bg-blue-900/30" "badgeText" "text-blue-700 dark:text-blue-400" "badgeBorder"
+            "border-blue-200 dark:border-blue-800/50")
             "Mastery" (dict "gradient" "from-orange-400 to-red-600" "bgGradient" "from-orange-50 to-red-50"
-            "darkBgGradient" "from-orange-900/20 to-red-900/20" "text" "text-orange-600")
+            "darkBgGradient" "from-orange-900/20 to-red-900/20" "text" "text-orange-600"
+            "badgeBg" "bg-orange-100 dark:bg-orange-900/30" "badgeText" "text-orange-700 dark:text-orange-400"
+            "badgeBorder" "border-orange-200 dark:border-orange-800/50")
             }}
 
             {{/* Fallback Color */}}
             {{ $defaultColor := dict "gradient" "from-purple-600 to-pink-600" "bgGradient" "from-purple-50 to-pink-50"
-            "darkBgGradient" "from-purple-900/20 to-pink-900/20" "text" "text-purple-600" }}
+            "darkBgGradient" "from-purple-900/20 to-pink-900/20" "text" "text-purple-600"
+            "badgeBg" "bg-purple-100 dark:bg-purple-900/30" "badgeText" "text-purple-700 dark:text-purple-400"
+            "badgeBorder" "border-purple-200 dark:border-purple-800/50" }}
 
             {{ $theme := index $colors .Title | default $defaultColor }}
 
@@ -93,13 +101,11 @@
                             </div>
 
                             <!-- Problem Count Badge -->
-                            <div class="flex items-center space-x-1.5">
-                                <div class="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full animate-pulse"></div>
-                                <span
-                                    class="px-2 py-1 bg-gray-100 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300 text-xs font-bold rounded-full border border-gray-200 dark:border-gray-600/50">
-                                    {{ $count }} Problems
-                                </span>
-                            </div>
+                            <!-- Problem Count Badge -->
+                            <span
+                                class="px-2 py-1 {{ $theme.badgeBg }} {{ $theme.badgeText }} text-xs font-bold rounded-full border {{ $theme.badgeBorder }}">
+                                {{ $count }} Problems
+                            </span>
                         </div>
 
                         <!-- Title -->

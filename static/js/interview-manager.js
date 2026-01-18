@@ -33,6 +33,37 @@ class InterviewManager {
                 }
             });
             console.log("InterviewManager: DB Loaded", Object.keys(this.db.sessions).length, "sessions");
+
+            // Hydrate Active Session if needed
+            if (this.db.activeSessionId) {
+                const activeS = this.db.sessions[this.db.activeSessionId];
+                if (activeS && activeS.problems && activeS.problems.length > 0) {
+                    // Check if hydration needed (random check: p.title missing?)
+                    if (!activeS.problems[0].title) {
+                        try {
+                            const allProblems = await this.getProblems();
+                            const pMap = {};
+                            allProblems.forEach(p => pMap[p.id || p.permalink.split('/').filter(Boolean).pop()] = p);
+
+                            activeS.problems.forEach(p => {
+                                const fullP = pMap[p.id];
+                                if (fullP) {
+                                    // Restore static fields
+                                    p.title = fullP.title;
+                                    p.difficulty = fullP.difficulty;
+                                    p.companies = fullP.companies;
+                                    p.topics = fullP.topics;
+                                    p.permalink = fullP.permalink;
+                                    p.starterCode = fullP.starterCode; // Needed for button
+                                }
+                            });
+                            console.log("Hydrated active session problems");
+                        } catch (hErr) {
+                            console.warn("Failed to hydrate active session", hErr);
+                        }
+                    }
+                }
+            }
         } catch (e) {
             console.error("Failed to load sessions from DB", e);
         }
@@ -40,11 +71,21 @@ class InterviewManager {
 
     async saveSession(session) {
         if (!session) return;
-        // Update in-memory
+        // Update in-memory (Keep FULL object for UI)
         this.db.sessions[session.id] = session;
-        // Persist to IDB
+
+        // Persist to IDB (Minimize problems array)
         try {
-            await window.dsaDB.saveSession(session);
+            const minSession = { ...session };
+            if (minSession.problems) {
+                minSession.problems = minSession.problems.map(p => ({
+                    id: p.id,
+                    status: p.status,
+                    timeSpentSeconds: p.timeSpentSeconds,
+                    notes: p.notes // Critically important to save scratchpad!
+                }));
+            }
+            await window.dsaDB.saveSession(minSession);
         } catch (e) {
             console.error("Failed to save session", e);
         }

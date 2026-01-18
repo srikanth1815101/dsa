@@ -254,6 +254,32 @@
         }
 
         renderSummary();
+
+        // Hydrate session if problems are missing details (e.g. from minimized storage)
+        if (session.problems && session.problems.length > 0 && !session.problems[0].title) {
+            try {
+                // We use manager.getProblems() which caches content
+                const allProblems = await manager.getProblems();
+                const pMap = {};
+                // Normalize ID lookup: map['two-sum'] = p
+                allProblems.forEach(p => pMap[p.id || p.permalink.split('/').filter(Boolean).pop()] = p);
+
+                session.problems.forEach(p => {
+                    const fullP = pMap[p.id];
+                    if (fullP) {
+                        p.title = fullP.title;
+                        p.difficulty = fullP.difficulty;
+                        p.companies = fullP.companies;
+                        p.topics = fullP.topics;
+                        p.permalink = fullP.permalink;
+                        // No need for starterCode here mainly, but good to have if we add buttons later
+                    }
+                });
+            } catch (hErr) {
+                console.warn("Failed to hydrate review session", hErr);
+            }
+        }
+
         renderProblems(); // Async call
 
         if (session.notes && session.notes.reflection) {

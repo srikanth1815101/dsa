@@ -1,20 +1,9 @@
-﻿[
-  {{- range $index, $e := .Pages -}}
-  {{- if $index -}},{{- end -}}
-  {
-      "title": {{ .Title | jsonify }},
-      "permalink": {{ .RelPermalink | jsonify }},
-      "difficulty": {{ .Params.difficulty | jsonify }},
-      "companies": {{ .Params.companies | jsonify }},
-      "topics": {{ .Params.topics | jsonify }},
-      "summary": {{ .Summary | jsonify }},
-      "starterCode": {{ .Params.starterCode | jsonify }},
-      "timeComplexity": {{ .Params.timeComplexity | jsonify }},
-      "spaceComplexity": {{ .Params.spaceComplexity | jsonify }},
-      "constraints": {{ .Params.constraints | jsonify }},
-      "examples": {{ .Params.examples | jsonify }},
-      "hints": {{ .Params.hints | jsonify }},
-      "content": {{ .Content | jsonify }}
-  }
-  {{- end -}}
-]
+﻿[{{ range $index, $e := .Pages }}{{ if $index }},{{ end }}{
+"id": "{{ .File.BaseFileName }}",
+"title": "{{ .Title }}",
+"difficulty": "{{ .Params.difficulty }}",
+"companies": {{ .Params.companies | jsonify }},
+"topics": {{ .Params.topics | jsonify }},
+"permalink": "{{ .Permalink }}",
+"starterCode": "{{ .Params.starterCode }}"
+}{{ end }}]

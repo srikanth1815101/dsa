@@ -1,12 +1,12 @@
 ---
 title: "Merge Sorted Arrays"
-date: 2024-01-05T10:00:00Z
+date: 2024-01-03T00:00:00Z
 difficulty: "Easy"
 topics: ["Array", "Sorting", "Two Pointers"]
 datastructures: ["Array"]
 companies: ["Meta", "Amazon", "Microsoft"]
-path: "Advanced"
-starterCode: "/dsa/files/MergeSortedArray.java"
+path: "Basic"
+starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/merge-sorted-array"
 hints:
   - "You can reverse the order of iteration."
   - "Use three pointers starting from the end of the arrays."
@@ -25,10 +25,16 @@ constraints:
   - "nums2.length == n"
   - "0 <= m, n <= 200"
   - "1 <= m + n <= 200"
+  - "-10^9 <= nums1[i], nums2[j] <= 10^9"
+realWorld:
+  - title: "Log Merging"
+    description: "Merging time-series log files from multiple servers into a single chronological stream."
+  - title: "Feed Aggregation"
+    description: "Combining sorted social media posts from different sources."
 javaTemplate: |
-  public class Solution {
+  class Solution {
       public void merge(int[] nums1, int m, int[] nums2, int n) {
-          // Your code here
+          
       }
   }
 ---

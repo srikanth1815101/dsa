@@ -221,7 +221,7 @@
 
             <!-- List Space -->
             <div id="problems-list" class="space-y-2 relative z-0">
-                {{ range .Pages }}
+                {{ range .Pages.ByDate }}
                 {{ $id := "" }}{{ with .File }}{{ $id = .ContentBaseName }}{{ end }}
 
                 <!-- Card Container (Adaptive Grid) - Responsive Alignment -->

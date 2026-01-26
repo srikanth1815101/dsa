@@ -8,7 +8,7 @@
 
     <!-- HEADER CARD -->
     <div
-        class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 rounded-2xl p-4 md:p-8 shadow-sm mb-6 md:mb-8 relative group">
+        class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700/50 rounded-2xl p-4 md:p-8 shadow-sm mb-6 md:mb-8 relative group">
         <!-- Subtle Decorative Background Elements -->
         <div class="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none">
             <div
@@ -39,6 +39,13 @@
                             {{ . }}
                         </span>
                         {{ end }}
+
+                        <!-- Date Stamp -->
+                        <span
+                            class="px-2 py-0.5 md:px-2.5 md:py-1 rounded-md text-[10px] md:text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center gap-1.5">
+                            <i data-lucide="calendar" class="w-3 h-3"></i>
+                            {{ .Date.Format "Jan 02, 2006" }}
+                        </span>
                     </div>
 
                     <h1
@@ -206,7 +213,7 @@
                         {{ if .Params.starterCode }}
                         <!-- Starter Code: Blue Gradient -->
                         <div class="group/tooltip relative">
-                            <a href="{{ .Params.starterCode }}" download
+                            <a href="{{ .Params.starterCode }}" target="_blank"
                                 class="flex items-center justify-center p-3 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all shadow-blue-500/20">
                                 <i data-lucide="code-2" class="w-5 h-5"></i>
                             </a>
@@ -372,15 +379,10 @@
             </div>
             {{ end }}
 
-
-        </div>
-
-        <!-- SIDEBAR -->
-        <div class="space-y-6 animate-fade-in-up delay-300">
-            <!-- Constraints (Moved from Main Content) -->
+            <!-- Constraints (Moved to Main) -->
             {{ if .Params.constraints }}
             <div id="problem-constraints"
-                class="bg-gradient-to-br from-white to-orange-50/50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700/50 rounded-2xl p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+                class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700/50 rounded-2xl p-4 md:p-8 shadow-sm hover:shadow-lg transition-all duration-300">
                 <h3
                     class="font-bold mb-4 text-gray-900 dark:text-gray-200 text-sm uppercase tracking-wider flex items-center gap-2">
                     <i data-lucide="alert-circle" class="w-4 h-4 text-gray-400"></i>
@@ -400,7 +402,14 @@
             </div>
             {{ end }}
 
-            <!-- Stats -->
+
+
+
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="space-y-6 animate-fade-in-up delay-300">
+            <!-- Complexity (Moved to Sidebar) -->
             <div
                 class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700/50 rounded-2xl p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
                 <h3 class="font-bold mb-4 text-gray-900 dark:text-gray-200 text-sm uppercase tracking-wider">Complexity
@@ -420,6 +429,33 @@
                     {{ end }}
                 </div>
             </div>
+
+            <!-- Real World Scenarios (Moved to Sidebar) -->
+            {{ if .Params.realWorld }}
+            <div id="real-world-scenarios"
+                class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700/50 rounded-2xl p-4 md:p-6 shadow-sm hover:shadow-lg transition-all duration-300">
+                <h2
+                    class="font-bold mb-4 text-gray-900 dark:text-gray-200 text-sm uppercase tracking-wider flex items-center gap-2">
+                    <i data-lucide="globe" class="w-4 h-4 text-blue-500"></i>
+                    Real World
+                </h2>
+                <div class="grid grid-cols-1 gap-3">
+                    {{ range .Params.realWorld }}
+                    <div
+                        class="p-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-blue-200 dark:hover:border-blue-800 transition-colors shadow-sm">
+                        <div class="flex items-start gap-3">
+                            <div>
+                                <h4 class="font-bold text-xs text-gray-900 dark:text-white mb-0.5">{{ .title }}</h4>
+                                <p class="text-[10px] text-gray-600 dark:text-gray-400 leading-relaxed">{{ .description
+                                    }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+            {{ end }}
 
             <!-- Personal Notes -->
             <div

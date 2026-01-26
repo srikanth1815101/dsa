@@ -1,12 +1,12 @@
 ---
 title: "Climbing Stairs"
-date: 2024-01-07T10:00:00Z
+date: 2024-01-10T00:00:00Z
 difficulty: "Easy"
 topics: ["Dynamic Programming", "Math"]
 datastructures: ["Array"]
 companies: ["Google", "Facebook", "Apple"]
 path: "Basic"
-starterCode: "/dsa/files/ClimbingStairs.java"
+starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/climbing-stairs"
 hints:
   - "Since you can only take 1 or 2 steps, ways(n) = ways(n-1) + ways(n-2)."
   - "This relates to the Fibonacci sequence."
@@ -23,11 +23,15 @@ examples:
     explanation: "There are three ways: 1. 1+1+1, 2. 1+2, 3. 2+1"
 constraints:
   - "1 <= n <= 45"
+realWorld:
+  - title: "Production Planning"
+    description: "Calculating combinations of production steps to reach a target."
+  - title: "Population Growth"
+    description: "Modeling growth patterns similar to Fibonacci (rabbits)."
 javaTemplate: |
-  public class Solution {
+  class Solution {
       public int climbStairs(int n) {
-          // Your code here
-          return 0;
+          
       }
   }
 ---

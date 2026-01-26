@@ -1,12 +1,12 @@
 ---
-title: "First Unique Character in a String First Unique Character in a String"
-date: 2024-01-10T10:00:00Z
+title: "First Unique Character in a String"
+date: 2024-01-06T00:00:00Z
 difficulty: "Easy"
 topics: ["String", "Hash Table"]
 datastructures: ["HashMap"]
 companies: ["Amazon", "Google", "Microsoft"]
 path: "Basic"
-starterCode: "/dsa/files/FirstUnique.java"
+starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/first-unique-character"
 hints:
   - "Count the frequency of all letters first."
   - "Iterate through the string again to find the first letter with count 1."
@@ -21,15 +21,18 @@ examples:
   - input: "s = \"loveleetcode\""
     output: "2"
     explanation: "The first unique character is 'v' at index 2"
-
 constraints:
   - "1 <= s.length <= 10^5"
   - "s consists of only lowercase English letters"
+realWorld:
+  - title: "Data Stream Analysis"
+    description: "Finding the first non-repeating signal or event in a data stream."
+  - title: "Username Validation"
+    description: "Identifying unique characters in a generated ID system."
 javaTemplate: |
-  public class Solution {
+  class Solution {
       public int firstUniqChar(String s) {
-          // Your code here
-          return -1;
+          
       }
   }
 ---

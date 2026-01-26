@@ -6,7 +6,7 @@ topics: ["Stack", "Queue", "Design"]
 datastructures: ["Stack", "Queue"]
 companies: ["Amazon", "Microsoft", "Bloomberg"]
 path: "Advanced"
-starterCode: "/dsa/files/MyQueue.java"
+starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/queue"
 hints:
   - "Use two stacks: one input stack and one output stack."
   - "Move elements from input to output only when output is empty."
@@ -25,6 +25,13 @@ constraints:
   - "1 <= x <= 9"
   - "At most 100 calls will be made to push, pop, peek, and empty"
   - "All the calls to pop and peek are valid"
+realWorld:
+  - title: "CPU Task Scheduling"
+    description: "Operating systems use queues (ready queue) to manage processes waiting for CPU time, often prioritizing based on arrival."
+  - title: "Printer Spooling"
+    description: "Print jobs are sent to a queue and processed in the order they were received (FIFO)."
+  - title: "Web Server Request Handling"
+    description: "Incoming HTTP requests are queued to be handled by worker threads in order, preventing overload."
 javaTemplate: |
   class MyQueue {
       public MyQueue() {

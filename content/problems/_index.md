@@ -1,6 +1,6 @@
 ---
 title: "Problems"
-outputs: ["HTML", "JSON"]
+outputs: ["HTML"]
 ---
 
 Browse all DSA problems organized by difficulty, topic, and data structure.

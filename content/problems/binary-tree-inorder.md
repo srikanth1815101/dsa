@@ -1,12 +1,12 @@
 ---
 title: "Binary Tree Inorder Traversal"
-date: 2024-01-08T10:00:00Z
+date: 2024-01-07T00:00:00Z
 difficulty: "Easy"
 topics: ["Tree", "Binary Tree", "DFS"]
 datastructures: ["Binary Tree", "Stack"]
 companies: ["Microsoft", "Amazon", "Google"]
 path: "Basic"
-starterCode: "/dsa/files/BinaryTreeInorder.java"
+starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/binary-tree-inorder-traversal"
 hints:
   - "Try utilizing a Stack to simulate recursion."
   - "The order is Left -> Node -> Right."
@@ -19,15 +19,18 @@ examples:
     output: "[1,3,2]"
   - input: "root = []"
     output: "[]"
-
 constraints:
   - "The number of nodes in the tree is in the range [0, 100]"
   - "-100 <= Node.val <= 100"
+realWorld:
+  - title: "Expression Trees"
+    description: "Generating the infix expression from an expression tree."
+  - title: "Directory Listing"
+    description: "Listing files in alphabetical order in a directory structure (if stored as a BST)."
 javaTemplate: |
-  public class Solution {
+  class Solution {
       public List<Integer> inorderTraversal(TreeNode root) {
-          // Your code here
-          return new ArrayList<>();
+          
       }
   }
 ---

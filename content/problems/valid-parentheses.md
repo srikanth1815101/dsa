@@ -1,12 +1,12 @@
 ---
 title: "Valid Parentheses"
-date: 2024-01-03T10:00:00Z
+date: 2024-01-02T00:00:00Z
 difficulty: "Easy"
 topics: ["String", "Stack"]
 datastructures: ["Stack"]
-companies: ["Google", "Meta", "Amazon"]
+companies: ["Google", "Meta", "Amazon", "Bloomberg"]
 path: "Basic"
-starterCode: "/dsa/files/ValidParentheses.java"
+starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/valid-parentheses"
 hints:
   - "Use a Stack to keep track of opening brackets."
   - "When encountering a closing bracket, check the top of the stack."
@@ -19,15 +19,20 @@ examples:
     output: "true"
   - input: "s = \"()[]{}\""
     output: "true"
-
+  - input: "s = \"(]\""
+    output: "false"
 constraints:
   - "1 <= s.length <= 10^4"
   - "s consists of parentheses only '()[]{}'"
+realWorld:
+  - title: "Code Compiler"
+    description: "Checking if code blocks, function calls, and array accesses are correctly closed."
+  - title: "Expression Evaluation"
+    description: "Parsing mathematical expressions to ensure valid syntax."
 javaTemplate: |
-  public class Solution {
+  class Solution {
       public boolean isValid(String s) {
-          // Your code here
-          return false;
+          
       }
   }
 ---

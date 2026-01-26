@@ -1,12 +1,12 @@
 ---
 title: "Reverse Linked List"
-date: 2024-01-02T10:00:00Z
+date: 2024-01-08T00:00:00Z
 difficulty: "Easy"
 topics: ["Linked List"]
 datastructures: ["Linked List"]
 companies: ["Amazon", "Microsoft", "Apple"]
 path: "Basic"
-starterCode: "/dsa/files/ReverseList.java"
+starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/reverse-linked-list"
 hints:
   - "Iterate through the list and change the next pointer of each node to point to the previous node."
   - "Keep track of prev, curr, and next nodes."
@@ -23,11 +23,15 @@ examples:
 constraints:
   - "The number of nodes in the list is in the range [0, 5000]"
   - "-5000 <= Node.val <= 5000"
+realWorld:
+  - title: "Undo Functionality"
+    description: "Reversing a sequence of actions or state changes."
+  - title: "Browser History"
+    description: "Going back through visited pages requires traversing history in reverse."
 javaTemplate: |
-  public class Solution {
+  class Solution {
       public ListNode reverseList(ListNode head) {
-          // Your code here
-          return null;
+          
       }
   }
 ---

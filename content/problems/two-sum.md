@@ -1,6 +1,6 @@
 ---
 title: "Two Sum"
-date: 2024-01-01T10:00:00Z
+date: 2024-01-01T00:00:00Z
 difficulty: "Easy"
 topics: ["Array", "Hash Table"]
 datastructures: ["Array", "HashMap"]
@@ -8,7 +8,7 @@ companies: ["Google", "Amazon", "Microsoft"]
 path: "Basic"
 timeComplexity: "O(n)"
 spaceComplexity: "O(n)"
-starterCode: "/dsa/files/TwoSum.java"
+starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/two-sum"
 hints:
   - "Try using a Hash Map to store numbers you've already seen."
   - "For each number x, check if (target - x) exists in the map."
@@ -26,6 +26,11 @@ constraints:
   - "-10^9 <= nums[i] <= 10^9"
   - "-10^9 <= target <= 10^9"
   - "Only one valid answer exists"
+realWorld:
+  - title: "E-commerce Cart"
+    description: "Finding two products that add up to a specific gift card balance."
+  - title: "Financial Analysis"
+    description: "Identifying two transactions that sum to a specific discrepancy value."
 javaTemplate: |
   public class Solution {
       public int[] twoSum(int[] nums, int target) {

@@ -1,12 +1,12 @@
 ---
 title: "Binary Search"
-date: 2024-01-04T10:00:00Z
-difficulty: "Hard"
+date: 2024-01-09T00:00:00Z
+difficulty: "Easy"
 topics: ["Array", "Searching", "Binary Search"]
 datastructures: ["Array"]
 companies: ["Google", "Facebook", "Apple"]
-path: "Advanced"
-starterCode: "/dsa/files/BinarySearch.java"
+path: "Basic"
+starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/binary-search"
 hints:
   - "The array is sorted, so we can eliminate half the search space at each step."
   - "Compare the target with the middle element."
@@ -26,11 +26,15 @@ constraints:
   - "-10^4 < nums[i], target < 10^4"
   - "All the integers in nums are unique"
   - "nums is sorted in ascending order"
+realWorld:
+  - title: "Database Indexing"
+    description: "Quickly locating a record in a sorted database index (B-Trees)."
+  - title: "Dictionary Lookup"
+    description: "Finding a word in a physical dictionary by splitting pages."
 javaTemplate: |
-  public class Solution {
+  class Solution {
       public int search(int[] nums, int target) {
-          // Your code here
-          return -1;
+          
       }
   }
 ---

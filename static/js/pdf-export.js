@@ -64,7 +64,7 @@
         // Fetch Metadata (Static Content for Examples/Constraints)
         let metadataMap = {};
         try {
-            const res = await fetch('/problems/metadata.json');
+            const res = await fetch('/problems/metadata.json?v=' + new Date().getTime());
             if (res.ok) {
                 const allProbData = await res.json();
                 allProbData.forEach(p => {
@@ -300,6 +300,20 @@
                                 const splitEx = doc.splitTextToSize(exTitle, contentW);
                                 doc.text(splitEx, margin, infoY);
                                 infoY += (splitEx.length * 4) + 2;
+                            });
+                            infoY += 5;
+                        }
+
+                        // Real World Scenarios
+                        if (document.getElementById('includeRealWorld')?.checked && item.meta.realWorld && item.meta.realWorld.length) {
+                            doc.setFont("helvetica", "bold"); doc.setTextColor(30); doc.text("Real World Applications", margin, infoY); infoY += 5;
+                            doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.setTextColor(...colTextMuted);
+
+                            item.meta.realWorld.forEach((rw) => {
+                                const rwText = `• ${rw.title}: ${rw.description}`;
+                                const splitRw = doc.splitTextToSize(rwText, contentW);
+                                doc.text(splitRw, margin, infoY);
+                                infoY += (splitRw.length * 4) + 2;
                             });
                             infoY += 5;
                         }

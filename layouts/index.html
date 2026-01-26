@@ -1,512 +1,385 @@
 {{ define "main" }}
-<div class="bg-gray-50 dark:bg-[#0A0E27] min-h-screen font-sans">
+<div
+    class="bg-gray-50 dark:bg-[#0A0E27] min-h-screen font-sans selection:bg-primary/30 selection:text-primary overflow-x-hidden">
 
     <!-- 1. HERO SECTION -->
-    <section class="relative pt-32 pb-20 overflow-hidden">
-        <!-- Minimalist Background Blob -->
+    <section class="relative pt-32 pb-24 lg:pt-48 lg:pb-40 overflow-hidden">
         <div
-            class="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[800px] h-[800px] bg-gradient-to-br from-primary/20 via-secondary/10 to-transparent rounded-full blur-3xl opacity-50 pointer-events-none animate-blob">
+            class="absolute inset-0 bg-[url('/img/grid.svg')] bg-center opacity-[0.03] dark:opacity-[0.07] pointer-events-none">
+        </div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[50vh] bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 blur-[120px] rounded-full pointer-events-none">
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <!-- Left: Content -->
-                <div class="text-center lg:text-left animate-fade-in-up">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-900/5 dark:bg-white/10 border border-gray-900/10 dark:border-white/10 mb-8 backdrop-blur-sm animate-fade-in-up">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                <span class="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300">All Systems
+                    Operational</span>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 dark:text-white mb-8 tracking-tighter animate-fade-in-up"
+                style="animation-delay: 0.1s;">
+                One Platform. <br>
+                <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">Complete
+                    Mastery.</span>
+            </h1>
+
+            <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-in-up"
+                style="animation-delay: 0.2s;">
+                The offline-first operating system for Data Structures & Algorithms.
+                Designed for serious engineers.
+            </p>
+
+            <!-- Quick Access Grid -->
+            <div class="flex flex-wrap justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.3s;">
+                <a href="/problems/"
+                    class="group flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-blue-500 dark:hover:border-blue-500 transition-all">
+                    <div class="p-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+                        <i data-lucide="list" class="w-4 h-4"></i>
+                    </div>
+                    <span class="font-bold text-gray-900 dark:text-white text-sm">Problems</span>
+                </a>
+                <a href="/paths/"
+                    class="group flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-purple-500 dark:hover:border-purple-500 transition-all">
                     <div
-                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-8">
-                        <span class="relative flex h-2 w-2">
-                            <span
-                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                        </span>
-                        <span class="text-xs font-mono font-bold uppercase tracking-wider text-primary">v2.0 Live</span>
+                        class="p-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400">
+                        <i data-lucide="git-branch" class="w-4 h-4"></i>
                     </div>
-
-                    <h1
-                        class="text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
-                        Master <span
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">DSA</span>.
-                        <br />
-                        Locally.
-                    </h1>
-
-                    <p
-                        class="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                        A privacy-first, offline-capable interview simulator for serious Java engineers.
-                        No login, no cloud, simply code.
-                    </p>
-
-                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                        <a href="/interview/"
-                            class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold hover:scale-105 transition-transform flex items-center justify-center gap-2 shadow-lg hover:shadow-xl">
-                            <i data-lucide="play-circle" class="w-5 h-5"></i>
-                            <span>Start Practice</span>
-                        </a>
-                        <a href="#how-it-works"
-                            class="w-full sm:w-auto px-8 py-4 rounded-xl bg-transparent border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-300 font-bold hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center justify-center gap-2">
-                            <span>How it Works</span>
-                            <i data-lucide="arrow-down" class="w-5 h-5"></i>
-                        </a>
-                    </div>
-
+                    <span class="font-bold text-gray-900 dark:text-white text-sm">Paths</span>
+                </a>
+                <a href="/interview/"
+                    class="group flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-orange-500 dark:hover:border-orange-500 transition-all">
                     <div
-                        class="mt-8 flex items-center justify-center lg:justify-start gap-6 text-sm font-medium text-gray-500 dark:text-gray-400">
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i> 100% Free
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="wifi-off" class="w-4 h-4 text-blue-500"></i> Offline Ready
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="coffee" class="w-4 h-4 text-orange-500"></i> Java Focused
-                        </div>
+                        class="p-1.5 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400">
+                        <i data-lucide="timer" class="w-4 h-4"></i>
                     </div>
-                </div>
-
-                <!-- Right: Visual (Terminal Mockup) -->
-                <div class="hidden lg:block relative animate-fade-in-up" style="animation-delay: 0.2s;">
+                    <span class="font-bold text-gray-900 dark:text-white text-sm">Interview</span>
+                </a>
+                <a href="/notes/"
+                    class="group flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-green-500 dark:hover:border-green-500 transition-all">
                     <div
-                        class="relative rounded-xl bg-[#1E1E1E] border border-gray-800 shadow-2xl overflow-hidden font-mono text-sm leading-relaxed">
-                        <div class="flex items-center gap-2 px-4 py-3 bg-[#252526] border-b border-gray-800">
-                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                            <div class="text-xs text-gray-500 ml-2">Solution.java</div>
-                        </div>
-                        <div class="p-6 text-gray-300">
-                            <div class="flex"><span class="text-blue-400 mr-2">class</span> <span
-                                    class="text-yellow-400">Solution</span> {</div>
-                            <div class="flex pl-4"><span class="text-blue-400 mr-2">public</span> <span
-                                    class="text-green-400 mr-2">boolean</span> <span
-                                    class="text-yellow-200">hasCycle</span>(ListNode head) {</div>
-                            <div class="flex pl-8"><span class="text-gray-500">// Detect cycle in O(1) space</span>
-                            </div>
-                            <div class="flex pl-8">ListNode slow = head, fast = head;</div>
-                            <div class="flex pl-8"><span class="text-purple-400">while</span> (fast != <span
-                                    class="text-blue-400">null</span> && fast.next != <span
-                                    class="text-blue-400">null</span>) {</div>
-                            <div class="flex pl-12">slow = slow.next;</div>
-                            <div class="flex pl-12">fast = fast.next.next;</div>
-                            <div class="flex pl-12"><span class="text-purple-400">if</span> (slow == fast) <span
-                                    class="text-purple-400">return</span> <span class="text-blue-400">true</span>;</div>
-                            <div class="flex pl-8">}</div>
-                            <div class="flex pl-8"><span class="text-purple-400">return</span> <span
-                                    class="text-blue-400">false</span>;</div>
-                            <div class="flex pl-4">}</div>
-                            <div class="flex">}</div>
-                            <div class="mt-4 flex items-center text-green-400">
-                                <span class="mr-2">➜</span>
-                                <span>Tests Passed (5/5)</span>
-                                <span
-                                    class="ml-2 px-1.5 py-0.5 rounded text-[10px] bg-green-500/20 text-green-400">1ms</span>
-                            </div>
-                        </div>
-                        <!-- Glow effect matching primary color -->
-                        <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-primary/20 blur-2xl rounded-full"></div>
+                        class="p-1.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
+                        <i data-lucide="book" class="w-4 h-4"></i>
                     </div>
-                </div>
+                    <span class="font-bold text-gray-900 dark:text-white text-sm">Notes</span>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- 2. DIFFERENTIATORS -->
-    <section class="py-20 bg-white dark:bg-gray-800/50">
+    <!-- 2. PROBLEMS SECTION (Left Text, Right Visual) -->
+    <section class="py-24 bg-white dark:bg-[#0F1430] border-y border-gray-200 dark:border-gray-800 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Why CSRGO DSA?</h2>
-                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Built by engineers, for engineers. We
-                    stripped away the fluff.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Card 1 -->
-                <div
-                    class="p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-primary/50 transition-colors group">
-                    <div
-                        class="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <i data-lucide="shield-check" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Local-First</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Your progress is stored in your
-                        browser. Clear cache to reset. Privacy by default.</p>
-                </div>
-
-                <!-- Card 2 -->
-                <div
-                    class="p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-blue-500/50 transition-colors group">
-                    <div
-                        class="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <i data-lucide="wifi-off" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Offline Capable</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Practice on the subway or
-                        airplane. No internet required after initial load.</p>
-                </div>
-
-                <!-- Card 3 -->
-                <div
-                    class="p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-purple-500/50 transition-colors group">
-                    <div
-                        class="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <i data-lucide="clock" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Interview Sim</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Real timer, hidden edge cases,
-                        and a distraction-free scratchpad environment.</p>
-                </div>
-
-                <!-- Card 4 -->
-                <div
-                    class="p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-orange-500/50 transition-colors group">
-                    <div
-                        class="w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <i data-lucide="coffee" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Java Specialized</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Curated for the Java ecosystem.
-                        Best practices and Collections framework mastery.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. HOW IT WORKS (FLOW) -->
-    <section id="how-it-works" class="py-20 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-16">
-                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">How it Works</h2>
-                <div class="h-1 w-20 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
-            </div>
-
-            <div class="relative">
-                <!-- Connecting Line (Desktop) -->
-                <div class="hidden lg:block absolute top-12 left-0 w-full h-0.5 bg-gray-200 dark:bg-gray-700 -z-10">
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-                    <!-- Step 1 -->
-                    <div class="relative bg-gray-50 dark:bg-[#0A0E27] p-2">
-                        <div
-                            class="w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center mb-6 text-xl shadow-lg shadow-primary/30">
-                            1</div>
-                        <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Select Path</h4>
-                        <p class="text-gray-600 dark:text-gray-400 text-sm">Choose a roadmap like Arrays, DP, or Graphs
-                            depending on your weakness.</p>
-                    </div>
-
-                    <!-- Step 2 -->
-                    <div class="relative bg-gray-50 dark:bg-[#0A0E27] p-2">
-                        <div
-                            class="w-10 h-10 rounded-full bg-secondary text-white font-bold flex items-center justify-center mb-6 text-xl shadow-lg shadow-secondary/30">
-                            2</div>
-                        <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Solve Locally</h4>
-                        <p class="text-gray-600 dark:text-gray-400 text-sm">Write efficient code in your IDE or our
-                            scratchpad. Focus on space/time complexity.</p>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="relative bg-gray-50 dark:bg-[#0A0E27] p-2">
-                        <div
-                            class="w-10 h-10 rounded-full bg-accent text-white font-bold flex items-center justify-center mb-6 text-xl shadow-lg shadow-accent/30">
-                            3</div>
-                        <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Test & Verify</h4>
-                        <p class="text-gray-600 dark:text-gray-400 text-sm">Run against our hidden test cases. Fix bugs.
-                            Optimize your solution.</p>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="relative bg-gray-50 dark:bg-[#0A0E27] p-2">
-                        <div
-                            class="w-10 h-10 rounded-full bg-green-500 text-white font-bold flex items-center justify-center mb-6 text-xl shadow-lg shadow-green-500/30">
-                            4</div>
-                        <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Review & Note</h4>
-                        <p class="text-gray-600 dark:text-gray-400 text-sm">Mark for revision. Add reflection notes.
-                            Export later for your interview day.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. INTERVIEW PREVIEW -->
-    <section class="py-24 bg-gray-900 dark:bg-black text-white relative overflow-hidden">
-        <div class="absolute inset-0 bg-primary/5 opacity-20 bg-[url('/img/grid.svg')]"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
                 <!-- Text -->
-                <div>
+                <div class="flex-1 lg:pr-12 animate-on-scroll">
                     <div
-                        class="inline-block px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-bold uppercase tracking-wider mb-6">
-                        Pro Feature</div>
-                    <h2 class="text-3xl md:text-5xl font-black mb-6">Serious Prep for <br /> Serious Roles.</h2>
-                    <p class="text-gray-400 text-lg mb-8 leading-relaxed">
-                        Don't just solve problems individually. Simulate the actual pressure of a whiteboard round.
-                        Customize your session duration, difficulty distribution, and topic focus.
+                        class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-500 flex items-center justify-center mb-6">
+                        <i data-lucide="list" class="w-6 h-6"></i>
+                    </div>
+                    <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-6">The Curated Library.</h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+                        Stop wasting time searching. Access 150+ hand-picked problems categorized by topic and
+                        difficulty.
+                        Track what you've solved, what you've saved, and what needs revision.
                     </p>
-
-                    <ul class="space-y-4 mb-10">
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="check" class="text-green-400 w-5 h-5"></i>
-                            <span class="text-gray-300">Customizable Timer (30/45/60 mins)</span>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3 text-gray-700 dark:text-gray-300">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                            <span>Filter by Topics (Graphs, DP, Arrays)</span>
                         </li>
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="check" class="text-green-400 w-5 h-5"></i>
-                            <span class="text-gray-300">Randomized Problem Sets</span>
+                        <li class="flex items-center gap-3 text-gray-700 dark:text-gray-300">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                            <span>Mark for Revision & Bookmark</span>
                         </li>
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="check" class="text-green-400 w-5 h-5"></i>
-                            <span class="text-gray-300">Session History & Analytics</span>
+                        <li class="flex items-center gap-3 text-gray-700 dark:text-gray-300">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                            <span>Progress Tracking in LocalStorage</span>
                         </li>
                     </ul>
-
-                    <a href="/interview/"
-                        class="inline-flex items-center gap-2 text-white font-bold border-b-2 border-white/30 hover:border-white pb-1 transition-colors">
-                        Enter Simulation Mode <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    <a href="/problems/"
+                        class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/25">
+                        <span>Browse Library</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
                 </div>
 
-                <!-- UI Mockup -->
-                <div
-                    class="relative bg-gray-800 rounded-2xl border border-gray-700 shadow-2xl p-6 md:p-8 transform rotate-1 hover:rotate-0 transition-transform duration-500">
-                    <div class="flex justify-between items-center mb-8 border-b border-gray-700 pb-4">
-                        <div class="text-sm font-mono text-gray-400">Session Setup</div>
-                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                    </div>
-
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Duration</label>
-                            <div class="flex gap-2">
-                                <span class="px-4 py-2 rounded bg-gray-700 text-sm">30m</span>
-                                <span
-                                    class="px-4 py-2 rounded bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20">45m</span>
-                                <span class="px-4 py-2 rounded bg-gray-700 text-sm">60m</span>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs uppercase tracking-wider text-gray-500 mb-2">Difficulty
-                                Mix</label>
-                            <div class="w-full h-2 bg-gray-700 rounded-full overflow-hidden flex">
-                                <div class="w-[30%] bg-green-500"></div>
-                                <div class="w-[50%] bg-yellow-500"></div>
-                                <div class="w-[20%] bg-red-500"></div>
-                            </div>
-                            <div class="flex justify-between text-xs text-gray-400 mt-2">
-                                <span>Easy</span>
-                                <span>Medium</span>
-                                <span>Hard</span>
-                            </div>
-                        </div>
-
-                        <div class="pt-4">
-                            <button
-                                class="w-full py-3 bg-white text-black font-bold rounded-lg hover:bg-gray-100 transition-colors">
-                                Start Session
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 5. LEARNING PATHS -->
-    <section class="py-20 bg-gray-50 dark:bg-[#0A0E27]">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-10 text-center">Curated Lists</h2>
-
-            <div class="space-y-4">
-                <!-- Path Item -->
-                <a href="/paths/" class="block group">
-                    <div
-                        class="flex items-center justify-between p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary/50 dark:hover:border-primary/50 transition-all hover:shadow-lg">
-                        <div class="flex items-center gap-4">
-                            <div
-                                class="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center">
-                                <i data-lucide="layers" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-gray-900 dark:text-white">Arrays & Hashing</h3>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Essential patterns: Sliding Window,
-                                    Two Pointers</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span
-                                class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs text-gray-600 dark:text-gray-300 font-mono">15
-                                Problems</span>
-                            <i data-lucide="chevron-right"
-                                class="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors"></i>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Path Item -->
-                <a href="/paths/" class="block group">
-                    <div
-                        class="flex items-center justify-between p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary/50 dark:hover:border-primary/50 transition-all hover:shadow-lg">
-                        <div class="flex items-center gap-4">
-                            <div
-                                class="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center">
-                                <i data-lucide="git-branch" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-gray-900 dark:text-white">Trees & Graphs</h3>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">BFS, DFS, Union Find, Topological
-                                    Sort</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span
-                                class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs text-gray-600 dark:text-gray-300 font-mono">25
-                                Problems</span>
-                            <i data-lucide="chevron-right"
-                                class="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors"></i>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Path Item -->
-                <a href="/paths/" class="block group">
-                    <div
-                        class="flex items-center justify-between p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary/50 dark:hover:border-primary/50 transition-all hover:shadow-lg">
-                        <div class="flex items-center gap-4">
-                            <div
-                                class="w-10 h-10 rounded-lg bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 flex items-center justify-center">
-                                <i data-lucide="box" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-gray-900 dark:text-white">Dynamic Programming</h3>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">1D, 2D, Knapsack, Longest Common
-                                    Subsequence</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span
-                                class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs text-gray-600 dark:text-gray-300 font-mono">30
-                                Problems</span>
-                            <i data-lucide="chevron-right"
-                                class="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <div class="text-center mt-10">
-                <a href="/problems/"
-                    class="inline-block text-sm font-bold text-gray-500 hover:text-primary transition-colors">View Full
-                    Library</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 6. NOTES & REVISION -->
-    <section class="py-20 bg-[#FDFBF7] dark:bg-[#1A1A1A] border-y border-gray-200 dark:border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="flex-1">
-                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Retention is Key.</h2>
-                    <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
-                        Don't lose your insights. Write reflection notes for every problem.
-                        Flag tricky edge cases. Export everything to PDF for your last-minute revision.
-                    </p>
-                    <div class="flex gap-4">
-                        <div class="flex items-center gap-2 text-sm text-gray-500">
-                            <i data-lucide="pencil" class="w-4 h-4"></i> Rich Text Notes
-                        </div>
-                        <div class="flex items-center gap-2 text-sm text-gray-500">
-                            <i data-lucide="flag" class="w-4 h-4"></i> Spaced Repetition
-                        </div>
-                    </div>
-                </div>
-                <!-- Visual: Notebook style card -->
-                <div class="flex-1 w-full max-w-md">
-                    <div
-                        class="bg-white dark:bg-[#252526] p-8 rounded-tr-3xl rounded-bl-3xl shadow-xl border-l-4 border-yellow-400 relative">
-                        <div class="absolute -left-2 top-8 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-600"></div>
-                        <div class="absolute -left-2 top-20 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-600"></div>
-                        <div class="absolute -left-2 top-32 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-600"></div>
-
-                        <h3 class="font-serif text-xl italic text-gray-800 dark:text-gray-200 mb-4">My Notes: LRU Cache
-                        </h3>
-                        <p class="font-handwriting text-gray-600 dark:text-gray-400 mb-2">Key insight: Use a HashMap
-                            combined with a Doubly Linked List.</p>
-                        <p class="font-handwriting text-gray-600 dark:text-gray-400 mb-2">- map: key -> node</p>
-                        <p class="font-handwriting text-gray-600 dark:text-gray-400 mb-4">- list: maintains order of
-                            access</p>
+                <!-- Visual (Mock List) -->
+                <div class="flex-1 w-full relative perspective-1000 animate-on-scroll">
+                    <div class="relative transform rotate-y-[-5deg] transition-transform duration-500 hover:rotate-0">
+                        <!-- Card Container -->
                         <div
-                            class="inline-block px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs rounded">
-                            #revision_needed</div>
+                            class="bg-gray-50 dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 p-4 shadow-2xl space-y-3">
+                            <!-- Mock Item 1 -->
+                            <div
+                                class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700/50 flex items-center justify-between shadow-sm">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="w-5 h-5 rounded border-2 border-green-500 bg-green-500/20 flex items-center justify-center">
+                                        <i data-lucide="check" class="w-3 h-3 text-green-500"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-gray-900 dark:text-white text-sm">Two Sum</div>
+                                        <div class="flex gap-2 mt-1">
+                                            <span
+                                                class="text-[10px] px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-bold uppercase">Easy</span>
+                                            <span
+                                                class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400">Arrays</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-gray-400">
+                                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                            <!-- Mock Item 2 -->
+                            <div
+                                class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700/50 flex items-center justify-between shadow-sm opacity-60">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-5 h-5 rounded border-2 border-gray-300 dark:border-gray-600"></div>
+                                    <div>
+                                        <div class="font-bold text-gray-900 dark:text-white text-sm">LRU Cache</div>
+                                        <div class="flex gap-2 mt-1">
+                                            <span
+                                                class="text-[10px] px-1.5 py-0.5 rounded bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 font-bold uppercase">Medium</span>
+                                            <span
+                                                class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400">Design</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Mock Item 3 -->
+                            <div
+                                class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700/50 flex items-center justify-between shadow-sm opacity-40">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-5 h-5 rounded border-2 border-gray-300 dark:border-gray-600"></div>
+                                    <div>
+                                        <div class="font-bold text-gray-900 dark:text-white text-sm">Trapping Rain Water
+                                        </div>
+                                        <div class="flex gap-2 mt-1">
+                                            <span
+                                                class="text-[10px] px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-bold uppercase">Hard</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Decor -->
+                        <div class="absolute -z-10 -top-10 -right-10 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 7. DATA OWNERSHIP -->
-    <section class="py-16 bg-gray-50 dark:bg-[#0A0E27]">
-        <div class="max-w-3xl mx-auto px-4 text-center">
-            <div
-                class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-800 mb-6">
-                <i data-lucide="database" class="w-8 h-8 text-gray-600 dark:text-gray-300"></i>
-            </div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">100% Client-Side.</h2>
-            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                We don't sell your data because we don't have it. Everything lives in your browser's <code
-                    class="bg-gray-200 dark:bg-gray-800 px-1 rounded text-sm">localStorage</code> and <code
-                    class="bg-gray-200 dark:bg-gray-800 px-1 rounded text-sm">IndexedDB</code>.
-                Want to move devices? Export your data to JSON and import it anywhere.
-            </p>
-        </div>
-    </section>
-
-    <!-- 8. WHO THIS IS FOR -->
-    <section class="py-20">
+    <!-- 3. PATHS SECTION (Right Text, Left Visual) -->
+    <section class="py-24 bg-gray-50 dark:bg-[#0A0E27] overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Is this for you?</h2>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="text-center p-4">
-                    <div class="font-bold text-gray-900 dark:text-white mb-1">CS Students</div>
-                    <div class="text-sm text-gray-500">Ace your placements</div>
+            <div class="flex flex-col lg:flex-row-reverse items-center gap-16">
+                <!-- Text -->
+                <div class="flex-1 lg:pl-12 animate-on-scroll">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-500 flex items-center justify-center mb-6">
+                        <i data-lucide="git-branch" class="w-6 h-6"></i>
+                    </div>
+                    <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-6">Structured Roadmaps.</h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+                        Don't know where to start? Follow our curated paths. Master one pattern at a time,
+                        from Sliding Windows to Graph traversals, before moving to the next.
+                    </p>
+                    <a href="/paths/"
+                        class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-purple-600 text-white font-bold hover:bg-purple-700 transition-colors shadow-lg shadow-purple-500/25">
+                        <span>View All Paths</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
                 </div>
-                <div class="text-center p-4">
-                    <div class="font-bold text-gray-900 dark:text-white mb-1">Backend Pros</div>
-                    <div class="text-sm text-gray-500">Sharpen fundamentals</div>
-                </div>
-                <div class="text-center p-4">
-                    <div class="font-bold text-gray-900 dark:text-white mb-1">Career Switchers</div>
-                    <div class="text-sm text-gray-500">Build confidence</div>
-                </div>
-                <div class="text-center p-4">
-                    <div class="font-bold text-gray-900 dark:text-white mb-1">Refreshers</div>
-                    <div class="text-sm text-gray-500">Get back in shape</div>
+
+                <!-- Visual (Mock Cards) -->
+                <div class="flex-1 w-full relative perspective-1000 animate-on-scroll">
+                    <div
+                        class="relative grid grid-cols-2 gap-4 transform rotate-y-[5deg] transition-transform duration-500 hover:rotate-0">
+                        <!-- Card 1 -->
+                        <div
+                            class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl flex flex-col items-center text-center">
+                            <div
+                                class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-500 flex items-center justify-center mb-4">
+                                <i data-lucide="layers" class="w-6 h-6"></i>
+                            </div>
+                            <div class="font-bold text-gray-900 dark:text-white mb-1">Arrays</div>
+                            <div class="text-xs text-gray-500">15 Problems</div>
+                        </div>
+                        <!-- Card 2 -->
+                        <div
+                            class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl flex flex-col items-center text-center mt-8">
+                            <div
+                                class="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-500 flex items-center justify-center mb-4">
+                                <i data-lucide="box" class="w-6 h-6"></i>
+                            </div>
+                            <div class="font-bold text-gray-900 dark:text-white mb-1">DP</div>
+                            <div class="text-xs text-gray-500">25 Problems</div>
+                        </div>
+                        <!-- Card 3 -->
+                        <div
+                            class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl flex flex-col items-center text-center -mt-8">
+                            <div
+                                class="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/30 text-green-500 flex items-center justify-center mb-4">
+                                <i data-lucide="network" class="w-6 h-6"></i>
+                            </div>
+                            <div class="font-bold text-gray-900 dark:text-white mb-1">Graphs</div>
+                            <div class="text-xs text-gray-500">20 Problems</div>
+                        </div>
+                        <!-- Card 4 -->
+                        <div
+                            class="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl flex flex-col items-center text-center">
+                            <div
+                                class="w-12 h-12 rounded-full bg-pink-100 dark:bg-pink-900/30 text-pink-500 flex items-center justify-center mb-4">
+                                <i data-lucide="binary" class="w-6 h-6"></i>
+                            </div>
+                            <div class="font-bold text-gray-900 dark:text-white mb-1">Trees</div>
+                            <div class="text-xs text-gray-500">30 Problems</div>
+                        </div>
+                    </div>
+                    <!-- Decor -->
+                    <div class="absolute -z-10 -bottom-10 -left-10 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl">
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 9. FINAL CTA -->
-    <section class="py-24 bg-gradient-to-br from-gray-900 to-black text-white text-center">
-        <div class="max-w-2xl mx-auto px-4">
-            <h2 class="text-4xl font-black mb-6">Ready to grind?</h2>
-            <p class="text-xl text-gray-400 mb-10">No signup. No credit card. Just code.</p>
-            <a href="/problems/"
-                class="inline-block px-10 py-5 rounded-full bg-primary text-white font-bold text-xl hover:bg-white hover:text-black transition-all transform hover:-translate-y-1 shadow-2xl shadow-primary/30">
-                Start Coding Now
-            </a>
+    <!-- 4. INTERVIEW SECTION (Left Text, Right Visual) -->
+    <section class="py-24 bg-white dark:bg-[#0F1430] border-y border-gray-200 dark:border-gray-800 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <!-- Text -->
+                <div class="flex-1 lg:pr-12 animate-on-scroll">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-500 flex items-center justify-center mb-6">
+                        <i data-lucide="zap" class="w-6 h-6"></i>
+                    </div>
+                    <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-6">Simulation Mode.</h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+                        Can you solve it in 45 minutes? Test your skills in a distraction-free environment.
+                        No hints, hidden test cases, and a ticking clock.
+                    </p>
+                    <a href="/interview/"
+                        class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-orange-600 text-white font-bold hover:bg-orange-700 transition-colors shadow-lg shadow-orange-500/25">
+                        <span>Start Session</span>
+                        <i data-lucide="play" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Visual (Mock Timer) -->
+                <div class="flex-1 w-full animate-on-scroll">
+                    <div
+                        class="bg-gray-900 rounded-3xl p-8 border border-gray-800 shadow-2xl relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-[url('/img/grid.svg')] opacity-10"></div>
+                        <div class="relative z-10 flex flex-col items-center justify-center py-12">
+                            <div class="text-6xl font-mono font-bold text-white mb-4 tabular-nums animate-pulse">
+                                44:59
+                            </div>
+                            <div class="flex gap-4">
+                                <span class="px-3 py-1 rounded bg-gray-800 text-gray-400 text-xs font-mono">Question
+                                    1/3</span>
+                                <span
+                                    class="px-3 py-1 rounded bg-gray-800 text-gray-400 text-xs font-mono">Medium</span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-gray-800 p-4 rounded-xl border-t border-gray-700 flex justify-between items-center mt-8">
+                            <div class="text-gray-400 text-sm">Status: <span class="text-green-400">Running</span></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500 box-shadow-green"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
+
+    <!-- 5. NOTES & GUIDE PREVIEW -->
+    <section class="py-24 bg-gray-50 dark:bg-[#0A0E27]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Notes Card -->
+                <div
+                    class="bg-white dark:bg-[#151a36] rounded-3xl p-8 border border-gray-200 dark:border-gray-700 hover:border-green-500/50 transition-colors shadow-lg group animate-on-scroll">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-green-500/10 text-green-500 flex items-center justify-center mb-6">
+                        <i data-lucide="book-open" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Notebook</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-8">
+                        Active Recall is key. Write down your intuitions and failures for every problem.
+                    </p>
+                    <a href="/notes/"
+                        class="text-green-500 font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
+                        View Notebook <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Guide Card -->
+                <div
+                    class="bg-white dark:bg-[#151a36] rounded-3xl p-8 border border-gray-200 dark:border-gray-700 hover:border-yellow-500/50 transition-colors shadow-lg group animate-on-scroll">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-yellow-500/10 text-yellow-500 flex items-center justify-center mb-6">
+                        <i data-lucide="help-circle" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Platform Guide</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-8">
+                        Learn how to use keyboard shortcuts, export your data, and maximize your prep efficiency.
+                    </p>
+                    <a href="/guide/"
+                        class="text-yellow-500 font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
+                        Read Guide <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. FINAL CTA & PROFILE -->
+    <section class="py-32 relative text-center">
+        <div class="max-w-2xl mx-auto px-4 relative z-10">
+            <h2 class="text-4xl font-black text-gray-900 dark:text-white mb-8">Ready to start?</h2>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/problems/"
+                    class="px-10 py-4 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold text-lg hover:shadow-xl transition-transform hover:-translate-y-1">
+                    Start Solving
+                </a>
+                <a href="/profile/"
+                    class="px-10 py-4 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-bold text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    Check Profile
+                </a>
+            </div>
+        </div>
+    </section>
+
 </div>
 
-<style>
-    /* Additional Minimalist Polish */
-    .font-handwriting {
-        font-family: 'Courier New', Courier, monospace;
-        /* Fallback for notes */
-    }
-</style>
+<script>
+    // Scroll Animation
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-in-up');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        el.style.opacity = '0';
+        observer.observe(el);
+    });
+</script>
 {{ end }}

@@ -36,7 +36,7 @@ window.toggleNote = function (id) {
     });
 
     // Clear persistence
-    localStorage.removeItem('dsa-notes-expanded');
+    sessionStorage.removeItem('dsa-notes-expanded');
 
     // If we were opening the clicked note, open it now
     if (isClosed) {
@@ -52,12 +52,24 @@ window.toggleNote = function (id) {
         }
 
         // Persist expanded state
-        localStorage.setItem('dsa-notes-expanded', id);
+        sessionStorage.setItem('dsa-notes-expanded', id);
     }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
     manager = window.InterviewManager;
+
+    // Fix: Clear expanded state on refresh (Reload)
+    // We want it to persist only if navigating back (Back/Forward or logical return)
+    try {
+        const navEntry = performance.getEntriesByType("navigation")[0];
+        if (navEntry && navEntry.type === 'reload') {
+            sessionStorage.removeItem('dsa-notes-expanded');
+            localStorage.removeItem('dsa-notes-tab');
+        }
+    } catch (e) {
+        console.log("Navigation API not supported", e);
+    }
 
     // Initialize UI Elements
     tabProblems = document.getElementById('tab-problems');
@@ -144,26 +156,30 @@ function updateTabUI() {
 async function loadData() {
     if (!manager) manager = window.InterviewManager; // Double check
 
+    // Shared Problem Map
+    let probMap = {};
+    try {
+        const allProblems = await manager.getProblems(); // Fetch all problems early
+        allProblems.forEach(p => {
+            // Normalize ID
+            const id = p.id || (p.permalink ? p.permalink.replace(/\/$/, '').split('/').pop() : 'unknown');
+            probMap[id] = p;
+        });
+    } catch (e) {
+        console.error("Error loading global problem list", e);
+    }
+
     // 1. Load Problem Notes (from DB)
     if (!window.dsaDB) {
-        // Wait retry if DB not ready
         setTimeout(loadData, 200);
         return;
     }
 
     try {
         const problemsFromDB = await window.dsaDB.getAllProblems();
-        // Filter those with notes
         const notesData = problemsFromDB.filter(p => p.note && p.note.trim() !== '');
 
         if (notesData.length > 0) {
-            const allProblems = await manager.getProblems(); // Helper to fetch problem metadata
-            const probMap = {};
-            allProblems.forEach(p => {
-                const id = p.id || p.permalink.replace(/\/$/, '').split('/').pop();
-                probMap[id] = p;
-            });
-
             notesItems = notesData.map(dbItem => {
                 const id = dbItem.id;
                 const prob = probMap[id];
@@ -191,17 +207,28 @@ async function loadData() {
             reflectionItems = sessions
                 .filter(s => s.notes && s.notes.reflection && s.notes.reflection.trim() !== '')
                 .sort((a, b) => b.createdAt - a.createdAt)
-                .map(s => ({
-                    id: s.id,
-                    title: s.title || 'Session Reflection',
-                    content: s.notes.reflection,
-                    date: new Date(s.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }),
-                    problems: (s.problems || []).map(p => ({
-                        title: p.title,
-                        status: p.status, // 'solved', 'attempted', 'skipped'
-                        permalink: p.permalink || '#'
-                    }))
-                }));
+                .map(s => {
+                    // Enrich session problems with titles/data from probMap
+                    const enrichedProblems = (s.problems || []).map(p => {
+                        // Extract ID if possible
+                        const pid = p.id || (p.permalink ? p.permalink.replace(/\/$/, '').split('/').pop() : null);
+                        const globalProb = pid ? probMap[pid] : null;
+
+                        return {
+                            title: globalProb ? globalProb.title : (p.title || 'Unknown Problem'),
+                            status: p.status,
+                            permalink: globalProb ? globalProb.permalink : (p.permalink || '#')
+                        };
+                    });
+
+                    return {
+                        id: s.id,
+                        title: s.title || 'Session Reflection',
+                        content: s.notes.reflection,
+                        date: new Date(s.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }),
+                        problems: enrichedProblems
+                    };
+                });
         } else {
             reflectionItems = [];
         }
@@ -215,7 +242,7 @@ async function loadData() {
     renderReflections(reflectionItems);
 
     // Restore expanded state
-    const expandedId = localStorage.getItem('dsa-notes-expanded');
+    const expandedId = sessionStorage.getItem('dsa-notes-expanded');
     if (expandedId) {
         // Wait for DOM to be ready
         setTimeout(() => {
@@ -481,11 +508,16 @@ function getBadgeStyle(diff) {
 // --- MODAL & PDF LOGIC ---
 
 window.openDownloadModal = function () {
-    document.getElementById('downloadModal').classList.remove('hidden');
+    const modal = document.getElementById('downloadModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (window.updateDownloadAvailability) window.updateDownloadAvailability();
 }
 
 window.closeDownloadModal = function () {
-    document.getElementById('downloadModal').classList.add('hidden');
+    const modal = document.getElementById('downloadModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
 }
 
 // Helper: Strip HTML
@@ -505,6 +537,47 @@ function stripHtml(html) {
     const textarea = document.createElement('textarea');
     textarea.innerHTML = text;
     return textarea.value.trim();
+}
+
+// Check Availability
+window.updateDownloadAvailability = async function () {
+    const scopeEl = document.querySelector('input[name="notesScope"]:checked');
+    const scope = scopeEl ? scopeEl.value : 'all';
+    const msgEl = document.getElementById('download-availability-message');
+    const btn = document.getElementById('btn-download-pdf');
+
+    if (!msgEl) return;
+
+    msgEl.innerHTML = `<span class="flex items-center justify-center gap-2 text-gray-400"><i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i> Checking availability...</span>`;
+    if (window.lucide) lucide.createIcons();
+
+    // Fetch fresh problems to check notes
+    let problemsCount = 0;
+    let reflectionsCount = 0;
+
+    try {
+        if (window.dsaDB) {
+            const problems = await window.dsaDB.getAllProblems();
+            problemsCount = problems.filter(p => p.note && p.note.trim().length > 0).length;
+
+            const sessions = await window.dsaDB.getAllSessions();
+            reflectionsCount = sessions.filter(s => s.notes && s.notes.reflection && s.notes.reflection.trim().length > 0).length;
+        }
+    } catch (e) { console.error("Error checking availability", e); }
+
+    let count = 0;
+    if (scope === 'all') count = problemsCount + reflectionsCount;
+    if (scope === 'problems') count = problemsCount;
+    if (scope === 'reflections') count = reflectionsCount;
+
+    if (count > 0) {
+        msgEl.innerHTML = `<span class="text-green-600 dark:text-green-400 flex items-center justify-center gap-2"><i data-lucide="check-circle" class="w-4 h-4"></i> ${count} notes available</span>`;
+        if (btn) btn.disabled = false;
+    } else {
+        msgEl.innerHTML = `<span class="text-red-500 flex items-center justify-center gap-2"><i data-lucide="alert-circle" class="w-4 h-4"></i> No notes found in this category</span>`;
+        if (btn) btn.disabled = true;
+    }
+    if (window.lucide) lucide.createIcons();
 }
 
 // Helper: Load Image

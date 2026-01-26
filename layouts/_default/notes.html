@@ -188,6 +188,7 @@
                     <label
                         class="group relative flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
                         <input type="radio" name="notesScope" value="all" checked
+                            onchange="updateDownloadAvailability()"
                             class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600">
                         <div class="flex-1">
                             <span class="block text-sm font-bold text-gray-900 dark:text-white">All Notes</span>
@@ -199,12 +200,14 @@
                         <label
                             class="group relative flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
                             <input type="radio" name="notesScope" value="problems"
+                                onchange="updateDownloadAvailability()"
                                 class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600">
                             <span class="text-sm font-bold text-gray-900 dark:text-white">Problem Notes</span>
                         </label>
                         <label
                             class="group relative flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
                             <input type="radio" name="notesScope" value="reflections"
+                                onchange="updateDownloadAvailability()"
                                 class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
                             <span class="text-sm font-bold text-gray-900 dark:text-white">Reflections</span>
                         </label>
@@ -244,6 +247,14 @@
                 </div>
             </div>
 
+            <!-- Validation Message -->
+            <div id="download-availability-message"
+                class="mt-4 md:mt-6 text-center text-xs font-bold min-h-[20px] transition-all duration-300">
+                <span class="flex items-center justify-center gap-1.5 text-gray-400">
+                    <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i> Checking notes...
+                </span>
+            </div>
+
         </div>
 
         <!-- Sticky Footer -->
@@ -253,8 +264,8 @@
                 class="flex-1 py-3 md:py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
                 Cancel
             </button>
-            <button onclick="downloadPDF()"
-                class="flex-[2] py-3 md:py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm hover:shadow-xl hover:shadow-blue-500/20 hover:scale-[1.01] transition-all transform active:scale-95 flex items-center justify-center gap-2">
+            <button onclick="downloadPDF()" id="btn-download-pdf"
+                class="flex-[2] py-3 md:py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm hover:shadow-xl hover:shadow-blue-500/20 hover:scale-[1.01] transition-all transform active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed">
                 <i data-lucide="download" class="w-4 h-4"></i> Download PDF
             </button>
         </div>

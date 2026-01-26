@@ -742,6 +742,7 @@
 
                 // Animation
                 modal.classList.remove('hidden');
+                modal.classList.add('flex');
                 // Small delay to allow display:block to apply before opacity transition
                 requestAnimationFrame(() => {
                     modal.classList.remove('opacity-0');
@@ -761,6 +762,7 @@
 
                 modalCloseTimer = setTimeout(() => {
                     modal.classList.add('hidden');
+                    modal.classList.remove('flex');
                     // Reset callbacks
                     onConfirmCallback = null;
                     modalCloseTimer = null;
@@ -911,11 +913,16 @@
 
             // --- DOWNLOAD NOTES MODAL & LOGIC (Ported) ---
             window.openDownloadModal = function () {
-                document.getElementById('downloadModal').classList.remove('hidden');
+                const modal = document.getElementById('downloadModal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                updateDownloadAvailability();
             }
 
             window.closeDownloadModal = function () {
-                document.getElementById('downloadModal').classList.add('hidden');
+                const modal = document.getElementById('downloadModal');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
             }
 
             function stripHtml(html) {
@@ -943,6 +950,46 @@
                     img.onerror = () => resolve(null);
                     img.src = url;
                 });
+            }
+
+            async function updateDownloadAvailability() {
+                const scopeEl = document.querySelector('input[name="notesScope"]:checked');
+                const scope = scopeEl ? scopeEl.value : 'all';
+                const msgEl = document.getElementById('download-availability-message');
+                const btn = document.getElementById('btn-download-pdf');
+
+                if (!msgEl) return;
+
+                msgEl.innerHTML = `<span class="flex items-center justify-center gap-2 text-gray-400"><i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i> Checking availability...</span>`;
+                if (window.lucide) lucide.createIcons();
+
+                // Count logic
+                let problemsCount = 0;
+                let reflectionsCount = 0;
+
+                if (window.dsaDB) {
+                    try {
+                        const problems = await window.dsaDB.getAllProblems();
+                        problemsCount = problems.filter(p => p.note && p.note.trim().length > 0).length;
+
+                        const sessions = await window.dsaDB.getAllSessions();
+                        reflectionsCount = sessions.filter(s => s.notes && s.notes.reflection && s.notes.reflection.trim().length > 0).length;
+                    } catch (e) { console.error(e); }
+                }
+
+                let count = 0;
+                if (scope === 'all') count = problemsCount + reflectionsCount;
+                if (scope === 'problems') count = problemsCount;
+                if (scope === 'reflections') count = reflectionsCount;
+
+                if (count > 0) {
+                    msgEl.innerHTML = `<span class="text-green-600 dark:text-green-400 flex items-center justify-center gap-2"><i data-lucide="check-circle" class="w-4 h-4"></i> ${count} notes available</span>`;
+                    if (btn) btn.disabled = false;
+                } else {
+                    msgEl.innerHTML = `<span class="text-red-500 flex items-center justify-center gap-2"><i data-lucide="alert-circle" class="w-4 h-4"></i> No notes found in this category</span>`;
+                    if (btn) btn.disabled = true;
+                }
+                if (window.lucide) lucide.createIcons();
             }
 
             window.downloadPDF = async function () {
@@ -1144,182 +1191,197 @@
 
         </script>
 
-        <!-- Download Modal -->
-        <div id="downloadModal"
-            class="fixed inset-0 z-[100] hidden items-center justify-center bg-gray-900/60 backdrop-blur-md px-4 py-4 sm:py-8 overflow-y-auto">
-            <div
-                class="bg-white dark:bg-gray-800 w-full max-w-xl rounded-2xl md:rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 relative animate-fade-in-up transform transition-all overflow-hidden group my-auto">
+    </div>
+</div>
 
-                <!-- Decorative bg blobs -->
-                <div
-                    class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none">
-                </div>
-                <div
-                    class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none">
-                </div>
 
-                <!-- Sticky Header -->
-                <div
-                    class="sticky top-0 z-20 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md px-5 py-3 md:px-6 md:py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center shrink-0">
-                    <div>
-                        <h2
-                            class="text-lg md:text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-2 md:gap-3">
-                            <div
-                                class="p-1.5 md:p-2 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg shadow-lg shrink-0">
-                                <i data-lucide="file-down" class="w-4 h-4 md:w-5 md:h-5 text-white"></i>
-                            </div>
-                            Download Notes
-                        </h2>
-                    </div>
-                    <button onclick="closeDownloadModal()"
-                        class="p-1.5 -mr-1.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors group/close">
-                        <i data-lucide="x"
-                            class="w-5 h-5 text-gray-400 group-hover/close:text-gray-600 dark:text-gray-500 dark:group-hover/close:text-gray-300 transition-colors"></i>
-                    </button>
-                </div>
+<!-- Download Modal (Moved Outside) -->
+<div id="downloadModal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center bg-gray-900/60 backdrop-blur-md px-4 py-4 sm:py-8 overflow-y-auto">
+    <div
+        class="bg-white dark:bg-gray-800 w-full max-w-xl rounded-2xl md:rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 relative animate-fade-in-up transform transition-all overflow-hidden group my-auto">
 
-                <!-- Scrollable Content -->
-                <div class="px-5 py-4 md:p-6 relative z-10 overflow-y-auto custom-scrollbar">
-
-                    <!-- Scope Section -->
-                    <div class="mb-6">
-                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Include
-                            Content</label>
-                        <div class="grid grid-cols-1 gap-2.5">
-                            <!-- All Notes -->
-                            <label
-                                class="group relative flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
-                                <input type="radio" name="notesScope" value="all" checked
-                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600">
-                                <div class="flex-1">
-                                    <span class="block text-sm font-bold text-gray-900 dark:text-white">All
-                                        Notes</span>
-                                    <span class="block text-xs text-gray-500">Includes both problem solutions and
-                                        reflections</span>
-                                </div>
-                            </label>
-                            <div class="grid grid-cols-2 gap-2.5">
-                                <label
-                                    class="group relative flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
-                                    <input type="radio" name="notesScope" value="problems"
-                                        class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600">
-                                    <span class="text-sm font-bold text-gray-900 dark:text-white">Problem
-                                        Notes</span>
-                                </label>
-                                <label
-                                    class="group relative flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
-                                    <input type="radio" name="notesScope" value="reflections"
-                                        class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
-                                    <span class="text-sm font-bold text-gray-900 dark:text-white">Reflections</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Metadata Section -->
-                    <div class="mb-2">
-                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Enrich
-                            with
-                            Data</label>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                            <label
-                                class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
-                                <input type="checkbox" id="includeStatement" checked
-                                    class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
-                                <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Problem
-                                    Statement</span>
-                            </label>
-                            <label
-                                class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
-                                <input type="checkbox" id="includeComplexity" checked
-                                    class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
-                                <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Time/Space
-                                    Complexity</span>
-                            </label>
-                            <label
-                                class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
-                                <input type="checkbox" id="includeExamples"
-                                    class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
-                                <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Examples</span>
-                            </label>
-                            <label
-                                class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
-                                <input type="checkbox" id="includeConstraints"
-                                    class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
-                                <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Constraints</span>
-                            </label>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Sticky Footer -->
-                <div
-                    class="p-4 md:p-6 border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50 backdrop-blur-sm relative z-20 shrink-0 flex gap-3">
-                    <button onclick="closeDownloadModal()"
-                        class="flex-1 py-3 md:py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
-                        Cancel
-                    </button>
-                    <button onclick="downloadPDF()"
-                        class="flex-[2] py-3 md:py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm hover:shadow-xl hover:shadow-blue-500/20 hover:scale-[1.01] transition-all transform active:scale-95 flex items-center justify-center gap-2">
-                        <i data-lucide="download" class="w-4 h-4"></i> Download PDF
-                    </button>
-                </div>
-            </div>
+        <!-- Decorative bg blobs -->
+        <div
+            class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none">
         </div>
 
-        <!-- Action Modal -->
-        <div id="actionModal"
-            class="fixed inset-0 z-50 hidden flex items-center justify-center bg-gray-900/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-            <div
-                class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden transform scale-95 transition-transform duration-300 border border-gray-100 dark:border-gray-700">
-                <!-- Modal Header -->
-                <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center"
-                    id="actionModalHeader">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white" id="actionModalTitle">Action</h3>
-                    <button onclick="closeActionModal()"
-                        class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                        <i data-lucide="x" class="w-5 h-5 text-gray-400"></i>
-                    </button>
-                </div>
-
-                <!-- Modal Body -->
-                <div class="p-6">
-                    <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4" id="actionModalMessage">
-                        Message goes here...</p>
-
-                    <!-- Input Container (Hidden by default) -->
-                    <div id="actionModalInputContainer" class="hidden mb-4">
-                        <input type="text" id="actionModalInput"
-                            class="w-full px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+        <!-- Sticky Header -->
+        <div
+            class="sticky top-0 z-20 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md px-5 py-3 md:px-6 md:py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center shrink-0">
+            <div>
+                <h2
+                    class="text-lg md:text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-2 md:gap-3">
+                    <div
+                        class="p-1.5 md:p-2 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg shadow-lg shrink-0">
+                        <i data-lucide="file-down" class="w-4 h-4 md:w-5 md:h-5 text-white"></i>
                     </div>
+                    Download Notes
+                </h2>
+            </div>
+            <button onclick="closeDownloadModal()"
+                class="p-1.5 -mr-1.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors group/close">
+                <i data-lucide="x"
+                    class="w-5 h-5 text-gray-400 group-hover/close:text-gray-600 dark:text-gray-500 dark:group-hover/close:text-gray-300 transition-colors"></i>
+            </button>
+        </div>
 
-                    <!-- Checkbox Container (Hidden by default) -->
-                    <div id="actionModalCheckboxContainer"
-                        class="hidden mb-4 flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-100 dark:border-gray-600">
-                        <div class="relative flex items-center">
-                            <input type="checkbox" id="actionModalCheckbox"
-                                class="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-gray-300 transition-all checked:border-blue-500 checked:bg-blue-500 hover:border-blue-400 dark:border-gray-600 dark:checked:bg-blue-500">
-                            <i data-lucide="check"
-                                class="pointer-events-none absolute left-1/2 top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 transition-opacity peer-checked:opacity-100"></i>
+        <!-- Scrollable Content -->
+        <div class="px-5 py-4 md:p-6 relative z-10 overflow-y-auto custom-scrollbar">
+
+            <!-- Scope Section -->
+            <div class="mb-6">
+                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Include
+                    Content</label>
+                <div class="grid grid-cols-1 gap-2.5">
+                    <!-- All Notes -->
+                    <label
+                        class="group relative flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        <input type="radio" name="notesScope" value="all" checked
+                            onchange="updateDownloadAvailability()"
+                            class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600">
+                        <div class="flex-1">
+                            <span class="block text-sm font-bold text-gray-900 dark:text-white">All
+                                Notes</span>
+                            <span class="block text-xs text-gray-500">Includes both problem solutions and
+                                reflections</span>
                         </div>
-                        <label for="actionModalCheckbox" id="actionModalCheckboxLabel"
-                            class="cursor-pointer select-none text-sm font-medium text-gray-700 dark:text-gray-200"></label>
-                    </div>
-
-                    <!-- Actions -->
-                    <div class="flex justify-end gap-3" id="actionModalButtons">
-                        <button onclick="closeActionModal()"
-                            class="px-4 py-2 rounded-lg text-sm font-bold text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
-                            Cancel
-                        </button>
-                        <button id="actionModalConfirmBtn"
-                            class="px-4 py-2 rounded-lg text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30">
-                            Confirm
-                        </button>
+                    </label>
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <label
+                            class="group relative flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                            <input type="radio" name="notesScope" value="problems"
+                                onchange="updateDownloadAvailability()"
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600">
+                            <span class="text-sm font-bold text-gray-900 dark:text-white">Problem
+                                Notes</span>
+                        </label>
+                        <label
+                            class="group relative flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                            <input type="radio" name="notesScope" value="reflections"
+                                onchange="updateDownloadAvailability()"
+                                class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
+                            <span class="text-sm font-bold text-gray-900 dark:text-white">Reflections</span>
+                        </label>
                     </div>
                 </div>
             </div>
+
+            <!-- Metadata Section -->
+            <div class="mb-2">
+                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Enrich
+                    with
+                    Data</label>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <label
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        <input type="checkbox" id="includeStatement" checked
+                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Problem
+                            Statement</span>
+                    </label>
+                    <label
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        <input type="checkbox" id="includeComplexity" checked
+                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Time/Space
+                            Complexity</span>
+                    </label>
+                    <label
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        <input type="checkbox" id="includeExamples"
+                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Examples</span>
+                    </label>
+                    <label
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        <input type="checkbox" id="includeConstraints"
+                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Constraints</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Validation Message -->
+            <div id="download-availability-message"
+                class="mt-4 md:mt-6 text-center text-xs font-bold min-h-[20px] transition-all duration-300">
+                <span class="flex items-center justify-center gap-1.5 text-gray-400">
+                    <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i> Checking notes...
+                </span>
+            </div>
+
         </div>
 
-        {{ end }}
+        <!-- Sticky Footer -->
+        <div
+            class="p-4 md:p-6 border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50 backdrop-blur-sm relative z-20 shrink-0 flex gap-3">
+            <button onclick="closeDownloadModal()"
+                class="flex-1 py-3 md:py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
+                Cancel
+            </button>
+            <button onclick="downloadPDF()" id="btn-download-pdf"
+                class="flex-[2] py-3 md:py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm hover:shadow-xl hover:shadow-blue-500/20 hover:scale-[1.01] transition-all transform active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed">
+                <i data-lucide="download" class="w-4 h-4"></i> Download PDF
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Action Modal (Moved Outside & Styled) -->
+<div id="actionModal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center bg-gray-900/60 backdrop-blur-md px-4 py-4 sm:py-8 overflow-y-auto">
+    <div
+        class="bg-white dark:bg-gray-800 w-full max-w-md rounded-2xl md:rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 relative animate-fade-in-up transform transition-all overflow-hidden group my-auto">
+        <!-- Modal Header -->
+        <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center"
+            id="actionModalHeader">
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white" id="actionModalTitle">Action</h3>
+            <button onclick="closeActionModal()"
+                class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <i data-lucide="x" class="w-5 h-5 text-gray-400"></i>
+            </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6 relative z-10">
+            <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4" id="actionModalMessage">
+                Message goes here...</p>
+
+            <!-- Input Container (Hidden by default) -->
+            <div id="actionModalInputContainer" class="hidden mb-4">
+                <input type="text" id="actionModalInput"
+                    class="w-full px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+            </div>
+
+            <!-- Checkbox Container (Hidden by default) -->
+            <div id="actionModalCheckboxContainer"
+                class="hidden mb-4 flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-100 dark:border-gray-600">
+                <div class="relative flex items-center">
+                    <input type="checkbox" id="actionModalCheckbox"
+                        class="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-gray-300 transition-all checked:border-blue-500 checked:bg-blue-500 hover:border-blue-400 dark:border-gray-600 dark:checked:bg-blue-500">
+                    <i data-lucide="check"
+                        class="pointer-events-none absolute left-1/2 top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 transition-opacity peer-checked:opacity-100"></i>
+                </div>
+                <label for="actionModalCheckbox" id="actionModalCheckboxLabel"
+                    class="cursor-pointer select-none text-sm font-medium text-gray-700 dark:text-gray-200"></label>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex justify-end gap-3" id="actionModalButtons">
+                <button onclick="closeActionModal()"
+                    class="px-4 py-2 rounded-lg text-sm font-bold text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
+                    Cancel
+                </button>
+                <button id="actionModalConfirmBtn"
+                    class="px-4 py-2 rounded-lg text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ end }}

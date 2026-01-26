@@ -1,4 +1,5 @@
 {{ define "main" }}
+<script>console.log("Notes template rendering started");</script>
 <script src="/js/interview-manager.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
@@ -264,7 +265,11 @@
                 class="flex-1 py-3 md:py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
                 Cancel
             </button>
-            <button onclick="downloadPDF()" id="btn-download-pdf"
+            <button onclick="exportNotesPDF(true)" id="btn-preview-pdf"
+                class="flex-1 py-3 md:py-3.5 rounded-xl border border-blue-200 dark:border-blue-800/50 text-blue-600 dark:text-blue-400 font-bold text-sm hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors flex items-center justify-center gap-2">
+                <i data-lucide="eye" class="w-4 h-4"></i> Preview
+            </button>
+            <button onclick="exportNotesPDF(false)" id="btn-download-pdf"
                 class="flex-[2] py-3 md:py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm hover:shadow-xl hover:shadow-blue-500/20 hover:scale-[1.01] transition-all transform active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed">
                 <i data-lucide="download" class="w-4 h-4"></i> Download PDF
             </button>
@@ -273,4 +278,8 @@
 </div>
 
 
+
+
+<!-- Load Shared PDF Export Logic -->
+<script src="/js/pdf-export.js"></script>
 {{ end }}

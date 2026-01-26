@@ -992,200 +992,7 @@
                 if (window.lucide) lucide.createIcons();
             }
 
-            window.downloadPDF = async function () {
-                if (!window.jspdf) {
-                    console.error("jspdf not loaded");
-                    alert("PDF Library not loaded. Please refresh.");
-                    return;
-                }
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
 
-                // Config
-                const scope = document.querySelector('input[name="notesScope"]:checked').value;
-                const inclStatement = document.getElementById('includeStatement').checked;
-                const inclComplexity = document.getElementById('includeComplexity').checked;
-                const inclExamples = document.getElementById('includeExamples').checked;
-                const inclConstraints = document.getElementById('includeConstraints').checked;
-                closeDownloadModal();
-
-                // Load Data
-                let notesItems = [];
-                let reflectionItems = [];
-
-                // 1. Problems
-                if (scope === 'all' || scope === 'problems') {
-                    const problems = await window.dsaDB.getAllProblems();
-                    const notesData = problems.filter(p => p.note && p.note.trim() !== '');
-                    // Need full metadata? "manager.getProblems()" might effectively be "fetch /problems/index.json"
-                    // Let's deduce metadata from 'notesData' if it has it, or fetch index
-                    let allProblems = [];
-                    try {
-                        const res = await fetch('/problems/index.json');
-                        allProblems = await res.json();
-                    } catch (e) { }
-                    const probMap = {};
-                    allProblems.forEach(p => probMap[p.id || p.permalink.split('/').filter(Boolean).pop()] = p);
-
-                    notesItems = notesData.map(dbItem => {
-                        const prob = probMap[dbItem.id] || {};
-                        return {
-                            type: 'Problem Note',
-                            title: prob.title || dbItem.id,
-                            content: dbItem.note,
-                            difficulty: prob.difficulty || 'Unknown',
-                            meta: prob,
-                            date: new Date(dbItem.lastUpdated || Date.now()).toLocaleDateString()
-                        };
-                    });
-                }
-
-                // 2. Reflections
-                if (scope === 'all' || scope === 'reflections') {
-                    const sessions = await window.dsaDB.getAllSessions();
-                    reflectionItems = sessions
-                        .filter(s => s.notes && s.notes.reflection && s.notes.reflection.trim() !== '')
-                        .map(s => ({
-                            type: 'Reflection',
-                            title: s.title || 'Session Reflection',
-                            content: s.notes.reflection,
-                            date: new Date(s.createdAt).toLocaleDateString(),
-                            problems: (s.problems || [])
-                        }));
-                }
-
-                const dataToPrint = [...notesItems, ...reflectionItems];
-                if (dataToPrint.length === 0) { alert("No notes to print."); return; }
-
-                // --- PDF GENERATION (Simplified Port) ---
-                // We reuse the logic but need to be careful about scope variables
-                const logoImg = await loadImage('/logo.png');
-                const nickname = localStorage.getItem('dsa-nickname') || "User";
-
-                const pageW = doc.internal.pageSize.getWidth();
-                const pageH = doc.internal.pageSize.getHeight();
-                const margin = 20;
-                const contentW = pageW - (margin * 2);
-                let y = 0;
-                let pageNum = 1;
-
-                const statusColors = {
-                    'solved': { bg: [22, 163, 74], txt: [255, 255, 255] },
-                    'attempted': { bg: [234, 179, 8], txt: [255, 255, 255] },
-                    'skipped': { bg: [239, 68, 68], txt: [255, 255, 255] },
-                    'default': { bg: [156, 163, 175], txt: [255, 255, 255] }
-                };
-
-                const drawHeader = () => {
-                    doc.setFillColor(255, 255, 255);
-                    doc.rect(0, 0, pageW, 30, 'F');
-                    if (logoImg) {
-                        const logoSize = 10;
-                        const logoRatio = logoImg.width / logoImg.height;
-                        const renderW = logoSize * logoRatio;
-                        doc.addImage(logoImg, 'PNG', margin, 10, renderW, logoSize);
-                        doc.setDrawColor(220, 220, 220);
-                        doc.setLineWidth(0.5);
-                        doc.line(margin + renderW + 4, 11, margin + renderW + 4, 19);
-                        doc.setFont("helvetica", "bold"); doc.setFontSize(16); doc.setTextColor(17, 24, 39);
-                        doc.text("CSRGO DSA", margin + renderW + 8, 18);
-                        doc.setFont("helvetica", "normal"); doc.setFontSize(11); doc.setTextColor(107, 114, 128);
-                        const nameText = nickname.endsWith('s') ? nickname + "\u0027 Personal Notes" : nickname + "\u0027s Personal Notes";
-                        doc.text(nameText, margin + renderW + 8 + 40, 18);
-                    }
-                    doc.setFontSize(9); doc.setTextColor(107, 114, 128);
-                    doc.text(new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }), pageW - margin, 18, { align: 'right' });
-
-                    // Gradient Line
-                    const steps = 60; const c1 = [126, 34, 206]; const c2 = [37, 99, 235];
-                    for (let i = 0; i < steps; i++) {
-                        const t = i / steps;
-                        const r = Math.round(c1[0] + t * (c2[0] - c1[0]));
-                        const g = Math.round(c1[1] + t * (c2[1] - c1[1]));
-                        const b = Math.round(c1[2] + t * (c2[2] - c1[2]));
-                        doc.setFillColor(r, g, b);
-                        doc.rect((i * (pageW / steps)), 29, (pageW / steps) + 1, 1, 'F');
-                    }
-                };
-
-                const drawFooter = () => {
-                    doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.setTextColor(150, 150, 150);
-                    doc.text(`${pageNum}`, pageW / 2, pageH - 10, { align: 'center' });
-                    pageNum++;
-                };
-
-                const checkOverflow = (h) => {
-                    if (y + h > pageH - margin) {
-                        drawFooter(); doc.addPage(); drawHeader(); y = 40; return true;
-                    } return false;
-                };
-
-                for (let i = 0; i < dataToPrint.length; i++) {
-                    if (i > 0) { drawFooter(); doc.addPage(); }
-                    drawHeader(); y = 45;
-                    const item = dataToPrint[i];
-
-                    doc.setFont("helvetica", "bold"); doc.setFontSize(22); doc.setTextColor(17, 24, 39);
-                    doc.text(item.title, margin, y); y += 10;
-
-                    if (item.type === 'Problem Note') {
-                        // Badge
-                        doc.setFontSize(10);
-                        const badgeText = (item.difficulty || 'Unknown').toUpperCase();
-                        let badgeBg = [229, 231, 235]; let badgeTxt = [55, 65, 81];
-                        if (item.difficulty === 'Easy') { badgeBg = [220, 252, 231]; badgeTxt = [21, 128, 61]; }
-                        if (item.difficulty === 'Medium') { badgeBg = [254, 249, 195]; badgeTxt = [161, 98, 7]; }
-                        if (item.difficulty === 'Hard') { badgeBg = [254, 226, 226]; badgeTxt = [185, 28, 28]; }
-                        const badgeW = doc.getTextWidth(badgeText) + 10;
-                        doc.setFillColor(...badgeBg); doc.roundedRect(margin, y, badgeW, 7, 2, 2, 'F');
-                        doc.setTextColor(...badgeTxt); doc.text(badgeText, margin + 5, y + 5); y += 15;
-
-                        // Meta
-                        if (item.meta) {
-                            if (inclStatement && item.meta.summary) {
-                                const summaryTxt = stripHtml(item.meta.summary);
-                                const splitSum = doc.splitTextToSize(summaryTxt, contentW - 10);
-                                const boxH = (splitSum.length * 5) + 15;
-                                checkOverflow(boxH);
-                                doc.setFillColor(249, 250, 251); doc.roundedRect(margin, y, contentW, boxH, 3, 3, 'F');
-                                doc.setFont("helvetica", "bold"); doc.setFontSize(9); doc.setTextColor(79, 70, 229);
-                                doc.text("PROBLEM", margin + 5, y + 7);
-                                doc.setFont("helvetica", "normal"); doc.setFontSize(10); doc.setTextColor(17, 24, 39);
-                                doc.text(splitSum, margin + 5, y + 14); y += boxH + 8;
-                            }
-                            if (inclComplexity || inclConstraints || inclExamples) {
-                                checkOverflow(30);
-                                if (inclComplexity) {
-                                    doc.setFont("helvetica", "bold"); doc.setFontSize(10); doc.setTextColor(30); doc.text("Complexity", margin, y); y += 5;
-                                    doc.setFont("helvetica", "normal"); doc.setTextColor(107);
-                                    doc.text(`Time: ${item.meta.timeComplexity || '-'} | Space: ${item.meta.spaceComplexity || '-'}`, margin, y); y += 10;
-                                }
-                            }
-                        }
-                    } else {
-                        doc.setFontSize(11); doc.setTextColor(107, 114, 128); doc.text("REFLECTION SESSION", margin, y); y += 10;
-                        if (item.problems) {
-                            checkOverflow(item.problems.length * 8 + 10);
-                            doc.setFont("helvetica", "bold"); doc.setFontSize(10); doc.setTextColor(30); doc.text("PROBLEMS", margin, y); y += 6;
-                            doc.setFont("helvetica", "normal");
-                            item.problems.forEach(p => {
-                                doc.text(`• ${p.title} (${p.status})`, margin + 2, y); y += 5;
-                            });
-                            y += 5;
-                        }
-                    }
-
-                    // Content
-                    checkOverflow(50);
-                    doc.setFont("helvetica", "normal"); doc.setFontSize(11); doc.setTextColor(55, 65, 81);
-                    const splitContent = doc.splitTextToSize(item.content, contentW);
-                    doc.text(splitContent, margin, y);
-                    y += (splitContent.length * 6);
-                }
-
-                drawFooter();
-                doc.save(`dsa-notes-${new Date().toISOString().split('T')[0]}.pdf`);
-            }
 
 
 
@@ -1322,13 +1129,20 @@
                 class="flex-1 py-3 md:py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
                 Cancel
             </button>
-            <button onclick="downloadPDF()" id="btn-download-pdf"
+            <button onclick="exportNotesPDF(true)" id="btn-preview-pdf"
+                class="flex-1 py-3 md:py-3.5 rounded-xl border border-blue-200 dark:border-blue-800/50 text-blue-600 dark:text-blue-400 font-bold text-sm hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors flex items-center justify-center gap-2">
+                <i data-lucide="eye" class="w-4 h-4"></i> Preview
+            </button>
+            <button onclick="exportNotesPDF(false)" id="btn-download-pdf"
                 class="flex-[2] py-3 md:py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm hover:shadow-xl hover:shadow-blue-500/20 hover:scale-[1.01] transition-all transform active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed">
                 <i data-lucide="download" class="w-4 h-4"></i> Download PDF
             </button>
         </div>
     </div>
 </div>
+
+<!-- Load Shared PDF Export Logic -->
+<script src="/js/pdf-export.js"></script>
 
 <!-- Action Modal (Moved Outside & Styled) -->
 <div id="actionModal"

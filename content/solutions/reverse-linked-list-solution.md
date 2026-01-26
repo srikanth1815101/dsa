@@ -1,37 +1,33 @@
 ---
-title: "Solution: Reverse Linked List"
-date: 2024-01-02
+title: "Reverse Linked List - Solution"
 problemUrl: "/problems/reverse-linked-list/"
 ---
 
-## Approach
+## Explanation
 
-Use the iterative method with three pointers: `prev`, `curr`, and `next`.
-1. Save `next = curr.next`.
-2. Reverse link `curr.next = prev`.
-3. Move `prev = curr`.
-4. Move `curr = next`.
+We iterate through the list and reverse the direction of each pointer. We need three pointers:
+- `prev`: The previous node (starts as null)
+- `curr`: The current node being processed
+- `next`: Temporary storage for the next node
 
-### Complexity
-
-- **Time Complexity**: O(n)
-- **Space Complexity**: O(1)
+At each step:
+1. Save the next node
+2. Reverse the current node's pointer to point to prev
+3. Move prev and curr one step forward
 
 ## Code
 
 ```java
-public class Solution {
+class Solution {
     public ListNode reverseList(ListNode head) {
         ListNode prev = null;
         ListNode curr = head;
-        
         while (curr != null) {
-            ListNode nextTemp = curr.next;
+            ListNode next = curr.next;
             curr.next = prev;
             prev = curr;
-            curr = nextTemp;
+            curr = next;
         }
-        
         return prev;
     }
 }

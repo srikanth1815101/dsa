@@ -1,15 +1,14 @@
 ---
 title: "Climbing Stairs"
-date: 2024-01-10T00:00:00Z
+date: 2024-01-07T00:00:00Z
 difficulty: "Easy"
 topics: ["Dynamic Programming", "Math"]
-datastructures: ["Array"]
 companies: ["Google", "Facebook", "Apple"]
 path: "Basic"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/climbing-stairs"
 hints:
-  - "Since you can only take 1 or 2 steps, ways(n) = ways(n-1) + ways(n-2)."
-  - "This relates to the Fibonacci sequence."
+  - "The answer follows a pattern: ways(n) = ways(n-1) + ways(n-2)."
+  - "This is essentially the Fibonacci sequence."
 youtubeId: "Y0lT9FckDqQ"
 solutionUrl: "/solutions/climbing-stairs-solution/"
 timeComplexity: "O(n)"
@@ -17,29 +16,21 @@ spaceComplexity: "O(1)"
 examples:
   - input: "n = 2"
     output: "2"
-    explanation: "There are two ways to climb to the top: 1. 1 step + 1 step, 2. 2 steps"
+    explanation: "There are two ways: (1 step + 1 step) or (2 steps)."
   - input: "n = 3"
     output: "3"
-    explanation: "There are three ways: 1. 1+1+1, 2. 1+2, 3. 2+1"
+    explanation: "There are three ways: (1+1+1), (1+2), or (2+1)."
 constraints:
   - "1 <= n <= 45"
 realWorld:
-  - title: "Production Planning"
-    description: "Calculating combinations of production steps to reach a target."
-  - title: "Population Growth"
-    description: "Modeling growth patterns similar to Fibonacci (rabbits)."
-javaTemplate: |
-  class Solution {
-      public int climbStairs(int n) {
-          
-      }
-  }
+  - title: "Route Planning"
+    description: "Counting different paths with variable step sizes in navigation systems."
+  - title: "Game Level Design"
+    description: "Calculating possible ways a player can progress through stages."
+  - title: "Investment Strategies"
+    description: "Computing combinations of small and large investments to reach a target."
 ---
 
 You are climbing a staircase. It takes `n` steps to reach the top.
 
-Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
-
-## Approach
-
-This is a Fibonacci sequence problem. The number of ways to reach step n is the sum of ways to reach step n-1 and n-2.
+Each time you can either climb **1** or **2** steps. In how many **distinct ways** can you climb to the top?

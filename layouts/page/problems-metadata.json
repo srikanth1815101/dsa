@@ -1,38 +1,12 @@
-[
-    {
-        { range $index, $e := where .Site.RegularPages "Section""problems"
-        }
-    }{
-        { if $index
-        }
-    },
-    {
-        { end
-        }
-    }{
-        "id": "{{ .File.BaseFileName }}",
-        "title": "{{ .Title }}",
-        "difficulty": "{{ .Params.difficulty }}",
-        "summary": {
-            { .Summary | jsonify
-            }
-        },
-        "timeComplexity": "{{ .Params.timeComplexity }}",
-        "spaceComplexity": "{{ .Params.spaceComplexity }}",
-        "constraints": {
-            { .Params.constraints | jsonify
-            }
-        },
-        "examples": {
-            { .Params.examples | jsonify
-            }
-        },
-        "realWorld": {
-            { .Params.realWorld | jsonify
-            }
-        }
-    }{
-        { end
-        }
-    }
-]
+﻿[{{ range $index, $e := where .Site.RegularPages "Section" "problems" }}{{ if $index }},{{ end }}{
+"id": "{{ .File.BaseFileName }}",
+"title": "{{ .Title }}",
+"difficulty": "{{ .Params.difficulty }}",
+"path": "{{ .Params.path }}",
+"summary": {{ .Summary | jsonify }},
+"timeComplexity": "{{ .Params.timeComplexity }}",
+"spaceComplexity": "{{ .Params.spaceComplexity }}",
+"constraints": {{ .Params.constraints | jsonify }},
+"examples": {{ .Params.examples | jsonify }},
+"realWorld": {{ .Params.realWorld | jsonify }}
+}{{ end }}]

@@ -165,44 +165,65 @@
         };
 
         const drawHeader = () => {
+            // Minimal header - matches web page style (25px height)
+            const headerHeight = 25;
+
+            // Clean white background
             doc.setFillColor(255, 255, 255);
-            doc.rect(0, 0, pageW, 30, 'F');
+            doc.rect(0, 0, pageW, headerHeight + 3, 'F');
+
+            // Logo positioning (same ratio as page header)
+            const logoY = 8;
+            let textStartX = margin;
 
             if (logoImg) {
-                const logoSize = 10;
+                const logoSize = 12;
                 const logoRatio = logoImg.width / logoImg.height;
                 const renderW = logoSize * logoRatio;
-                doc.addImage(logoImg, 'PNG', margin, 10, renderW, logoSize);
+                doc.addImage(logoImg, 'PNG', margin, logoY, renderW, logoSize);
 
-                // Separator
-                doc.setDrawColor(220, 220, 220);
-                doc.setLineWidth(0.5);
-                doc.line(margin + renderW + 4, 11, margin + renderW + 4, 19);
+                // Vertical separator line
+                doc.setDrawColor(200, 200, 200);
+                doc.setLineWidth(0.4);
+                doc.line(margin + renderW + 4, logoY + 1, margin + renderW + 4, logoY + logoSize - 1);
 
-                // Brand
-                doc.setFont("helvetica", "bold"); doc.setFontSize(16); doc.setTextColor(...colTextMain);
-                doc.text("CSRGO DSA", margin + renderW + 8, 18);
-
-                // Tagline
-                doc.setFont("helvetica", "normal"); doc.setFontSize(11); doc.setTextColor(...colTextMuted);
-                const nameText = nickname.endsWith('s') ? nickname + "\u0027 Personal Notes" : nickname + "\u0027s Personal Notes";
-                doc.text(nameText, margin + renderW + 8 + 40, 18);
+                // Brand text - same style as web header
+                textStartX = margin + renderW + 8;
             }
 
-            // Date
-            doc.setFontSize(9); doc.setTextColor(...colTextMuted);
-            doc.text(new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }), pageW - margin, 18, { align: 'right' });
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(14);
+            doc.setTextColor(26, 32, 44);
+            doc.text("CSRGO DSA", textStartX, logoY + 9);
 
-            // Gradient Line
+            // Right side - Username's Personal Notes
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(9);
+            doc.setTextColor(75, 85, 99);
+            const nameText = nickname.endsWith('s') ? nickname + "' Personal Notes" : nickname + "'s Personal Notes";
+            doc.text(nameText, pageW - margin, logoY + 4, { align: 'right' });
+
+            // Export date below
+            doc.setFontSize(8);
+            doc.setTextColor(107, 114, 128);
+            doc.text("Exported on " + new Date().toLocaleDateString(undefined, {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            }), pageW - margin, logoY + 11, { align: 'right' });
+
+            // Thin gradient line at bottom
+            const gradY = headerHeight + 1;
             const steps = 60;
-            const c1 = [126, 34, 206]; const c2 = [37, 99, 235];
+            const c1 = [126, 34, 206]; // Purple
+            const c2 = [37, 99, 235];  // Blue
             for (let i = 0; i < steps; i++) {
                 const t = i / steps;
                 const r = Math.round(c1[0] + t * (c2[0] - c1[0]));
                 const g = Math.round(c1[1] + t * (c2[1] - c1[1]));
                 const b = Math.round(c1[2] + t * (c2[2] - c1[2]));
                 doc.setFillColor(r, g, b);
-                doc.rect((i * (pageW / steps)), 29, (pageW / steps) + 1, 1, 'F');
+                doc.rect((i * (pageW / steps)), gradY, (pageW / steps) + 1, 1, 'F');
             }
         };
 
@@ -217,7 +238,7 @@
                 drawFooter();
                 doc.addPage();
                 drawHeader();
-                y = 40;
+                y = 35;
                 return true;
             }
             return false;
@@ -230,7 +251,7 @@
                 doc.addPage();
             }
             drawHeader();
-            y = 45;
+            y = 35;
 
             const item = dataToPrint[i];
 

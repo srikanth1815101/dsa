@@ -2,6 +2,7 @@
 "id": "{{ .File.BaseFileName }}",
 "title": "{{ .Title }}",
 "difficulty": "{{ .Params.difficulty }}",
+"path": "{{ .Params.path }}",
 "companies": {{ .Params.companies | jsonify }},
 "topics": {{ .Params.topics | jsonify }},
 "permalink": "{{ .RelPermalink }}",

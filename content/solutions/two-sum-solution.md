@@ -1,27 +1,22 @@
 ---
-title: "Solution: Two Sum"
-date: 2024-01-01
+title: "Two Sum - Solution"
 problemUrl: "/problems/two-sum/"
 ---
 
-## Approach
+## Explanation
 
-Use a **Hash Map** to store each number's value and its index as we iterate.
-For each element `x`, calculate `complement = target - x`.
-If `complement` is already in the map, we found our pair! Return `{map.get(complement), i}`.
+The key insight is that for each number `x` in the array, we need to find if `target - x` exists. A brute force approach would check every pair, giving O(n²) time.
 
-### Complexity
+**Optimized Approach:** Use a HashMap to store each number and its index as we iterate. For each element, check if its complement (`target - current`) already exists in the map. If yes, we found our answer. If not, add the current number to the map.
 
-- **Time Complexity**: O(n)
-- **Space Complexity**: O(n)
+This reduces the problem to a single pass through the array, achieving O(n) time complexity.
 
 ## Code
 
 ```java
-public class Solution {
+class Solution {
     public int[] twoSum(int[] nums, int target) {
         Map<Integer, Integer> map = new HashMap<>();
-        
         for (int i = 0; i < nums.length; i++) {
             int complement = target - nums[i];
             if (map.containsKey(complement)) {
@@ -29,7 +24,6 @@ public class Solution {
             }
             map.put(nums[i], i);
         }
-        
         return new int[] {};
     }
 }

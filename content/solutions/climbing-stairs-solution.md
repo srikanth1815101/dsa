@@ -1,40 +1,35 @@
 ---
-title: "Solution: Climbing Stairs"
-date: 2024-01-07
+title: "Climbing Stairs - Solution"
 problemUrl: "/problems/climbing-stairs/"
 ---
 
-## Approach
+## Explanation
 
-This is a classic Dynamic Programming problem that maps effectively to the Fibonacci sequence.
+This is a classic **dynamic programming** problem that follows the Fibonacci sequence pattern.
 
-To reach step `n`, you could have come from step `n-1` (single step) or `n-2` (double step).
-Therefore: `ways(n) = ways(n-1) + ways(n-2)`.
+**Intuition:** To reach step `n`, you can either:
+- Take 1 step from step `n-1`, OR
+- Take 2 steps from step `n-2`
 
-Base cases:
-- Step 1: 1 way
-- Step 2: 2 ways
+So `ways(n) = ways(n-1) + ways(n-2)`
 
-We can optimize space by only keeping track of the last two values.
+Base cases: `ways(1) = 1`, `ways(2) = 2`
 
-### Complexity
-
-- **Time Complexity**: O(n)
-- **Space Complexity**: O(1)
+We optimize space by only keeping track of the last two values instead of the entire array.
 
 ## Code
 
 ```java
-public class Solution {
+class Solution {
     public int climbStairs(int n) {
-        if (n <= 1) return 1;
-        int prev = 1, curr = 1;
-        for (int i = 2; i <= n; i++) {
-            int temp = curr;
-            curr = prev + curr;
-            prev = temp;
+        if (n <= 2) return n;
+        int a = 1, b = 2;
+        for (int i = 3; i <= n; i++) {
+            int temp = a + b;
+            a = b;
+            b = temp;
         }
-        return curr;
+        return b;
     }
 }
 ```

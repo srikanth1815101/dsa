@@ -1,15 +1,14 @@
 ---
 title: "Reverse Linked List"
-date: 2024-01-08T00:00:00Z
+date: 2024-01-06T00:00:00Z
 difficulty: "Easy"
-topics: ["Linked List"]
-datastructures: ["Linked List"]
+topics: ["Linked List", "Recursion"]
 companies: ["Amazon", "Microsoft", "Apple"]
 path: "Basic"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/reverse-linked-list"
 hints:
-  - "Iterate through the list and change the next pointer of each node to point to the previous node."
-  - "Keep track of prev, curr, and next nodes."
+  - "Use three pointers: prev, curr, and next."
+  - "At each step, reverse the current node's pointer and move forward."
 youtubeId: "G0_I-DBvHhm"
 solutionUrl: "/solutions/reverse-linked-list-solution/"
 timeComplexity: "O(n)"
@@ -17,27 +16,20 @@ spaceComplexity: "O(1)"
 examples:
   - input: "head = [1,2,3,4,5]"
     output: "[5,4,3,2,1]"
-    explanation: "Reverse the entire linked list"
+    explanation: "Reverse all the links: 1←2←3←4←5, so 5 becomes the new head."
   - input: "head = [1,2]"
     output: "[2,1]"
+    explanation: "Simply swap the two nodes: 1←2 becomes 2→1."
 constraints:
-  - "The number of nodes in the list is in the range [0, 5000]"
+  - "The number of nodes is in the range [0, 5000]"
   - "-5000 <= Node.val <= 5000"
 realWorld:
   - title: "Undo Functionality"
-    description: "Reversing a sequence of actions or state changes."
+    description: "Reversing a sequence of user actions to implement undo operations."
   - title: "Browser History"
-    description: "Going back through visited pages requires traversing history in reverse."
-javaTemplate: |
-  class Solution {
-      public ListNode reverseList(ListNode head) {
-          
-      }
-  }
+    description: "Navigating backwards through visited pages requires reverse traversal."
+  - title: "Text Editor"
+    description: "Reversing text or command history for editing operations."
 ---
 
-Given the `head` of a singly linked list, reverse the list, and return the reversed list.
-
-## Approach
-
-Use three pointers (prev, current, next) to reverse the links iteratively. Start with prev as null and iterate through the list, reversing each link.
+Given the `head` of a singly linked list, **reverse the list**, and return the reversed list.

@@ -1,46 +1,31 @@
 ---
-title: "Solution: Binary Search"
-date: 2024-01-04
+title: "Binary Search - Solution"
 problemUrl: "/problems/binary-search/"
 ---
 
-## Approach
+## Explanation
 
-The generic binary search algorithm runs in logarithmic time by dividing the search interval in half at each step.
+Binary search works by repeatedly dividing the search interval in half. We maintain two pointers, `left` and `right`, representing the current search range.
 
-1. Initialize `left` to 0 and `right` to `nums.length - 1`.
-2. While `left <= right`:
-    - Calculate `mid` as `left + (right - left) / 2`.
-    - If `nums[mid] == target`, return `mid`.
-    - If `nums[mid] < target`, move to the right half (`left = mid + 1`).
-    - If `nums[mid] > target`, move to the left half (`right = mid - 1`).
-3. If target is not found, return `-1`.
-
-### Complexity
-
-- **Time Complexity**: O(log n)
-- **Space Complexity**: O(1)
+**Algorithm:**
+1. Calculate the middle index: `mid = left + (right - left) / 2`
+2. If `nums[mid] == target`, return `mid`
+3. If `nums[mid] < target`, search the right half: `left = mid + 1`
+4. If `nums[mid] > target`, search the left half: `right = mid - 1`
+5. Repeat until `left > right`
 
 ## Code
 
 ```java
-public class Solution {
+class Solution {
     public int search(int[] nums, int target) {
-        int left = 0;
-        int right = nums.length - 1;
-        
+        int left = 0, right = nums.length - 1;
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            
-            if (nums[mid] == target) {
-                return mid;
-            } else if (nums[mid] < target) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
+            if (nums[mid] == target) return mid;
+            if (nums[mid] < target) left = mid + 1;
+            else right = mid - 1;
         }
-        
         return -1;
     }
 }

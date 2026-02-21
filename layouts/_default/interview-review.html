@@ -1,5 +1,17 @@
 {{ define "main" }}
 <script src="/js/interview-manager.js"></script>
+<style>
+    /* Ensure line-clamp works correctly with whitespace-pre-wrap by enforcing box-orient */
+    .line-clamp-1.whitespace-pre-wrap {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        word-break: break-word;
+        /* Ensure long words break instead of overflowing */
+    }
+</style>
+
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-8 animate-fade-in-up">
 
@@ -314,12 +326,24 @@
             const isRevised = revised.has(id);
 
             let notesHTML = '';
-            if (p.notes) {
-                const truncatedNote = p.notes.substring(0, 100) + (p.notes.length > 100 ? '...' : '');
-                notesHTML = '<div class="col-span-full mt-2 text-xs text-gray-500 dark:text-gray-400 italic flex items-center gap-2 pl-12">' +
-                    '<span class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-[10px] uppercase font-bold text-gray-400 not-italic">Note</span>' +
-                    '<span>' + truncatedNote + '</span>' +
-                    '</div>';
+            if (p.notes && p.notes.trim() !== '') {
+                // Ensure ID is safe for HTML attributes
+                const safeId = id.replace(/[^a-zA-Z0-9-]/g, '-');
+                const fullNote = p.notes;
+                const isLongNote = fullNote.length > 100 || fullNote.includes('\n');
+                notesHTML = `
+                    <div class="col-span-full mt-2 flex items-start gap-2 pl-12 text-xs">
+                        <span class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-[10px] uppercase font-bold text-gray-400 shrink-0 mt-0.5">Note</span>
+                        <div class="flex-1 min-w-0">
+                            <span id="note-text-${safeId}" class="block text-gray-500 dark:text-gray-400 italic whitespace-pre-wrap break-words ${isLongNote ? 'line-clamp-1' : ''} transition-all duration-300">${fullNote}</span>
+                        </div>
+                        ${isLongNote ? `
+                        <button onclick="toggleNoteExpand(event, '${safeId}')" class="shrink-0 text-primary hover:text-blue-600 dark:hover:text-blue-400 font-semibold text-[10px] uppercase tracking-wider flex items-center gap-1 mt-0.5 transition-colors">
+                            <span id="note-btn-text-${safeId}">More</span>
+                            <i data-lucide="chevron-down" id="note-icon-${safeId}" class="w-3 h-3 transition-transform duration-300"></i>
+                        </button>
+                        ` : ''}
+                    </div>`;
             }
 
             return `
@@ -380,6 +404,7 @@
         if (session.notes && session.notes.reflection && session.notes.reflection.trim()) {
             disp.textContent = session.notes.reflection;
             disp.classList.remove('italic', 'text-gray-400');
+            disp.classList.add('whitespace-pre-wrap');
             txt.value = session.notes.reflection;
         } else {
             disp.innerHTML = '<span class="text-gray-400 italic">Take a moment to jot down what went well or what you found challenging...</span>';
@@ -533,6 +558,23 @@
             showReviewToast('Session Renamed', 'success');
         }
     }
+
+    window.toggleNoteExpand = function (e, id) {
+        e.stopPropagation();
+        const textSpan = document.getElementById(`note-text-${id}`);
+        const btnText = document.getElementById(`note-btn-text-${id}`);
+        const icon = document.getElementById(`note-icon-${id}`);
+
+        if (textSpan.classList.contains('line-clamp-1')) {
+            textSpan.classList.remove('line-clamp-1');
+            btnText.textContent = 'Less';
+            icon.style.transform = 'rotate(180deg)';
+        } else {
+            textSpan.classList.add('line-clamp-1');
+            btnText.textContent = 'More';
+            icon.style.transform = 'rotate(0deg)';
+        }
+    };
 
     // Initialize Title on Load (handled in async wrapper)
 </script>

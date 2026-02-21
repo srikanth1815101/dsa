@@ -90,42 +90,7 @@
     </div>
 </div>
 
-<!-- EDIT SESSION MODAL -->
-<div id="edit-session-modal"
-    class="fixed inset-0 z-[100] hidden items-center justify-center bg-gray-900/60 backdrop-blur-md px-4 animate-fade-in">
-    <div
-        class="bg-white dark:bg-gray-800 w-full max-w-sm p-6 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 relative overflow-hidden animate-scale-up">
 
-        <!-- Decorative Gradient Blob -->
-        <div
-            class="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none">
-        </div>
-
-        <div class="text-center relative z-10">
-            <div
-                class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl mx-auto flex items-center justify-center mb-4">
-                <i data-lucide="pencil" class="w-6 h-6 text-indigo-500"></i>
-            </div>
-
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Rename Session</h3>
-
-            <input type="text" id="edit-session-input"
-                class="w-full mb-6 px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white font-bold text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 placeholder-gray-400"
-                placeholder="Enter session name..." onkeydown="if(event.key === 'Enter') confirmEditSession()">
-
-            <div class="flex gap-3">
-                <button onclick="closeEditModal()"
-                    class="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                    Cancel
-                </button>
-                <button onclick="confirmEditSession()"
-                    class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold text-sm hover:shadow-lg hover:shadow-indigo-500/20 hover:scale-[1.02] transition-all">
-                    Save
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
     const manager = window.InterviewManager;
@@ -245,11 +210,7 @@
                                 <h3 class="font-bold text-gray-900 dark:text-white text-base md:text-lg truncate pr-2">
                                     ${s.title || (difficulty + ' Interview')}
                                 </h3>
-                                ${!isCompleted ? '<span class="relative flex h-2 w-2 flex-shrink-0"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></span>' : `
-                                    <button onclick="event.preventDefault(); event.stopPropagation(); startEditSession('${s.id}')" class="relative z-10 p-1 text-gray-400 hover:text-indigo-500 transition-all transform hover:scale-110" title="Rename Session">
-                                        <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
-                                    </button>
-                                `}
+                                ${!isCompleted ? '<span class="relative flex h-2 w-2 flex-shrink-0"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></span>' : ''}
                             </div>
                             <div class="flex items-center gap-3 text-[10px] md:text-xs font-medium text-gray-500 dark:text-gray-400">
                                 <span class="flex items-center gap-1">
@@ -316,41 +277,7 @@
     }
 
     let sessionToDeleteId = null;
-    let sessionToEditId = null;
 
-    function startEditSession(id) {
-        sessionToEditId = id;
-        const currentTitle = manager.db.sessions[id].title;
-        const modal = document.getElementById('edit-session-modal');
-        const input = document.getElementById('edit-session-input');
-        input.value = currentTitle;
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        setTimeout(() => input.focus(), 100);
-    }
-
-    function closeEditModal() {
-        sessionToEditId = null;
-        const modal = document.getElementById('edit-session-modal');
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-    }
-
-    async function confirmEditSession() {
-        if (sessionToEditId) {
-            const input = document.getElementById('edit-session-input');
-            const newTitle = input.value.trim();
-            if (newTitle) {
-                const s = manager.db.sessions[sessionToEditId];
-                if (s) {
-                    s.title = newTitle;
-                    await manager.saveSession(s);
-                    renderHistory();
-                    closeEditModal();
-                }
-            }
-        }
-    }
 
     function startDeleteSession(id) {
         sessionToDeleteId = id;

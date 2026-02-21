@@ -333,12 +333,12 @@
                 const isLongNote = fullNote.length > 100 || fullNote.includes('\n');
                 notesHTML = `
                     <div class="col-span-full mt-2 flex items-start gap-2 pl-12 text-xs">
-                        <span class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-[10px] uppercase font-bold text-gray-400 shrink-0 mt-0.5">Note</span>
-                        <div class="flex-1 min-w-0">
-                            <span id="note-text-${safeId}" class="block text-gray-500 dark:text-gray-400 italic whitespace-pre-wrap break-words ${isLongNote ? 'line-clamp-1' : ''} transition-all duration-300">${fullNote}</span>
+                        <span class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-[10px] uppercase font-bold text-gray-400 shrink-0">Note</span>
+                        <div class="flex-1 min-w-0 flex items-start">
+                            <span id="note-text-${safeId}" class="block text-gray-500 dark:text-gray-400 italic whitespace-pre-wrap ${isLongNote ? 'line-clamp-1' : ''} transition-all duration-300 leading-tight pt-0.5">${fullNote}</span>
                         </div>
                         ${isLongNote ? `
-                        <button onclick="toggleNoteExpand(event, '${safeId}')" class="shrink-0 text-primary hover:text-blue-600 dark:hover:text-blue-400 font-semibold text-[10px] uppercase tracking-wider flex items-center gap-1 mt-0.5 transition-colors">
+                        <button onclick="toggleNoteExpand(event, '${safeId}')" class="shrink-0 text-primary hover:text-blue-600 dark:hover:text-blue-400 font-semibold text-[10px] uppercase tracking-wider flex items-center gap-1 transition-colors pt-0.5">
                             <span id="note-btn-text-${safeId}">More</span>
                             <i data-lucide="chevron-down" id="note-icon-${safeId}" class="w-3 h-3 transition-transform duration-300"></i>
                         </button>

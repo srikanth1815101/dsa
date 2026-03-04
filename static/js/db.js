@@ -311,7 +311,8 @@ class DSADatabase {
             problems: cleanProblems,
             sessions: cleanSessions,
             user: {
-                nickname: localStorage.getItem('dsa-nickname') || 'Learner'
+                nickname: localStorage.getItem('dsa-nickname') || 'Learner',
+                theme: localStorage.getItem('theme') || 'light'
             }
         };
         return JSON.stringify(exportObj, null, 2);
@@ -347,8 +348,17 @@ class DSADatabase {
             }
 
             // Restore user meta
-            if (data.user && data.user.nickname) {
-                localStorage.setItem('dsa-nickname', data.user.nickname);
+            if (data.user) {
+                if (data.user.nickname) localStorage.setItem('dsa-nickname', data.user.nickname);
+                if (data.user.theme) {
+                    localStorage.setItem('theme', data.user.theme);
+                    document.documentElement.setAttribute('data-theme', data.user.theme);
+                    if (data.user.theme === 'dark') {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                }
             }
 
             return new Promise((resolve, reject) => {

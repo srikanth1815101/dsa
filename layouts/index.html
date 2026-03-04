@@ -13,54 +13,67 @@
             class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[50vh] bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 blur-[120px] rounded-full pointer-events-none">
         </div>
 
+        <!-- Decorative Floating Elements -->
+        <div class="absolute top-24 left-[15%] w-24 h-24 bg-blue-500/20 rounded-full blur-2xl animate-float pointer-events-none"
+            style="animation-delay: 0s;"></div>
+        <div class="absolute top-40 right-[15%] w-32 h-32 bg-purple-500/20 rounded-full blur-3xl animate-float pointer-events-none"
+            style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-10 left-[25%] w-20 h-20 bg-pink-500/20 rounded-full blur-2xl animate-float pointer-events-none"
+            style="animation-delay: 4s;"></div>
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
 
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 dark:text-white mb-8 tracking-tighter animate-fade-in-up"
-                style="animation-delay: 0.1s;">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 dark:text-white mb-8 tracking-tighter opacity-0 animate-fade-in-up"
+                style="animation-delay: 0.1s; animation-fill-mode: forwards;">
                 One Platform. <br>
                 <span
-                    class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">Complete
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-[length:200%_auto] animate-gradient-x inline-block">Complete
                     Mastery.</span>
             </h1>
 
-            <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-in-up"
-                style="animation-delay: 0.2s;">
+            <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed opacity-0 animate-slide-up"
+                style="animation-delay: 0.2s; animation-fill-mode: forwards;">
                 Practice DSA the way real software engineers work in enterprise applications.
                 No accounts. No login. Free forever. Your progress stays in your browser.
             </p>
 
             <!-- Quick Access Grid -->
-            <div class="flex flex-wrap justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.3s;">
+            <div class="flex flex-wrap justify-center gap-4">
                 <a href="/problems/"
-                    class="group flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-blue-500 dark:hover:border-blue-500 transition-all">
-                    <div class="p-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+                    class="group flex items-center gap-3 px-6 py-3.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-blue-500 hover:shadow-lg hover:shadow-blue-500/20 transition-all opacity-0 animate-pop-in"
+                    style="animation-delay: 0.3s; animation-fill-mode: forwards;">
+                    <div
+                        class="p-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform duration-300">
                         <i data-lucide="list" class="w-4 h-4"></i>
                     </div>
-                    <span class="font-bold text-gray-900 dark:text-white text-sm">Problems</span>
+                    <span class="font-bold text-gray-900 dark:text-white text-sm lg:text-base">Problems</span>
                 </a>
                 <a href="/paths/"
-                    class="group flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-purple-500 dark:hover:border-purple-500 transition-all">
+                    class="group flex items-center gap-3 px-6 py-3.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-purple-500 hover:shadow-lg hover:shadow-purple-500/20 transition-all opacity-0 animate-pop-in"
+                    style="animation-delay: 0.4s; animation-fill-mode: forwards;">
                     <div
-                        class="p-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400">
+                        class="p-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300">
                         <i data-lucide="git-branch" class="w-4 h-4"></i>
                     </div>
-                    <span class="font-bold text-gray-900 dark:text-white text-sm">Paths</span>
+                    <span class="font-bold text-gray-900 dark:text-white text-sm lg:text-base">Paths</span>
                 </a>
                 <a href="/interview/"
-                    class="group flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-orange-500 dark:hover:border-orange-500 transition-all">
+                    class="group flex items-center gap-3 px-6 py-3.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-orange-500 hover:shadow-lg hover:shadow-orange-500/20 transition-all opacity-0 animate-pop-in"
+                    style="animation-delay: 0.5s; animation-fill-mode: forwards;">
                     <div
-                        class="p-1.5 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400">
+                        class="p-1.5 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform duration-300">
                         <i data-lucide="timer" class="w-4 h-4"></i>
                     </div>
-                    <span class="font-bold text-gray-900 dark:text-white text-sm">Interview</span>
+                    <span class="font-bold text-gray-900 dark:text-white text-sm lg:text-base">Interview</span>
                 </a>
                 <a href="/notes/"
-                    class="group flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-green-500 dark:hover:border-green-500 transition-all">
+                    class="group flex items-center gap-3 px-6 py-3.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-green-500 hover:shadow-lg hover:shadow-green-500/20 transition-all opacity-0 animate-pop-in"
+                    style="animation-delay: 0.6s; animation-fill-mode: forwards;">
                     <div
-                        class="p-1.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
+                        class="p-1.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform duration-300">
                         <i data-lucide="book-open" class="w-4 h-4"></i>
                     </div>
-                    <span class="font-bold text-gray-900 dark:text-white text-sm">Notes</span>
+                    <span class="font-bold text-gray-900 dark:text-white text-sm lg:text-base">Notes</span>
                 </a>
             </div>
         </div>
@@ -555,17 +568,19 @@
 </div>
 
 <script>
-    // Scroll-triggered animations
+    // Scroll-triggered animations - Smoother config
     const observerOptions = {
         root: null,
-        rootMargin: '0px',
-        threshold: 0.1
+        rootMargin: '0px 0px -50px 0px',
+        threshold: 0.15
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate-fade-in-up');
+                // Ensure opacity transitions smoothly back
+                entry.target.style.opacity = '';
                 observer.unobserve(entry.target);
             }
         });

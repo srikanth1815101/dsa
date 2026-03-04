@@ -480,6 +480,32 @@
                 manager = window.InterviewManager;
                 loadProfileData();
                 if (window.lucide) lucide.createIcons();
+
+                // Show first-time profile name prompt
+                if (!localStorage.getItem('dsa-seen-profile-name-prompt')) {
+                    localStorage.setItem('dsa-seen-profile-name-prompt', 'true');
+                    const currentName = localStorage.getItem('dsa-nickname') || '';
+
+                    // We only want to show the prompt if they actually have a system-generated name,
+                    // but they should based on our header.html logic.
+                    if (currentName) {
+                        showPrompt(
+                            "Welcome to Your Profile!",
+                            `We have assigned you the random name <b>${currentName}</b>.<br><br>Would you like to keep this or change it?`,
+                            currentName,
+                            (newName) => {
+                                if (newName && newName.trim()) {
+                                    const formattedName = toTitleCase(newName.trim());
+                                    if (formattedName !== currentName) {
+                                        localStorage.setItem('dsa-nickname', formattedName);
+                                        loadProfileData(); // refresh the counts/names on the page
+                                        showAlert("Success", "Nickname updated successfully!", "success");
+                                    }
+                                }
+                            }
+                        );
+                    }
+                }
             });
 
             function getRandomNickname() {

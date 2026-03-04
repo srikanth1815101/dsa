@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -28,7 +28,7 @@
         rel="stylesheet">
 
     <!-- Core Logic -->
-    <script src="/js/db.js"></script>
+    <script src="/js/db.js?v=2"></script>
     <script src="/js/problem-utils.js"></script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -54,9 +54,13 @@
                         'gradient-cool': 'linear-gradient(135deg, #4A90E2 0%, #8B5CF6 100%)',
                     },
                     animation: {
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-                        'fade-in': 'fadeIn 1s ease-out forwards',
+                        'fade-in-up': 'fadeInUp 1s cubic-bezier(0.25, 1, 0.5, 1) forwards',
+                        'fade-in': 'fadeIn 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards',
                         'blob': 'blob 7s infinite',
+                        'pop-in': 'popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                        'gradient-x': 'gradient-x 15s ease infinite',
+                        'slide-up': 'slideUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards',
                     },
                     keyframes: {
                         fadeInUp: {
@@ -72,6 +76,28 @@
                             '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
                             '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
                             '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        popIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.8) translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'gradient-x': {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
                         }
                     }
                 }
@@ -143,6 +169,7 @@
             padding: 2px;
             background: var(--gradient-primary);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
         }
@@ -278,13 +305,24 @@
         .pulse {
             animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
+
+        /* Smooth Page Transitions */
+        body {
+            opacity: 1;
+            transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.page-transitioning {
+            opacity: 0;
+            pointer-events: none;
+        }
     </style>
 
     <!-- Theme Toggle Script -->
     <script>
-            // Initialize theme from localStorage or default to dark
+            // Initialize theme from localStorage or default to light
             (function () {
-                const theme = localStorage.getItem('theme') || 'dark';
+                const theme = localStorage.getItem('theme') || 'light';
                 document.documentElement.setAttribute('data-theme', theme);
                 if (theme === 'dark') {
                     document.documentElement.classList.add('dark');
@@ -685,6 +723,8 @@
             // Update icon
             const themeIcon = document.getElementById('theme-icon');
             if (themeIcon) {
+                // If the new theme is dark, the icon to switch back to light is 'sun'. 
+                // If the new theme is light, the icon to switch to dark is 'moon'.
                 themeIcon.setAttribute('data-lucide', newTheme === 'dark' ? 'sun' : 'moon');
                 lucide.createIcons();
             }
@@ -713,6 +753,42 @@
                     mobileMenu.classList.add('hidden');
                 });
             });
+
+            // Smooth Page Transitions
+            document.body.classList.remove('page-transitioning');
+        });
+
+        // Intercept navigation for smooth fade out
+        document.addEventListener('click', e => {
+            const link = e.target.closest('a');
+            if (!link || !link.href) return;
+
+            // Ignore external links, new tabs, downloads, or anchor links
+            const isExternal = link.hostname !== window.location.hostname;
+            const isNewTab = link.target === '_blank';
+            const isDownload = link.hasAttribute('download');
+            const isAnchor = link.getAttribute('href').startsWith('#');
+
+            if (!isExternal && !isNewTab && !isDownload && !isAnchor) {
+                // If it's a guide-prompt modal intercept, let header.html handle it first
+                const hasSeenGuidePrompt = localStorage.getItem('dsa-seen-guide-prompt');
+                const isGuide = link.pathname.includes('/guide');
+
+                if (hasSeenGuidePrompt || isGuide) {
+                    e.preventDefault();
+                    document.body.classList.add('page-transitioning');
+                    setTimeout(() => {
+                        window.location.href = link.href;
+                    }, 300); // match transition duration
+                }
+            }
+        });
+
+        // Handle browser back/forward buttons graceful restore
+        window.addEventListener('pageshow', (e) => {
+            if (e.persisted) {
+                document.body.classList.remove('page-transitioning');
+            }
         });
     </script>
 </body>

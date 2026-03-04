@@ -80,8 +80,8 @@
     </div>
 </header>
 
-<!-- Nickname Modal (Global) -->
-<div id="nickname-modal"
+<!-- Guide Prompt Modal (Global) -->
+<div id="guide-prompt-modal"
     class="fixed inset-0 z-[100] hidden items-center justify-center bg-gray-900/60 backdrop-blur-md px-4">
     <div
         class="bg-white dark:bg-gray-800 w-full max-w-md p-8 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 relative overflow-hidden animate-fade-in-up">
@@ -92,70 +92,101 @@
         <div class="relative z-10 text-center">
             <div
                 class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl mx-auto flex items-center justify-center mb-6 shadow-lg rotate-3">
-                <i data-lucide="sparkles" class="w-8 h-8 text-white"></i>
+                <i data-lucide="map" class="w-8 h-8 text-white"></i>
             </div>
 
-            <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-2">Welcome!</h2>
-            <p class="text-gray-600 dark:text-gray-300 mb-8">What should we call you?</p>
+            <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-2">First Time Here?</h2>
+            <p class="text-gray-600 dark:text-gray-300 mb-8">It is highly recommended to visit the Guide page first to
+                understand how this platform works.</p>
 
-            <form onsubmit="saveNickname(event)" class="space-y-4">
-                <input type="text" id="nickname-input" required maxlength="20" placeholder="Enter your nickname"
-                    class="w-full px-5 py-4 rounded-xl bg-gray-50 dark:bg-gray-900 border-2 border-gray-100 dark:border-gray-700 focus:border-primary dark:focus:border-primary outline-none transition-all text-center font-bold text-lg dark:text-white placeholder-gray-400">
-
-                <button type="submit"
-                    class="w-full py-4 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-bold text-lg hover:shadow-lg hover:scale-[1.02] transition-all transform active:scale-95 shadow-primary/25">
-                    Start Journey
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button id="guide-prompt-cancel"
+                    class="w-full py-3 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">
+                    Skip
                 </button>
-            </form>
+                <button id="guide-prompt-confirm"
+                    class="w-full py-3 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-bold hover:shadow-lg transition-all shadow-primary/25">
+                    View Guide
+                </button>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    // Global Nickname Logic
+    function getRandomNickname() {
+        const adjectives = ["Code", "Algo", "Binary", "Data", "Logic", "Syntax", "Pixel", "Stack", "Git", "Null"];
+        const nouns = ["Voyager", "Explorer", "Master", "Bard", "Sorcerer", "Hunter", "Surfer", "Ninja", "Wizard", "Pioneer"];
+        const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+        const noun = nouns[Math.floor(Math.random() * nouns.length)];
+        return `${adj} ${noun}`;
+    }
+
     function checkNickname() {
         const nickname = localStorage.getItem('dsa-nickname');
-        const modal = document.getElementById('nickname-modal');
-        // Do not block if we are already on a page but the logic runs (avoid flicker)
-        // But for first time, we force it.
-        // Exception: Dont show if we just cleared it on profile page to edit
-        // Actually editing removes it so we DO want to show it.
         if (!nickname) {
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            document.getElementById('nickname-input').focus();
-        } else {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+            const newName = getRandomNickname();
+            localStorage.setItem('dsa-nickname', newName);
         }
     }
 
-    function saveNickname(e) {
-        e.preventDefault();
-        const input = document.getElementById('nickname-input');
-        const name = input.value.trim();
-        if (name) {
-            localStorage.setItem('dsa-nickname', name);
-            // Hide modal
-            document.getElementById('nickname-modal').classList.add('hidden');
-            document.getElementById('nickname-modal').classList.remove('flex');
-
-            // If we are setting it for the first time (implied by modal being open and now saving)
-            // Redirect to Guide as per onboarding flow
-            // Exception: If we are specifically editing it from profile page, maybe just reload?
-            // The constraint: "when user is came first time to site after name, navigates to guide page"
-            // We can check if it was empty before.
-            // But here we just set it.
-            // We can rely on the fact that if this modal was shown via checkNickname(), it meant nickname was missing.
-            // So this IS the first time setup (or after clear).
-            window.location.href = '/guide/';
-        }
-    }
+    let pendingNavigationUrl = null;
 
     document.addEventListener('DOMContentLoaded', () => {
-        // Run check
         checkNickname();
-        // Also update Lucide again for the new icon
+
+        // Initialize theme icon correctly based on the current theme
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        const themeIcon = document.getElementById('theme-icon');
+        if (themeIcon) {
+            themeIcon.setAttribute('data-lucide', currentTheme === 'dark' ? 'sun' : 'moon');
+        }
+
         if (window.lucide) window.lucide.createIcons();
+
+        const guideCancelBtn = document.getElementById('guide-prompt-cancel');
+        const guideConfirmBtn = document.getElementById('guide-prompt-confirm');
+
+        if (guideCancelBtn) {
+            guideCancelBtn.addEventListener('click', () => {
+                localStorage.setItem('dsa-seen-guide-prompt', 'true');
+                const modal = document.getElementById('guide-prompt-modal');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                if (pendingNavigationUrl) {
+                    window.location.href = pendingNavigationUrl;
+                }
+            });
+        }
+
+        if (guideConfirmBtn) {
+            guideConfirmBtn.addEventListener('click', () => {
+                localStorage.setItem('dsa-seen-guide-prompt', 'true');
+                const modal = document.getElementById('guide-prompt-modal');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                window.location.href = '/guide/';
+            });
+        }
+    });
+
+    document.addEventListener('click', function (e) {
+        const link = e.target.closest('a');
+        if (!link || !link.href || link.target === '_blank' || link.hasAttribute('download')) return;
+
+        const isInternal = link.hostname === window.location.hostname;
+        const isGuide = link.pathname.includes('/guide');
+        const isHashOnly = link.getAttribute('href').startsWith('#');
+
+        // Allow navigation without interruption if user already saw prompt
+        const hasSeenGuidePrompt = localStorage.getItem('dsa-seen-guide-prompt');
+
+        if (isInternal && !isGuide && !isHashOnly && !hasSeenGuidePrompt) {
+            e.preventDefault();
+            pendingNavigationUrl = link.href;
+            const modal = document.getElementById('guide-prompt-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
     });
 </script>

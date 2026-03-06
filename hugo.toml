@@ -53,10 +53,7 @@ enableGitInfo = false
   url = "/guide/"
   weight = 1
 
-[[menu.footer]]
-  name = "About"
-  url = "/about/"
-  weight = 2
+
 
 # Site parameters
 [params]

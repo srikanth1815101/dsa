@@ -1,146 +1,81 @@
 {{ define "main" }}
-<div class="min-h-screen bg-gray-50 dark:bg-[#0A0E27] font-sans overflow-x-hidden">
-
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <!-- HERO — Clean gradient title                               -->
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <section class="relative pt-8 pb-8 lg:pt-14 lg:pb-10 overflow-hidden text-center">
-        <!-- Subtle gradient glow behind title -->
-        <div
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[30vh] bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 blur-[100px] rounded-full pointer-events-none">
-        </div>
-
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <h1 class="legal-title text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-2">
+<article class="py-12 animate-fade-in-up">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <header class="mb-10 text-center">
+            <h1
+                class="text-3xl md:text-5xl font-extrabold mb-4 pb-2 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent inline-block bg-[length:200%_auto] animate-gradient-x">
                 {{ .Title }}
             </h1>
+        </header>
+
+        <!-- Content -->
+        <div class="legal-prose">
+            {{ .Content }}
         </div>
-    </section>
+    </div>
+</article>
 
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <!-- CONTENT                                                   -->
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <section class="pb-20 lg:pb-28">
-        <div class="max-w-3xl mx-auto px-6 sm:px-8 lg:px-10 relative">
-            <!-- Content Card -->
-            <div class="legal-content">
-
-                {{ with .Params.lastUpdated }}
-                <p class="legal-updated"><strong>Last Updated: {{ . }}</strong></p>
-                {{ end }}
-
-                <div class="legal-prose">
-                    {{ .Content }}
-                </div>
-
-                <!-- Back to Home -->
-                <div class="legal-back">
-                    <a href="/" class="legal-back-btn group">
-                        <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
-                        <span>Back to Home</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!-- Legal Page Styles                                          -->
-<!-- ═══════════════════════════════════════════════════════════ -->
 <style>
-    /* ── Title ── */
-    .legal-title {
-        background: linear-gradient(135deg, #8B5CF6, #EC4899);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    /* ── Content card ── */
-    .legal-content {
-        background: #FFFFFF;
-        border-radius: 1.25rem;
-        padding: 2.5rem 2.5rem;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.04);
-        border: 1px solid #E5E7EB;
-    }
-
-    html[data-theme="dark"] .legal-content {
-        background: #141B3D;
-        border-color: rgba(75, 85, 99, 0.35);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.15);
-    }
-
-    @media (min-width: 768px) {
-        .legal-content {
-            padding: 3rem 3.5rem;
-        }
-    }
-
-    /* ── Updated date ── */
-    .legal-updated {
-        font-size: 0.95rem;
-        color: #374151;
-        margin-bottom: 1.75rem;
-    }
-
-    html[data-theme="dark"] .legal-updated {
-        color: #D1D5DB;
-    }
-
-    /* ═══════════════════════════════════════════════════════ */
-    /* PROSE — Markdown typography                            */
-    /* ═══════════════════════════════════════════════════════ */
+    /* ── Legal prose — clean, readable typography ── */
     .legal-prose {
-        font-size: 1rem;
+        max-width: none;
+        font-size: 1.05rem;
         line-height: 1.8;
-        color: #4B5563;
+        color: #374151;
     }
 
     html[data-theme="dark"] .legal-prose {
         color: #D1D5DB;
     }
 
-    /* ── H2 — Section headings ── */
-    .legal-prose h2 {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: #111827;
-        margin-top: 2.5rem;
-        margin-bottom: 0.85rem;
-        letter-spacing: -0.01em;
+    /* Headings */
+    .legal-prose h1,
+    .legal-prose h2,
+    .legal-prose h3,
+    .legal-prose h4,
+    .legal-prose h5,
+    .legal-prose h6 {
+        font-weight: 700;
         line-height: 1.3;
+        color: #111827;
+    }
+
+    html[data-theme="dark"] .legal-prose h1,
+    html[data-theme="dark"] .legal-prose h2,
+    html[data-theme="dark"] .legal-prose h3,
+    html[data-theme="dark"] .legal-prose h4 {
+        color: #F3F4F6;
+    }
+
+    .legal-prose h2 {
+        font-size: 1.65rem;
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #E5E7EB;
     }
 
     html[data-theme="dark"] .legal-prose h2 {
-        color: #F9FAFB;
+        border-bottom-color: #374151;
     }
 
     .legal-prose>h2:first-child {
         margin-top: 0;
     }
 
-    /* ── H3 — Sub-section headings ── */
     .legal-prose h3 {
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: #1F2937;
+        font-size: 1.3rem;
         margin-top: 1.75rem;
-        margin-bottom: 0.6rem;
-        line-height: 1.35;
+        margin-bottom: 0.75rem;
     }
 
-    html[data-theme="dark"] .legal-prose h3 {
-        color: #E5E7EB;
-    }
-
-    /* ── Paragraphs ── */
+    /* Paragraphs */
     .legal-prose p {
-        margin-bottom: 1.15rem;
+        margin-bottom: 1.25rem;
     }
 
-    /* ── Bold ── */
+    /* Bold */
     .legal-prose strong {
         font-weight: 700;
         color: #111827;
@@ -150,198 +85,99 @@
         color: #F9FAFB;
     }
 
-    /* ── Links ── */
+    /* Links */
     .legal-prose a {
-        color: #7C3AED;
+        color: #3B82F6;
         text-decoration: underline;
         text-underline-offset: 2px;
-        text-decoration-color: rgba(124, 58, 237, 0.3);
-        font-weight: 500;
-        transition: all 0.2s ease;
     }
 
     .legal-prose a:hover {
-        color: #6D28D9;
-        text-decoration-color: #6D28D9;
+        color: #2563EB;
     }
 
     html[data-theme="dark"] .legal-prose a {
-        color: #A78BFA;
-        text-decoration-color: rgba(167, 139, 250, 0.3);
+        color: #60A5FA;
     }
 
     html[data-theme="dark"] .legal-prose a:hover {
-        color: #C4B5FD;
-        text-decoration-color: #C4B5FD;
+        color: #93BBFD;
     }
 
-    /* ── Unordered lists ── */
-    .legal-prose ul {
-        list-style: none;
-        padding-left: 0;
-        margin-bottom: 1.25rem;
-    }
-
-    .legal-prose>ul,
-    .legal-prose>div>ul {
-        padding-left: 0.5rem;
-    }
-
-    .legal-prose ul li {
-        position: relative;
-        padding-left: 1.5rem;
-        margin-bottom: 0.5rem;
-        line-height: 1.7;
-    }
-
-    .legal-prose ul li::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0.65rem;
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: #8B5CF6;
-    }
-
-    /* ── Ordered lists ── */
+    /* Lists */
+    .legal-prose ul,
     .legal-prose ol {
-        list-style: none;
-        padding-left: 0;
-        margin-bottom: 1.25rem;
-        counter-reset: legal-ol;
+        margin: 1.25rem 0;
+        padding-left: 1.5rem;
     }
 
-    .legal-prose ol li {
-        position: relative;
-        padding-left: 1.75rem;
-        margin-bottom: 0.5rem;
-        counter-increment: legal-ol;
-        line-height: 1.7;
+    .legal-prose ul {
+        list-style-type: disc;
     }
 
-    .legal-prose ol li::before {
-        content: counter(legal-ol) '.';
-        position: absolute;
-        left: 0;
-        font-weight: 700;
-        color: #7C3AED;
+    .legal-prose ol {
+        list-style-type: decimal;
     }
 
-    html[data-theme="dark"] .legal-prose ol li::before {
-        color: #A78BFA;
+    .legal-prose li {
+        margin: 0.5rem 0;
+        line-height: 1.75;
     }
 
-    /* ── Nested lists ── */
+    /* Nested lists */
     .legal-prose ul ul,
-    .legal-prose ol ul,
-    .legal-prose ul ol,
-    .legal-prose ol ol {
-        margin-top: 0.4rem;
-        margin-bottom: 0.4rem;
+    .legal-prose ol ul {
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
     }
 
-    .legal-prose ul ul li::before {
-        width: 5px;
-        height: 5px;
-        background: #A78BFA;
-        opacity: 0.6;
-    }
-
-    /* ── Inline code ── */
+    /* Inline code */
     .legal-prose code {
-        font-family: 'Fira Code', monospace;
-        font-size: 0.88em;
-        padding: 0.1rem 0.4rem;
-        border-radius: 0.3rem;
         background: #F3F4F6;
-        color: #7C3AED;
-        font-weight: 600;
+        padding: 0.125rem 0.35rem;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+        font-family: 'Fira Code', monospace;
+        color: #111827;
     }
 
     html[data-theme="dark"] .legal-prose code {
-        background: rgba(139, 92, 246, 0.12);
-        color: #A78BFA;
+        background: #374151;
+        color: #F3F4F6;
     }
 
-    /* ── Blockquotes ── */
+    /* Blockquotes */
     .legal-prose blockquote {
-        border-left: 3px solid #8B5CF6;
-        padding: 0.75rem 1.25rem;
-        margin: 1.25rem 0;
-        background: #F9FAFB;
-        border-radius: 0 0.5rem 0.5rem 0;
+        border-left: 4px solid #3B82F6;
+        padding-left: 1rem;
+        margin: 1.5rem 0;
+        font-style: italic;
+        color: #6B7280;
     }
 
     html[data-theme="dark"] .legal-prose blockquote {
-        background: rgba(139, 92, 246, 0.06);
+        color: #9CA3AF;
     }
 
-    .legal-prose blockquote p {
-        margin-bottom: 0;
-    }
-
-    /* ── HR ── */
+    /* HR */
     .legal-prose hr {
         border: none;
-        height: 1px;
-        background: #E5E7EB;
+        border-top: 1px solid #E5E7EB;
         margin: 2rem 0;
     }
 
     html[data-theme="dark"] .legal-prose hr {
-        background: rgba(75, 85, 99, 0.4);
+        border-top-color: #374151;
     }
 
-    /* ── Back button ── */
-    .legal-back {
-        margin-top: 2.5rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid #E5E7EB;
-    }
-
-    html[data-theme="dark"] .legal-back {
-        border-top-color: rgba(75, 85, 99, 0.4);
-    }
-
-    .legal-back-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.6rem 1.25rem;
-        border-radius: 0.75rem;
-        background: linear-gradient(135deg, #8B5CF6, #EC4899);
-        color: #FFFFFF;
-        font-weight: 600;
-        font-size: 0.9rem;
-        text-decoration: none;
-        transition: all 0.2s ease;
-        box-shadow: 0 2px 8px rgba(139, 92, 246, 0.25);
-    }
-
-    .legal-back-btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
-    }
-
-    /* ── Responsive ── */
     @media (min-width: 768px) {
         .legal-prose h2 {
-            font-size: 1.65rem;
+            font-size: 1.875rem;
         }
 
         .legal-prose h3 {
-            font-size: 1.3rem;
-        }
-
-        .legal-prose {
-            font-size: 1.05rem;
+            font-size: 1.5rem;
         }
     }
 </style>
-
-<script>
-    if (typeof lucide !== 'undefined') { lucide.createIcons(); }
-</script>
 {{ end }}

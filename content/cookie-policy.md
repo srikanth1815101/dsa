@@ -1,99 +1,68 @@
 ---
 title: "Cookie Policy"
-description: "How CSRGO DSA uses cookies and browser storage technologies."
-layout: "page"
-lastUpdated: "March 6, 2026"
+date: 2026-03-06
+layout: "legal"
 ---
 
-This Cookie Policy explains how **CSRGO DSA** at [dsa.csrgo.com](https://dsa.csrgo.com/) uses cookies and browser storage technologies. CSRGO DSA takes a **privacy-first approach** — we do not use traditional cookies for tracking or advertising.
+**Last Updated: March 6, 2026**
 
-## 1. What Are Cookies?
+This Cookie Policy explains how CSRGO DSA ("we", "us", and "our") uses cookies and similar technologies to recognize you when you visit our website at https://dsa.csrgo.com/. It explains what these technologies are and why we use them, as well as your rights to control our use of them.
 
-Cookies are small text files stored on your device by a web browser. They are commonly used to remember preferences, track sessions, and enable website functionality.
+## 1. What are Cookies?
 
-## 2. Our Approach
+Cookies are small data files that are placed on your computer or mobile device when you visit a website. They are widely used by website owners in order to make their websites work, or to work more efficiently, as well as to provide reporting information.
 
-Instead of cookies, CSRGO DSA uses **modern browser storage APIs** — LocalStorage and IndexedDB — to store data **entirely on your device**. No data is sent to our servers.
+## 2. How We Use Browser Storage
 
-### LocalStorage
+Since this Site is a static platform with no login functionality, **we do not use first-party cookies to track your personal identity.** We do not have a shopping cart, user dashboard, or preferences that require persistent storage of your personal data via cookies.
 
-Used for lightweight key-value data:
+Instead of cookies, we use modern browser storage APIs — **LocalStorage** and **IndexedDB** — to store data entirely on your device:
 
-- **Theme Preference:** Your light/dark mode selection.
-- **UI State:** Filter selections and display options.
-- **Problem Status:** Completed, bookmarked, attempted, and revision flags.
-- **Guide Prompt:** Whether you've been shown the platform guide.
+*   **LocalStorage:** Theme preference, UI filter states, problem status flags, and general preferences.
+*   **IndexedDB:** Personal notes, interview session data, and detailed progress tracking.
 
-### IndexedDB
-
-Used for structured and larger data:
-
-- **Personal Notes:** Problem-specific notes and interview reflections.
-- **Interview Sessions:** Session history, configurations, and results.
-- **Progress Data:** Detailed learning journey tracking across problems and paths.
+This data never leaves your device and is not transmitted to any server.
 
 ## 3. What We Do NOT Use
 
-We want to be clear about what we **don't** use:
-
-- ❌ **Tracking Cookies** — we do not track you across websites
-- ❌ **Analytics Cookies** — no Google Analytics, Mixpanel, or similar
-- ❌ **Advertising Cookies** — we show no ads and work with no ad networks
-- ❌ **Third-Party Cookies** — no external services set cookies on our domain
-- ❌ **Session Cookies** — no login system or authentication sessions
-- ❌ **Persistent Identifiers** — no unique user IDs created or stored
-- ❌ **Cross-Site Tracking** — no cross-site or cross-device tracking
+*   **No Tracking Cookies:** We do not track you across websites or sessions.
+*   **No Analytics Cookies:** We do not use Google Analytics, Mixpanel, or similar services.
+*   **No Advertising Cookies:** We do not serve advertisements or work with ad networks.
+*   **No Third-Party Cookies:** No external services set cookies on our domain.
+*   **No Session Cookies:** We have no login system or authentication sessions.
 
 ## 4. Third-Party Resources
 
-While we set no cookies ourselves, we load external resources that may have their own policies:
+Because we rely on third-party services for hosting and static assets, these parties may have their own cookie or caching policies:
 
-- **Netlify** (hosting) — may use CDN cookies for performance. See [Netlify's Privacy Policy](https://www.netlify.com/privacy/).
-- **Google Fonts** — may use minimal caching. See [Google's Privacy Policy](https://policies.google.com/privacy).
-- **Font Awesome CDN** — see [Font Awesome's Privacy Policy](https://fontawesome.com/privacy).
-- **Tailwind CSS CDN** and **Lucide Icons** — static assets with no known data collection.
+*   **Netlify:** Our hosting provider may use CDN cookies for performance optimization. See [Netlify's Privacy Policy](https://www.netlify.com/privacy/).
+*   **Google Fonts:** May use minimal caching. See [Google's Privacy Policy](https://policies.google.com/privacy).
+*   **Font Awesome CDN:** See [Font Awesome's Privacy Policy](https://fontawesome.com/privacy).
+*   **Tailwind CSS CDN** and **Lucide Icons:** Serve static assets with no known data collection.
 
-## 5. Managing Your Data
+## 5. Your Control Over Data
 
-You have **full control** over all data stored by CSRGO DSA.
+You have the right to manage all data stored by CSRGO DSA in your browser.
 
-### Export
+*   **Export:** Visit your [Profile](/profile/) page to export all progress, notes, and session data as a JSON backup.
+*   **Import:** Restore previously exported data using the import function on the [Profile](/profile/) page.
+*   **Delete:** Use the **Clear Data** option on your [Profile](/profile/) page, or clear site data for `dsa.csrgo.com` through your browser settings.
+*   **Browser Controls:** Most web browsers allow you to control cookies and site data through their settings preferences. You can usually find these settings in the "Options" or "Preferences" menu of your browser.
 
-Visit your [Profile](/profile/) page to export all progress, notes, and session data as a JSON backup file.
+If you choose to clear site data, your locally stored progress, notes, and preferences will be permanently removed.
 
-### Import
+## 6. Future Advertising
 
-Restore previously exported data using the import function on the [Profile](/profile/) page.
+Currently, we do not serve any advertisements. However, we reserve the right to introduce advertising in the future. If and when we implement advertising:
 
-### Delete
+*   Third-party vendors, including Google, may use cookies to serve ads based on your prior visits.
+*   Users may opt out of personalized advertising by visiting [Ads Settings](https://www.google.com/settings/ads).
+*   This Cookie Policy will be updated accordingly.
 
-Remove all stored data through any of these methods:
+## 7. Changes to This Cookie Policy
 
-- **Platform:** Use the **Clear Data** function on the [Profile](/profile/) page.
-- **Browser Settings:** Clear site data for `dsa.csrgo.com` in your browser's privacy settings.
-- **DevTools:** Open DevTools (F12) → Application tab → Clear Storage.
-
-### Browser-Level Controls
-
-Most browsers let you manage cookies and site data:
-
-- **Chrome:** Settings → Privacy and Security → Cookies and other site data
-- **Firefox:** Settings → Privacy & Security → Cookies and Site Data
-- **Edge:** Settings → Cookies and site permissions
-- **Safari:** Preferences → Privacy → Manage Website Data
-
-## 6. Consent
-
-Since CSRGO DSA uses only **strictly necessary and functional storage** (not tracking or advertising), explicit cookie consent banners are not required under GDPR or the ePrivacy Directive. We provide this policy for full transparency.
-
-## 7. Changes to This Policy
-
-We may update this policy from time to time. Changes will be reflected on this page with an updated "Last Updated" date. We recommend reviewing periodically.
+We may update this Cookie Policy from time to time. We will notify you of any changes by posting the new Cookie Policy on this page and updating the "Last Updated" date at the top.
 
 ## 8. Contact Us
 
-If you have questions about our use of cookies or browser storage, please contact us:
-
-- **Email:** hello@csrgo.com
-- **Twitter:** [@CSRGO](https://twitter.com)
-- **GitHub:** [CSRGO](https://github.com)
+If you have any questions about this Cookie Policy, please contact us via email at: hello@csrgo.com

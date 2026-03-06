@@ -1,120 +1,64 @@
 ---
-title: "Terms & Conditions"
-description: "The rules and guidelines for using the CSRGO DSA platform."
-layout: "page"
-lastUpdated: "March 6, 2026"
+title: "Terms and Conditions"
+date: 2026-03-06
+layout: "legal"
 ---
 
-These Terms & Conditions ("Terms") govern your access to and use of **CSRGO DSA** at [dsa.csrgo.com](https://dsa.csrgo.com/) (the "Site"). By using the Site, you agree to be bound by these Terms. If you do not agree, please discontinue use immediately.
+**Last Updated: March 6, 2026**
 
-## 1. Description of Service
+Welcome to CSRGO DSA! By using our website at https://dsa.csrgo.com/ (the "Site"), you agree to these Terms and Conditions. Please read them carefully.
 
-CSRGO DSA is a **free, open-source** educational platform for practicing Data Structures and Algorithms. The platform provides:
+## 1. Educational Purpose Only
 
-- A curated library of DSA problems with difficulty levels, topic tags, and company tags
-- Structured learning paths for progressive skill building
-- Timed interview simulation mode with configurable parameters
-- Personal note-taking with PDF export functionality
-- Local-only progress tracking — no accounts, no backend, no server-side storage
+**Disclaimer:** The content provided on this Site is for **educational and informational purposes only**.
 
-All features are available free of charge with no registration required.
+*   **Use at Your Own Risk:** The problems, solutions, code snippets, and guides provided here are intended to help you learn and practice Data Structures and Algorithms. You are responsible for verifying any code or approaches before using them in production systems.
+*   **No Professional Advice:** The information on this Site does not constitute professional advice. While we strive for accuracy, technology changes rapidly, and information may become outdated or contain errors.
+*   **"As Is" Basis:** All materials are provided "as is" without warranty of any kind, express or implied. We do not guarantee that the problems, solutions, or editorial content are free from errors.
+*   **No Guarantee of Results:** Using this platform does not guarantee success in any technical interview, examination, certification, or employment process. The platform is intended as a supplementary study tool.
 
 ## 2. Intellectual Property
 
-### Our Content
+Unless otherwise stated, CSRGO DSA and/or its licensors own the intellectual property rights for all original material on this Site.
 
-All original content — including problem descriptions, editorial content, solution explanations, platform design, UI elements, logos, and branding — is the intellectual property of CSRGO and is protected by applicable copyright and trademark laws.
+*   **You May:** View, download for caching purposes, and print pages, code samples, or other content for your own personal use and learning. You may also export your personal notes and progress data.
+*   **You Must Not:** Republish material from this Site (including republication on another website), sell, rent, or sub-license material from the Site, or reproduce substantial portions of the Site for commercial gain without our express written consent.
+*   **Open Source Code:** Certain components of the platform's source code may be available under an open-source license. Refer to the project's GitHub repository for the specific license governing source code usage. Open-source licenses apply to the code only, not to curated problem content or branding.
+*   **Your Content:** Any notes, reflections, or data you create using CSRGO DSA belongs to you. Since it is stored locally in your browser, we have no access to it and make no ownership claims.
 
-### Open Source Code
+## 3. User Conduct
 
-Certain platform source code may be available under an open-source license. Refer to the GitHub repository for the specific license. Open-source licenses apply to the code only, not to curated content or branding.
+You agree to use this Site only for lawful purposes in a way that does not infringe the rights of, restrict, or inhibit anyone else's use and enjoyment of the Site.
 
-### Your Content
-
-Any notes, reflections, or data you create on CSRGO DSA belongs to you. Since it is stored locally in your browser, we have no access to it and make no ownership claims.
-
-## 3. Acceptable Use
-
-**You must NOT:**
-
-- Attempt to gain unauthorized access to the platform's infrastructure
-- Use automated tools, bots, or scrapers to bulk-download or extract content
-- Reproduce, redistribute, sublicense, or sell the curated content without permission
-- Use the platform in any manner that could damage, disable, or impair the service
-- Interfere with the platform's operation, security, or integrity
-- Misrepresent your affiliation with CSRGO
-- Use the platform for any illegal or harmful purpose
-
-**You MAY:**
-
-- Use the platform for personal educational purposes
-- Share links to the platform
-- Export your personal notes and progress data
-- Contribute to the open-source codebase per its license terms
+*   You must not attempt to gain unauthorized access to the platform's infrastructure.
+*   You must not use automated tools, bots, or scrapers to bulk-download or extract content.
+*   You must not interfere with the platform's operation, security, or integrity.
+*   You must not misrepresent your affiliation with CSRGO.
 
 ## 4. Data and Privacy
 
-All user data is stored **locally in your browser**. We do not collect, store, or process personal data on our servers. See our [Privacy Policy](/privacy-policy/) and [Cookie Policy](/cookie-policy/) for details.
+CSRGO DSA stores all user data **locally in your browser** using LocalStorage and IndexedDB. We do not collect, store, or process any personal data on our servers. For full details, see our [Privacy Policy](/privacy-policy/) and [Cookie Policy](/cookie-policy/).
 
 ## 5. Service Availability
 
-- We do **not guarantee** uninterrupted or error-free availability
-- The platform may experience downtime due to maintenance or hosting issues
-- We may modify, suspend, or discontinue any feature or the entire service at any time without prior notice
-- Problem sets, learning paths, and features may change as we improve the platform
+We make reasonable efforts to keep the platform accessible, but we do not guarantee uninterrupted or error-free availability. We reserve the right to modify, suspend, or discontinue any feature or the entire service at any time without prior notice.
 
-## 6. Disclaimer of Warranties
+## 6. Limitation of Liability
 
-CSRGO DSA is provided **"AS IS"** and **"AS AVAILABLE"** without warranties of any kind. We do not warrant that:
+In no event shall CSRGO DSA, nor any of its authors or contributors, be liable to you for anything arising out of or in any way connected with your use of this Site, whether such liability is under contract, tort, or otherwise. CSRGO DSA shall not be liable for any indirect, consequential, or special liability arising out of or in any way related to your use of this Site, including but not limited to data loss, system failure, or incidental damages resulting from following tutorials or using code snippets found here.
 
-- The platform will be error-free or uninterrupted
-- Problems, solutions, or editorial content are free of errors
-- The platform will meet your specific requirements
-- Results obtained from the platform will be accurate or reliable
+## 7. External Links
 
-**Using this platform does not guarantee success in any technical interview, examination, or employment process.** It is a supplementary study tool, not a substitute for comprehensive preparation.
-
-## 7. Limitation of Liability
-
-To the maximum extent permitted by law, CSRGO shall **not** be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising from:
-
-- Your use of or inability to use the platform
-- Loss of locally stored data (progress, notes, sessions)
-- Reliance on platform content in professional or academic contexts
-- Errors or omissions in content
-- Interruption or discontinuation of the platform
-- Your interaction with third-party links or resources
-
-Our total liability shall not exceed the amount you paid for using the platform (which is zero).
+This Site may contain links to third-party websites or services that are not owned or controlled by CSRGO DSA. We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites. You acknowledge and agree that CSRGO DSA shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of such content.
 
 ## 8. Indemnification
 
 You agree to indemnify and hold harmless CSRGO, its owners, and contributors from any claims, liabilities, damages, losses, and expenses arising from your use of the platform, violation of these Terms, or violation of any third-party rights.
 
-## 9. Third-Party Links
+## 9. Modifications
 
-The Site may contain links to external websites (GitHub, documentation, etc.). These are provided for convenience only. We do not endorse, control, or assume responsibility for any third-party content, privacy practices, or security.
+We reserve the right to modify these Terms and Conditions at any time. By continuing to use the Site after any changes are posted, you agree to accept those changes.
 
-## 10. Severability
+## 10. Governing Law
 
-If any provision of these Terms is found unenforceable by a court of competent jurisdiction, the remaining provisions shall remain in full force and effect.
-
-## 11. Entire Agreement
-
-These Terms, together with our [Privacy Policy](/privacy-policy/) and [Cookie Policy](/cookie-policy/), constitute the entire agreement between you and CSRGO regarding use of the platform.
-
-## 12. Changes to These Terms
-
-We may update these Terms at any time. Changes will be posted on this page with an updated "Last Updated" date. Continued use of the platform constitutes acceptance of revised terms.
-
-## 13. Governing Law
-
-These Terms shall be governed by and construed in accordance with the laws of India. Disputes shall first be attempted to be resolved through good-faith negotiation, and failing that, through the courts of competent jurisdiction in India.
-
-## 14. Contact Us
-
-If you have questions about these Terms, please contact us:
-
-- **Email:** hello@csrgo.com
-- **Twitter:** [@CSRGO](https://twitter.com)
-- **GitHub:** [CSRGO](https://github.com)
+These Terms will be governed by and interpreted in accordance with the laws of India, and you submit to the non-exclusive jurisdiction of the state and federal courts located in India for the resolution of any disputes.

@@ -1,0 +1,205 @@
+{{ define "main" }}
+<div class="min-h-screen bg-gray-50 dark:bg-[#0A0E27] font-sans overflow-x-hidden">
+
+    <!-- Hero -->
+    <section class="relative pt-8 pb-8 lg:pt-14 lg:pb-10 overflow-hidden text-center">
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[30vh] bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-cyan-500/10 blur-[100px] rounded-full pointer-events-none">
+        </div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-2 text-gray-900 dark:text-white">
+                Contact Us
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed mt-4">
+                Found a bug? Have a suggestion? We'd love to hear from you.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Form + Info -->
+    <section class="pb-20 lg:pb-28">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-10">
+
+                <!-- Form Column -->
+                <div class="lg:col-span-3">
+                    <div
+                        class="bg-white dark:bg-[#141B3D] rounded-2xl border border-gray-200 dark:border-gray-700/50 p-6 md:p-10 shadow-lg">
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white flex items-center justify-center shadow-md">
+                                <i data-lucide="message-square" class="w-5 h-5"></i>
+                            </div>
+                            Send a Message
+                        </h2>
+
+                        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"
+                            class="space-y-5">
+                            <!-- Honeypot (spam prevention) -->
+                            <p class="hidden">
+                                <label>Don't fill this out: <input name="bot-field" /></label>
+                            </p>
+                            <input type="hidden" name="form-name" value="contact" />
+
+                            <!-- Name -->
+                            <div>
+                                <label for="name"
+                                    class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5">
+                                    Name <span class="text-gray-400 font-normal">(optional)</span>
+                                </label>
+                                <input type="text" id="name" name="name" placeholder="Your name"
+                                    class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#0A0E27] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all" />
+                            </div>
+
+                            <!-- Email -->
+                            <div>
+                                <label for="email"
+                                    class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5">
+                                    Email <span class="text-gray-400 font-normal">(optional, for reply)</span>
+                                </label>
+                                <input type="email" id="email" name="email" placeholder="your@email.com"
+                                    class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#0A0E27] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all" />
+                            </div>
+
+                            <!-- Category -->
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
+                                    Category
+                                </label>
+                                <div class="flex flex-wrap gap-2" id="category-options">
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="category" value="Feedback" class="sr-only peer"
+                                            checked />
+                                        <span
+                                            class="px-4 py-2 rounded-lg border-2 border-gray-200 dark:border-gray-700 text-sm font-bold text-gray-600 dark:text-gray-400 peer-checked:border-emerald-500 peer-checked:bg-emerald-50 peer-checked:text-emerald-700 dark:peer-checked:border-emerald-500 dark:peer-checked:bg-emerald-900/20 dark:peer-checked:text-emerald-400 transition-all inline-flex items-center gap-1.5">
+                                            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> Feedback
+                                        </span>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="category" value="Bug Report" class="sr-only peer" />
+                                        <span
+                                            class="px-4 py-2 rounded-lg border-2 border-gray-200 dark:border-gray-700 text-sm font-bold text-gray-600 dark:text-gray-400 peer-checked:border-red-500 peer-checked:bg-red-50 peer-checked:text-red-700 dark:peer-checked:border-red-500 dark:peer-checked:bg-red-900/20 dark:peer-checked:text-red-400 transition-all inline-flex items-center gap-1.5">
+                                            <i data-lucide="bug" class="w-3.5 h-3.5"></i> Bug Report
+                                        </span>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="category" value="Feature Request"
+                                            class="sr-only peer" />
+                                        <span
+                                            class="px-4 py-2 rounded-lg border-2 border-gray-200 dark:border-gray-700 text-sm font-bold text-gray-600 dark:text-gray-400 peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 dark:peer-checked:border-blue-500 dark:peer-checked:bg-blue-900/20 dark:peer-checked:text-blue-400 transition-all inline-flex items-center gap-1.5">
+                                            <i data-lucide="lightbulb" class="w-3.5 h-3.5"></i> Feature Request
+                                        </span>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="category" value="Other" class="sr-only peer" />
+                                        <span
+                                            class="px-4 py-2 rounded-lg border-2 border-gray-200 dark:border-gray-700 text-sm font-bold text-gray-600 dark:text-gray-400 peer-checked:border-purple-500 peer-checked:bg-purple-50 peer-checked:text-purple-700 dark:peer-checked:border-purple-500 dark:peer-checked:bg-purple-900/20 dark:peer-checked:text-purple-400 transition-all inline-flex items-center gap-1.5">
+                                            <i data-lucide="help-circle" class="w-3.5 h-3.5"></i> Other
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Message -->
+                            <div>
+                                <label for="message"
+                                    class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5">
+                                    Message <span class="text-red-400">*</span>
+                                </label>
+                                <textarea id="message" name="message" rows="5" required
+                                    placeholder="Tell us what's on your mind..."
+                                    class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#0A0E27] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all resize-y min-h-[120px]"></textarea>
+                            </div>
+
+                            <!-- Submit -->
+                            <button type="submit"
+                                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold text-base hover:shadow-lg hover:shadow-emerald-500/25 transition-all hover:-translate-y-0.5">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                <span>Submit Message</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Info Column -->
+                <div class="lg:col-span-2 space-y-6">
+
+                    <!-- Direct Contact -->
+                    <div
+                        class="bg-white dark:bg-[#141B3D] rounded-2xl border border-gray-200 dark:border-gray-700/50 p-6 shadow-lg">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <i data-lucide="contact" class="w-5 h-5 text-emerald-500"></i> Direct Contact
+                        </h3>
+                        <div class="space-y-4">
+                            <a href="mailto:hello@csrgo.com"
+                                class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-[#0A0E27] hover:bg-emerald-50 dark:hover:bg-emerald-900/10 transition-colors group">
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i data-lucide="mail" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-gray-900 dark:text-white">Email</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">hello@csrgo.com</div>
+                                </div>
+                            </a>
+                            <a href="https://twitter.com" target="_blank" rel="noopener"
+                                class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-[#0A0E27] hover:bg-sky-50 dark:hover:bg-sky-900/10 transition-colors group">
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-sky-100 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i data-lucide="twitter" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-gray-900 dark:text-white">Twitter</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">@CSRGO</div>
+                                </div>
+                            </a>
+                            <a href="https://github.com" target="_blank" rel="noopener"
+                                class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-[#0A0E27] hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i data-lucide="github" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-gray-900 dark:text-white">GitHub</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Report issues & contribute
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Response Info -->
+                    <div
+                        class="bg-white dark:bg-[#141B3D] rounded-2xl border border-gray-200 dark:border-gray-700/50 p-6 shadow-lg">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <i data-lucide="clock" class="w-5 h-5 text-teal-500"></i> What to Expect
+                        </h3>
+                        <ul class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0"></i>
+                                <span>We review every submission</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Bug reports are prioritized for quick fixes</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Feature requests help shape our roadmap</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Leave your email if you'd like a reply</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    if (typeof lucide !== 'undefined') { lucide.createIcons(); }
+</script>
+{{ end }}

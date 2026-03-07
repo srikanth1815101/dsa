@@ -1,11 +1,11 @@
-{{ define "main" }}
+﻿{{ define "main" }}
 <div
     class="bg-gray-50 dark:bg-[#0A0E27] min-h-screen font-sans selection:bg-primary/30 selection:text-primary overflow-x-hidden">
 
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!-- 1. HERO SECTION                                           -->
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <section class="relative pt-32 pb-24 lg:pt-48 lg:pb-40 overflow-hidden">
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
         <div
             class="absolute inset-0 bg-[url('/img/grid.svg')] bg-center opacity-[0.03] dark:opacity-[0.07] pointer-events-none">
         </div>
@@ -34,47 +34,87 @@
             <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed opacity-0 animate-slide-up"
                 style="animation-delay: 0.2s; animation-fill-mode: forwards;">
                 Practice DSA the way real software engineers work in enterprise applications.
-                No accounts. No login. Free forever. Your progress stays in your browser.
+                No accounts. No login. Free forever.
             </p>
 
-            <!-- Quick Access Grid -->
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="/problems/"
-                    class="group flex items-center gap-3 px-6 py-3.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-blue-500 hover:shadow-lg hover:shadow-blue-500/20 transition-all opacity-0 animate-pop-in"
-                    style="animation-delay: 0.3s; animation-fill-mode: forwards;">
+            <!-- Company Logo Ticker -->
+            <div class="mb-14 opacity-0 animate-slide-up"
+                style="animation-delay: 0.25s; animation-fill-mode: forwards;">
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-5">
+                    Prepare for interviews at
+                </p>
+                <div class="relative overflow-hidden max-w-4xl mx-auto group">
+                    <!-- Fade edges -->
                     <div
-                        class="p-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform duration-300">
-                        <i data-lucide="list" class="w-4 h-4"></i>
+                        class="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-gray-50 dark:from-[#0A0E27] to-transparent z-10 pointer-events-none">
                     </div>
-                    <span class="font-bold text-gray-900 dark:text-white text-sm lg:text-base">Problems</span>
-                </a>
-                <a href="/paths/"
-                    class="group flex items-center gap-3 px-6 py-3.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-purple-500 hover:shadow-lg hover:shadow-purple-500/20 transition-all opacity-0 animate-pop-in"
-                    style="animation-delay: 0.4s; animation-fill-mode: forwards;">
                     <div
-                        class="p-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300">
-                        <i data-lucide="git-branch" class="w-4 h-4"></i>
+                        class="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-gray-50 dark:from-[#0A0E27] to-transparent z-10 pointer-events-none">
                     </div>
-                    <span class="font-bold text-gray-900 dark:text-white text-sm lg:text-base">Paths</span>
-                </a>
-                <a href="/interview/"
-                    class="group flex items-center gap-3 px-6 py-3.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-pink-500 hover:shadow-lg hover:shadow-pink-500/20 transition-all opacity-0 animate-pop-in"
-                    style="animation-delay: 0.5s; animation-fill-mode: forwards;">
-                    <div
-                        class="p-1.5 rounded-full bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400 group-hover:scale-110 transition-transform duration-300">
-                        <i data-lucide="timer" class="w-4 h-4"></i>
+
+                    <div class="flex animate-marquee group-hover:[animation-play-state:paused] whitespace-nowrap">
+                        <!-- Set 1 -->
+                        <div class="flex items-center gap-10 md:gap-14 shrink-0 px-8">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/amazon.svg" alt="Amazon"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/meta.svg" alt="Meta"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/google.svg" alt="Google"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/apple.svg" alt="Apple"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/microsoft.svg"
+                                alt="Microsoft"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/netflix.svg" alt="Netflix"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/adobe.svg" alt="Adobe"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/uber.svg" alt="Uber"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/salesforce.svg"
+                                alt="Salesforce"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/oracle.svg" alt="Oracle"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/stripe.svg" alt="Stripe"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/linkedin.svg"
+                                alt="LinkedIn"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                        </div>
+                        <!-- Set 2 (duplicate for seamless loop) -->
+                        <div class="flex items-center gap-10 md:gap-14 shrink-0 px-8">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/amazon.svg" alt="Amazon"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/meta.svg" alt="Meta"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/google.svg" alt="Google"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/apple.svg" alt="Apple"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/microsoft.svg"
+                                alt="Microsoft"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/netflix.svg" alt="Netflix"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/adobe.svg" alt="Adobe"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/uber.svg" alt="Uber"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/salesforce.svg"
+                                alt="Salesforce"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/oracle.svg" alt="Oracle"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/stripe.svg" alt="Stripe"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/linkedin.svg"
+                                alt="LinkedIn"
+                                class="h-6 md:h-7 opacity-40 hover:opacity-70 transition-opacity dark:invert">
+                        </div>
                     </div>
-                    <span class="font-bold text-gray-900 dark:text-white text-sm lg:text-base">Interview</span>
-                </a>
-                <a href="/notes/"
-                    class="group flex items-center gap-3 px-6 py-3.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:border-orange-500 hover:shadow-lg hover:shadow-orange-500/20 transition-all opacity-0 animate-pop-in"
-                    style="animation-delay: 0.6s; animation-fill-mode: forwards;">
-                    <div
-                        class="p-1.5 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform duration-300">
-                        <i data-lucide="book-open" class="w-4 h-4"></i>
-                    </div>
-                    <span class="font-bold text-gray-900 dark:text-white text-sm lg:text-base">Notes</span>
-                </a>
+                </div>
             </div>
         </div>
     </section>

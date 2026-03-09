@@ -64,84 +64,44 @@
                 Prepare for interviews at
             </p>
             <div class="relative overflow-hidden max-w-4xl mx-auto group">
-                <div class="flex animate-marquee group-hover:[animation-play-state:paused] whitespace-nowrap">
+                <div class="flex w-max animate-marquee group-hover:[animation-play-state:paused] whitespace-nowrap">
+                    {{ $logos := slice
+                    (dict "name" "Google" "color" "bg-[#4285F4]" "icon" "google")
+                    (dict "name" "Amazon" "color" "bg-[#FF9900]" "icon" "amazon")
+                    (dict "name" "Meta" "color" "bg-[#0468FF]" "icon" "meta")
+                    (dict "name" "Apple" "color" "bg-black dark:bg-white" "icon" "apple")
+                    (dict "name" "Microsoft" "color" "bg-[#00A4EF]" "icon" "microsoft")
+                    (dict "name" "Netflix" "color" "bg-[#E50914]" "icon" "netflix")
+                    (dict "name" "Uber" "color" "bg-black dark:bg-white" "icon" "uber")
+                    (dict "name" "Airbnb" "color" "bg-[#FF5A5F]" "icon" "airbnb")
+                    (dict "name" "LinkedIn" "color" "bg-[#0A66C2]" "icon" "linkedin")
+                    (dict "name" "Adobe" "color" "bg-[#FF0000]" "icon" "adobe")
+                    (dict "name" "Stripe" "color" "bg-[#008CDD]" "icon" "stripe")
+                    (dict "name" "Salesforce" "color" "bg-[#00A1E0]" "icon" "salesforce")
+                    (dict "name" "Oracle" "color" "bg-[#F80000]" "icon" "oracle")
+                    (dict "name" "PayPal" "color" "bg-[#00457C]" "icon" "paypal")
+                    (dict "name" "Atlassian" "color" "bg-[#0052CC]" "icon" "atlassian")
+                    (dict "name" "Shopify" "color" "bg-[#96BF48]" "icon" "shopify")
+                    (dict "name" "DoorDash" "color" "bg-[#FF3008]" "icon" "doordash")
+                    (dict "name" "Robinhood" "color" "bg-[#00C805]" "icon" "robinhood")
+                    (dict "name" "Dropbox" "color" "bg-[#0061FF]" "icon" "dropbox")
+                    (dict "name" "Snap" "color" "bg-[#FFFC00]" "icon" "snapchat")
+                    }}
                     <!-- Set 1 -->
-                    <div class="flex items-center gap-8 sm:gap-10 md:gap-14 shrink-0 px-4 sm:px-8">
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#FF9900] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/amazon.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/amazon.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Amazon"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#0468FF] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/meta.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/meta.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Meta"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#4285F4] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/google.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/google.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Google"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-black dark:bg-white opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/apple.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/apple.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Apple"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#00A4EF] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/microsoft.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/microsoft.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Microsoft"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#E50914] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/netflix.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/netflix.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Netflix"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#FF0000] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/adobe.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/adobe.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Adobe"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-black dark:bg-white opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/uber.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/uber.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Uber"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#00A1E0] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/salesforce.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/salesforce.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Salesforce"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#F80000] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/oracle.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/oracle.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Oracle"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#008CDD] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/stripe.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/stripe.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Stripe"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#0A66C2] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/linkedin.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/linkedin.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="LinkedIn"></div>
+                    <div class="flex items-center gap-8 sm:gap-10 md:gap-14 shrink-0 pr-8 sm:pr-10 md:pr-14">
+                        {{ range $logos }}
+                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 {{ .color }} opacity-80 hover:opacity-100 transition-all hover:scale-110"
+                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/{{ .icon }}.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/{{ .icon }}.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
+                            aria-label="{{ .name }}"></div>
+                        {{ end }}
                     </div>
                     <!-- Set 2 (duplicate for seamless loop) -->
-                    <div class="flex items-center gap-8 sm:gap-10 md:gap-14 shrink-0 px-4 sm:px-8">
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#FF9900] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/amazon.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/amazon.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Amazon"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#0468FF] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/meta.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/meta.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Meta"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#4285F4] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/google.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/google.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Google"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-black dark:bg-white opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/apple.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/apple.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Apple"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#00A4EF] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/microsoft.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/microsoft.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Microsoft"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#E50914] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/netflix.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/netflix.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Netflix"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#FF0000] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/adobe.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/adobe.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Adobe"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-black dark:bg-white opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/uber.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/uber.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Uber"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#00A1E0] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/salesforce.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/salesforce.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Salesforce"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#F80000] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/oracle.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/oracle.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Oracle"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#008CDD] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/stripe.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/stripe.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="Stripe"></div>
-                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 bg-[#0A66C2] opacity-80 hover:opacity-100 transition-all hover:scale-110"
-                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/linkedin.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/linkedin.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
-                            aria-label="LinkedIn"></div>
+                    <div class="flex items-center gap-8 sm:gap-10 md:gap-14 shrink-0 pr-8 sm:pr-10 md:pr-14">
+                        {{ range $logos }}
+                        <div class="h-6 sm:h-7 md:h-8 w-6 sm:w-7 md:w-8 {{ .color }} opacity-80 hover:opacity-100 transition-all hover:scale-110"
+                            style="-webkit-mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/{{ .icon }}.svg) no-repeat center; mask: url(https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/{{ .icon }}.svg) no-repeat center; -webkit-mask-size: contain; mask-size: contain;"
+                            aria-label="{{ .name }}"></div>
+                        {{ end }}
                     </div>
                 </div>
             </div>

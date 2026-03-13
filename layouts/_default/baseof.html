@@ -774,6 +774,15 @@
 
         // Intercept navigation for smooth fade out
         document.addEventListener('click', e => {
+            // Close mobile menu if clicked outside
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuBtn = e.target.closest('button[onclick="toggleMobileMenu()"]');
+            const clickedInsideMenu = e.target.closest('#mobile-menu');
+            
+            if (mobileMenu && !mobileMenu.classList.contains('hidden') && !clickedInsideMenu && !menuBtn) {
+                mobileMenu.classList.add('hidden');
+            }
+
             const link = e.target.closest('a');
             if (!link || !link.href) return;
 

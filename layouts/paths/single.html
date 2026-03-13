@@ -17,9 +17,26 @@
             <div class="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
                 <div class="flex-1">
                     <div class="flex items-center gap-3 mb-4">
-                        <div class="p-2 bg-gradient-to-br from-primary/10 to-blue-500/10 rounded-xl">
-                            <i data-lucide="{{ .Params.icon | default " map" }}" class="w-6 h-6 text-primary"></i>
+                        {{ if eq .Title "Basic" }}
+                        <div
+                            class="p-2.5 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-600 text-white shadow-lg shadow-emerald-500/20">
+                            <i data-lucide="{{ .Params.icon | default "footprints" }}" class="w-6 h-6"></i>
                         </div>
+                        {{ else if eq .Title "Advanced" }}
+                        <div
+                            class="p-2.5 rounded-xl bg-gradient-to-r from-blue-400 to-indigo-600 text-white shadow-lg shadow-blue-500/20">
+                            <i data-lucide="{{ .Params.icon | default "mountain" }}" class="w-6 h-6"></i>
+                        </div>
+                        {{ else if eq .Title "Mastery" }}
+                        <div
+                            class="p-2.5 rounded-xl bg-gradient-to-r from-orange-400 to-red-600 text-white shadow-lg shadow-orange-500/20">
+                            <i data-lucide="{{ .Params.icon | default "trophy" }}" class="w-6 h-6"></i>
+                        </div>
+                        {{ else }}
+                        <div class="p-2.5 bg-gradient-to-br from-primary/10 to-blue-500/10 rounded-xl">
+                            <i data-lucide="{{ .Params.icon | default "map" }}" class="w-6 h-6 text-primary"></i>
+                        </div>
+                        {{ end }}
                         <h1
                             class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">
                             {{ .Title }}
@@ -36,12 +53,19 @@
                         <div class="flex-1">
                             <div class="flex justify-between text-sm font-medium mb-2">
                                 <span class="text-gray-500 dark:text-gray-400">Path Progress</span>
-                                <span id="path-progress-text" class="text-primary font-bold">0 / {{ len $problems
+                                <span id="path-progress-text" class="font-bold
+                                    {{ if eq .Title "Basic" }}text-emerald-600 dark:text-emerald-400
+                                    {{ else if eq .Title "Advanced" }}text-blue-600 dark:text-blue-400
+                                    {{ else if eq .Title "Mastery" }}text-orange-600 dark:text-orange-400
+                                    {{ else }}text-primary{{ end }}">0 / {{ len $problems
                                     }}</span>
                             </div>
                             <div class="h-2.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
-                                <div id="path-progress-bar"
-                                    class="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-1000 ease-out w-0 relative">
+                                <div id="path-progress-bar" class="h-full transition-all duration-1000 ease-out w-0 relative
+                                    {{ if eq .Title "Basic" }}bg-gradient-to-r from-emerald-400 to-teal-600
+                                    {{ else if eq .Title "Advanced" }}bg-gradient-to-r from-blue-400 to-indigo-600
+                                    {{ else if eq .Title "Mastery" }}bg-gradient-to-r from-orange-400 to-red-600
+                                    {{ else }}bg-gradient-to-r from-primary to-secondary{{ end }}">
                                     <div
                                         class="absolute inset-0 bg-white/20 animate-[shimmer_2s_infinite] border-t border-white/10">
                                     </div>
@@ -54,16 +78,16 @@
                 <!-- Header Actions -->
                 <div class="flex items-center gap-2 md:gap-3 self-start md:self-end">
 
-                    <!-- Git Repo -->
+                    <!-- Path Code -->
                     {{ if .Params.repo_url }}
                     <div class="group/tooltip relative">
-                        <a href="{{ .Params.repo_url }}" target="_blank"
+                        <a href="{{ .Params.repo_url }}" target="_blank" data-code-download="true"
                             class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 text-white shadow-lg shadow-indigo-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
-                            <i data-lucide="github" class="w-4 h-4 md:w-5 md:h-5"></i>
+                            <i data-lucide="route" class="w-4 h-4 md:w-5 md:h-5"></i>
                         </a>
                         <div
                             class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0">
-                            Full Repo
+                            {{ .Title }} Path Code
                             <div
                                 class="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900 dark:border-t-black">
                             </div>

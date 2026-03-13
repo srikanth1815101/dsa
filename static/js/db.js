@@ -312,7 +312,8 @@ class DSADatabase {
             sessions: cleanSessions,
             user: {
                 nickname: localStorage.getItem('dsa-nickname') || 'Learner',
-                theme: localStorage.getItem('theme') || 'light'
+                theme: localStorage.getItem('theme') || 'light',
+                seenTestRunnerPrompt: localStorage.getItem('dsa-seen-test-runner-prompt') || null
             }
         };
         return JSON.stringify(exportObj, null, 2);
@@ -358,6 +359,9 @@ class DSADatabase {
                     } else {
                         document.documentElement.classList.remove('dark');
                     }
+                }
+                if (data.user.seenTestRunnerPrompt) {
+                    localStorage.setItem('dsa-seen-test-runner-prompt', data.user.seenTestRunnerPrompt);
                 }
             }
 

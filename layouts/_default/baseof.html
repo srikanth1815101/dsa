@@ -808,6 +808,77 @@
             }
         });
     </script>
+
+    <!-- Test Runner Prompt Modal -->
+    <div id="testRunnerModal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4">
+        <div id="testRunnerBackdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        <div class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6 md:p-8 animate-fade-in-up border border-gray-200 dark:border-gray-700">
+            <div class="flex justify-center mb-5">
+                <div class="p-4 rounded-2xl bg-gradient-to-br from-emerald-400 to-green-600 text-white shadow-lg shadow-emerald-500/30">
+                    <i data-lucide="book-check" class="w-8 h-8"></i>
+                </div>
+            </div>
+            <h3 class="text-xl font-extrabold text-gray-900 dark:text-white text-center mb-3">Download Test Runner</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 text-center leading-relaxed mb-2">
+                To run test cases for any problem, you need the <strong class="text-gray-900 dark:text-white">CSRGO Test Runner</strong>.
+            </p>
+            <p class="text-sm text-gray-600 dark:text-gray-400 text-center leading-relaxed mb-6">
+                It only needs to be downloaded <strong class="text-gray-900 dark:text-white">once</strong> and works across all problems and paths.
+            </p>
+            <div class="flex flex-col gap-3">
+                <a id="testRunnerDownloadBtn" href="https://github.com/your-repo/dsa-test-runner" target="_blank"
+                    class="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold text-sm shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                    Download Test Runner
+                </a>
+                <button id="testRunnerSkipBtn"
+                    class="w-full py-3 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 font-semibold text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">
+                    Skip for Now
+                </button>
+            </div>
+            <p class="text-[11px] text-gray-400 dark:text-gray-500 text-center mt-4">
+                You can always download it later from the <a href="/guide/" class="text-primary hover:underline font-medium">Guide page</a>.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Test Runner Prompt
+        (function() {
+            var trModal = document.getElementById('testRunnerModal');
+            var trBackdrop = document.getElementById('testRunnerBackdrop');
+            var trDownload = document.getElementById('testRunnerDownloadBtn');
+            var trSkip = document.getElementById('testRunnerSkipBtn');
+
+            function closeTRModal() {
+                if (trModal) {
+                    trModal.classList.add('hidden');
+                    trModal.style.display = 'none';
+                }
+            }
+
+            if (trBackdrop) trBackdrop.addEventListener('click', closeTRModal);
+            if (trDownload) trDownload.addEventListener('click', closeTRModal);
+            if (trSkip) trSkip.addEventListener('click', closeTRModal);
+
+            document.addEventListener('click', function(e) {
+                var link = e.target.closest('a[data-code-download]');
+                if (!link) return;
+                if (localStorage.getItem('dsa-seen-test-runner-prompt')) return;
+
+                localStorage.setItem('dsa-seen-test-runner-prompt', 'true');
+                e.preventDefault();
+                e.stopPropagation();
+
+                if (trModal) {
+                    trModal.classList.remove('hidden');
+                    trModal.style.display = 'flex';
+                    if (window.lucide) lucide.createIcons();
+                }
+                window.open(link.href, '_blank');
+            }, true);
+        })();
+    </script>
 </body>
 
 </html>

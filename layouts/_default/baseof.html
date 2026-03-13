@@ -786,9 +786,12 @@
             if (!isExternal && !isNewTab && !isDownload && !isAnchor) {
                 // If it's a guide-prompt modal intercept, let header.html handle it first
                 const hasSeenGuidePrompt = localStorage.getItem('dsa-seen-guide-prompt');
-                const isGuide = link.pathname.includes('/guide');
+                const isProblemLink = link.pathname.startsWith('/problems/') && link.pathname !== '/problems/';
 
-                if (hasSeenGuidePrompt || isGuide) {
+                // If header.html will intercept this, skip smooth transition
+                const willBeIntercepted = isProblemLink && !hasSeenGuidePrompt;
+
+                if (!willBeIntercepted) {
                     e.preventDefault();
                     document.body.classList.add('page-transitioning');
                     setTimeout(() => {

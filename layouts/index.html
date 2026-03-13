@@ -307,69 +307,87 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <!-- Basic Path -->
                     <div
-                        class="bg-white dark:bg-[#141B3D] p-6 rounded-2xl border border-gray-100 dark:border-gray-700/50 shadow-xl hover:shadow-2xl hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all duration-300 transform hover:scale-[1.02] group flex flex-col items-center text-center h-full relative overflow-hidden">
+                        class="bg-white dark:bg-[#141B3D] p-5 sm:p-6 rounded-2xl border border-gray-100 dark:border-gray-700/50 shadow-xl hover:shadow-2xl hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all duration-300 transform hover:scale-[1.02] group flex flex-col sm:items-center sm:text-center h-full relative overflow-hidden">
                         <!-- Hover Gradient Background -->
                         <div
                             class="absolute inset-0 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
                         </div>
 
-                        <div class="relative z-10 flex flex-col items-center h-full w-full">
+                        <div class="relative z-10 flex flex-row sm:flex-col items-center text-left sm:text-center h-full w-full gap-4 sm:gap-0">
                             <div
-                                class="w-14 h-14 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-600 text-white flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
-                                <i data-lucide="footprints" class="w-7 h-7"></i>
+                                class="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-600 text-white flex items-center justify-center sm:mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                                <i data-lucide="footprints" class="w-6 h-6 sm:w-7 sm:h-7"></i>
                             </div>
-                            <div
-                                class="font-bold text-gray-900 dark:text-white mb-1 text-lg group-hover:text-emerald-600 dark:group-hover:text-emerald-500 transition-colors">
-                                Basic</div>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mb-4">Build a strong
-                                foundation with essential data structures.</p>
-                            <span
-                                class="mt-auto text-[10px] px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-bold uppercase border border-emerald-200 dark:border-emerald-800/50">Easy</span>
+                            <div class="flex-1 min-w-0 flex flex-col items-start sm:items-center h-full">
+                                <div class="flex items-center justify-between w-full sm:block sm:mb-1">
+                                    <div
+                                        class="font-bold text-gray-900 dark:text-white text-base sm:text-lg group-hover:text-emerald-600 dark:group-hover:text-emerald-500 transition-colors">
+                                        Basic</div>
+                                    <span
+                                        class="block sm:hidden text-[10px] px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-bold uppercase border border-emerald-200 dark:border-emerald-800/50">Easy</span>
+                                </div>
+                                <p class="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 leading-relaxed mt-1 sm:mt-0 sm:mb-4">Build a strong
+                                    foundation with essential data structures.</p>
+                                <span
+                                    class="hidden sm:inline-block mt-auto text-[10px] px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-bold uppercase border border-emerald-200 dark:border-emerald-800/50">Easy</span>
+                            </div>
                         </div>
                     </div>
                     <!-- Advanced Path -->
                     <div
-                        class="bg-white dark:bg-[#141B3D] p-6 rounded-2xl border border-gray-100 dark:border-gray-700/50 shadow-xl hover:shadow-2xl hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all duration-300 transform hover:scale-[1.02] group flex flex-col items-center text-center h-full relative overflow-hidden">
+                        class="bg-white dark:bg-[#141B3D] p-5 sm:p-6 rounded-2xl border border-gray-100 dark:border-gray-700/50 shadow-xl hover:shadow-2xl hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all duration-300 transform hover:scale-[1.02] group flex flex-col sm:items-center sm:text-center h-full relative overflow-hidden">
                         <!-- Hover Gradient Background -->
                         <div
                             class="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
                         </div>
 
-                        <div class="relative z-10 flex flex-col items-center h-full w-full">
+                        <div class="relative z-10 flex flex-row sm:flex-col items-center text-left sm:text-center h-full w-full gap-4 sm:gap-0">
                             <div
-                                class="w-14 h-14 rounded-2xl bg-gradient-to-r from-blue-400 to-indigo-600 text-white flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
-                                <i data-lucide="mountain" class="w-7 h-7"></i>
+                                class="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-2xl bg-gradient-to-r from-blue-400 to-indigo-600 text-white flex items-center justify-center sm:mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                                <i data-lucide="mountain" class="w-6 h-6 sm:w-7 sm:h-7"></i>
                             </div>
-                            <div
-                                class="font-bold text-gray-900 dark:text-white mb-1 text-lg group-hover:text-blue-600 dark:group-hover:text-blue-500 transition-colors">
-                                Advanced</div>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mb-4">Tackle complex
-                                patterns and optimization techniques.</p>
-                            <span
-                                class="mt-auto text-[10px] px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 font-bold uppercase border border-blue-200 dark:border-blue-800/50">Medium</span>
+                            <div class="flex-1 min-w-0 flex flex-col items-start sm:items-center h-full">
+                                <div class="flex items-center justify-between w-full sm:block sm:mb-1">
+                                    <div
+                                        class="font-bold text-gray-900 dark:text-white text-base sm:text-lg group-hover:text-blue-600 dark:group-hover:text-blue-500 transition-colors">
+                                        Advanced</div>
+                                    <span
+                                        class="block sm:hidden text-[10px] px-2 py-0.5 rounded-md bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 font-bold uppercase border border-blue-200 dark:border-blue-800/50">Medium</span>
+                                </div>
+                                <p class="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 leading-relaxed mt-1 sm:mt-0 sm:mb-4">Tackle complex
+                                    patterns and optimization techniques.</p>
+                                <span
+                                    class="hidden sm:inline-block mt-auto text-[10px] px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 font-bold uppercase border border-blue-200 dark:border-blue-800/50">Medium</span>
+                            </div>
                         </div>
                     </div>
                     <!-- Mastery Path -->
                     <div
-                        class="bg-white dark:bg-[#141B3D] p-6 rounded-2xl border border-gray-100 dark:border-gray-700/50 shadow-xl hover:shadow-2xl hover:border-orange-500/50 dark:hover:border-orange-500/50 transition-all duration-300 transform hover:scale-[1.02] group flex flex-col items-center text-center h-full relative overflow-hidden">
+                        class="bg-white dark:bg-[#141B3D] p-5 sm:p-6 rounded-2xl border border-gray-100 dark:border-gray-700/50 shadow-xl hover:shadow-2xl hover:border-orange-500/50 dark:hover:border-orange-500/50 transition-all duration-300 transform hover:scale-[1.02] group flex flex-col sm:items-center sm:text-center h-full relative overflow-hidden">
                         <!-- Hover Gradient Background -->
                         <div
                             class="absolute inset-0 bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
                         </div>
 
-                        <div class="relative z-10 flex flex-col items-center h-full w-full">
+                        <div class="relative z-10 flex flex-row sm:flex-col items-center text-left sm:text-center h-full w-full gap-4 sm:gap-0">
                             <div
-                                class="w-14 h-14 rounded-2xl bg-gradient-to-r from-orange-400 to-red-600 text-white flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
-                                <i data-lucide="trophy" class="w-7 h-7"></i>
+                                class="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-2xl bg-gradient-to-r from-orange-400 to-red-600 text-white flex items-center justify-center sm:mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                                <i data-lucide="trophy" class="w-6 h-6 sm:w-7 sm:h-7"></i>
                             </div>
-                            <div
-                                class="font-bold text-gray-900 dark:text-white mb-1 text-lg group-hover:text-orange-600 dark:group-hover:text-orange-500 transition-colors">
-                                Mastery</div>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mb-4">Conquer the
-                                hardest
-                                problems top companies ask.</p>
-                            <span
-                                class="mt-auto text-[10px] px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 font-bold uppercase border border-orange-200 dark:border-orange-800/50">Hard</span>
+                            <div class="flex-1 min-w-0 flex flex-col items-start sm:items-center h-full">
+                                <div class="flex items-center justify-between w-full sm:block sm:mb-1">
+                                    <div
+                                        class="font-bold text-gray-900 dark:text-white text-base sm:text-lg group-hover:text-orange-600 dark:group-hover:text-orange-500 transition-colors">
+                                        Mastery</div>
+                                    <span
+                                        class="block sm:hidden text-[10px] px-2 py-0.5 rounded-md bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 font-bold uppercase border border-orange-200 dark:border-orange-800/50">Hard</span>
+                                </div>
+                                <p class="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 leading-relaxed mt-1 sm:mt-0 sm:mb-4">Conquer the
+                                    hardest
+                                    problems top companies ask.</p>
+                                <span
+                                    class="hidden sm:inline-block mt-auto text-[10px] px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 font-bold uppercase border border-orange-200 dark:border-orange-800/50">Hard</span>
+                            </div>
                         </div>
                     </div>
                 </div>

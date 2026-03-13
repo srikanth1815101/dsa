@@ -569,16 +569,32 @@
                                 isComplete = true;
                                 console.log("Database deleted successfully");
                                 localStorage.setItem('dsa-welcome-reset', 'true');
-                                showAlert(
+                                
+                                showPrompt(
                                     "Reset Complete",
-                                    `Account has been successfully reset.<br><br>Your new identity is <b>${newName}</b>.<br><br>Click OK to restart.`,
-                                    "success",
-                                    () => {
+                                    "Account has been successfully reset.<br><br>Here is your new randomly generated identity. You can modify it if you'd like.<br><br>Click Save & Restart when ready.",
+                                    newName,
+                                    (finalName) => {
+                                        if (finalName.trim() !== '') {
+                                            localStorage.setItem('dsa-nickname', finalName.trim());
+                                        } else {
+                                            localStorage.setItem('dsa-nickname', newName); // Fallback to random if cleared
+                                        }
+
+                                        // Set visited states to avoid redundant prompts on explicit reset
+                                        localStorage.setItem('dsa-seen-welcome', 'true');
+                                        localStorage.setItem('dsa-seen-guide-prompt', 'true');
+                                        localStorage.setItem('dsa-seen-profile-name-prompt', 'true');
                                         if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
                                         window.scrollTo(0, 0);
                                         window.location.reload();
                                     }
                                 );
+                                
+                                // Reset is final; lock the modal to only the confirm button
+                                document.getElementById('actionModalConfirmBtn').textContent = "Save & Restart";
+                                document.getElementById('actionModalCancelBtn').classList.add('hidden');
+                                document.getElementById('actionModalCloseBtn').classList.add('hidden');
                             };
 
                             deleteReq.onerror = (e) => {
@@ -755,6 +771,8 @@
                 const titleEl = document.getElementById('actionModalTitle');
                 const msgEl = document.getElementById('actionModalMessage');
                 const confirmBtn = document.getElementById('actionModalConfirmBtn');
+                const cancelBtn = document.getElementById('actionModalCancelBtn');
+                const closeBtn = document.getElementById('actionModalCloseBtn');
                 const inputEl = document.getElementById('actionModalInputContainer');
                 const checkboxEl = document.getElementById('actionModalCheckboxContainer'); // Ensure we can access this
 
@@ -762,6 +780,8 @@
                 msgEl.innerHTML = message; // Allow HTML for line breaks
                 inputEl.classList.add('hidden');
                 if (checkboxEl) checkboxEl.classList.add('hidden'); // Reset checkbox visibility
+                if (cancelBtn) cancelBtn.classList.remove('hidden');
+                if (closeBtn) closeBtn.classList.remove('hidden');
 
                 // Reset Button Style
                 confirmBtn.className = "px-4 py-2 rounded-lg text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30";
@@ -907,7 +927,8 @@
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = `dsa-backup-${new Date().toISOString().split('T')[0]}.json`;
+                    const username = (localStorage.getItem('dsa-nickname') || 'user').toLowerCase().replace(/\s+/g, '-');
+                    a.download = `${username}-account-backup-${new Date().toISOString().split('T')[0]}.json`;
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);
@@ -1187,7 +1208,7 @@
         <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center"
             id="actionModalHeader">
             <h3 class="text-lg font-bold text-gray-900 dark:text-white" id="actionModalTitle">Action</h3>
-            <button onclick="closeActionModal()"
+            <button onclick="closeActionModal()" id="actionModalCloseBtn"
                 class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                 <i data-lucide="x" class="w-5 h-5 text-gray-400"></i>
             </button>
@@ -1219,7 +1240,7 @@
 
             <!-- Actions -->
             <div class="flex justify-end gap-3" id="actionModalButtons">
-                <button onclick="closeActionModal()"
+                <button onclick="closeActionModal()" id="actionModalCancelBtn"
                     class="px-4 py-2 rounded-lg text-sm font-bold text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
                     Cancel
                 </button>

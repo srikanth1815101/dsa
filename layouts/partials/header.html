@@ -168,6 +168,17 @@
                 window.location.href = '/guide/';
             });
         }
+
+        // Also trigger if they directly load a problem page without clicking a link
+        const isProblemPage = window.location.pathname.startsWith('/problems/') && window.location.pathname !== '/problems/';
+        const hasSeenGuidePrompt = localStorage.getItem('dsa-seen-guide-prompt');
+        if (isProblemPage && !hasSeenGuidePrompt) {
+            const modal = document.getElementById('guide-prompt-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
     });
 
     document.addEventListener('click', function (e) {
@@ -175,13 +186,13 @@
         if (!link || !link.href || link.target === '_blank' || link.hasAttribute('download')) return;
 
         const isInternal = link.hostname === window.location.hostname;
-        const isGuide = link.pathname.includes('/guide');
+        const isProblemLink = link.pathname.startsWith('/problems/') && link.pathname !== '/problems/';
         const isHashOnly = link.getAttribute('href').startsWith('#');
 
         // Allow navigation without interruption if user already saw prompt
         const hasSeenGuidePrompt = localStorage.getItem('dsa-seen-guide-prompt');
 
-        if (isInternal && !isGuide && !isHashOnly && !hasSeenGuidePrompt) {
+        if (isInternal && isProblemLink && !isHashOnly && !hasSeenGuidePrompt) {
             e.preventDefault();
             pendingNavigationUrl = link.href;
             const modal = document.getElementById('guide-prompt-modal');

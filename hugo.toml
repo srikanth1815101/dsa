@@ -63,6 +63,11 @@ enableGitInfo = false
   url = "/contact/"
   weight = 2
 
+[[menu.footer]]
+  name = "About"
+  url = "/about/"
+  weight = 3
+
 
 # Site parameters
 [params]

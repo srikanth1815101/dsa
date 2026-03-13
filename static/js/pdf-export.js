@@ -567,7 +567,8 @@
             const blobUrl = URL.createObjectURL(blob);
             window.open(blobUrl, '_blank');
         } else {
-            doc.save(`${nickname}_DSA_Notes.pdf`);
+            const username = (localStorage.getItem('dsa-nickname') || 'user').replace(/\s+/g, '-');
+            doc.save(`${username}-DSA-Notes-${new Date().toISOString().split('T')[0]}.pdf`);
         }
     };
 

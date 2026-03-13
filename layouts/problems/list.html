@@ -19,8 +19,8 @@
             <div class="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
                 <div class="flex-1">
                     <div class="flex items-center gap-3 mb-4">
-                        <div class="p-2 bg-gradient-to-br from-primary/10 to-blue-500/10 rounded-xl">
-                            <i data-lucide="list" class="w-6 h-6 text-primary"></i>
+                        <div class="p-2.5 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/20">
+                            <i data-lucide="list" class="w-6 h-6"></i>
                         </div>
                         <h1
                             class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">
@@ -33,11 +33,11 @@
                         <div class="flex-1">
                             <div class="flex justify-between text-sm font-medium mb-2">
                                 <span class="text-gray-500 dark:text-gray-400">Total Progress</span>
-                                <span id="progress-text" class="text-primary font-bold">0 / {{ len .Pages }}</span>
+                                <span id="progress-text" class="text-blue-600 dark:text-blue-400 font-bold">0 / {{ len .Pages }}</span>
                             </div>
                             <div class="h-2.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
                                 <div id="progress-bar"
-                                    class="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-1000 ease-out w-0 relative">
+                                    class="h-full bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-1000 ease-out w-0 relative">
                                     <div
                                         class="absolute inset-0 bg-white/20 animate-[shimmer_2s_infinite] border-t border-white/10">
                                     </div>

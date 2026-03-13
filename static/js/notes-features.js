@@ -281,7 +281,7 @@ function renderNotes(items) {
                         </span>
                         
                         <!-- Desktop Hover Tags -->
-                        <div class="topic-tags-container hidden md:flex items-center gap-2 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-out flex-shrink overflow-hidden min-w-0">
+                        <div class="topic-tags-container hidden md:flex items-center gap-2 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 group-[.expanded]:!opacity-0 group-[.expanded]:pointer-events-none transition-all duration-300 ease-out flex-shrink overflow-hidden min-w-0">
                             ${item.topics.map(t => `
                                 <span class="topic-tag px-2 py-0.5 rounded-md text-[10px] font-semibold bg-primary/10 text-primary border border-primary/20 whitespace-nowrap">
                                     ${t}
@@ -312,7 +312,7 @@ function renderNotes(items) {
 ${item.content}
                         </div>
                         <div class="mt-6 pt-4 flex justify-end">
-                            <a href="${item.permalink}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700/50 text-gray-700 dark:text-gray-200 rounded-lg text-sm font-semibold hover:bg-primary hover:text-white transition-all shadow-sm hover:shadow-md">
+                            <a href="${item.permalink}" class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg text-sm font-bold shadow-md hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all">
                                 View Problem <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                         </div>
@@ -447,7 +447,7 @@ function renderReflections(items) {
 ${item.content}
                         </div>
                         <div class="mt-6 pt-4 flex justify-end">
-                            <a href="/interview/review/?id=${item.id}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700/50 text-gray-700 dark:text-gray-200 rounded-lg text-sm font-semibold hover:bg-purple-600 hover:text-white transition-all shadow-sm hover:shadow-md">
+                            <a href="/interview/review/?id=${item.id}" class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-fuchsia-600 text-white rounded-lg text-sm font-bold shadow-md hover:shadow-lg hover:shadow-purple-500/30 hover:-translate-y-0.5 transition-all">
                                 View Session <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                         </div>

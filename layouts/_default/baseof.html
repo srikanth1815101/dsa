@@ -772,6 +772,14 @@
             document.body.classList.remove('page-transitioning');
         });
 
+        // Close menu on scroll
+        window.addEventListener('scroll', () => {
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
+        }, { passive: true });
+
         // Intercept navigation for smooth fade out
         document.addEventListener('click', e => {
             // Close mobile menu if clicked outside

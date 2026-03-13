@@ -222,20 +222,22 @@
                         </div>
                         {{ end }}
 
-                        <!-- Full Repo: Indigo Gradient -->
+                        {{ if .Params.engineeringMode }}
+                        <!-- Engineering Mode: Indigo Gradient -->
                         <div class="group/tooltip relative">
-                            <a href="https://github.com/your-repo/dsa-problems" target="_blank"
+                            <a href="{{ .Params.engineeringMode }}" target="_blank"
                                 class="flex items-center justify-center p-3 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all shadow-indigo-500/20">
-                                <i data-lucide="github" class="w-5 h-5"></i>
+                                <i data-lucide="bug" class="w-5 h-5"></i>
                             </a>
                             <div
                                 class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0">
-                                Full Repo
+                                Engineering Mode
                                 <div
                                     class="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900 dark:border-t-black">
                                 </div>
                             </div>
                         </div>
+                        {{ end }}
 
                         <div class="w-px h-8 bg-gray-200 dark:bg-gray-700 hidden sm:block mx-1"></div>
 
@@ -255,12 +257,14 @@
                                 </div>
                             </button>
                             <div id="hint-dropdown"
-                                class="absolute top-full left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:translate-x-0 mt-3 w-[85vw] sm:w-80 bg-white dark:bg-gray-800 border-2 border-yellow-400/30 dark:border-yellow-500/30 rounded-xl shadow-2xl p-5 hidden z-[100] animate-fade-in-up origin-top md:origin-top-right">
-                                <ul class="list-disc list-inside space-y-3 text-sm text-gray-600 dark:text-gray-300">
-                                    {{ range .Params.hints }}
-                                    <li class="leading-relaxed">{{ . }}</li>
-                                    {{ end }}
-                                </ul>
+                                class="absolute top-full left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:translate-x-0 mt-3 w-[85vw] sm:w-80 hidden z-[100]">
+                                <div class="bg-white dark:bg-gray-800 border-2 border-yellow-400/30 dark:border-yellow-500/30 rounded-xl shadow-2xl p-5 animate-fade-in-up origin-top md:origin-top-right w-full">
+                                    <ul class="list-disc list-inside space-y-3 text-sm text-gray-600 dark:text-gray-300">
+                                        {{ range .Params.hints }}
+                                        <li class="leading-relaxed">{{ . }}</li>
+                                        {{ end }}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         {{ end }}

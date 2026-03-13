@@ -6,6 +6,7 @@ topics: ["Array", "Queue", "Sliding Window", "Monotonic Queue"]
 companies: ["Amazon", "Google", "Microsoft"]
 path: "Mastery"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/sliding-window-maximum"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/sliding-window-maximum"
 hints:
   - "Use a monotonic decreasing deque to track potential maximums."
   - "Remove elements from front when they're outside the window."

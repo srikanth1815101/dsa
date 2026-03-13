@@ -6,6 +6,7 @@ topics: ["Linked List", "Recursion"]
 companies: ["Amazon", "Microsoft", "Facebook"]
 path: "Mastery"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/reverse-nodes-in-k-group"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/reverse-nodes-in-k-group"
 hints:
   - "First count if there are at least k nodes to reverse."
   - "Reverse k nodes, then recursively process the remaining list."

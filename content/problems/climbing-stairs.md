@@ -6,6 +6,7 @@ topics: ["Dynamic Programming", "Math"]
 companies: ["Google", "Facebook", "Apple"]
 path: "Basic"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/climbing-stairs"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/climbing-stairs"
 hints:
   - "The answer follows a pattern: ways(n) = ways(n-1) + ways(n-2)."
   - "This is essentially the Fibonacci sequence."

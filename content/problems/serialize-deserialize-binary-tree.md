@@ -6,6 +6,7 @@ topics: ["Tree", "DFS", "BFS", "Design"]
 companies: ["Amazon", "Facebook", "Microsoft"]
 path: "Mastery"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/serialize-deserialize-binary-tree"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/serialize-deserialize-binary-tree"
 hints:
   - "Use preorder traversal to serialize, including null markers."
   - "Deserialize by reading values in the same order."

@@ -6,6 +6,7 @@ topics: ["Array", "Prefix Sum"]
 companies: ["Amazon", "Facebook", "Apple"]
 path: "Advanced"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/product-of-array-except-self"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/product-of-array-except-self"
 hints:
   - "Think about prefix and suffix products."
   - "Can you compute the result without using division?"

@@ -6,6 +6,7 @@ topics: ["Array", "Binary Search", "Divide and Conquer"]
 companies: ["Google", "Amazon", "Apple"]
 path: "Mastery"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/median-of-two-sorted-arrays"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/median-of-two-sorted-arrays"
 hints:
   - "Binary search on the smaller array to find the correct partition."
   - "The partition should divide total elements into two equal halves."

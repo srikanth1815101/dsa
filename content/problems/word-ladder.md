@@ -6,6 +6,7 @@ topics: ["Graph", "BFS", "String"]
 companies: ["Amazon", "Facebook", "Google"]
 path: "Mastery"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/word-ladder"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/word-ladder"
 hints:
   - "Model words as nodes in a graph where edges connect words differing by one letter."
   - "Use BFS to find the shortest path."

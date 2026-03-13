@@ -6,6 +6,7 @@ topics: ["Graph", "BFS", "Matrix"]
 companies: ["Amazon", "Microsoft", "Google"]
 path: "Advanced"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/rotting-oranges"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/rotting-oranges"
 hints:
   - "Use multi-source BFS starting from all rotten oranges simultaneously."
   - "Track elapsed time by processing level by level."

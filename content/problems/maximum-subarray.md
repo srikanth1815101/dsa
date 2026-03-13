@@ -6,6 +6,7 @@ topics: ["Array", "Dynamic Programming", "Divide and Conquer"]
 companies: ["Google", "Facebook", "Microsoft"]
 path: "Basic"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/maximum-subarray"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/maximum-subarray"
 hints:
   - "If the running sum becomes negative, it's better to start fresh."
   - "Consider Kadane's algorithm for an O(n) solution."

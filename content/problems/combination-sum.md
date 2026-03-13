@@ -6,6 +6,7 @@ topics: ["Array", "Backtracking"]
 companies: ["Amazon", "Facebook", "Airbnb"]
 path: "Advanced"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/combination-sum"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/combination-sum"
 hints:
   - "Use backtracking to explore all possible combinations."
   - "You can reuse the same element multiple times."

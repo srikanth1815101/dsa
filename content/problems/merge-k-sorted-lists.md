@@ -6,6 +6,7 @@ topics: ["Linked List", "Divide and Conquer", "Heap"]
 companies: ["Amazon", "Facebook", "Microsoft"]
 path: "Mastery"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/merge-k-sorted-lists"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/merge-k-sorted-lists"
 hints:
   - "Use a min-heap to always extract the smallest element efficiently."
   - "Alternative: merge lists pairwise using divide and conquer."

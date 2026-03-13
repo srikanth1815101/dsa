@@ -6,6 +6,7 @@ topics: ["Array", "Binary Search"]
 companies: ["Amazon", "Facebook", "Microsoft"]
 path: "Advanced"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/search-in-rotated-sorted-array"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/search-in-rotated-sorted-array"
 hints:
   - "The array is rotated but still partially sorted."
   - "Determine which half is sorted, then decide which half to search."

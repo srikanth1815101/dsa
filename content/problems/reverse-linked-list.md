@@ -6,6 +6,7 @@ topics: ["Linked List", "Recursion"]
 companies: ["Amazon", "Microsoft", "Apple"]
 path: "Basic"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/reverse-linked-list"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/reverse-linked-list"
 hints:
   - "Use three pointers: prev, curr, and next."
   - "At each step, reverse the current node's pointer and move forward."

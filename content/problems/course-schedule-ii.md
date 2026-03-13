@@ -6,6 +6,7 @@ topics: ["Graph", "Topological Sort", "BFS", "DFS"]
 companies: ["Amazon", "Facebook", "Microsoft"]
 path: "Mastery"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/course-schedule-ii"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/course-schedule-ii"
 hints:
   - "This is a classic topological sort problem."
   - "Build a graph and track in-degrees, then use Kahn's algorithm."

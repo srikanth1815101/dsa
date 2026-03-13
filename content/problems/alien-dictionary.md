@@ -6,6 +6,7 @@ topics: ["Graph", "Topological Sort", "BFS"]
 companies: ["Amazon", "Facebook", "Airbnb"]
 path: "Mastery"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/alien-dictionary"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/alien-dictionary"
 hints:
   - "Build a directed graph from character orderings."
   - "Use topological sort to determine the order."

@@ -6,6 +6,7 @@ topics: ["Stack", "Queue", "Design"]
 companies: ["Amazon", "Microsoft", "Bloomberg"]
 path: "Advanced"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/implement-queue-using-stacks"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/implement-queue-using-stacks"
 hints:
   - "Use two stacks: one for input, one for output."
   - "Transfer elements from input to output only when output is empty."

@@ -6,6 +6,7 @@ topics: ["Array", "Stack", "Monotonic Stack"]
 companies: ["Amazon", "Google", "Microsoft"]
 path: "Mastery"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/largest-rectangle-in-histogram"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/largest-rectangle-in-histogram"
 hints:
   - "Use a monotonic increasing stack of indices."
   - "When you see a shorter bar, calculate areas for taller bars."

@@ -6,6 +6,7 @@ topics: ["String", "Stack"]
 companies: ["Google", "Meta", "Amazon"]
 path: "Basic"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/valid-parentheses"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/valid-parentheses"
 hints:
   - "Use a Stack to keep track of opening brackets."
   - "When encountering a closing bracket, check the top of the stack."

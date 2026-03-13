@@ -6,6 +6,7 @@ topics: ["Array", "Hash Table"]
 companies: ["Google", "Amazon", "Microsoft"]
 path: "Basic"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/two-sum"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/two-sum"
 hints:
   - "Use a Hash Map to store numbers you've seen."
   - "For each number x, check if (target - x) exists in the map."

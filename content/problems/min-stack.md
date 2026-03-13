@@ -6,6 +6,7 @@ topics: ["Stack", "Design"]
 companies: ["Amazon", "Bloomberg", "Microsoft"]
 path: "Advanced"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/min-stack"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/min-stack"
 hints:
   - "Store the minimum alongside each element."
   - "Or use two stacks: one for values, one for tracking minimums."

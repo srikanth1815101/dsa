@@ -6,6 +6,7 @@ topics: ["Array", "Two Pointers", "Dynamic Programming", "Stack"]
 companies: ["Amazon", "Google", "Bloomberg"]
 path: "Mastery"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/trapping-rain-water"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/trapping-rain-water"
 hints:
   - "Water at each position = min(maxLeft, maxRight) - height."
   - "Use two pointers from both ends to avoid extra space."

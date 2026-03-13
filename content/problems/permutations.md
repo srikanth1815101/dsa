@@ -6,6 +6,7 @@ topics: ["Array", "Backtracking"]
 companies: ["Amazon", "Microsoft", "LinkedIn"]
 path: "Advanced"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/permutations"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/permutations"
 hints:
   - "Use backtracking to generate all orderings."
   - "Track which elements have been used in the current permutation."

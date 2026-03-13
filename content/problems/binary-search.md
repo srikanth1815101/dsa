@@ -6,6 +6,7 @@ topics: ["Array", "Binary Search"]
 companies: ["Google", "Facebook", "Apple"]
 path: "Basic"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/binary-search"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/binary-search"
 hints:
   - "The array is sorted—use this to eliminate half the search space."
   - "Compare the target with the middle element to decide which half to search."

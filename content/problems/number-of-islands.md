@@ -6,6 +6,7 @@ topics: ["Graph", "DFS", "BFS", "Matrix"]
 companies: ["Amazon", "Google", "Facebook"]
 path: "Advanced"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/number-of-islands"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/number-of-islands"
 hints:
   - "Use DFS or BFS to explore each island completely."
   - "Mark visited cells to avoid counting the same island twice."

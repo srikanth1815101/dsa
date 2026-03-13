@@ -6,6 +6,7 @@ topics: ["Array", "Dynamic Programming"]
 companies: ["Amazon", "Google", "Facebook"]
 path: "Basic"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/best-time-to-buy-and-sell-stock"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/best-time-to-buy-and-sell-stock"
 hints:
   - "Track the minimum price seen so far."
   - "At each step, calculate the profit if you sold today and track the maximum."

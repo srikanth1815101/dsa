@@ -6,6 +6,7 @@ topics: ["Array", "Two Pointers", "Sorting"]
 companies: ["Meta", "Amazon", "Microsoft"]
 path: "Basic"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/merge-sorted-array"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/merge-sorted-array"
 hints:
   - "Start from the back of the arrays to avoid overwriting elements."
   - "Use three pointers: end of nums1 valid elements, end of nums2, and merge position."

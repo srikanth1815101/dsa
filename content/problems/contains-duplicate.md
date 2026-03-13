@@ -6,6 +6,7 @@ topics: ["Array", "Hash Table", "Sorting"]
 companies: ["Google", "Amazon", "Apple"]
 path: "Basic"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/contains-duplicate"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/contains-duplicate"
 hints:
   - "Use a HashSet to track elements you've seen."
   - "If you encounter an element already in the set, return true."

@@ -6,6 +6,7 @@ topics: ["Tree", "Binary Search Tree", "DFS"]
 companies: ["Amazon", "Facebook", "Microsoft"]
 path: "Advanced"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/lowest-common-ancestor-bst"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/lowest-common-ancestor-bst"
 hints:
   - "Use the BST property: left subtree has smaller values, right has larger."
   - "If both nodes are smaller than root, LCA is in left subtree; if both larger, it's in right."

@@ -6,6 +6,7 @@ topics: ["Linked List", "Two Pointers"]
 companies: ["Amazon", "Microsoft", "Bloomberg"]
 path: "Basic"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/linked-list-cycle"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/linked-list-cycle"
 hints:
   - "Use two pointers moving at different speeds."
   - "If they meet, there's a cycle; if fast reaches null, there's no cycle."

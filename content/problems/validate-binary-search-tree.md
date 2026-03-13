@@ -6,6 +6,7 @@ topics: ["Tree", "Binary Search Tree", "DFS"]
 companies: ["Amazon", "Microsoft", "Facebook"]
 path: "Advanced"
 starterCode: "https://github.com/your-username/dsa-repo/tree/main/problems/validate-binary-search-tree"
+engineeringMode: "https://github.com/your-repo/dsa-problems/tree/main/engineering/validate-binary-search-tree"
 hints:
   - "A BST's inorder traversal produces values in strictly increasing order."
   - "Alternatively, pass min/max bounds during recursive traversal."

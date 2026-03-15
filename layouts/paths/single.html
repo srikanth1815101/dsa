@@ -128,6 +128,21 @@
                     </div>
                     {{ end }}
 
+                    <!-- Share Feature -->
+                    <div class="group/tooltip relative">
+                        <button onclick="copyPageUrl()"
+                            class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-slate-500 to-slate-700 text-white shadow-lg shadow-slate-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                            <i data-lucide="share-2" class="w-4 h-4 md:w-5 md:h-5"></i>
+                        </button>
+                        <div
+                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0 text-center">
+                            Share
+                            <div
+                                class="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900 dark:border-t-black">
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -163,20 +178,22 @@
         <div class="relative min-h-[200px]">
             <div id="empty-state"
                 class="hidden flex flex-col items-center justify-center py-2 md:py-4 text-center animate-fade-in relative z-10 w-full">
-                <div class="w-14 h-14 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center mb-3 shadow-lg border border-gray-100 dark:border-gray-700 relative group">
+                <div
+                    class="w-14 h-14 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center mb-3 shadow-lg border border-gray-100 dark:border-gray-700 relative group">
                     <!-- Dynamic Theme Glow -->
                     <div id="empty-glow" class="absolute inset-0 rounded-xl blur-lg transition-opacity"></div>
                     <i data-lucide="folder-open" id="empty-icon" class="w-6 h-6 relative z-10 transition-colors"></i>
                 </div>
-                
+
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight" id="empty-title">
                     No problems found
                 </h3>
-                <p class="text-xs text-gray-500 dark:text-gray-400 max-w-sm mx-auto mb-5 leading-relaxed px-4" id="empty-desc">
+                <p class="text-xs text-gray-500 dark:text-gray-400 max-w-sm mx-auto mb-5 leading-relaxed px-4"
+                    id="empty-desc">
                     Start solving and save problems to see them here.
                 </p>
-                
-                <button onclick="switchTab('all')" id="empty-state-btn" 
+
+                <button onclick="switchTab('all')" id="empty-state-btn"
                     class="inline-flex items-center gap-1.5 px-5 py-2 text-white rounded-xl font-bold text-xs hover:-translate-y-0.5 transition-all shadow-lg">
                     <span id="empty-btn-text">View all problems</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
@@ -430,7 +447,7 @@
                 const icon = document.getElementById('empty-icon');
                 const glow = document.getElementById('empty-glow');
                 const btn = document.getElementById('empty-state-btn');
-                
+
                 const pathTitle = "{{ .Title }}";
                 let themeColor = 'text-blue-500';
                 let themeGlow = 'from-blue-500/10 to-indigo-600/10';

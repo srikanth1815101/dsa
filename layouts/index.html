@@ -6,7 +6,7 @@
     <!-- 1. HERO SECTION                                           -->
     <!-- ═══════════════════════════════════════════════════════════ -->
     <section
-        class="relative min-h-screen min-h-[100dvh] flex flex-col justify-center items-center pt-20 pb-20 overflow-hidden">
+        class="relative min-h-[100dvh] flex flex-col justify-center items-center pt-24 md:pt-28 pb-10 overflow-hidden">
         <div
             class="absolute inset-0 bg-[url('/img/grid.svg')] bg-center opacity-[0.03] dark:opacity-[0.07] pointer-events-none">
         </div>
@@ -24,42 +24,57 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center w-full">
 
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 dark:text-white mb-8 tracking-tighter opacity-0 animate-fade-in-up"
+            <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-gray-900 dark:text-white mb-4 md:mb-8 tracking-tighter opacity-0 animate-fade-in-up md:px-4 leading-[1.1]"
                 style="animation-delay: 0.1s; animation-fill-mode: forwards;">
-                One Platform. <br>
+                One Platform. <br class="sm:hidden">
                 <span
-                    class="text-transparent bg-clip-text pb-2 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-[length:200%_auto] animate-gradient-x inline-block">Complete
+                    class="text-transparent bg-clip-text pb-1 md:pb-2 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-[length:200%_auto] animate-gradient-x inline-block">Complete
                     Mastery.</span>
             </h1>
 
-            <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed opacity-0 animate-slide-up"
+            <p class="text-base md:text-xl text-gray-600 dark:text-gray-400 mb-6 md:mb-10 max-w-[280px] sm:max-w-2xl mx-auto leading-relaxed opacity-0 animate-slide-up"
                 style="animation-delay: 0.2s; animation-fill-mode: forwards;">
                 Practice DSA the way real software engineers work in enterprise applications.
             </p>
 
-            <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-12 opacity-0 animate-slide-up"
+            <!-- Primary Actions -->
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-3 md:gap-4 mb-8 md:mb-12 opacity-0 animate-slide-up px-8 w-full max-w-[320px] sm:max-w-none mx-auto"
                 style="animation-delay: 0.3s; animation-fill-mode: forwards;">
+                <a href="/problems/"
+                    class="w-full sm:w-auto px-7 py-3 md:px-8 md:py-3.5 bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-xl md:rounded-2xl font-bold text-base md:text-lg shadow-xl shadow-blue-500/20 transition-all hover:-translate-y-1 hover:shadow-blue-500/40 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2.5 group">
+                    <i data-lucide="list" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                    Start Practicing
+                </a>
+                <a href="/interview/"
+                    class="w-full sm:w-auto px-7 py-3 md:px-8 md:py-3.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl md:rounded-2xl font-bold text-base md:text-lg shadow-xl shadow-purple-500/20 transition-all hover:-translate-y-1 hover:shadow-purple-500/40 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2.5 group border border-white/10">
+                    <i data-lucide="monitor-check" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                    Mock Interview
+                </a>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-4 mb-12 opacity-0 animate-slide-up max-w-[300px] sm:max-w-none mx-auto"
+                style="animation-delay: 0.4s; animation-fill-mode: forwards;">
                 <div
-                    class="px-4 py-2 rounded-full bg-blue-50/80 dark:bg-blue-900/20 border border-blue-200/50 dark:border-blue-800/50 flex items-center gap-2 shadow-sm">
-                    <i data-lucide="user-x" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
-                    <span class="text-sm font-semibold text-gray-800 dark:text-gray-200">No accounts</span>
+                    class="px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-blue-50/80 dark:bg-blue-900/20 border border-blue-200/50 dark:border-blue-800/50 flex items-center gap-2 shadow-sm">
+                    <i data-lucide="user-x" class="w-3.5 h-3.5 md:w-4 md:h-4 text-blue-600 dark:text-blue-400"></i>
+                    <span class="text-[10px] md:text-sm font-semibold text-gray-800 dark:text-gray-200">No accounts</span>
                 </div>
                 <div
-                    class="px-4 py-2 rounded-full bg-purple-50/80 dark:bg-purple-900/20 border border-purple-200/50 dark:border-purple-800/50 flex items-center gap-2 shadow-sm">
-                    <i data-lucide="log-in" class="w-4 h-4 text-purple-600 dark:text-purple-400"></i>
-                    <span class="text-sm font-semibold text-gray-800 dark:text-gray-200">No login</span>
+                    class="px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-purple-50/80 dark:bg-purple-900/20 border border-purple-200/50 dark:border-purple-800/50 flex items-center gap-2 shadow-sm">
+                    <i data-lucide="log-in" class="w-3.5 h-3.5 md:w-4 md:h-4 text-purple-600 dark:text-purple-400"></i>
+                    <span class="text-[10px] md:text-sm font-semibold text-gray-800 dark:text-gray-200">No login</span>
                 </div>
                 <div
-                    class="px-4 py-2 rounded-full bg-pink-50/80 dark:bg-pink-900/20 border border-pink-200/50 dark:border-pink-800/50 flex items-center gap-2 shadow-sm">
-                    <i data-lucide="infinity" class="w-4 h-4 text-pink-600 dark:text-pink-400"></i>
-                    <span class="text-sm font-semibold text-gray-800 dark:text-gray-200">Free forever</span>
+                    class="px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-pink-50/80 dark:bg-pink-900/20 border border-pink-200/50 dark:border-pink-800/50 flex items-center gap-2 shadow-sm">
+                    <i data-lucide="infinity" class="w-3.5 h-3.5 md:w-4 md:h-4 text-pink-600 dark:text-pink-400"></i>
+                    <span class="text-[10px] md:text-sm font-semibold text-gray-800 dark:text-gray-200">Free forever</span>
                 </div>
             </div>
         </div>
 
         <!-- Company Logo Ticker -->
         <div class="absolute bottom-0 left-0 w-full pb-8 pt-8 px-4 sm:px-6 lg:px-8 z-10 text-center opacity-0 animate-slide-up"
-            style="animation-delay: 0.25s; animation-fill-mode: forwards;">
+            style="animation-delay: 0.5s; animation-fill-mode: forwards;">
             <p class="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-5">
                 Prepare for interviews at
             </p>

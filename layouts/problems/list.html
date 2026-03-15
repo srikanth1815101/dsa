@@ -128,14 +128,14 @@
                     <i data-lucide="bookmark" class="w-3.5 h-3.5 md:w-4 md:h-4"></i>
                     Saved
                     <span id="saved-count-badge"
-                        class="ml-0.5 md:ml-1 px-1.5 py-0.5 text-[9px] md:text-[10px] bg-primary/10 text-primary rounded-md hidden">0</span>
+                        class="ml-0.5 md:ml-1 px-1.5 py-0.5 text-[9px] md:text-[10px] bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400 rounded-md hidden transition-colors duration-300">0</span>
                 </button>
                 <button onclick="switchTab('revised')" id="tab-revised"
                     class="flex-1 md:flex-none justify-center px-4 py-2 rounded-full text-xs md:text-sm font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-all duration-300 flex items-center gap-1.5 md:gap-2">
                     <i data-lucide="list-restart" class="w-3.5 h-3.5 md:w-4 md:h-4"></i>
                     Revise
                     <span id="revised-count-badge"
-                        class="ml-0.5 md:ml-1 px-1.5 py-0.5 text-[9px] md:text-[10px] bg-primary/10 text-primary rounded-md hidden">0</span>
+                        class="ml-0.5 md:ml-1 px-1.5 py-0.5 text-[9px] md:text-[10px] bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400 rounded-md hidden transition-colors duration-300">0</span>
                 </button>
             </div>
 
@@ -214,7 +214,7 @@
                     Try adjusting your search or filters to find what you're looking for.
                 </p>
                 <button onclick="clearFilters()"
-                    class="mt-6 px-6 py-2.5 bg-primary text-white rounded-xl font-medium hover:bg-primary/90 transition-colors shadow-lg shadow-primary/25">
+                    class="mt-6 px-6 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium hover:-translate-y-0.5 transition-all shadow-lg shadow-blue-500/25">
                     Clear all filters
                 </button>
             </div>
@@ -341,26 +341,31 @@
     }
 
     function updateTabUI() {
-        const activeClass = ['bg-primary', 'text-white', 'shadow-md'];
+        const activeClass = ['bg-gradient-to-r', 'from-blue-500', 'to-indigo-600', 'text-white', 'shadow-md', 'shadow-blue-500/20'];
         const inactiveClass = ['text-gray-500', 'hover:text-gray-900', 'dark:text-gray-400', 'dark:hover:text-white'];
+        const badgeActiveClass = ['bg-white/20', 'text-white'];
+        const badgeInactiveClass = ['bg-blue-100', 'text-blue-600', 'dark:bg-blue-900/40', 'dark:text-blue-400'];
 
-        // Reset all
-        [tabAll, tabSaved, tabRevised].forEach(el => {
-            el.classList.remove(...activeClass);
-            el.classList.add(...inactiveClass);
+        const tabs = [
+            { id: 'all', el: tabAll, badge: null },
+            { id: 'saved', el: tabSaved, badge: document.getElementById('saved-count-badge') },
+            { id: 'revised', el: tabRevised, badge: document.getElementById('revised-count-badge') }
+        ];
+
+        tabs.forEach(tab => {
+            if (!tab.el) return;
+            const isActive = currentTab === tab.id;
+            
+            // Handle Button State
+            tab.el.classList.remove(...activeClass, ...inactiveClass);
+            tab.el.classList.add(...(isActive ? activeClass : inactiveClass));
+            
+            // Handle Badge State (if exists)
+            if (tab.badge) {
+                tab.badge.classList.remove(...badgeActiveClass, ...badgeInactiveClass);
+                tab.badge.classList.add(...(isActive ? badgeActiveClass : badgeInactiveClass));
+            }
         });
-
-        // Set active
-        if (currentTab === 'all') {
-            tabAll.classList.add(...activeClass);
-            tabAll.classList.remove(...inactiveClass);
-        } else if (currentTab === 'saved') {
-            tabSaved.classList.add(...activeClass);
-            tabSaved.classList.remove(...inactiveClass);
-        } else if (currentTab === 'revised') {
-            tabRevised.classList.add(...activeClass);
-            tabRevised.classList.remove(...inactiveClass);
-        }
 
         updateCounts();
     }

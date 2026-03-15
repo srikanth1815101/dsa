@@ -162,21 +162,41 @@
                     <i data-lucide="bookmark" class="w-3.5 h-3.5 md:w-4 md:h-4"></i>
                     Saved
                     <span id="saved-count-badge"
-                        class="ml-0.5 md:ml-1 px-1.5 py-0.5 text-[9px] md:text-[10px] bg-primary/10 text-primary rounded-md hidden">0</span>
+                        class="ml-0.5 md:ml-1 px-1.5 py-0.5 text-[9px] md:text-[10px] rounded-md hidden transition-colors duration-300">0</span>
                 </button>
                 <button onclick="switchTab('revised')" id="tab-revised"
                     class="flex-1 md:flex-none justify-center px-4 py-2 rounded-full text-xs md:text-sm font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-all duration-300 flex items-center gap-1.5 md:gap-2">
                     <i data-lucide="list-restart" class="w-3.5 h-3.5 md:w-4 md:h-4"></i>
                     Revise
                     <span id="revised-count-badge"
-                        class="ml-0.5 md:ml-1 px-1.5 py-0.5 text-[9px] md:text-[10px] bg-primary/10 text-primary rounded-md hidden">0</span>
+                        class="ml-0.5 md:ml-1 px-1.5 py-0.5 text-[9px] md:text-[10px] rounded-md hidden transition-colors duration-300">0</span>
                 </button>
             </div>
         </div>
 
         <!-- Problems List (Reusing exact structure from problems list for consistency) -->
-        <div id="problems-list" class="space-y-2 relative z-0">
-            {{ range $problems.ByDate }}
+        <div class="relative min-h-[400px]">
+            <!-- Empty State Container -->
+            <div id="empty-state" class="hidden absolute inset-0 flex flex-col items-center justify-center p-12 text-center z-10 animate-fade-in">
+                <div class="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-6">
+                    <i data-lucide="folder-open" id="empty-icon" class="w-10 h-10 text-gray-400"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight" id="empty-title">No problems found</h3>
+                <p class="text-gray-500 dark:text-gray-400 max-w-xs mx-auto leading-relaxed" id="empty-desc">
+                    Start solving and save problems to see them here.
+                </p>
+                <button onclick="switchTab('all')" id="empty-state-btn"
+                    class="mt-6 px-6 py-2.5 text-white rounded-xl font-medium hover:-translate-y-0.5 transition-all shadow-lg
+                    {{ if eq .Title "Basic" }}bg-gradient-to-r from-emerald-400 to-teal-600 shadow-emerald-500/25
+                    {{ else if eq .Title "Advanced" }}bg-gradient-to-r from-blue-400 to-indigo-600 shadow-blue-500/25
+                    {{ else if eq .Title "Mastery" }}bg-gradient-to-r from-orange-400 to-red-600 shadow-orange-500/25
+                    {{ else }}bg-gradient-to-r from-blue-500 to-indigo-600 shadow-blue-500/25{{ end }}">
+                    View all problems
+                </button>
+            </div>
+
+            <div id="problems-list" class="space-y-2 relative z-0">
+                {{ range $problems.ByDate }}
 
             <!-- Card Container (Adaptive Grid) - Responsive Alignment -->
             <div class="problem-item group grid grid-cols-[auto_1fr_auto] md:grid-cols-[50px_1fr_100px_50px_50px] items-center gap-2 md:gap-4 px-3 md:px-6 py-2.5 md:py-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 shadow-sm hover:shadow-md transition-all duration-200"
@@ -297,26 +317,72 @@
     }
 
     function updateTabUI() {
-        const activeClass = ['bg-primary', 'text-white', 'shadow-md'];
+        const pathTitle = "{{ .Title }}";
+        let activeBgClasses = ['bg-primary'];
+        let badgeInactiveClass = ['bg-blue-100', 'text-blue-600', 'dark:bg-blue-900/40', 'dark:text-blue-400'];
+        
+        if (pathTitle === 'Basic') {
+            activeBgClasses = ['bg-gradient-to-r', 'from-emerald-400', 'to-teal-600'];
+            badgeInactiveClass = ['bg-emerald-100', 'text-emerald-700', 'dark:bg-emerald-900/30', 'dark:text-emerald-400'];
+        } else if (pathTitle === 'Advanced') {
+            activeBgClasses = ['bg-gradient-to-r', 'from-blue-400', 'to-indigo-600'];
+            badgeInactiveClass = ['bg-blue-100', 'text-blue-700', 'dark:bg-blue-900/30', 'dark:text-blue-400'];
+        } else if (pathTitle === 'Mastery') {
+            activeBgClasses = ['bg-gradient-to-r', 'from-orange-400', 'to-red-600'];
+            badgeInactiveClass = ['bg-orange-100', 'text-orange-700', 'dark:bg-orange-900/30', 'dark:text-orange-400'];
+        }
+
+        const activeClass = [...activeBgClasses, 'text-white', 'shadow-md'];
         const inactiveClass = ['text-gray-500', 'hover:text-gray-900', 'dark:text-gray-400', 'dark:hover:text-white'];
+        const badgeActiveClass = ['bg-white/20', 'text-white'];
 
         if (!tabAll) return;
 
-        [tabAll, tabSaved, tabRevised].forEach(el => {
-            el.classList.remove(...activeClass);
-            el.classList.add(...inactiveClass);
-        });
+        // Collect all possible active button classes
+        const allActiveButtonClasses = [
+            'bg-primary', 'bg-gradient-to-r', 'from-emerald-400', 'to-teal-600', 
+            'from-blue-400', 'to-indigo-600', 'from-orange-400', 'to-red-600',
+            'from-blue-500', 'to-indigo-600', 'text-white', 'shadow-md', 
+            'shadow-emerald-500/20', 'shadow-blue-500/20', 'shadow-orange-500/20'
+        ];
 
-        if (currentTab === 'all') {
-            tabAll.classList.add(...activeClass);
-            tabAll.classList.remove(...inactiveClass);
-        } else if (currentTab === 'saved') {
-            tabSaved.classList.add(...activeClass);
-            tabSaved.classList.remove(...inactiveClass);
-        } else if (currentTab === 'revised') {
-            tabRevised.classList.add(...activeClass);
-            tabRevised.classList.remove(...inactiveClass);
-        }
+        // Collect all possible badge classes
+        const allBadgeClasses = [
+            'bg-white/20', 'text-white',
+            'bg-emerald-100', 'text-emerald-700', 'dark:bg-emerald-900/30', 'dark:text-emerald-400',
+            'bg-blue-100', 'text-blue-700', 'dark:bg-blue-900/30', 'dark:text-blue-400',
+            'bg-blue-100', 'text-blue-600', 'dark:bg-blue-900/40', 'dark:text-blue-400',
+            'bg-orange-100', 'text-orange-700', 'dark:bg-orange-900/30', 'dark:text-orange-400',
+            'bg-primary/10', 'text-primary'
+        ];
+
+        const tabs = [
+            { id: 'all', el: tabAll, badge: null },
+            { id: 'saved', el: tabSaved, badge: document.getElementById('saved-count-badge') },
+            { id: 'revised', el: tabRevised, badge: document.getElementById('revised-count-badge') }
+        ];
+
+        tabs.forEach(tab => {
+            if (!tab.el) return;
+            const isActive = currentTab === tab.id;
+            
+            // Handle Button
+            tab.el.classList.remove(...allActiveButtonClasses, ...inactiveClass);
+            tab.el.classList.add(...(isActive ? activeClass : inactiveClass));
+            
+            // Add matching subtle shadow if active
+            if (isActive) {
+                if (pathTitle === 'Basic') tab.el.classList.add('shadow-emerald-500/20');
+                else if (pathTitle === 'Advanced') tab.el.classList.add('shadow-blue-500/20');
+                else if (pathTitle === 'Mastery') tab.el.classList.add('shadow-orange-500/20');
+            }
+
+            // Handle Badge
+            if (tab.badge) {
+                tab.badge.classList.remove(...allBadgeClasses);
+                tab.badge.classList.add(...(isActive ? badgeActiveClass : badgeInactiveClass));
+            }
+        });
 
         updateCounts();
     }
@@ -346,6 +412,7 @@
     }
 
     function filterProblems() {
+        let visibleCount = 0;
         problemItems.forEach(item => {
             const itemId = item.dataset.id;
             let isVisible = true;
@@ -357,7 +424,35 @@
             }
 
             item.style.display = isVisible ? 'grid' : 'none';
+            if (isVisible) visibleCount++;
         });
+
+        // Toggle Empty State
+        const emptyState = document.getElementById('empty-state');
+        if (emptyState) {
+            if (visibleCount === 0) {
+                emptyState.classList.remove('hidden');
+                
+                // Customize messsage based on tab
+                const title = document.getElementById('empty-title');
+                const desc = document.getElementById('empty-desc');
+                const icon = document.getElementById('empty-icon');
+
+                if (currentTab === 'saved') {
+                    title.textContent = "No Saved Problems";
+                    desc.textContent = "Click the bookmark icon on any problem to save it for quick access later.";
+                    if (icon) icon.setAttribute('data-lucide', 'bookmark');
+                } else if (currentTab === 'revised') {
+                    title.textContent = "Revision List Empty";
+                    desc.textContent = "Mark problems as 'Revise' when you want to come back and master them again.";
+                    if (icon) icon.setAttribute('data-lucide', 'list-restart');
+                }
+                
+                if (window.lucide) lucide.createIcons();
+            } else {
+                emptyState.classList.add('hidden');
+            }
+        }
 
         setTimeout(adjustTopicTags, 50);
     }

@@ -2,39 +2,43 @@
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-8 animate-fade-in-up">
 
-        <!-- Enhanced Header Card -->
+        <!-- Enhanced Header Card (Matching Interview style) -->
         <div
             class="relative bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 mb-12 border border-gray-200 dark:border-gray-700/50 shadow-sm group overflow-hidden">
+            <!-- Animated Background Blobs -->
             <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-2xl">
-                <div
-                    class="absolute -top-32 -right-32 w-96 h-96 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors duration-700">
-                </div>
-                <div
-                    class="absolute -bottom-32 -left-32 w-96 h-96 bg-secondary/5 rounded-full blur-3xl group-hover:bg-secondary/10 transition-colors duration-700">
-                </div>
+                <div class="absolute -top-32 -right-32 w-96 h-96 {{ if eq .Title "Basic" }}bg-emerald-500/5{{ else if
+                    eq .Title "Advanced" }}bg-blue-500/5{{ else if eq .Title "Mastery" }}bg-orange-500/5{{ else
+                    }}bg-primary/5{{ end }} rounded-full blur-3xl group-hover:opacity-20 transition-opacity
+                    duration-700"></div>
+                <div class="absolute -bottom-32 -left-32 w-96 h-96 {{ if eq .Title "Basic" }}bg-teal-500/5{{ else if eq
+                    .Title "Advanced" }}bg-indigo-500/5{{ else if eq .Title "Mastery" }}bg-red-500/5{{ else
+                    }}bg-secondary/5{{ end }} rounded-full blur-3xl group-hover:opacity-20 transition-opacity
+                    duration-700"></div>
             </div>
 
             <div class="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
                 <div class="flex-1">
-                    <div class="flex items-center gap-3 mb-4">
+                    <div class="flex items-center gap-4 mb-4">
                         {{ if eq .Title "Basic" }}
                         <div
-                            class="p-2.5 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-600 text-white shadow-lg shadow-emerald-500/20">
-                            <i data-lucide="{{ .Params.icon | default "footprints" }}" class="w-6 h-6"></i>
+                            class="p-3 bg-gradient-to-br from-emerald-400 to-teal-600 rounded-2xl shadow-lg shadow-emerald-500/20">
+                            <i data-lucide="{{ .Params.icon | default "footprints" }}" class="w-6 h-6 text-white"></i>
                         </div>
                         {{ else if eq .Title "Advanced" }}
                         <div
-                            class="p-2.5 rounded-xl bg-gradient-to-r from-blue-400 to-indigo-600 text-white shadow-lg shadow-blue-500/20">
-                            <i data-lucide="{{ .Params.icon | default "mountain" }}" class="w-6 h-6"></i>
+                            class="p-3 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-2xl shadow-lg shadow-blue-500/20">
+                            <i data-lucide="{{ .Params.icon | default "mountain" }}" class="w-6 h-6 text-white"></i>
                         </div>
                         {{ else if eq .Title "Mastery" }}
                         <div
-                            class="p-2.5 rounded-xl bg-gradient-to-r from-orange-400 to-red-600 text-white shadow-lg shadow-orange-500/20">
-                            <i data-lucide="{{ .Params.icon | default "trophy" }}" class="w-6 h-6"></i>
+                            class="p-3 bg-gradient-to-br from-orange-400 to-red-600 rounded-2xl shadow-lg shadow-orange-500/20">
+                            <i data-lucide="{{ .Params.icon | default "trophy" }}" class="w-6 h-6 text-white"></i>
                         </div>
                         {{ else }}
-                        <div class="p-2.5 bg-gradient-to-br from-primary/10 to-blue-500/10 rounded-xl">
-                            <i data-lucide="{{ .Params.icon | default "map" }}" class="w-6 h-6 text-primary"></i>
+                        <div
+                            class="p-3 bg-gradient-to-br from-primary to-secondary rounded-2xl shadow-lg shadow-primary/20">
+                            <i data-lucide="{{ .Params.icon | default "map" }}" class="w-6 h-6 text-white"></i>
                         </div>
                         {{ end }}
                         <h1
@@ -42,30 +46,28 @@
                             {{ .Title }}
                         </h1>
                     </div>
-                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl ml-1">
+                    <p class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-xl ml-1">
                         {{ .Params.description }}
                     </p>
 
                     {{ $problems := where site.RegularPages "Params.path" .Title }}
-
                     <!-- Path Progress Section -->
                     <div class="flex items-center gap-6 max-w-md mt-6">
                         <div class="flex-1">
                             <div class="flex justify-between text-sm font-medium mb-2">
                                 <span class="text-gray-500 dark:text-gray-400">Path Progress</span>
                                 <span id="path-progress-text" class="font-bold
-                                    {{ if eq .Title "Basic" }}text-emerald-600 dark:text-emerald-400
-                                    {{ else if eq .Title "Advanced" }}text-blue-600 dark:text-blue-400
-                                    {{ else if eq .Title "Mastery" }}text-orange-600 dark:text-orange-400
-                                    {{ else }}text-primary{{ end }}">0 / {{ len $problems
-                                    }}</span>
+                                    {{ if eq .Title "Basic" }}text-emerald-600 dark:text-emerald-400 {{ else if eq
+                                    .Title "Advanced" }}text-blue-600 dark:text-blue-400 {{ else if eq .Title "Mastery"
+                                    }}text-orange-600 dark:text-orange-400 {{ else }}text-primary{{ end }}">0 / {{ len
+                                    $problems }}</span>
                             </div>
                             <div class="h-2.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
                                 <div id="path-progress-bar" class="h-full transition-all duration-1000 ease-out w-0 relative
-                                    {{ if eq .Title "Basic" }}bg-gradient-to-r from-emerald-400 to-teal-600
-                                    {{ else if eq .Title "Advanced" }}bg-gradient-to-r from-blue-400 to-indigo-600
-                                    {{ else if eq .Title "Mastery" }}bg-gradient-to-r from-orange-400 to-red-600
-                                    {{ else }}bg-gradient-to-r from-primary to-secondary{{ end }}">
+                                    {{ if eq .Title "Basic" }}bg-gradient-to-r from-emerald-400 to-teal-600 {{ else if
+                                    eq .Title "Advanced" }}bg-gradient-to-r from-blue-400 to-indigo-600 {{ else if eq
+                                    .Title "Mastery" }}bg-gradient-to-r from-orange-400 to-red-600 {{ else
+                                    }}bg-gradient-to-r from-primary to-secondary{{ end }}">
                                     <div
                                         class="absolute inset-0 bg-white/20 animate-[shimmer_2s_infinite] border-t border-white/10">
                                     </div>
@@ -76,18 +78,17 @@
                 </div>
 
                 <!-- Header Actions -->
-                <div class="flex items-center gap-2 md:gap-3 self-start md:self-end">
-
-                    <!-- Path Code -->
+                <div class="flex items-center gap-2 md:gap-3 self-start md:self-end shrink-0">
                     {{ if .Params.repo_url }}
+                    <!-- Path Code: Indigo Gradient (Match Problems) -->
                     <div class="group/tooltip relative">
-                        <a href="{{ .Params.repo_url }}" target="_blank" data-code-download="true"
+                        <a href="{{ .Params.repo_url }}" target="_blank"
                             class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 text-white shadow-lg shadow-indigo-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
-                            <i data-lucide="route" class="w-4 h-4 md:w-5 md:h-5"></i>
+                            <i data-lucide="github" class="w-4 h-4 md:w-5 md:h-5"></i>
                         </a>
                         <div
-                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0">
-                            {{ .Title }} Path Code
+                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0 text-center">
+                            Path Code
                             <div
                                 class="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900 dark:border-t-black">
                             </div>
@@ -95,7 +96,6 @@
                     </div>
                     {{ end }}
 
-                    <!-- YouTube Playlist -->
                     {{ if .Params.youtube_url }}
                     <div class="group/tooltip relative">
                         <a href="{{ .Params.youtube_url }}" target="_blank"
@@ -103,7 +103,7 @@
                             <i data-lucide="youtube" class="w-4 h-4 md:w-5 md:h-5"></i>
                         </a>
                         <div
-                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0">
+                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0 text-center">
                             Tutorials
                             <div
                                 class="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900 dark:border-t-black">
@@ -112,15 +112,14 @@
                     </div>
                     {{ end }}
 
-                    <!-- Guide -->
                     {{ if .Params.guide_url }}
                     <div class="group/tooltip relative">
                         <a href="{{ .Params.guide_url }}"
-                            class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-lg shadow-blue-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                            class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-sky-600 text-white shadow-lg shadow-cyan-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
                             <i data-lucide="map" class="w-4 h-4 md:w-5 md:h-5"></i>
                         </a>
                         <div
-                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0">
+                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0 text-center">
                             Guide
                             <div
                                 class="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900 dark:border-t-black">
@@ -129,15 +128,14 @@
                     </div>
                     {{ end }}
 
-                    <!-- Share: Cyan Gradient -->
                     <div class="group/tooltip relative">
                         <button onclick="copyPageUrl()"
-                            class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-sky-500 text-white shadow-lg shadow-cyan-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                            class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-pink-400 to-rose-500 text-white shadow-lg shadow-pink-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
                             <i data-lucide="share-2" class="w-4 h-4 md:w-5 md:h-5"></i>
                         </button>
                         <div
-                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0">
-                            Share
+                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0 text-center">
+                            Share Page
                             <div
                                 class="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900 dark:border-t-black">
                             </div>
@@ -177,20 +175,21 @@
         <!-- Problems List (Reusing exact structure from problems list for consistency) -->
         <div class="relative min-h-[400px]">
             <!-- Empty State Container -->
-            <div id="empty-state" class="hidden absolute inset-0 flex flex-col items-center justify-center p-12 text-center z-10 animate-fade-in">
+            <div id="empty-state"
+                class="hidden absolute inset-0 flex flex-col items-center justify-center p-12 text-center z-10 animate-fade-in">
                 <div class="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-6">
                     <i data-lucide="folder-open" id="empty-icon" class="w-10 h-10 text-gray-400"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight" id="empty-title">No problems found</h3>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight" id="empty-title">No
+                    problems found</h3>
                 <p class="text-gray-500 dark:text-gray-400 max-w-xs mx-auto leading-relaxed" id="empty-desc">
                     Start solving and save problems to see them here.
                 </p>
-                <button onclick="switchTab('all')" id="empty-state-btn"
-                    class="mt-6 px-6 py-2.5 text-white rounded-xl font-medium hover:-translate-y-0.5 transition-all shadow-lg
-                    {{ if eq .Title "Basic" }}bg-gradient-to-r from-emerald-400 to-teal-600 shadow-emerald-500/25
-                    {{ else if eq .Title "Advanced" }}bg-gradient-to-r from-blue-400 to-indigo-600 shadow-blue-500/25
-                    {{ else if eq .Title "Mastery" }}bg-gradient-to-r from-orange-400 to-red-600 shadow-orange-500/25
-                    {{ else }}bg-gradient-to-r from-blue-500 to-indigo-600 shadow-blue-500/25{{ end }}">
+                <button onclick="switchTab('all')" id="empty-state-btn" class="mt-6 px-6 py-2.5 text-white rounded-xl font-medium hover:-translate-y-0.5 transition-all shadow-lg
+                    {{ if eq .Title " Basic" }}bg-gradient-to-r from-emerald-400 to-teal-600 shadow-emerald-500/25 {{
+                    else if eq .Title "Advanced" }}bg-gradient-to-r from-blue-400 to-indigo-600 shadow-blue-500/25 {{
+                    else if eq .Title "Mastery" }}bg-gradient-to-r from-orange-400 to-red-600 shadow-orange-500/25 {{
+                    else }}bg-gradient-to-r from-blue-500 to-indigo-600 shadow-blue-500/25{{ end }}">
                     View all problems
                 </button>
             </div>
@@ -198,87 +197,90 @@
             <div id="problems-list" class="space-y-2 relative z-0">
                 {{ range $problems.ByDate }}
 
-            <!-- Card Container (Adaptive Grid) - Responsive Alignment -->
-            <div class="problem-item group grid grid-cols-[auto_1fr_auto] md:grid-cols-[50px_1fr_100px_50px_50px] items-center gap-2 md:gap-4 px-3 md:px-6 py-2.5 md:py-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 shadow-sm hover:shadow-md transition-all duration-200"
-                data-difficulty="{{ .Params.difficulty }}"
-                data-topics="{{ if .Params.topics }}{{ delimit .Params.topics " ," }}{{ end }}"
-                data-title="{{ .Title | lower }}" data-id="{{ .File.ContentBaseName }}">
+                <!-- Card Container (Adaptive Grid) - Responsive Alignment -->
+                <div class="problem-item group grid grid-cols-[auto_1fr_auto] md:grid-cols-[50px_1fr_100px_50px_50px] items-center gap-2 md:gap-4 px-3 md:px-6 py-2.5 md:py-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 shadow-sm hover:shadow-md transition-all duration-200"
+                    data-difficulty="{{ .Params.difficulty }}"
+                    data-topics="{{ if .Params.topics }}{{ delimit .Params.topics " ," }}{{ end }}"
+                    data-title="{{ .Title | lower }}" data-id="{{ .File.ContentBaseName }}">
 
-                <!-- 1. Checkbox Column -->
-                <div class="flex items-center justify-start">
-                    <div class="relative cursor-pointer"
-                        onclick="toggleListCompletion(event, '{{ .File.ContentBaseName }}')">
-                        <input type="checkbox"
-                            class="peer appearance-none w-4 h-4 md:w-5 md:h-5 border-2 border-gray-300 dark:border-gray-600 rounded-md checked:bg-green-500 checked:border-green-500 transition-all cursor-pointer">
-                        <i data-lucide="check"
-                            class="w-3.5 h-3.5 text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity font-bold"></i>
+                    <!-- 1. Checkbox Column -->
+                    <div class="flex items-center justify-start">
+                        <div class="relative cursor-pointer"
+                            onclick="toggleListCompletion(event, '{{ .File.ContentBaseName }}')">
+                            <input type="checkbox"
+                                class="peer appearance-none w-4 h-4 md:w-5 md:h-5 border-2 border-gray-300 dark:border-gray-600 rounded-md checked:bg-green-500 checked:border-green-500 transition-all cursor-pointer">
+                            <i data-lucide="check"
+                                class="w-3.5 h-3.5 text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity font-bold"></i>
+                        </div>
                     </div>
-                </div>
 
-                <!-- 2. Title Column (Link & Tags) -->
-                <div class="min-w-0 flex items-center gap-3">
-                    <a href="{{ .RelPermalink }}"
-                        class="text-sm md:text-base font-bold text-gray-900 dark:text-gray-100 hover:text-primary transition-colors truncate block flex-shrink-0 max-w-full">
-                        {{ .Title }}
-                    </a>
+                    <!-- 2. Title Column (Link & Tags) -->
+                    <div class="min-w-0 flex items-center gap-3">
+                        <a href="{{ .RelPermalink }}"
+                            class="text-sm md:text-base font-bold text-gray-900 dark:text-gray-100 hover:text-primary transition-colors truncate block flex-shrink-0 max-w-full">
+                            {{ .Title }}
+                        </a>
 
-                    <!-- Desktop Hover Tags (Dynamic JS) -->
-                    <div
-                        class="topic-tags-container hidden md:flex items-center gap-2 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-out flex-shrink overflow-hidden min-w-0">
-                        {{ range .Params.topics }}
+                        <!-- Desktop Hover Tags (Dynamic JS) -->
+                        <div
+                            class="topic-tags-container hidden md:flex items-center gap-2 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-out flex-shrink overflow-hidden min-w-0">
+                            {{ range .Params.topics }}
+                            <span
+                                class="topic-tag px-2 py-0.5 rounded-md text-[10px] font-semibold bg-primary/10 text-primary border border-primary/20 whitespace-nowrap">
+                                {{ . }}
+                            </span>
+                            {{ end }}
+
+
+
+                            <!-- Overflow Counter -->
+                            <span
+                                class="topic-count hidden px-1.5 py-0.5 rounded-md text-[10px] font-medium text-gray-400 bg-gray-100 dark:bg-gray-700 whitespace-nowrap"></span>
+                        </div>
+                    </div>
+
+                    <!-- 3. Difficulty Column - Adaptive Width -->
+                    <div class="flex justify-start">
+                        {{ if eq .Params.difficulty "Easy" }}
                         <span
-                            class="topic-tag px-2 py-0.5 rounded-md text-[10px] font-semibold bg-primary/10 text-primary border border-primary/20 whitespace-nowrap">
-                            {{ . }}
+                            class="inline-block px-1.5 md:px-2.5 py-0.5 md:py-1 rounded-md text-[10px] md:text-xs font-bold uppercase tracking-wider bg-green-100 text-green-700 border border-green-200 dark:bg-green-500/10 dark:text-green-400 dark:border-green-500/20 w-auto md:w-24 text-center shadow-sm">
+                            Easy
+                        </span>
+                        {{ else if eq .Params.difficulty "Medium" }}
+                        <span
+                            class="inline-block px-1.5 md:px-2.5 py-0.5 md:py-1 rounded-md text-[10px] md:text-xs font-bold uppercase tracking-wider bg-yellow-100 text-yellow-700 border border-yellow-200 dark:bg-yellow-500/10 dark:text-yellow-400 dark:border-yellow-500/20 w-auto md:w-24 text-center shadow-sm">
+                            Medium
+                        </span>
+                        {{ else }}
+                        <span
+                            class="inline-block px-1.5 md:px-2.5 py-0.5 md:py-1 rounded-md text-[10px] md:text-xs font-bold uppercase tracking-wider bg-red-100 text-red-700 border border-red-200 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/20 w-auto md:w-24 text-center shadow-sm">
+                            Hard
                         </span>
                         {{ end }}
+                    </div>
 
+                    <!-- 4. Revise Button Column (Hidden on Mobile) -->
+                    <div class="hidden md:flex justify-start">
+                        <button onclick="toggleRevision(event, '{{ .File.ContentBaseName }}')"
+                            class="p-2 rounded-lg text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all border border-transparent hover:border-blue-200 dark:hover:border-blue-500/30">
+                            <i data-lucide="history" class="w-5 h-5 revise-icon"
+                                data-id="{{ .File.ContentBaseName }}"></i>
+                        </button>
+                    </div>
 
-
-                        <!-- Overflow Counter -->
-                        <span
-                            class="topic-count hidden px-1.5 py-0.5 rounded-md text-[10px] font-medium text-gray-400 bg-gray-100 dark:bg-gray-700 whitespace-nowrap"></span>
+                    <!-- 5. Bookmark Button Column (Hidden on Mobile) -->
+                    <div class="hidden md:flex justify-start">
+                        <button onclick="toggleBookmark(event, '{{ .File.ContentBaseName }}')"
+                            class="p-2 rounded-lg text-gray-400 hover:text-yellow-500 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 transition-all border border-transparent hover:border-yellow-200 dark:hover:border-yellow-500/30">
+                            <i data-lucide="bookmark" class="w-5 h-5 bookmark-icon transition-transform hover:scale-110"
+                                data-id="{{ .File.ContentBaseName }}"></i>
+                        </button>
                     </div>
                 </div>
-
-                <!-- 3. Difficulty Column - Adaptive Width -->
-                <div class="flex justify-start">
-                    {{ if eq .Params.difficulty "Easy" }}
-                    <span
-                        class="inline-block px-1.5 md:px-2.5 py-0.5 md:py-1 rounded-md text-[10px] md:text-xs font-bold uppercase tracking-wider bg-green-100 text-green-700 border border-green-200 dark:bg-green-500/10 dark:text-green-400 dark:border-green-500/20 w-auto md:w-24 text-center shadow-sm">
-                        Easy
-                    </span>
-                    {{ else if eq .Params.difficulty "Medium" }}
-                    <span
-                        class="inline-block px-1.5 md:px-2.5 py-0.5 md:py-1 rounded-md text-[10px] md:text-xs font-bold uppercase tracking-wider bg-yellow-100 text-yellow-700 border border-yellow-200 dark:bg-yellow-500/10 dark:text-yellow-400 dark:border-yellow-500/20 w-auto md:w-24 text-center shadow-sm">
-                        Medium
-                    </span>
-                    {{ else }}
-                    <span
-                        class="inline-block px-1.5 md:px-2.5 py-0.5 md:py-1 rounded-md text-[10px] md:text-xs font-bold uppercase tracking-wider bg-red-100 text-red-700 border border-red-200 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/20 w-auto md:w-24 text-center shadow-sm">
-                        Hard
-                    </span>
-                    {{ end }}
-                </div>
-
-                <!-- 4. Revise Button Column (Hidden on Mobile) -->
-                <div class="hidden md:flex justify-start">
-                    <button onclick="toggleRevision(event, '{{ .File.ContentBaseName }}')"
-                        class="p-2 rounded-lg text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all border border-transparent hover:border-blue-200 dark:hover:border-blue-500/30">
-                        <i data-lucide="history" class="w-5 h-5 revise-icon" data-id="{{ .File.ContentBaseName }}"></i>
-                    </button>
-                </div>
-
-                <!-- 5. Bookmark Button Column (Hidden on Mobile) -->
-                <div class="hidden md:flex justify-start">
-                    <button onclick="toggleBookmark(event, '{{ .File.ContentBaseName }}')"
-                        class="p-2 rounded-lg text-gray-400 hover:text-yellow-500 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 transition-all border border-transparent hover:border-yellow-200 dark:hover:border-yellow-500/30">
-                        <i data-lucide="bookmark" class="w-5 h-5 bookmark-icon transition-transform hover:scale-110"
-                            data-id="{{ .File.ContentBaseName }}"></i>
-                    </button>
-                </div>
+                {{ end }}
             </div>
-            {{ end }}
         </div>
+
     </div>
 </div>
 <script>
@@ -320,7 +322,7 @@
         const pathTitle = "{{ .Title }}";
         let activeBgClasses = ['bg-primary'];
         let badgeInactiveClass = ['bg-blue-100', 'text-blue-600', 'dark:bg-blue-900/40', 'dark:text-blue-400'];
-        
+
         if (pathTitle === 'Basic') {
             activeBgClasses = ['bg-gradient-to-r', 'from-emerald-400', 'to-teal-600'];
             badgeInactiveClass = ['bg-emerald-100', 'text-emerald-700', 'dark:bg-emerald-900/30', 'dark:text-emerald-400'];
@@ -340,9 +342,9 @@
 
         // Collect all possible active button classes
         const allActiveButtonClasses = [
-            'bg-primary', 'bg-gradient-to-r', 'from-emerald-400', 'to-teal-600', 
+            'bg-primary', 'bg-gradient-to-r', 'from-emerald-400', 'to-teal-600',
             'from-blue-400', 'to-indigo-600', 'from-orange-400', 'to-red-600',
-            'from-blue-500', 'to-indigo-600', 'text-white', 'shadow-md', 
+            'from-blue-500', 'to-indigo-600', 'text-white', 'shadow-md',
             'shadow-emerald-500/20', 'shadow-blue-500/20', 'shadow-orange-500/20'
         ];
 
@@ -365,11 +367,11 @@
         tabs.forEach(tab => {
             if (!tab.el) return;
             const isActive = currentTab === tab.id;
-            
+
             // Handle Button
             tab.el.classList.remove(...allActiveButtonClasses, ...inactiveClass);
             tab.el.classList.add(...(isActive ? activeClass : inactiveClass));
-            
+
             // Add matching subtle shadow if active
             if (isActive) {
                 if (pathTitle === 'Basic') tab.el.classList.add('shadow-emerald-500/20');
@@ -432,7 +434,7 @@
         if (emptyState) {
             if (visibleCount === 0) {
                 emptyState.classList.remove('hidden');
-                
+
                 // Customize messsage based on tab
                 const title = document.getElementById('empty-title');
                 const desc = document.getElementById('empty-desc');
@@ -447,7 +449,7 @@
                     desc.textContent = "Mark problems as 'Revise' when you want to come back and master them again.";
                     if (icon) icon.setAttribute('data-lucide', 'list-restart');
                 }
-                
+
                 if (window.lucide) lucide.createIcons();
             } else {
                 emptyState.classList.add('hidden');

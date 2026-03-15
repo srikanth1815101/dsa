@@ -1,10 +1,10 @@
 {{ define "main" }}
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-8 animate-fade-in-up">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 md:pt-4 animate-fade-in-up">
 
         <!-- Enhanced Header Card (Matching Interview style) -->
         <div
-            class="relative bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 mb-12 border border-gray-200 dark:border-gray-700/50 shadow-sm group overflow-hidden">
+            class="relative bg-white dark:bg-gray-800 rounded-2xl p-3 md:p-3.5 mb-3 md:mb-4 border border-gray-200 dark:border-gray-700/50 shadow-sm group overflow-hidden">
             <!-- Animated Background Blobs -->
             <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-2xl">
                 <div class="absolute -top-32 -right-32 w-96 h-96 {{ if eq .Title "Basic" }}bg-emerald-500/5{{ else if
@@ -52,7 +52,7 @@
 
                     {{ $problems := where site.RegularPages "Params.path" .Title }}
                     <!-- Path Progress Section -->
-                    <div class="flex items-center gap-6 max-w-md mt-6">
+                    <div class="flex items-center gap-6 max-w-md mt-2">
                         <div class="flex-1">
                             <div class="flex justify-between text-sm font-medium mb-2">
                                 <span class="text-gray-500 dark:text-gray-400">Path Progress</span>
@@ -128,25 +128,12 @@
                     </div>
                     {{ end }}
 
-                    <div class="group/tooltip relative">
-                        <button onclick="copyPageUrl()"
-                            class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-pink-400 to-rose-500 text-white shadow-lg shadow-pink-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
-                            <i data-lucide="share-2" class="w-4 h-4 md:w-5 md:h-5"></i>
-                        </button>
-                        <div
-                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0 text-center">
-                            Share Page
-                            <div
-                                class="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900 dark:border-t-black">
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Tabs Section -->
-        <div class="flex flex-col lg:flex-row gap-6 mb-8 justify-between items-start lg:items-center">
+        <div class="flex flex-col lg:flex-row gap-6 mb-2 justify-between items-start lg:items-center">
             <!-- Pill Tabs -->
             <div
                 class="bg-white dark:bg-gray-800 p-1 rounded-full border border-gray-200 dark:border-gray-700/50 shadow-sm flex w-full md:inline-flex md:w-auto">
@@ -173,24 +160,26 @@
         </div>
 
         <!-- Problems List (Reusing exact structure from problems list for consistency) -->
-        <div class="relative min-h-[400px]">
-            <!-- Empty State Container -->
+        <div class="relative min-h-[200px]">
             <div id="empty-state"
-                class="hidden absolute inset-0 flex flex-col items-center justify-center p-12 text-center z-10 animate-fade-in">
-                <div class="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-6">
-                    <i data-lucide="folder-open" id="empty-icon" class="w-10 h-10 text-gray-400"></i>
+                class="hidden flex flex-col items-center justify-center py-2 md:py-4 text-center animate-fade-in relative z-10 w-full">
+                <div class="w-14 h-14 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center mb-3 shadow-lg border border-gray-100 dark:border-gray-700 relative group">
+                    <!-- Dynamic Theme Glow -->
+                    <div id="empty-glow" class="absolute inset-0 rounded-xl blur-lg transition-opacity"></div>
+                    <i data-lucide="folder-open" id="empty-icon" class="w-6 h-6 relative z-10 transition-colors"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight" id="empty-title">No
-                    problems found</h3>
-                <p class="text-gray-500 dark:text-gray-400 max-w-xs mx-auto leading-relaxed" id="empty-desc">
+                
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight" id="empty-title">
+                    No problems found
+                </h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400 max-w-sm mx-auto mb-5 leading-relaxed px-4" id="empty-desc">
                     Start solving and save problems to see them here.
                 </p>
-                <button onclick="switchTab('all')" id="empty-state-btn" class="mt-6 px-6 py-2.5 text-white rounded-xl font-medium hover:-translate-y-0.5 transition-all shadow-lg
-                    {{ if eq .Title " Basic" }}bg-gradient-to-r from-emerald-400 to-teal-600 shadow-emerald-500/25 {{
-                    else if eq .Title "Advanced" }}bg-gradient-to-r from-blue-400 to-indigo-600 shadow-blue-500/25 {{
-                    else if eq .Title "Mastery" }}bg-gradient-to-r from-orange-400 to-red-600 shadow-orange-500/25 {{
-                    else }}bg-gradient-to-r from-blue-500 to-indigo-600 shadow-blue-500/25{{ end }}">
-                    View all problems
+                
+                <button onclick="switchTab('all')" id="empty-state-btn" 
+                    class="inline-flex items-center gap-1.5 px-5 py-2 text-white rounded-xl font-bold text-xs hover:-translate-y-0.5 transition-all shadow-lg">
+                    <span id="empty-btn-text">View all problems</span>
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </button>
             </div>
 
@@ -434,25 +423,62 @@
         if (emptyState) {
             if (visibleCount === 0) {
                 emptyState.classList.remove('hidden');
+                emptyState.classList.add('flex');
 
-                // Customize messsage based on tab
                 const title = document.getElementById('empty-title');
                 const desc = document.getElementById('empty-desc');
                 const icon = document.getElementById('empty-icon');
+                const glow = document.getElementById('empty-glow');
+                const btn = document.getElementById('empty-state-btn');
+                
+                const pathTitle = "{{ .Title }}";
+                let themeColor = 'text-blue-500';
+                let themeGlow = 'from-blue-500/10 to-indigo-600/10';
+                let themeGradient = 'bg-gradient-to-r from-blue-400 to-indigo-600';
+                let themeShadow = 'shadow-blue-500/20';
+
+                if (pathTitle === 'Basic') {
+                    themeColor = 'text-emerald-500';
+                    themeGlow = 'from-emerald-500/10 to-teal-600/10';
+                    themeGradient = 'bg-gradient-to-r from-emerald-400 to-teal-600';
+                    themeShadow = 'shadow-emerald-500/20';
+                } else if (pathTitle === 'Advanced') {
+                    themeColor = 'text-blue-500';
+                    themeGlow = 'from-blue-500/10 to-indigo-600/10';
+                    themeGradient = 'bg-gradient-to-r from-blue-400 to-indigo-600';
+                    themeShadow = 'shadow-blue-500/20';
+                } else if (pathTitle === 'Mastery') {
+                    themeColor = 'text-orange-500';
+                    themeGlow = 'from-orange-500/10 to-red-600/10';
+                    themeGradient = 'bg-gradient-to-r from-orange-400 to-red-600';
+                    themeShadow = 'shadow-orange-500/20';
+                }
 
                 if (currentTab === 'saved') {
                     title.textContent = "No Saved Problems";
-                    desc.textContent = "Click the bookmark icon on any problem to save it for quick access later.";
+                    desc.textContent = "Keep track of problems you find interesting by saving them. They'll always be one click away.";
                     if (icon) icon.setAttribute('data-lucide', 'bookmark');
                 } else if (currentTab === 'revised') {
                     title.textContent = "Revision List Empty";
-                    desc.textContent = "Mark problems as 'Revise' when you want to come back and master them again.";
+                    desc.textContent = "Mark tricky problems for revision. Consistent practice is the key to mastering complex algorithms.";
                     if (icon) icon.setAttribute('data-lucide', 'list-restart');
+                }
+
+                // Apply Theme
+                if (icon) {
+                    icon.className = `w-6 h-6 relative z-10 transition-colors ${themeColor}`;
+                }
+                if (glow) {
+                    glow.className = `absolute inset-0 bg-gradient-to-br rounded-xl blur-lg opacity-100 ${themeGlow}`;
+                }
+                if (btn) {
+                    btn.className = `inline-flex items-center gap-1.5 px-5 py-2 text-white rounded-xl font-bold text-xs hover:-translate-y-0.5 transition-all shadow-lg ${themeGradient} ${themeShadow}`;
                 }
 
                 if (window.lucide) lucide.createIcons();
             } else {
                 emptyState.classList.add('hidden');
+                emptyState.classList.remove('flex');
             }
         }
 

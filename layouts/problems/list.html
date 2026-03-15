@@ -1,10 +1,10 @@
 {{ define "main" }}
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-8 animate-fade-in-up">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 md:pt-4 animate-fade-in-up">
 
         <!-- Enhanced Header Card -->
         <div
-            class="relative bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 mb-12 border border-gray-200 dark:border-gray-700/50 shadow-sm group overflow-hidden">
+            class="relative bg-white dark:bg-gray-800 rounded-2xl p-4 md:p-4.5 mb-4 md:mb-5 border border-gray-200 dark:border-gray-700/50 shadow-sm group overflow-hidden">
 
             <!-- Animated Background Blobs -->
             <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-2xl">
@@ -94,10 +94,10 @@
                         </div>
                     </div>
 
-                    <!-- Share: Pink Gradient -->
+                    <!-- Share: Violet Gradient -->
                     <div class="group/tooltip relative">
                         <button onclick="copyPageUrl()"
-                            class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-pink-400 to-rose-500 text-white shadow-lg shadow-pink-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                            class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 text-white shadow-lg shadow-violet-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
                             <i data-lucide="share-2" class="w-4 h-4 md:w-5 md:h-5"></i>
                         </button>
                         <div
@@ -113,7 +113,7 @@
         </div>
 
         <!-- Pills and Filters Container -->
-        <div class="flex flex-col lg:flex-row gap-6 mb-8 justify-between items-start lg:items-center">
+        <div class="flex flex-col lg:flex-row gap-4 mb-4 justify-between items-start lg:items-center">
 
             <!-- Pill Tabs -->
             <div
@@ -200,22 +200,26 @@
         </div>
 
         <!-- Problems List (Cards Stack) -->
-        <div class="relative min-h-[400px]">
+        <div class="relative min-h-[200px]">
 
-            <!-- No Results State -->
+            <!-- Compact Themed No Results State -->
             <div id="noResults"
-                class="hidden absolute inset-0 flex flex-col items-center justify-center p-12 text-center z-10">
-                <div
-                    class="w-20 h-20 bg-gray-50 dark:bg-gray-700/50 rounded-full flex items-center justify-center mb-6">
-                    <i data-lucide="search-x" class="w-10 h-10 text-gray-400"></i>
+                class="hidden flex flex-col items-center justify-center py-6 md:py-8 text-center animate-fade-in relative z-10 w-full">
+                <div class="w-14 h-14 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center mb-3.5 shadow-lg border border-gray-100 dark:border-gray-700 relative group">
+                    <!-- Subtle Glow -->
+                    <div id="no-results-glow" class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-indigo-600/10 rounded-xl blur-lg transition-opacity"></div>
+                    <i data-lucide="search-x" id="no-results-icon" class="w-6 h-6 text-blue-500 relative z-10"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">No problems found</h3>
-                <p class="text-gray-500 dark:text-gray-400 max-w-xs mx-auto">
+                
+                <h3 id="no-results-title" class="text-lg font-bold text-gray-900 dark:text-white mb-1.5 tracking-tight">No problems found</h3>
+                <p id="no-results-desc" class="text-xs text-gray-500 dark:text-gray-400 max-w-sm mx-auto mb-5 leading-relaxed px-4">
                     Try adjusting your search or filters to find what you're looking for.
                 </p>
-                <button onclick="clearFilters()"
-                    class="mt-6 px-6 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium hover:-translate-y-0.5 transition-all shadow-lg shadow-blue-500/25">
-                    Clear all filters
+                
+                <button id="no-results-btn" onclick="clearFilters()"
+                    class="inline-flex items-center gap-1.5 px-5 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-bold text-xs hover:-translate-y-0.5 transition-all shadow-lg shadow-blue-500/20">
+                    <span id="no-results-btn-text">Clear all filters</span>
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </button>
             </div>
 
@@ -429,7 +433,42 @@
             }
         });
 
-        noResults.classList.toggle('hidden', visibleCount > 0);
+        const noResults = document.getElementById('noResults');
+        if (noResults) {
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+                noResults.classList.add('flex');
+
+                const title = document.getElementById('no-results-title');
+                const desc = document.getElementById('no-results-desc');
+                const icon = document.getElementById('no-results-icon');
+                const btnText = document.getElementById('no-results-btn-text');
+                const btn = document.getElementById('no-results-btn');
+                const glow = document.getElementById('no-results-glow');
+
+                if (currentTab === 'saved') {
+                    title.textContent = "No Saved Problems";
+                    desc.textContent = "Keep track of problems you find interesting by saving them. They'll always be one click away.";
+                    icon.setAttribute('data-lucide', 'bookmark');
+                    btnText.textContent = "Browse all problems";
+                } else if (currentTab === 'revised') {
+                    title.textContent = "Revision List Empty";
+                    desc.textContent = "Mark tricky problems for revision. Consistent practice is the key to mastering complex algorithms.";
+                    icon.setAttribute('data-lucide', 'list-restart');
+                    btnText.textContent = "Browse all problems";
+                } else {
+                    title.textContent = "No matches found";
+                    desc.textContent = "We couldn't find any problems matching your current search or filters.";
+                    icon.setAttribute('data-lucide', 'search-x');
+                    btnText.textContent = "Clear all filters";
+                }
+
+                if (window.lucide) lucide.createIcons();
+            } else {
+                noResults.classList.add('hidden');
+                noResults.classList.remove('flex');
+            }
+        }
 
         // Recalculate tags layout after filtering since visibility changed
         setTimeout(adjustTopicTags, 50);

@@ -4,11 +4,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-8 animate-fade-in-up">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 md:pt-6 animate-fade-in-up">
 
         <!-- Enhanced Header Card -->
         <div
-            class="relative bg-white dark:bg-gray-800 rounded-2xl p-4 md:p-8 mb-8 md:mb-12 border border-gray-200 dark:border-gray-700/50 shadow-sm group overflow-hidden">
+            class="relative bg-white dark:bg-gray-800 rounded-2xl p-4 md:p-5 mb-5 md:mb-6 border border-gray-200 dark:border-gray-700/50 shadow-sm group overflow-hidden">
 
             <!-- Animated Background Blobs -->
             <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-2xl">
@@ -49,7 +49,7 @@
         </div>
 
         <!-- TABS & CONTROLS -->
-        <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 mb-8 justify-between items-stretch lg:items-center">
+        <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 mb-5 justify-between items-stretch lg:items-center">
 
             <!-- Pill Tabs -->
             <div
@@ -74,7 +74,7 @@
                             class="h-4 w-4 text-gray-400 group-focus-within:text-primary transition-colors"></i>
                     </div>
                     <input type="text" id="searchInput" placeholder="Search notes..."
-                        class="pl-10 pr-4 py-2.5 w-full md:w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm transition-all shadow-sm">
+                        class="pl-10 pr-4 py-2.5 w-full md:w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 text-sm transition-all shadow-sm">
                 </div>
 
                 <div class="relative group w-full md:w-auto min-w-[140px]" id="difficultyFilterContainer">
@@ -83,7 +83,7 @@
                             class="h-4 w-4 text-gray-400 group-focus-within:text-primary transition-colors"></i>
                     </div>
                     <select id="difficultyFilter"
-                        class="pl-10 pr-8 py-2.5 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm appearance-none cursor-pointer shadow-sm transition-all whitespace-nowrap overflow-hidden text-ellipsis">
+                        class="pl-10 pr-8 py-2.5 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 text-sm appearance-none cursor-pointer shadow-sm transition-all whitespace-nowrap overflow-hidden text-ellipsis">
                         <option value="">All Difficulties</option>
                         <option value="Easy">Easy</option>
                         <option value="Medium">Medium</option>
@@ -99,20 +99,25 @@
         <!-- CONTENT CONTAINERS -->
         <div id="container-problems" class="space-y-4">
             <!-- No Results State -->
-            <div id="noResults" class="hidden text-center py-12">
-                <div
-                    class="bg-gray-50 dark:bg-gray-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div id="noResults" class="hidden flex flex-col items-center justify-center py-10 md:py-12 text-center">
+                <div class="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center mb-5 shadow-inner">
                     <i data-lucide="search-x" class="w-8 h-8 text-gray-400"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">No matches found</h3>
-                <p class="text-gray-500 dark:text-gray-400">Try adjusting your search.</p>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1.5">No matches found</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 max-w-xs mx-auto">
+                    We couldn't find any problem notes matching your current filters.
+                </p>
+                <button onclick="document.getElementById('searchInput').value=''; document.getElementById('difficultyFilter').value=''; window.filterContent();"
+                    class="mt-5 px-5 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-bold text-xs hover:-translate-y-0.5 transition-all shadow-lg shadow-blue-500/25">
+                    Clear all filters
+                </button>
             </div>
 
             <!-- Problem Notes List -->
             <div id="problem-notes-list" class="space-y-3">
-                <div class="py-12 text-center text-gray-400">
+                <div class="py-12 text-center text-orange-500">
                     <i data-lucide="loader-2" class="w-8 h-8 animate-spin mx-auto mb-2"></i>
-                    <p>Loading notes...</p>
+                    <p class="text-gray-400">Loading notes...</p>
                 </div>
             </div>
         </div>
@@ -120,20 +125,25 @@
         <!-- Reflections Container (Previously missing in this reconstruction but present in file) -->
         <div id="container-reflections" class="hidden space-y-4">
             <!-- No Results State Reflections -->
-            <div id="noResultsReflections" class="hidden text-center py-12">
-                <div
-                    class="bg-gray-50 dark:bg-gray-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div id="noResultsReflections" class="hidden flex flex-col items-center justify-center py-10 md:py-12 text-center">
+                <div class="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center mb-5 shadow-inner">
                     <i data-lucide="search-x" class="w-8 h-8 text-gray-400"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">No matches found</h3>
-                <p class="text-gray-500 dark:text-gray-400">Try adjusting your search.</p>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1.5">No matches found</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 max-w-xs mx-auto">
+                    We couldn't find any reflections matching your search query.
+                </p>
+                <button onclick="document.getElementById('searchInput').value=''; window.filterContent();"
+                    class="mt-5 px-5 py-2.5 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-bold text-xs hover:-translate-y-0.5 transition-all shadow-lg shadow-purple-500/25">
+                    Clear search
+                </button>
             </div>
 
             <!-- Reflections List -->
             <div id="reflections-list" class="space-y-3">
-                <div class="py-12 text-center text-gray-400">
+                <div class="py-12 text-center text-orange-500">
                     <i data-lucide="loader-2" class="w-8 h-8 animate-spin mx-auto mb-2"></i>
-                    <p>Loading reflections...</p>
+                    <p class="text-gray-400">Loading reflections...</p>
                 </div>
             </div>
         </div>

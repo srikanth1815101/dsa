@@ -124,8 +124,8 @@ window.switchTab = function (tab) {
 
 function updateTabUI() {
     if (!tabProblems) return;
-    const activeClass = ['bg-primary', 'text-white', 'shadow-md'];
-    const inactiveClass = ['text-gray-500', 'hover:text-gray-900', 'dark:text-gray-400', 'dark:hover:text-white'];
+    const activeClass = ['bg-gradient-to-r', 'from-orange-500', 'to-amber-600', 'text-white', 'shadow-md', 'shadow-orange-500/25'];
+    const inactiveClass = ['text-gray-500', 'hover:text-gray-900', 'dark:text-gray-400', 'dark:hover:text-white', 'bg-transparent'];
 
     if (currentTab === 'problems') {
         tabProblems.classList.add(...activeClass);
@@ -485,18 +485,31 @@ function filterContent() {
 }
 
 function renderEmptyState(container, message, type) {
+    const isDSA = type === 'dsa';
     container.innerHTML = `
-            <div class="col-span-full py-16 text-center border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-2xl">
-                 <div class="bg-gray-100 dark:bg-gray-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i data-lucide="${type === 'dsa' ? 'edit-3' : 'anchor'}" class="w-8 h-8 text-gray-400"></i>
-                </div>
-                <p class="text-gray-500 dark:text-gray-400 font-medium">${message}</p>
-                ${type === 'dsa'
-            ? `<a href="/problems/" class="inline-block mt-4 text-primary font-bold hover:underline text-sm">Solve a problem</a>`
-            : `<a href="/interview/" class="inline-block mt-4 text-purple-600 font-bold hover:underline text-sm">Start an interview</a>`
-        }
+        <div class="flex flex-col items-center justify-center py-10 md:py-12 text-center animate-fade-in">
+            <div class="w-14 h-14 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center mb-4 shadow-lg border border-gray-100 dark:border-gray-700 relative group">
+                <!-- Subtle glow -->
+                <div class="absolute inset-0 bg-gradient-to-br ${isDSA ? 'from-blue-500/10 to-indigo-600/10' : 'from-purple-500/10 to-pink-500/10'} rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                
+                <i data-lucide="${isDSA ? 'book-open' : 'sparkles'}" 
+                   class="w-6 h-6 ${isDSA ? 'text-blue-500' : 'text-purple-500'} relative z-10"></i>
             </div>
-        `;
+            
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1.5 tracking-tight">${message}</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 max-w-sm mx-auto mb-5 leading-relaxed px-4">
+                ${isDSA 
+                    ? "Capture your insights while solving. Problem-specific notes help you remember logic and edge cases." 
+                    : "Reflect on your interview sessions. Summarize what went well and what needs improvement."}
+            </p>
+            
+            <a href="${isDSA ? '/problems/' : '/interview/'}" 
+               class="inline-flex items-center gap-1.5 px-5 py-2 bg-gradient-to-r ${isDSA ? 'from-blue-500 to-indigo-600 shadow-blue-500/25' : 'from-purple-500 to-pink-600 shadow-purple-500/25'} text-white rounded-xl font-bold text-xs hover:shadow-xl hover:-translate-y-0.5 transition-all active:scale-95">
+                <span>${isDSA ? 'Start Problem' : 'Start Interview'}</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </a>
+        </div>
+    `;
 }
 
 function getBadgeStyle(diff) {

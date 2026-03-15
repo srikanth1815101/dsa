@@ -1,10 +1,10 @@
 {{ define "main" }}
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 md:pt-4 animate-fade-in-up">
 
         <!-- Enhanced Header Card (Matching Interview style) -->
         <div
-            class="relative bg-white dark:bg-gray-800 rounded-2xl p-3 md:p-3.5 mb-3 md:mb-4 border border-gray-200 dark:border-gray-700/50 shadow-sm group overflow-hidden">
+            class="relative bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 mb-3 md:mb-4 border border-gray-200 dark:border-gray-700/50 shadow-sm group overflow-hidden">
             <!-- Animated Background Blobs -->
             <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-2xl">
                 <div class="absolute -top-32 -right-32 w-96 h-96 {{ if eq .Title "Basic" }}bg-emerald-500/5{{ else if
@@ -42,7 +42,7 @@
                         </div>
                         {{ end }}
                         <h1
-                            class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">
+                            class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight whitespace-nowrap">
                             {{ .Title }}
                         </h1>
                     </div>

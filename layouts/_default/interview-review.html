@@ -5,6 +5,7 @@
     .line-clamp-1.whitespace-pre-wrap {
         display: -webkit-box;
         -webkit-line-clamp: 1;
+        line-clamp: 1;
         -webkit-box-orient: vertical;
         overflow: hidden;
         word-break: break-word;
@@ -12,7 +13,7 @@
     }
 </style>
 
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-8 animate-fade-in-up">
 
         <!-- GOLD STANDARD HEADER CARD -->
@@ -22,10 +23,10 @@
             <!-- Animated Background Blobs -->
             <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-2xl">
                 <div
-                    class="absolute -top-32 -right-32 w-96 h-96 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors duration-700">
+                    class="absolute -top-32 -right-32 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl group-hover:bg-purple-500/10 transition-colors duration-700">
                 </div>
                 <div
-                    class="absolute -bottom-32 -left-32 w-96 h-96 bg-secondary/5 rounded-full blur-3xl group-hover:bg-secondary/10 transition-colors duration-700">
+                    class="absolute -bottom-32 -left-32 w-96 h-96 bg-pink-500/5 rounded-full blur-3xl group-hover:bg-pink-500/10 transition-colors duration-700">
                 </div>
             </div>
 
@@ -45,7 +46,7 @@
                                 <span id="session-title">Session Review</span>
                                 <span class="inline-block w-0 overflow-visible align-middle">
                                     <button onclick="startEditSession()"
-                                        class="ml-2 p-1.5 text-gray-400 hover:text-indigo-500 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg transition-all transform hover:scale-110 -translate-y-0.5 md:-translate-y-1"
+                                        class="ml-2 p-1.5 text-gray-400 hover:text-purple-500 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg transition-all transform hover:scale-110 -translate-y-0.5 md:-translate-y-1"
                                         title="Rename Session">
                                         <i data-lucide="pencil" class="w-4 h-4 md:w-5 md:h-5"></i>
                                     </button>
@@ -60,7 +61,7 @@
                         <!-- Stats Item: Duration -->
                         <div class="flex items-center gap-1.5 md:gap-3 shrink-1 min-w-0">
                             <div
-                                class="p-1.5 md:p-2 bg-sky-50 dark:bg-sky-900/20 rounded-lg text-sky-600 dark:text-sky-400 shrink-0">
+                                class="p-1.5 md:p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg text-purple-600 dark:text-purple-400 shrink-0">
                                 <i data-lucide="clock" class="w-3.5 h-3.5 md:w-4 md:h-4"></i>
                             </div>
                             <div class="min-w-0">
@@ -123,7 +124,7 @@
                     <!-- New Session -->
                     <div class="group/tooltip relative flex-1 sm:flex-none">
                         <a href="/interview/"
-                            class="flex items-center justify-center gap-1.5 md:gap-2 px-3 py-2.5 md:px-6 md:py-3 rounded-xl bg-gradient-to-br from-primary to-blue-600 text-white shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 font-bold text-xs sm:text-sm whitespace-nowrap"
+                            class="flex items-center justify-center gap-1.5 md:gap-2 px-3 py-2.5 md:px-6 md:py-3 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 text-white shadow-lg shadow-purple-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 font-bold text-xs sm:text-sm whitespace-nowrap"
                             aria-label="New Session">
                             <i data-lucide="plus-circle" class="w-4 h-4 md:w-5 md:h-5"></i>
                             <span>New Session</span>
@@ -147,7 +148,7 @@
         <!-- PROBLEM LIST (FULL WIDTH LINEAR) -->
         <div class="space-y-4 mb-12">
             <h2 class="text-xl font-bold text-gray-900 dark:text-white px-1 flex items-center gap-2">
-                <i data-lucide="activity" class="w-5 h-5 text-primary"></i>
+                <i data-lucide="activity" class="w-5 h-5 text-purple-500"></i>
                 Performance Details
             </h2>
             <div id="problem-list" class="space-y-3">
@@ -193,7 +194,7 @@
                     <!-- Edit Mode (Hidden) -->
                     <div id="reflection-input-container" class="space-y-3 hidden">
                         <textarea id="reflection-text" oninput="autoResize(this)"
-                            class="w-full min-h-[8rem] p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none resize-none text-sm leading-relaxed placeholder:text-gray-400 dark:placeholder-gray-600 overflow-hidden transition-all"
+                            class="w-full min-h-[8rem] p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 outline-none resize-none text-sm leading-relaxed placeholder:text-gray-400 dark:placeholder-gray-600 overflow-hidden transition-all"
                             placeholder="Type your reflection here..."></textarea>
 
                         <div class="flex justify-end gap-2">
@@ -202,7 +203,7 @@
                                 Cancel
                             </button>
                             <button onclick="saveReflection()" id="save-btn"
-                                class="px-6 py-2 rounded-xl bg-gradient-to-r from-primary to-blue-600 text-white font-bold text-sm hover:shadow-lg hover:shadow-primary/20 hover:scale-[1.01] transition-all flex items-center gap-2 active:scale-95">
+                                class="px-6 py-2 rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold text-sm hover:shadow-lg hover:shadow-purple-500/20 hover:scale-[1.01] transition-all flex items-center gap-2 active:scale-95">
                                 <i data-lucide="save" class="w-4 h-4"></i> Save
                             </button>
                         </div>

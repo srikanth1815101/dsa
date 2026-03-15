@@ -3,7 +3,7 @@
 <script src="/js/interview-manager.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 md:pt-6 animate-fade-in-up">
 
         <!-- Enhanced Header Card -->
@@ -13,10 +13,10 @@
             <!-- Animated Background Blobs -->
             <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-2xl">
                 <div
-                    class="absolute -top-32 -right-32 w-96 h-96 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors duration-700">
+                    class="absolute -top-32 -right-32 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl group-hover:bg-orange-500/10 transition-colors duration-700">
                 </div>
                 <div
-                    class="absolute -bottom-32 -left-32 w-96 h-96 bg-secondary/5 rounded-full blur-3xl group-hover:bg-secondary/10 transition-colors duration-700">
+                    class="absolute -bottom-32 -left-32 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl group-hover:bg-amber-500/10 transition-colors duration-700">
                 </div>
             </div>
 
@@ -40,7 +40,7 @@
                 <!-- Stats / Decoration -->
                 <div class="flex items-center gap-2 md:self-end">
                     <button onclick="window.openDownloadModal()"
-                        class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm shadow-lg shadow-blue-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                        class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 text-white font-bold text-sm shadow-lg shadow-orange-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
                         <i data-lucide="download" class="w-4 h-4"></i>
                         <span>Download PDF</span>
                     </button>
@@ -71,7 +71,7 @@
                 <div class="relative group w-full md:w-auto md:flex-initial">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i data-lucide="search"
-                            class="h-4 w-4 text-gray-400 group-focus-within:text-primary transition-colors"></i>
+                            class="h-4 w-4 text-gray-400 group-focus-within:text-orange-500 transition-colors"></i>
                     </div>
                     <input type="text" id="searchInput" placeholder="Search notes..."
                         class="pl-10 pr-4 py-2.5 w-full md:w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 text-sm transition-all shadow-sm">
@@ -80,7 +80,7 @@
                 <div class="relative group w-full md:w-auto min-w-[140px]" id="difficultyFilterContainer">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i data-lucide="bar-chart-2"
-                            class="h-4 w-4 text-gray-400 group-focus-within:text-primary transition-colors"></i>
+                            class="h-4 w-4 text-gray-400 group-focus-within:text-orange-500 transition-colors"></i>
                     </div>
                     <select id="difficultyFilter"
                         class="pl-10 pr-8 py-2.5 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 text-sm appearance-none cursor-pointer shadow-sm transition-all whitespace-nowrap overflow-hidden text-ellipsis">
@@ -108,7 +108,7 @@
                     We couldn't find any problem notes matching your current filters.
                 </p>
                 <button onclick="document.getElementById('searchInput').value=''; document.getElementById('difficultyFilter').value=''; window.filterContent();"
-                    class="mt-5 px-5 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-bold text-xs hover:-translate-y-0.5 transition-all shadow-lg shadow-blue-500/25">
+                    class="mt-5 px-5 py-2.5 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-xl font-bold text-xs hover:-translate-y-0.5 transition-all shadow-lg shadow-orange-500/25">
                     Clear all filters
                 </button>
             </div>
@@ -134,7 +134,7 @@
                     We couldn't find any reflections matching your search query.
                 </p>
                 <button onclick="document.getElementById('searchInput').value=''; window.filterContent();"
-                    class="mt-5 px-5 py-2.5 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-bold text-xs hover:-translate-y-0.5 transition-all shadow-lg shadow-purple-500/25">
+                    class="mt-5 px-5 py-2.5 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-xl font-bold text-xs hover:-translate-y-0.5 transition-all shadow-lg shadow-orange-500/25">
                     Clear search
                 </button>
             </div>
@@ -161,10 +161,10 @@
 
         <!-- Decorative bg blobs -->
         <div
-            class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none">
+            class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none">
         </div>
         <div
-            class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none">
+            class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none">
         </div>
 
         <!-- Sticky Header -->
@@ -174,7 +174,7 @@
                 <h2
                     class="text-base md:text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-2 md:gap-3">
                     <div
-                        class="p-1.5 md:p-2 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg shadow-lg shrink-0">
+                        class="p-1.5 md:p-2 bg-gradient-to-r from-orange-500 to-amber-600 rounded-lg shadow-lg shrink-0">
                         <i data-lucide="file-down" class="w-4 h-4 md:w-5 md:h-5 text-white"></i>
                     </div>
                     Download Notes
@@ -197,10 +197,10 @@
                 <div class="grid grid-cols-1 gap-2">
                     <!-- All Notes -->
                     <label
-                        class="group relative flex items-center gap-3 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        class="group relative flex items-center gap-3 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-orange-500/50 transition-all">
                         <input type="radio" name="notesScope" value="all" checked
                             onchange="updateDownloadAvailability()"
-                            class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
+                            class="w-4 h-4 text-orange-600 border-gray-300 focus:ring-orange-500 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
                         <div class="flex-1 min-w-0">
                             <span class="block text-sm font-bold text-gray-900 dark:text-white truncate">All
                                 Notes</span>
@@ -211,18 +211,18 @@
                     </label>
                     <div class="grid grid-cols-2 gap-2">
                         <label
-                            class="group relative flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                            class="group relative flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-orange-500/50 transition-all">
                             <input type="radio" name="notesScope" value="problems"
                                 onchange="updateDownloadAvailability()"
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
+                                class="w-4 h-4 text-orange-600 border-gray-300 focus:ring-orange-500 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
                             <span
                                 class="text-xs md:text-sm font-bold text-gray-900 dark:text-white truncate">Problems</span>
                         </label>
                         <label
-                            class="group relative flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                            class="group relative flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-orange-500/50 transition-all">
                             <input type="radio" name="notesScope" value="reflections"
                                 onchange="updateDownloadAvailability()"
-                                class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
+                                class="w-4 h-4 text-orange-600 focus:ring-orange-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
                             <span
                                 class="text-xs md:text-sm font-bold text-gray-900 dark:text-white truncate">Reflections</span>
                         </label>
@@ -237,35 +237,35 @@
                     Data</label>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <label
-                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-orange-500/50 transition-all">
                         <input type="checkbox" id="includeStatement" checked
-                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
+                            class="w-4 h-4 rounded text-orange-600 focus:ring-orange-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
                         <span class="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-200">Problem
                             Statement</span>
                     </label>
                     <label
-                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-orange-500/50 transition-all">
                         <input type="checkbox" id="includeComplexity" checked
-                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
+                            class="w-4 h-4 rounded text-orange-600 focus:ring-orange-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
                         <span class="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-200">Time/Space
                             Cmplx</span>
                     </label>
                     <label
-                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-orange-500/50 transition-all">
                         <input type="checkbox" id="includeExamples"
-                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
+                            class="w-4 h-4 rounded text-orange-600 focus:ring-orange-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
                         <span class="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-200">Examples</span>
                     </label>
                     <label
-                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-orange-500/50 transition-all">
                         <input type="checkbox" id="includeConstraints"
-                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
+                            class="w-4 h-4 rounded text-orange-600 focus:ring-orange-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
                         <span class="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-200">Constraints</span>
                     </label>
                     <label
-                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-orange-500/50 transition-all">
                         <input type="checkbox" id="includeRealWorld"
-                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
+                            class="w-4 h-4 rounded text-orange-600 focus:ring-orange-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
                         <span class="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-200">Real World</span>
                     </label>
                 </div>
@@ -289,11 +289,11 @@
                 Cancel
             </button>
             <button onclick="exportNotesPDF(true)" id="btn-preview-pdf"
-                class="flex-1 py-2.5 md:py-3.5 rounded-xl border border-blue-200 dark:border-blue-800/50 text-blue-600 dark:text-blue-400 font-bold text-xs md:text-sm hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors flex items-center justify-center gap-2">
+                class="flex-1 py-2.5 md:py-3.5 rounded-xl border border-orange-200 dark:border-orange-800/50 text-orange-600 dark:text-orange-400 font-bold text-xs md:text-sm hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors flex items-center justify-center gap-2">
                 <i data-lucide="eye" class="w-3.5 h-3.5 md:w-4 md:h-4"></i> Preview
             </button>
             <button onclick="exportNotesPDF(false)" id="btn-download-pdf"
-                class="flex-[1.5] py-2.5 md:py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xs md:text-sm hover:shadow-xl hover:shadow-blue-500/20 hover:scale-[1.01] transition-all transform active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed">
+                class="flex-[1.5] py-2.5 md:py-3.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 text-white font-bold text-xs md:text-sm hover:shadow-xl hover:shadow-orange-500/20 hover:scale-[1.01] transition-all transform active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed">
                 <i data-lucide="download" class="w-3.5 h-3.5 md:w-4 md:h-4"></i> Download
             </button>
         </div>
@@ -305,4 +305,11 @@
 
 <!-- Load Shared PDF Export Logic -->
 <script src="/js/pdf-export.js"></script>
+<script>
+    function copyPageUrl() {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            if (typeof showToast === 'function') showToast('Link copied to clipboard!', 'success');
+        });
+    }
+</script>
 {{ end }}

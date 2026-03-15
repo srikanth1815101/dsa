@@ -1,6 +1,6 @@
 {{ define "main" }}
 <script src="/js/interview-manager.js"></script>
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-8 animate-fade-in-up">
 
         <!-- HEADER SECTION -->
@@ -13,7 +13,7 @@
                     class="absolute -top-32 -right-32 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl group-hover:bg-purple-500/10 transition-colors duration-700">
                 </div>
                 <div
-                    class="absolute -bottom-32 -left-32 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl group-hover:bg-blue-500/10 transition-colors duration-700">
+                    class="absolute -bottom-32 -left-32 w-96 h-96 bg-pink-500/5 rounded-full blur-3xl group-hover:bg-pink-500/10 transition-colors duration-700">
                 </div>
             </div>
 
@@ -34,7 +34,7 @@
 
                 <div class="flex items-center gap-3">
                     <a href="/interview/"
-                        class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm shadow-lg shadow-blue-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                        class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold text-sm shadow-lg shadow-purple-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
                         <i data-lucide="plus" class="w-4 h-4"></i>
                         New Session
                     </a>
@@ -152,7 +152,7 @@
                         <i data-lucide="ghost" class="w-8 h-8 text-gray-400"></i>
                     </div>
                     <p class="text-gray-500 dark:text-gray-400 font-medium">No interviews yet.</p>
-                    <a href="/interview/" class="inline-block mt-4 text-primary font-bold hover:underline">Start your first session</a>
+                    <a href="/interview/" class="inline-block mt-4 text-purple-600 dark:text-purple-400 font-bold hover:underline">Start your first session</a>
                 </div>
             `;
             return;
@@ -259,7 +259,7 @@
                                     <i data-lucide="play" class="w-3 h-3 fill-current"></i> Resume
                                 </a>
                             ` : `
-                                <a href="/interview/review/?id=${s.id}" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-lg text-xs font-bold shadow-md shadow-purple-500/20 hover:shadow-lg hover:shadow-purple-500/30 hover:-translate-y-0.5 transition-all">
+                                <a href="/interview/review/?id=${s.id}" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-lg text-xs font-bold shadow-md shadow-purple-500/20 hover:shadow-lg hover:shadow-purple-500/30 hover:-translate-y-0.5 transition-all">
                                     <i data-lucide="bar-chart-2" class="w-3 h-3"></i> Review
                                 </a>
                             `}

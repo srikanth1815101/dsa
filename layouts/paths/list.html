@@ -1,5 +1,5 @@
 {{ define "main" }}
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-20">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans pb-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-8 animate-fade-in-up">
 
         {{ if or (eq .Kind "taxonomy") (eq .Kind "section") }}
@@ -27,7 +27,7 @@
                             <i data-lucide="route" class="w-6 h-6 text-white"></i>
                         </div>
                         <h1
-                            class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight">
+                            class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-tight whitespace-nowrap">
                             Learning Paths
                         </h1>
                     </div>

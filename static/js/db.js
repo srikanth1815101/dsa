@@ -37,86 +37,17 @@ class DSADatabase {
 
             request.onsuccess = async (event) => {
                 this.db = event.target.result;
-                await this.migrateFromLocalStorage();
+                
+                // Final Cleanup of legacy migration flags
+                localStorage.removeItem('dsa-db-migrated');
+                localStorage.removeItem('dsa-db-migrated-v2');
+                
                 resolve(this.db);
             };
         });
     }
 
-    async migrateFromLocalStorage() {
-        const hasMigrated = localStorage.getItem('dsa-db-migrated-v2');
-        if (hasMigrated) return;
 
-        console.log('Migrating data from LocalStorage to IndexedDB...');
-
-        try {
-            /* --- Migrate Problems --- */
-            // Check if v1 migration occurred, if not do it now
-            const v1Migrated = localStorage.getItem('dsa-db-migrated');
-
-            if (!v1Migrated) {
-                const bookmarks = JSON.parse(localStorage.getItem('dsa-bookmarks') || '[]');
-                const completed = JSON.parse(localStorage.getItem('dsa-completed') || '[]');
-                const revised = JSON.parse(localStorage.getItem('dsa-revised') || '[]');
-                const notes = JSON.parse(localStorage.getItem('dsa-notes') || '{}');
-
-                const problemIds = new Set([
-                    ...bookmarks,
-                    ...completed,
-                    ...revised,
-                    ...Object.keys(notes)
-                ]);
-
-                if (problemIds.size > 0) {
-                    const tx = this.db.transaction([STORE_PROBLEMS], 'readwrite');
-                    const store = tx.objectStore(STORE_PROBLEMS);
-
-                    for (const id of problemIds) {
-                        const record = {
-                            id: id,
-                            bookmarked: bookmarks.includes(id),
-                            completed: completed.includes(id),
-                            revised: revised.includes(id),
-                            note: notes[id] || '',
-                            lastUpdated: Date.now()
-                        };
-                        store.put(record);
-                    }
-                    await new Promise((resolve, reject) => {
-                        tx.oncomplete = resolve;
-                        tx.onerror = () => reject(tx.error);
-                        tx.onabort = () => reject(new Error('Transaction aborted'));
-                    });
-                }
-                localStorage.setItem('dsa-db-migrated', 'true');
-            }
-
-            /* --- Migrate Sessions --- */
-            const interviewRaw = localStorage.getItem('interview_db');
-            if (interviewRaw) {
-                const interviewDB = JSON.parse(interviewRaw);
-                if (interviewDB.sessions) {
-                    const tx = this.db.transaction([STORE_SESSIONS], 'readwrite');
-                    const store = tx.objectStore(STORE_SESSIONS);
-
-                    for (const session of Object.values(interviewDB.sessions)) {
-                        store.put(session);
-                    }
-                    await new Promise((resolve, reject) => {
-                        tx.oncomplete = resolve;
-                        tx.onerror = () => reject(tx.error);
-                        tx.onabort = () => reject(new Error('Transaction aborted'));
-                    });
-                }
-            }
-
-            localStorage.setItem('dsa-db-migrated-v2', 'true');
-            console.log('Migration completed successfully.');
-
-        } catch (err) {
-            console.error('Migration failed:', err);
-        }
-    }
 
     /* --- Problem Operations --- */
     async getProblem(id) {
@@ -375,9 +306,6 @@ class DSADatabase {
 
             return new Promise((resolve, reject) => {
                 tx.oncomplete = () => {
-                    // Force re-migration skip if importing on fresh device
-                    localStorage.setItem('dsa-db-migrated', 'true'); // For v1 problems
-                    localStorage.setItem('dsa-db-migrated-v2', 'true'); // For v2 overall
                     resolve(true);
                 };
                 tx.onerror = () => reject(tx.error);

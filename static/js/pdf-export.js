@@ -95,6 +95,7 @@
             const inclComplexity = document.getElementById('includeComplexity')?.checked ?? true;
             const inclExamples = document.getElementById('includeExamples')?.checked ?? false;
             const inclConstraints = document.getElementById('includeConstraints')?.checked ?? false;
+            const inclRealWorld = document.getElementById('includeRealWorld')?.checked ?? false;
 
             // 2. Fetch Data
             // User Data from IndexedDB
@@ -364,6 +365,21 @@
                                 item.meta.examples.forEach((ex, exIdx) => {
                                     const splitEx = doc.splitTextToSize(`Ex ${exIdx + 1}: Input: ${ex.input} | Output: ${ex.output}`, contentW);
                                     doc.text(splitEx, margin, infoY); infoY += (splitEx.length * 4) + 2;
+                                });
+                                infoY += 5;
+                            }
+                            if (inclRealWorld && item.meta.realWorld && Array.isArray(item.meta.realWorld)) {
+                                y = infoY; checkOverflow(30); infoY = y;
+                                doc.setFont("helvetica", "bold"); doc.setTextColor(30); doc.setFontSize(10);
+                                doc.text("Real World Application", margin, infoY); infoY += 6;
+                                doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.setTextColor(...colTextMuted);
+                                item.meta.realWorld.forEach(rw => {
+                                    const rwTitle = rw.title || "Application";
+                                    const rwDesc = rw.description || "";
+                                    const fullText = `• ${rwTitle}: ${rwDesc}`;
+                                    const splitRW = doc.splitTextToSize(stripHtml(fullText), contentW);
+                                    checkOverflow(splitRW.length * 5);
+                                    doc.text(splitRW, margin, infoY); infoY += (splitRW.length * 4.5);
                                 });
                                 infoY += 5;
                             }

@@ -558,7 +558,8 @@ window.updateDownloadAvailability = async function () {
     const scopeEl = document.querySelector('input[name="notesScope"]:checked');
     const scope = scopeEl ? scopeEl.value : 'all';
     const msgEl = document.getElementById('download-availability-message');
-    const btn = document.getElementById('btn-download-pdf');
+    const downloadBtn = document.getElementById('btn-download-pdf');
+    const previewBtn = document.getElementById('btn-preview-pdf');
 
     if (!msgEl) return;
 
@@ -586,10 +587,12 @@ window.updateDownloadAvailability = async function () {
 
     if (count > 0) {
         msgEl.innerHTML = `<span class="text-green-600 dark:text-green-400 flex items-center justify-center gap-2"><i data-lucide="check-circle" class="w-4 h-4"></i> ${count} notes available</span>`;
-        if (btn) btn.disabled = false;
+        if (downloadBtn) downloadBtn.disabled = false;
+        if (previewBtn) previewBtn.disabled = false;
     } else {
         msgEl.innerHTML = `<span class="text-red-500 flex items-center justify-center gap-2"><i data-lucide="alert-circle" class="w-4 h-4"></i> No notes found in this category</span>`;
-        if (btn) btn.disabled = true;
+        if (downloadBtn) downloadBtn.disabled = true;
+        if (previewBtn) previewBtn.disabled = true;
     }
     if (window.lucide) lucide.createIcons();
 }

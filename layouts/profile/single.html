@@ -1139,7 +1139,8 @@
                 const scopeEl = document.querySelector('input[name="notesScope"]:checked');
                 const scope = scopeEl ? scopeEl.value : 'all';
                 const msgEl = document.getElementById('download-availability-message');
-                const btn = document.getElementById('btn-download-pdf');
+                const downloadBtn = document.getElementById('btn-download-pdf');
+                const previewBtn = document.getElementById('btn-preview-pdf');
 
                 if (!msgEl) return;
 
@@ -1167,10 +1168,12 @@
 
                 if (count > 0) {
                     msgEl.innerHTML = `<span class="text-green-600 dark:text-green-400 flex items-center justify-center gap-2"><i data-lucide="check-circle" class="w-4 h-4"></i> ${count} notes available</span>`;
-                    if (btn) btn.disabled = false;
+                    if (downloadBtn) downloadBtn.disabled = false;
+                    if (previewBtn) previewBtn.disabled = false;
                 } else {
                     msgEl.innerHTML = `<span class="text-red-500 flex items-center justify-center gap-2"><i data-lucide="alert-circle" class="w-4 h-4"></i> No notes found in this category</span>`;
-                    if (btn) btn.disabled = true;
+                    if (downloadBtn) downloadBtn.disabled = true;
+                    if (previewBtn) previewBtn.disabled = true;
                 }
                 if (window.lucide) lucide.createIcons();
             }
@@ -1316,7 +1319,7 @@
         <div
             class="p-3 md:p-6 border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50 backdrop-blur-sm relative z-20 shrink-0 flex gap-2 md:gap-3">
             <button onclick="exportNotesPDF(true)" id="btn-preview-pdf"
-                class="flex-1 py-2.5 md:py-3.5 rounded-xl border border-orange-200 dark:border-orange-800/50 text-orange-600 dark:text-orange-400 font-bold text-xs md:text-sm hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors flex items-center justify-center gap-2">
+                class="flex-1 py-2.5 md:py-3.5 rounded-xl border border-orange-200 dark:border-orange-800/50 text-orange-600 dark:text-orange-400 font-bold text-xs md:text-sm hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed">
                 <i data-lucide="eye" class="w-3.5 h-3.5 md:w-4 md:h-4"></i> Preview
             </button>
             <button onclick="exportNotesPDF(false)" id="btn-download-pdf"

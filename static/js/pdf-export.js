@@ -314,7 +314,7 @@
                             doc.text(splitSum, margin + 5, y + 14); y += boxH + 8;
                         }
 
-                        if (inclComplexity || inclConstraints || (inclExamples && item.meta.examples)) {
+                        if (inclComplexity || inclConstraints || (inclExamples && item.meta.examples) || (inclRealWorld && item.meta.realWorld)) {
                             checkOverflow(60);
                             let infoY = y;
                             const showComplexity = inclComplexity;

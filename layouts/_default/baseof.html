@@ -712,6 +712,46 @@
 
     {{ partial "footer.html" . }}
 
+    <!-- Go to Top Button -->
+    <button id="goToTopBtn" 
+        class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[101] hidden items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/30 hover:shadow-xl hover:-translate-y-1 active:scale-95 transition-all duration-300 opacity-0 transform translate-y-4">
+        <i data-lucide="chevron-up" class="w-6 h-6"></i>
+    </button>
+
+    <script>
+        (function() {
+            const btn = document.getElementById('goToTopBtn');
+            if (!btn) return;
+
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 400) {
+                    btn.classList.remove('hidden');
+                    btn.classList.add('flex');
+                    requestAnimationFrame(() => {
+                        btn.classList.remove('opacity-0', 'translate-y-4');
+                        btn.classList.add('opacity-100', 'translate-y-0');
+                    });
+                } else {
+                    btn.classList.add('opacity-0', 'translate-y-4');
+                    btn.classList.remove('opacity-100', 'translate-y-0');
+                    setTimeout(() => {
+                        if (window.pageYOffset <= 400) {
+                            btn.classList.add('hidden');
+                            btn.classList.remove('flex');
+                        }
+                    }, 300);
+                }
+            });
+
+            btn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        })();
+    </script>
+
     <!-- Initialize Lucide Icons -->
     <script>
         lucide.createIcons();
@@ -895,6 +935,8 @@
             }, true);
         })();
     </script>
+    </script>
+
 </body>
 
 </html>

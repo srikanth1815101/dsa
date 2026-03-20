@@ -64,6 +64,11 @@ enableGitInfo = false
   weight = 2
 
 [[menu.footer]]
+  name = "Support"
+  url = "/support/"
+  weight = 3
+
+[[menu.footer]]
   name = "About"
   url = "/about/"
   weight = 3

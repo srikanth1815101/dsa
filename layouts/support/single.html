@@ -1,0 +1,203 @@
+{{ define "main" }}
+<div class="relative w-full overflow-hidden pt-32 pb-24">
+    <!-- Background Accents (Shared with site theme) -->
+    <div class="fixed inset-0 pointer-events-none">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-gradient-to-b from-blue-500/5 to-transparent dark:from-blue-600/10 opacity-50"></div>
+        <div class="absolute top-[10%] left-[-5%] w-[40rem] h-[40rem] bg-purple-500/10 rounded-full blur-[100px] animate-blob"></div>
+        <div class="absolute bottom-[20%] right-[-5%] w-[35rem] h-[35rem] bg-indigo-500/10 rounded-full blur-[100px] animate-blob animation-delay-2000"></div>
+    </div>
+
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <div
+                class="inline-flex items-center justify-center p-3 mb-6 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-600 shadow-xl shadow-purple-500/20">
+                <i data-lucide="heart" class="w-8 h-8 text-white animate-pulse"></i>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">Support <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">CSRGO DSA</span>
+            </h1>
+            <p
+                class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed font-medium">
+                CSRGO DSA is, and will always be, free. If you find value in our curated platform, consider supporting
+                its development through a voluntary contribution.
+            </p>
+        </div>
+
+        <!-- Payment Options Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
+            <!-- UPI Option: FORCED LIGHT THEME for Scannability -->
+            <div
+                class="group relative bg-white border border-gray-100 rounded-[2.5rem] p-10 shadow-2xl flex flex-col overflow-hidden">
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                </div>
+
+                <div class="relative w-full flex flex-col h-full items-center">
+                    <div class="flex items-center gap-4 mb-6 w-full">
+                        <div
+                            class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center text-white shadow-xl shadow-purple-500/20">
+                            <i data-lucide="qr-code" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-black text-gray-900 leading-tight">UPI</h3>
+                            <p class="text-[10px] uppercase tracking-widest font-black text-purple-500/80">Scan or Pay
+                                Directly</p>
+                        </div>
+                    </div>
+
+                    <!-- Direct QR Placement (Guaranteed white contrast) -->
+                    <div
+                        class="relative w-full max-w-[240px] aspect-square flex items-center justify-center transition-all duration-300 mb-6">
+                        <div id="upi-qrcode" class="w-full h-full"></div>
+                    </div>
+
+                    <div class="mt-auto w-full">
+                        <a id="upi-pay-button" href="#"
+                            class="w-full group/btn inline-flex items-center justify-center gap-3 py-4 px-8 rounded-[1.5rem] bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black text-lg shadow-xl shadow-purple-600/20 hover:shadow-purple-600/40 active:scale-95 transition-all">
+                            Pay via UPI App
+                            <i data-lucide="external-link"
+                                class="w-5 h-5 group-hover/btn:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Razorpay Option: Dual-Theme Compatible -->
+            <div
+                class="group relative bg-white dark:bg-gray-800/40 backdrop-blur-xl border border-gray-100 dark:border-gray-700/50 rounded-[2.5rem] p-10 shadow-2xl flex flex-col overflow-hidden">
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                </div>
+
+                <div class="relative h-full flex flex-col">
+                    <div class="flex items-center gap-5 mb-10">
+                        <div
+                            class="w-14 h-14 rounded-2xl bg-white dark:bg-gray-900 flex items-center justify-center p-3 shadow-xl shadow-blue-500/10 border border-gray-50 dark:border-gray-800">
+                            <img src="https://razorpay.com/favicon.png" class="w-full h-full object-contain"
+                                alt="Razorpay">
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-black text-gray-900 dark:text-white leading-tight">Razorpay
+                            </h3>
+                            <div class="flex items-center gap-2">
+                                <p class="text-[10px] uppercase tracking-widest font-black text-blue-500/80">Digital
+                                    Checkout</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 mb-10">
+                        <div
+                            class="flex items-start gap-4 p-5 rounded-2xl bg-blue-50/50 dark:bg-blue-900/20 border border-blue-100/30 dark:border-blue-700/30 transition-all group-hover:border-blue-200">
+                            <div class="mt-0.5 p-1.5 rounded-lg bg-blue-500 text-white shadow-sm">
+                                <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-black text-gray-900 dark:text-white">Seamless Experience</h4>
+                                <p class="text-[11px] text-gray-500 dark:text-gray-400">Cards, Net Banking, and All
+                                    Wallets supported.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="flex items-start gap-4 p-5 rounded-2xl bg-cyan-50/50 dark:bg-cyan-900/20 border border-cyan-100/30 dark:border-cyan-700/30 transition-all group-hover:border-cyan-200">
+                            <div class="mt-0.5 p-1.5 rounded-lg bg-cyan-500 text-white shadow-sm">
+                                <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-black text-gray-900 dark:text-white">Secure Gateway</h4>
+                                <p class="text-[11px] text-gray-500 dark:text-gray-400">100% encrypted environment for
+                                    your transactions.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto pt-6">
+                        <a href="https://razorpay.me/@yourlink" target="_blank" rel="noopener"
+                            class="w-full group/btn inline-flex items-center justify-center gap-3 py-4 px-8 rounded-[1.5rem] bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black text-lg shadow-xl shadow-blue-600/20 hover:shadow-blue-600/40 active:scale-95 transition-all">
+                            Proceed to Pay
+                            <i data-lucide="arrow-right"
+                                class="w-5 h-5 group-hover/btn:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Commitment Note -->
+        <div
+            class="mt-20 text-center max-w-2xl mx-auto px-8 py-8 rounded-[2.5rem] bg-gray-50/10 dark:bg-gray-800/20 border border-gray-100/50 dark:border-gray-700/50">
+            <h4
+                class="text-gray-900 dark:text-white font-black mb-3 flex items-center justify-center gap-2.5 text-base italic">
+                <i data-lucide="heart" class="w-5 h-5 text-pink-500"></i>
+                Our Commitment
+            </h4>
+            <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
+                CSRGO DSA is built by the community, for the community. We promise to keep all features free for
+                everyone, always. Your contributions simply help us move faster.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Load Advanced Designer QR Library -->
+<script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        if (window.lucide) window.lucide.createIcons();
+
+        const upiID = 'csr850@okaxis';
+        const upiUrl = `upi://pay?pa=${upiID}&pn=${encodeURIComponent('CSRGO DSA')}&cu=INR`;
+
+        const payBtn = document.getElementById('upi-pay-button');
+        if (payBtn) payBtn.href = upiUrl;
+
+        // Advance QR Generation with qr-code-styling
+        if (window.QRCodeStyling) {
+            const qrCode = new QRCodeStyling({
+                width: 240,
+                height: 240,
+                type: "svg",
+                data: upiUrl,
+                image: "/logo.png",
+                dotsOptions: {
+                    color: "#000000",
+                    type: "rounded"
+                },
+                backgroundOptions: {
+                    color: "transparent",
+                },
+                imageOptions: {
+                    crossOrigin: "anonymous",
+                    margin: 8,
+                    imageSize: 0.4
+                },
+                cornersSquareOptions: {
+                    color: "#000000",
+                    type: "extra-rounded"
+                },
+                cornersDotOptions: {
+                    color: "#000000",
+                    type: "dot"
+                }
+            });
+
+            const qrContainer = document.getElementById('upi-qrcode');
+            if (qrContainer) {
+                qrCode.append(qrContainer);
+
+                // Fine-tune generated SVG for responsiveness
+                setTimeout(() => {
+                    const svg = qrContainer.querySelector('svg');
+                    if (svg) {
+                        svg.setAttribute('viewBox', '0 0 240 240');
+                        svg.style.width = '100%';
+                        svg.style.height = '100%';
+                    }
+                }, 100);
+            }
+        }
+    });
+</script>
+{{ end }}

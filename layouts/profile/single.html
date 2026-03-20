@@ -1193,10 +1193,10 @@
 
         <!-- Decorative bg blobs -->
         <div
-            class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none">
+            class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none">
         </div>
         <div
-            class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none">
+            class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none">
         </div>
 
         <!-- Sticky Header -->
@@ -1206,7 +1206,7 @@
                 <h2
                     class="text-base md:text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-2 md:gap-3">
                     <div
-                        class="p-1.5 md:p-2 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg shadow-lg shrink-0">
+                        class="p-1.5 md:p-2 bg-gradient-to-r from-orange-500 to-amber-600 rounded-lg shadow-lg shrink-0">
                         <i data-lucide="file-down" class="w-4 h-4 md:w-5 md:h-5 text-white"></i>
                     </div>
                     Download Notes
@@ -1229,10 +1229,10 @@
                 <div class="grid grid-cols-1 gap-2">
                     <!-- All Notes -->
                     <label
-                        class="group relative flex items-center gap-3 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        class="group relative flex items-center gap-3 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-orange-500/50 transition-all">
                         <input type="radio" name="notesScope" value="all" checked
                             onchange="updateDownloadAvailability()"
-                            class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
+                            class="w-4 h-4 text-orange-600 border-gray-300 focus:ring-orange-500 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
                         <div class="flex-1 min-w-0">
                             <span class="block text-sm font-bold text-gray-900 dark:text-white truncate">All
                                 Notes</span>
@@ -1243,18 +1243,18 @@
                     </label>
                     <div class="grid grid-cols-2 gap-2">
                         <label
-                            class="group relative flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                            class="group relative flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-orange-500/50 transition-all">
                             <input type="radio" name="notesScope" value="problems"
                                 onchange="updateDownloadAvailability()"
-                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
+                                class="w-4 h-4 text-orange-600 border-gray-300 focus:ring-orange-500 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
                             <span class="text-xs md:text-sm font-bold text-gray-900 dark:text-white truncate">Problem
                                 Notes</span>
                         </label>
                         <label
-                            class="group relative flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                            class="group relative flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-orange-500/50 transition-all">
                             <input type="radio" name="notesScope" value="reflections"
                                 onchange="updateDownloadAvailability()"
-                                class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
+                                class="w-4 h-4 text-orange-600 focus:ring-orange-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
                             <span
                                 class="text-xs md:text-sm font-bold text-gray-900 dark:text-white truncate">Reflections</span>
                         </label>
@@ -1269,35 +1269,35 @@
                     Data</label>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <label
-                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-orange-500/50 transition-all">
                         <input type="checkbox" id="includeStatement" checked
-                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
+                            class="w-4 h-4 rounded text-orange-600 focus:ring-orange-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
                         <span class="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-200">Problem
                             Statement</span>
                     </label>
                     <label
-                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-orange-500/50 transition-all">
                         <input type="checkbox" id="includeComplexity" checked
-                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
+                            class="w-4 h-4 rounded text-orange-600 focus:ring-orange-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
                         <span class="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-200">Time/Space
                             Cmplx</span>
                     </label>
                     <label
-                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-orange-500/50 transition-all">
                         <input type="checkbox" id="includeExamples"
-                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
+                            class="w-4 h-4 rounded text-orange-600 focus:ring-orange-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
                         <span class="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-200">Examples</span>
                     </label>
                     <label
-                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-orange-500/50 transition-all">
                         <input type="checkbox" id="includeConstraints"
-                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
+                            class="w-4 h-4 rounded text-orange-600 focus:ring-orange-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
                         <span class="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-200">Constraints</span>
                     </label>
                     <label
-                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-blue-500/50 transition-all">
+                        class="flex items-center gap-2 px-3 py-2 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700/50 bg-gray-50 dark:bg-gray-900 cursor-pointer hover:border-orange-500/50 transition-all">
                         <input type="checkbox" id="includeRealWorld"
-                            class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
+                            class="w-4 h-4 rounded text-orange-600 focus:ring-orange-500 border-gray-300 dark:bg-gray-800 dark:border-gray-600 flex-shrink-0">
                         <span class="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-200">Real World</span>
                     </label>
                 </div>
@@ -1313,19 +1313,14 @@
 
         </div>
 
-        <!-- Sticky Footer -->
         <div
             class="p-3 md:p-6 border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50 backdrop-blur-sm relative z-20 shrink-0 flex gap-2 md:gap-3">
-            <button onclick="closeDownloadModal()"
-                class="flex-1 py-2.5 md:py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-xs md:text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
-                Cancel
-            </button>
             <button onclick="exportNotesPDF(true)" id="btn-preview-pdf"
-                class="flex-1 py-2.5 md:py-3.5 rounded-xl border border-blue-200 dark:border-blue-800/50 text-blue-600 dark:text-blue-400 font-bold text-xs md:text-sm hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors flex items-center justify-center gap-2">
+                class="flex-1 py-2.5 md:py-3.5 rounded-xl border border-orange-200 dark:border-orange-800/50 text-orange-600 dark:text-orange-400 font-bold text-xs md:text-sm hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors flex items-center justify-center gap-2">
                 <i data-lucide="eye" class="w-3.5 h-3.5 md:w-4 md:h-4"></i> Preview
             </button>
             <button onclick="exportNotesPDF(false)" id="btn-download-pdf"
-                class="flex-[1.5] py-2.5 md:py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xs md:text-sm hover:shadow-xl hover:shadow-blue-500/20 hover:scale-[1.01] transition-all transform active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed">
+                class="flex-1 py-2.5 md:py-3.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 text-white font-bold text-xs md:text-sm hover:shadow-xl hover:shadow-orange-500/20 hover:scale-[1.01] transition-all transform active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed">
                 <i data-lucide="download" class="w-3.5 h-3.5 md:w-4 md:h-4"></i> Download
             </button>
         </div>

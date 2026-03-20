@@ -284,16 +284,12 @@
         <!-- Sticky Footer -->
         <div
             class="p-3 md:p-6 border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50 backdrop-blur-sm relative z-20 shrink-0 flex gap-2 md:gap-3">
-            <button onclick="closeDownloadModal()"
-                class="flex-1 py-2.5 md:py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 font-bold text-xs md:text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
-                Cancel
-            </button>
             <button onclick="exportNotesPDF(true)" id="btn-preview-pdf"
                 class="flex-1 py-2.5 md:py-3.5 rounded-xl border border-orange-200 dark:border-orange-800/50 text-orange-600 dark:text-orange-400 font-bold text-xs md:text-sm hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors flex items-center justify-center gap-2">
                 <i data-lucide="eye" class="w-3.5 h-3.5 md:w-4 md:h-4"></i> Preview
             </button>
             <button onclick="exportNotesPDF(false)" id="btn-download-pdf"
-                class="flex-[1.5] py-2.5 md:py-3.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 text-white font-bold text-xs md:text-sm hover:shadow-xl hover:shadow-orange-500/20 hover:scale-[1.01] transition-all transform active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed">
+                class="flex-1 py-2.5 md:py-3.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 text-white font-bold text-xs md:text-sm hover:shadow-xl hover:shadow-orange-500/20 hover:scale-[1.01] transition-all transform active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed">
                 <i data-lucide="download" class="w-3.5 h-3.5 md:w-4 md:h-4"></i> Download
             </button>
         </div>

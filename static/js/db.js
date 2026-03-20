@@ -236,18 +236,28 @@ class DSADatabase {
             return cleanS;
         });
 
+        const user = {};
+        const nickname = localStorage.getItem('dsa-nickname');
+        if (nickname && nickname !== 'Learner') user.nickname = nickname;
+
+        const theme = localStorage.getItem('theme');
+        if (theme && theme !== 'light') user.theme = theme;
+
+        const seenTestRunner = localStorage.getItem('dsa-seen-test-runner-prompt');
+        if (seenTestRunner === 'true') user.seenTestRunnerPrompt = 'true';
+
+        const seenGuide = localStorage.getItem('dsa-seen-guide-prompt');
+        if (seenGuide === 'true') user.seenGuidePrompt = 'true';
+
+        const seenProfileName = localStorage.getItem('dsa-seen-profile-name-prompt');
+        if (seenProfileName === 'true') user.seenProfileNamePrompt = 'true';
+
         const exportObj = {
             version: 1,
             timestamp: Date.now(),
             problems: cleanProblems,
             sessions: cleanSessions,
-            user: {
-                nickname: localStorage.getItem('dsa-nickname') || 'Learner',
-                theme: localStorage.getItem('theme') || 'light',
-                seenTestRunnerPrompt: localStorage.getItem('dsa-seen-test-runner-prompt') || null,
-                seenGuidePrompt: localStorage.getItem('dsa-seen-guide-prompt') || null,
-                seenProfileNamePrompt: localStorage.getItem('dsa-seen-profile-name-prompt') || null
-            }
+            user
         };
         return JSON.stringify(exportObj, null, 2);
     }

@@ -577,6 +577,15 @@
         }
     };
 
+    // Fix: Re-render problems when navigating back to this page (handles bfcache)
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+            if (session && typeof renderProblems === 'function') {
+                renderProblems();
+            }
+        }
+    });
+
     // Initialize Title on Load (handled in async wrapper)
 </script>
 

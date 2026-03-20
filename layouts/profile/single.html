@@ -329,9 +329,9 @@
                         </div>
 
                         <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700/50">
-                            <a href="/interview/history/"
+                            <a href="/interview/"
                                 class="w-full inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-3 rounded-xl font-bold text-sm hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-95 group/btn">
-                                <span>View History</span>
+                                <span>Practice Interviews</span>
                                 <i data-lucide="arrow-right"
                                     class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
                             </a>
@@ -595,6 +595,15 @@
                                 }
                             }
                         );
+                    }
+                }
+            });
+
+            // Fix: Re-load profile data when navigating back to this page (handles bfcache)
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                    if (typeof loadProfileData === 'function') {
+                        loadProfileData();
                     }
                 }
             });

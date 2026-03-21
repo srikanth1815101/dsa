@@ -1,5 +1,5 @@
 {{ define "main" }}
-<div class="relative w-full overflow-hidden pt-32 pb-24">
+<div class="relative w-full overflow-hidden pb-12">
     <!-- Background Accents (Shared with site theme) -->
     <div class="fixed inset-0 pointer-events-none">
         <div
@@ -15,23 +15,47 @@
 
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <!-- Header -->
-        <div class="text-center mb-16">
-            <div
-                class="inline-flex items-center justify-center p-3 mb-6 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-600 shadow-xl shadow-purple-500/20">
-                <i data-lucide="heart" class="w-8 h-8 text-white animate-pulse"></i>
+        <!-- Truly Full-Screen Hero Section (Top Aligned for focus) -->
+        <div class="min-h-[calc(100vh-80px)] flex flex-col items-center justify-start text-center pt-16">
+            <!-- Refined Glassmorphism Icon -->
+            <div class="inline-flex relative mb-6 group">
+                <div class="absolute inset-0 bg-purple-500 blur-xl opacity-20 transition-opacity"></div>
+                <div
+                    class="relative w-14 h-14 rounded-2xl bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10 flex items-center justify-center shadow-xl">
+                    <i data-lucide="heart" class="w-7 h-7 text-purple-600 dark:text-purple-400 fill-purple-600/20"></i>
+                </div>
             </div>
-            <h1 class="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">Support <span
-                    class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">CSRGO DSA</span>
+
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <span
+                    class="px-3 py-1 rounded-full bg-blue-500/10 dark:bg-blue-400/10 border border-blue-200/50 dark:border-blue-700/50 text-[9px] uppercase tracking-[0.2em] font-black text-blue-600 dark:text-blue-400">
+                    Sustaining Solo-Engineering
+                </span>
+            </div>
+
+            <h1 class="text-4xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 tracking-tight leading-none">
+                Support <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">CSRGO
+                    DSA</span>
             </h1>
+
             <p
-                class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed font-medium">
-                CSRGO DSA is a dedicated project within the CSRGO ecosystem, meticulously developed by a single engineer to provide a premium, 100% free learning experience for every developer.
+                class="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed font-medium mb-8">
+                CSRGO DSA is a solo-engineered project within the CSRGO ecosystem, provided 100% free for the community.
+                If this platform has helped your career or interview journey, your voluntary support helps sustain its
+                growth for everyone.
             </p>
+
+            <!-- Support Now CTA -->
+            <a href="#support-options"
+                class="group relative inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-black text-lg shadow-xl hover:scale-105 active:scale-95 transition-all duration-300">
+                Support Now
+                <i data-lucide="chevron-down" class="w-5 h-5 animate-bounce"></i>
+            </a>
         </div>
 
         <!-- Payment Options Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
+        <div id="support-options"
+            class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch scroll-mt-32 pb-16">
             <!-- UPI Option: FORCED LIGHT THEME for Scannability -->
             <div
                 class="group relative bg-white border border-gray-100 rounded-[2.5rem] p-10 shadow-2xl flex flex-col overflow-hidden">
@@ -139,7 +163,8 @@
                 Our Commitment
             </h4>
             <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
-                CSRGO DSA is personally engineered and maintained within the CSRGO ecosystem to serve the developer community. We promise to keep all features 100% free for everyone, always.
+                CSRGO DSA is personally engineered and maintained within the CSRGO ecosystem to serve the developer
+                community. We promise to keep all features 100% free for everyone, always.
             </p>
         </div>
     </div>

@@ -245,7 +245,7 @@
                         Problems
                     </label>
                     <div class="relative group/input">
-                        <input type="number" id="cfg-count" value="1" min="1" max="10"
+                        <input type="number" id="cfg-count" value="1" min="1" max="10" oninput="updateTimeFromCount()"
                             class="w-full pl-9 pr-2 py-2 md:py-2.5 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 outline-none font-bold text-sm text-gray-900 dark:text-white transition-all group-hover/input:border-blue-300 dark:group-hover/input:border-blue-700">
                         <div
                             class="absolute left-2.5 top-2.5 text-gray-400 group-focus-within/input:text-blue-500 transition-colors">
@@ -493,6 +493,12 @@
             opt.textContent = item;
             select.appendChild(opt);
         });
+    }
+
+    function updateTimeFromCount() {
+        const count = parseInt(document.getElementById('cfg-count').value) || 1;
+        const timeInput = document.getElementById('cfg-time');
+        timeInput.value = count * 30;
     }
 
     async function updateAvailableCount() {

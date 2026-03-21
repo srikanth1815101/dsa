@@ -108,6 +108,9 @@ class InterviewManager {
         if (filters.difficulty && filters.difficulty !== 'Any') {
             pool = pool.filter(p => p.difficulty === filters.difficulty);
         }
+        if (filters.path && filters.path !== 'Any') {
+            pool = pool.filter(p => p.path === filters.path);
+        }
         if (filters.company && filters.company !== 'Any') {
             pool = pool.filter(p => p.companies && p.companies.includes(filters.company));
         }
@@ -188,6 +191,7 @@ class InterviewManager {
             // Custom Session: Use filters if explicitly selected
             let prefixes = [];
             if (config.company && config.company !== 'Any') prefixes.push(config.company);
+            if (config.path && config.path !== 'Any') prefixes.push(config.path);
             if (config.topic && config.topic !== 'Any') prefixes.push(config.topic);
             if (config.difficulty && config.difficulty !== 'Any') prefixes.push(config.difficulty);
 
@@ -389,15 +393,18 @@ class InterviewManager {
 
         const companies = new Set();
         const topics = new Set();
+        const paths = new Set();
 
         problems.forEach(p => {
             if (p.companies) p.companies.forEach(c => companies.add(c));
             if (p.topics) p.topics.forEach(t => topics.add(t));
+            if (p.path) paths.add(p.path);
         });
 
         return {
             companies: Array.from(companies).sort(),
-            topics: Array.from(topics).sort()
+            topics: Array.from(topics).sort(),
+            paths: Array.from(paths).sort()
         };
     }
 }

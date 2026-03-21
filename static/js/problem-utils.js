@@ -451,3 +451,54 @@ window.copyCode = function () {
         showToast('Code copied to clipboard!', 'success');
     }
 };
+
+function copySolutionCode(button) {const codeBlock = document.getElementById('solution-code-block');
+        if (!codeBlock) return;
+
+        // Try to find the inner code table cell (Chroma layout) to exclude line numbers
+        const codeCell = codeBlock.querySelector('td:last-child') || codeBlock;
+        const textToCopy = codeCell.innerText;
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            // TARGETING
+            const container = button.querySelector('.copy-icon-container');
+            const tooltip = button.querySelector('div');
+
+            // STATES
+            // Note: We use innerHTML replacement to be robust against Lucide's SVG replacement behavior
+            const checkIconHTML = `<i data-lucide="check" class="w-5 h-5 text-green-500 transition-colors"></i>`;
+            const copyIconHTML = `<i data-lucide="copy" class="w-5 h-5 text-gray-400 group-hover/copy:text-blue-500 transition-colors"></i>`;
+
+            // 1. APPLY SUCCESS STATE
+            if (container) {
+                container.innerHTML = checkIconHTML;
+            }
+
+            if (tooltip) {
+                tooltip.innerText = 'Copied!';
+                tooltip.classList.remove('opacity-0', 'group-hover/copy:opacity-100');
+                tooltip.classList.add('opacity-100');
+            }
+
+            // Re-render icons immediately
+            lucide.createIcons();
+
+            // 2. REVERT STATE (2s Delay)
+            setTimeout(() => {
+                if (container) {
+                    container.innerHTML = copyIconHTML;
+                }
+
+                if (tooltip) {
+                    tooltip.innerText = 'Copy Code';
+                    tooltip.classList.remove('opacity-100');
+                    tooltip.classList.add('opacity-0', 'group-hover/copy:opacity-100');
+                }
+
+                lucide.createIcons();
+            }, 2000);
+
+        }).catch(err => {
+            console.error('Failed to copy:', err);
+        });
+    }

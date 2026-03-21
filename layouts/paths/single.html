@@ -265,23 +265,7 @@
                         {{ end }}
                     </div>
 
-                    <!-- 4. Revise Button Column (Hidden on Mobile) -->
-                    <div class="hidden md:flex justify-start">
-                        <button onclick="toggleRevision(event, '{{ .File.ContentBaseName }}')"
-                            class="p-2 rounded-lg text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all border border-transparent hover:border-blue-200 dark:hover:border-blue-500/30">
-                            <i data-lucide="history" class="w-5 h-5 revise-icon"
-                                data-id="{{ .File.ContentBaseName }}"></i>
-                        </button>
-                    </div>
-
-                    <!-- 5. Bookmark Button Column (Hidden on Mobile) -->
-                    <div class="hidden md:flex justify-start">
-                        <button onclick="toggleBookmark(event, '{{ .File.ContentBaseName }}')"
-                            class="p-2 rounded-lg text-gray-400 hover:text-yellow-500 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 transition-all border border-transparent hover:border-yellow-200 dark:hover:border-yellow-500/30">
-                            <i data-lucide="bookmark" class="w-5 h-5 bookmark-icon transition-transform hover:scale-110"
-                                data-id="{{ .File.ContentBaseName }}"></i>
-                        </button>
-                    </div>
+                    {{ partial "problem-list-actions.html" . }}
                 </div>
                 {{ end }}
             </div>

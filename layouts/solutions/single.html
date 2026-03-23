@@ -82,7 +82,7 @@
                     prose-ul:my-4 prose-li:my-1 prose-li:marker:text-teal-500
                     prose-blockquote:border-l-4 prose-blockquote:border-teal-500 prose-blockquote:bg-teal-50/50 dark:prose-blockquote:bg-teal-900/10 prose-blockquote:px-4 prose-blockquote:py-2 prose-blockquote:rounded-r-lg
                     flex-1">
-                    {{ index $parts 0 | safeHTML }}
+                    {{ index $parts 0 | replaceRE "^(?s)\\s*<h2[^>]*>Explanation</h2>" "" | safeHTML }}
                 </div>
             </div>
 
@@ -111,12 +111,7 @@
                     </button>
                 </div>
 
-                <div class="prose prose-lg max-w-none w-full flex-1 code-scroll-wrapper
-                    text-gray-800 dark:text-gray-300
-                    prose-pre:bg-white dark:prose-pre:bg-gray-900
-                    prose-pre:border prose-pre:border-gray-200 dark:prose-pre:border-gray-800 
-                    prose-pre:rounded-xl prose-pre:shadow-inner prose-pre:p-4
-                    prose-code:font-mono prose-code:text-sm md:prose-code:text-base" id="solution-code-block">
+                <div class="w-full flex-1 code-scroll-wrapper text-gray-800 dark:text-gray-300 font-mono text-sm md:text-base" id="solution-code-block">
                     {{ index $parts 1 | safeHTML }}
                 </div>
             </div>

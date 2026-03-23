@@ -29,8 +29,24 @@
     <!-- Core Logic -->
     <script src="/js/db.js?v=2"></script>
     <script src="/js/problem-utils.js"></script>
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS with Typography Plugin -->
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+    <!-- MathJax for LaTeX Support -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -103,7 +119,31 @@
                             '0%': { transform: 'translateX(0)' },
                             '100%': { transform: 'translateX(-50%)' },
                         },
-                    }
+                    },
+                    typography: {
+                        DEFAULT: {
+                            css: {
+                                'code::before': { content: 'none !important' },
+                                'code::after': { content: 'none !important' },
+                                'pre code::before': { content: 'none !important' },
+                                'pre code::after': { content: 'none !important' },
+                                'code': {
+                                    color: 'inherit',
+                                    fontWeight: 'inherit',
+                                    backgroundColor: 'transparent',
+                                    padding: '0',
+                                    fontFamily: 'inherit',
+                                },
+                                'pre': {
+                                    color: 'inherit',
+                                    backgroundColor: 'transparent',
+                                    padding: '0',
+                                    margin: '0',
+                                    borderRadius: '0',
+                                },
+                            },
+                        },
+                    },
                 }
             }
         }
@@ -119,7 +159,8 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Custom CSS --><link rel="stylesheet" href="/css/styles.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
 
     <!-- Theme Toggle Script -->
     <script>
@@ -134,7 +175,7 @@
                 }
             })();
     </script>
-    
+
 </head>
 
 <body>
@@ -147,7 +188,7 @@
     {{ partial "footer.html" . }}
 
     <!-- Go to Top Button -->
-    <button id="goToTopBtn" 
+    <button id="goToTopBtn"
         class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[101] hidden items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/30 hover:shadow-xl hover:-translate-y-1 active:scale-95 transition-all duration-300 opacity-0 transform translate-y-4">
         <i data-lucide="chevron-up" class="w-6 h-6"></i>
     </button>
@@ -155,18 +196,22 @@
     <!-- Test Runner Prompt Modal -->
     <div id="testRunnerModal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4">
         <div id="testRunnerBackdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-        <div class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6 md:p-8 animate-fade-in-up border border-gray-200 dark:border-gray-700">
+        <div
+            class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6 md:p-8 animate-fade-in-up border border-gray-200 dark:border-gray-700">
             <div class="flex justify-center mb-5">
-                <div class="p-4 rounded-2xl bg-gradient-to-br from-cyan-400 to-sky-600 text-white shadow-lg shadow-cyan-500/30">
+                <div
+                    class="p-4 rounded-2xl bg-gradient-to-br from-cyan-400 to-sky-600 text-white shadow-lg shadow-cyan-500/30">
                     <i data-lucide="book-check" class="w-8 h-8"></i>
                 </div>
             </div>
             <h3 class="text-xl font-extrabold text-gray-900 dark:text-white text-center mb-3">Download Test Runner</h3>
             <p class="text-sm text-gray-600 dark:text-gray-400 text-center leading-relaxed mb-2">
-                To run test cases for any problem, you need the <strong class="text-gray-900 dark:text-white">CSRGO Test Runner</strong>.
+                To run test cases for any problem, you need the <strong class="text-gray-900 dark:text-white">CSRGO Test
+                    Runner</strong>.
             </p>
             <p class="text-sm text-gray-600 dark:text-gray-400 text-center leading-relaxed mb-6">
-                It only needs to be downloaded <strong class="text-gray-900 dark:text-white">once</strong> and works across all problems and paths.
+                It only needs to be downloaded <strong class="text-gray-900 dark:text-white">once</strong> and works
+                across all problems and paths.
             </p>
             <div class="flex flex-col gap-3">
                 <a id="testRunnerDownloadBtn" href="https://github.com/your-repo/dsa-test-runner" target="_blank"
@@ -180,12 +225,21 @@
                 </button>
             </div>
             <p class="text-[11px] text-gray-400 dark:text-gray-500 text-center mt-4">
-                You can always download it later from the <a href="/guide/" class="text-primary hover:underline font-medium">Guide page</a>.
+                You can always download it later from the <a href="/guide/"
+                    class="text-primary hover:underline font-medium">Guide page</a>.
             </p>
         </div>
     </div>
 
     <!-- Global UI Scripts -->
     <script src="/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
 
 </html>

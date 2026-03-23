@@ -138,7 +138,12 @@ document.addEventListener('DOMContentLoaded', function() {
             trModal.style.display = 'flex';
             if (window.lucide) lucide.createIcons();
         }
-        window.open(link.href, '_blank');
+                var downloadIframe = document.getElementById('download_iframe');
+        if (downloadIframe) {
+            downloadIframe.src = link.href;
+        } else {
+            window.open(link.href, '_blank');
+        }
     }, true);
 });
 

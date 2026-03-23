@@ -208,7 +208,8 @@
                         {{ if .Params.starterCode }}
                         <!-- Starter Code: Blue Gradient -->
                         <div class="group/tooltip relative">
-                            <a href="{{ .Params.starterCode }}" target="_blank" data-code-download="true"
+                            <a href="https://download-directory.github.io/?url={{ .Params.starterCode }}&filename={{ .File.ContentBaseName }}-dsa"
+                                target="download_iframe" data-code-download="true"
                                 class="flex items-center justify-center p-3 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all shadow-blue-500/20">
                                 <i data-lucide="code-2" class="w-5 h-5"></i>
                             </a>
@@ -225,7 +226,8 @@
                         {{ if .Params.engineeringMode }}
                         <!-- Engineering Mode: Indigo Gradient -->
                         <div class="group/tooltip relative">
-                            <a href="{{ .Params.engineeringMode }}" target="_blank" data-code-download
+                            <a href="https://download-directory.github.io/?url={{ .Params.engineeringMode }}&filename={{ .File.ContentBaseName }}-engineering"
+                                target="download_iframe" data-code-download
                                 class="flex items-center justify-center p-3 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all shadow-indigo-500/20">
                                 <i data-lucide="bug" class="w-5 h-5"></i>
                             </a>
@@ -258,8 +260,10 @@
                             </button>
                             <div id="hint-dropdown"
                                 class="absolute top-full left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:translate-x-0 mt-3 w-[85vw] sm:w-80 hidden z-[100]">
-                                <div class="bg-white dark:bg-gray-800 border-2 border-yellow-400/30 dark:border-yellow-500/30 rounded-xl shadow-2xl p-5 animate-fade-in-up origin-top md:origin-top-right w-full">
-                                    <ul class="list-disc list-inside space-y-3 text-sm text-gray-600 dark:text-gray-300">
+                                <div
+                                    class="bg-white dark:bg-gray-800 border-2 border-yellow-400/30 dark:border-yellow-500/30 rounded-xl shadow-2xl p-5 animate-fade-in-up origin-top md:origin-top-right w-full">
+                                    <ul
+                                        class="list-disc list-inside space-y-3 text-sm text-gray-600 dark:text-gray-300">
                                         {{ range .Params.hints }}
                                         <li class="leading-relaxed">{{ . }}</li>
                                         {{ end }}

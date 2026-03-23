@@ -82,7 +82,7 @@
                     {{ if .Params.repo_url }}
                     <!-- Path Code: Indigo Gradient (Match Problems) -->
                     <div class="group/tooltip relative">
-                        <a href="{{ .Params.repo_url }}" target="_blank" data-code-download
+                        <a href="https://download-directory.github.io/?url={{ .Params.repo_url }}&filename={{ .Title | urlize }}-path" target="download_iframe" data-code-download
                             class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 text-white shadow-lg shadow-indigo-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
                             <i data-lucide="github" class="w-4 h-4 md:w-5 md:h-5"></i>
                         </a>

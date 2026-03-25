@@ -72,9 +72,10 @@
                         </div>
                     </div>
 
+                    {{ if .Site.Params.youtube_playlist }}
                     <!-- YouTube Playlist: Red Gradient -->
                     <div class="group/tooltip relative">
-                        <a href="https://youtube.com/your-playlist" target="_blank"
+                        <a href="{{ .Site.Params.youtube_playlist }}" target="_blank"
                             class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-red-500 to-rose-600 text-white shadow-lg shadow-red-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -85,13 +86,14 @@
                             </svg>
                         </a>
                         <div
-                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0">
+                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-900 dark:bg-black rounded-lg opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 whitespace-nowrap shadow-xl z-50 transform translate-y-1 group-hover/tooltip:translate-y-0 text-center">
                             Tutorials
                             <div
                                 class="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900 dark:border-t-black">
                             </div>
                         </div>
                     </div>
+                    {{ end }}
 
                     <!-- How to Use Guide: Cyan Gradient (Sync with Home) -->
                     <div class="group/tooltip relative">

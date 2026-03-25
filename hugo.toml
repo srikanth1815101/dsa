@@ -83,6 +83,7 @@ enableGitInfo = false
   github = "https://github.com/csrgo"
   twitter = "https://twitter.com/csrgo"
   linkedin = "https://linkedin.com/company/csrgo"
+  youtube_playlist = ""
   
   # Logo
   logo = "/logo.png"

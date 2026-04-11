@@ -2,7 +2,7 @@
 title: "Is Number Prime"
 date: 2026-03-23T19:30:14+05:30
 difficulty: "Easy"
-topics: ["Basic Logic", "Mathematics"]
+topics: ["Mathematics", "Number Theory"]
 companies: ["TCS", "Infosys", "Wipro"]
 path: "Basic"
 

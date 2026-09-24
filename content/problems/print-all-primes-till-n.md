@@ -4,7 +4,7 @@ date: 2026-03-25T16:39:41+05:30
 difficulty: "Easy"
 topics: ["Mathematics", "Number Theory", "Sieve of Eratosthenes"]
 companies: ["TCS", "Infosys", "Cognizant"]
-path: "Basic"
+learningPath: "Basic"
 
 starterCode: "https://github.com/CSRGO/dsa-java/tree/main/src/main/java/com/csrgo/problems/basic/PrintAllPrimesTillN/dsa"
 engineeringMode: "https://github.com/CSRGO/dsa-java/tree/main/src/main/java/com/csrgo/problems/basic/PrintAllPrimesTillN/engineering"

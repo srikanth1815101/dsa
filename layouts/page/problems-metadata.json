@@ -1,8 +1,8 @@
-﻿[{{ range $index, $e := where .Site.RegularPages "Section" "problems" }}{{ if $index }},{{ end }}{
+[{{ range $index, $e := where .Site.RegularPages "Section" "problems" }}{{ if $index }},{{ end }}{
 "id": "{{ .File.BaseFileName }}",
 "title": "{{ .Title }}",
 "difficulty": "{{ .Params.difficulty }}",
-"path": "{{ .Params.path }}",
+"path": "{{ .Params.learningPath }}",
 "summary": {{ .Summary | jsonify }},
 "timeComplexity": "{{ .Params.timeComplexity }}",
 "spaceComplexity": "{{ .Params.spaceComplexity }}",

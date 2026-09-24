@@ -4,7 +4,7 @@ date: 2026-03-25T18:03:35+05:30
 difficulty: "Easy"
 topics: ["Mathematics", "Recursion", "Dynamic Programming"]
 companies: ["Amazon", "Microsoft", "Adobe"]
-path: "Basic"
+learningPath: "Basic"
 
 starterCode: "https://github.com/CSRGO/dsa-java/tree/main/src/main/java/com/csrgo/problems/basic/FibonacciTillN/dsa"
 engineeringMode: "https://github.com/CSRGO/dsa-java/tree/main/src/main/java/com/csrgo/problems/basic/FibonacciTillN/engineering"

@@ -4,7 +4,7 @@ date: 2026-04-11T15:26:41+05:30
 difficulty: "Easy"
 topics: ["Mathematics", "Number Theory", "Recursion"]
 companies: ["Amazon", "Google", "Adobe"]
-path: "Basic"
+learningPath: "Basic"
 
 starterCode: "https://github.com/CSRGO/dsa-java/tree/main/src/main/java/com/csrgo/problems/basic/GCDAndLCM/dsa"
 engineeringMode: "https://github.com/CSRGO/dsa-java/tree/main/src/main/java/com/csrgo/problems/basic/GCDAndLCM/engineering"

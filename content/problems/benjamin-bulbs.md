@@ -4,7 +4,7 @@ date: 2026-04-11T15:47:48+05:30
 difficulty: "Easy"
 topics: ["Mathematics", "Number Theory", "Puzzles"]
 companies: ["Goldman Sachs", "Morgan Stanley", "TCS"]
-path: "Basic"
+learningPath: "Basic"
 
 starterCode: "https://github.com/CSRGO/dsa-java/tree/main/src/main/java/com/csrgo/problems/basic/BenjaminBulbs/dsa"
 engineeringMode: "https://github.com/CSRGO/dsa-java/tree/main/src/main/java/com/csrgo/problems/basic/BenjaminBulbs/engineering"

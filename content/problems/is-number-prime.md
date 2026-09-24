@@ -4,7 +4,7 @@ date: 2026-03-23T19:30:14+05:30
 difficulty: "Easy"
 topics: ["Mathematics", "Number Theory"]
 companies: ["TCS", "Infosys", "Wipro"]
-path: "Basic"
+learningPath: "Basic"
 
 starterCode: "https://github.com/CSRGO/dsa-java/tree/main/src/main/java/com/csrgo/problems/basic/IsNumberPrime/dsa"
 engineeringMode: "https://github.com/CSRGO/dsa-java/tree/main/src/main/java/com/csrgo/problems/basic/IsNumberPrime/engineering"

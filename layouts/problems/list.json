@@ -1,8 +1,8 @@
-﻿[{{ range $index, $e := .Pages }}{{ if $index }},{{ end }}{
+[{{ range $index, $e := .Pages }}{{ if $index }},{{ end }}{
 "id": "{{ .File.BaseFileName }}",
 "title": "{{ .Title }}",
 "difficulty": "{{ .Params.difficulty }}",
-"path": "{{ .Params.path }}",
+"path": "{{ .Params.learningPath }}",
 "companies": {{ .Params.companies | jsonify }},
 "topics": {{ .Params.topics | jsonify }},
 "permalink": "{{ .RelPermalink }}",

@@ -4,7 +4,7 @@ date: 2026-04-11T15:09:23+05:30
 difficulty: "Easy"
 topics: ["Mathematics", "Number Theory"]
 companies: ["Amazon", "Microsoft", "TCS"]
-path: "Basic"
+learningPath: "Basic"
 
 starterCode: "https://github.com/CSRGO/dsa-java/tree/main/src/main/java/com/csrgo/problems/basic/ReverseANumber/dsa"
 engineeringMode: "https://github.com/CSRGO/dsa-java/tree/main/src/main/java/com/csrgo/problems/basic/ReverseANumber/engineering"

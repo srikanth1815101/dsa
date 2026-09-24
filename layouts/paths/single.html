@@ -50,7 +50,7 @@
                         {{ .Params.description }}
                     </p>
 
-                    {{ $problems := where site.RegularPages "Params.path" .Title }}
+                    {{ $problems := where (where site.RegularPages "Section" "problems") "Params.learningpath" .Title }}
                     <!-- Path Progress Section -->
                     <div class="flex items-center gap-6 max-w-md mt-2">
                         <div class="flex-1">

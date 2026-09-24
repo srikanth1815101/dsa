@@ -49,7 +49,7 @@
 
             {{/* Data Gathering */}}
             {{ $pathTitle := .Title }}
-            {{ $problems := where site.RegularPages "Params.path" $pathTitle }}
+            {{ $problems := where (where site.RegularPages "Section" "problems") "Params.learningpath" $pathTitle }}
             {{ $count := len $problems }}
 
             {{/* Create comma-separated list of IDs for JS using 'scratch' or string manipulation */}}

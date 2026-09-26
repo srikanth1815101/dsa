@@ -46,10 +46,3 @@ realWorld:
 Given an array of integers `nums` which is sorted in ascending order, and an integer `target`, write a function to search `target` in `nums`. If `target` exists, then return its 0-based index. Otherwise, return `-1`.
 
 You must write an algorithm with $O(\log n)$ runtime complexity.
-
-### Input Format
-- An array of sorted integers `nums`.
-- An integer `target` to search for.
-
-### Output Format
-- An integer representing the index of `target` in `nums`, or `-1` if absent.

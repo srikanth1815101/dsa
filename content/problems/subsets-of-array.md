@@ -44,9 +44,3 @@ realWorld:
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an array of integers `arr`, generate and return all $2^n$ **subsets** (power set) of the array in standard binary order from $0$ to $2^n - 1$. Each subset should occupy its own line, with elements or dashes (`-` for omitted elements) separated by a tab (`\t`).
-
-### Input Format
-- An array of integers `arr`.
-
-### Output Format
-- A string representing all subsets, one per line, with tab-separated elements and dashes.

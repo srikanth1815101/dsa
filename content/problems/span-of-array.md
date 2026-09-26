@@ -44,9 +44,3 @@ realWorld:
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an array of integers `arr`, determine the **span** of the array. The span is defined as the difference between the maximum element and the minimum element ($max - min$).
-
-### Input Format
-- An array of integers `arr`.
-
-### Output Format
-- An integer representing the span ($max - min$) of the array.

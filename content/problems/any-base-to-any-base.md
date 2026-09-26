@@ -43,12 +43,4 @@ realWorld:
 ---
 <!-- All rights reserved to CSRGO DSA -->
 
-Given a number `n` represented in base `b1` ($2 \le b1 \le 10$), convert it directly into its representation in base `b2` ($2 \le b2 \le 10$).
-
-### Input Format
-- A 64-bit integer `n` whose decimal digits represent the digits in base `b1`.
-- An integer `b1` representing the source base ($2 \le b1 \le 10$).
-- An integer `b2` representing the destination base ($2 \le b2 \le 10$).
-
-### Output Format
-- A 64-bit integer (`long`) representing the digits of the number in base `b2`.
+Given a number `n` represented in base `b1` ($2 \le b1 \le 10$), convert it directly into its representation in base `b2` ($2 \le b2 \le 10$) and return the resulting number.

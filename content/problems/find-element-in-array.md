@@ -44,10 +44,3 @@ realWorld:
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an array of integers `arr` and a target value `d`, find and return the 0-based index of the **first occurrence** of `d` in `arr`. If `d` is not present in the array, return `-1`.
-
-### Input Format
-- An array of integers `arr`.
-- An integer `d` representing the target element to search for.
-
-### Output Format
-- An integer representing the 0-based index of `d` in `arr`, or `-1` if not found.

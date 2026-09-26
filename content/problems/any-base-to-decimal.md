@@ -43,11 +43,4 @@ realWorld:
 ---
 <!-- All rights reserved to CSRGO DSA -->
 
-Given a number `n` represented in base `b` ($2 \le b \le 10$), convert it into its decimal (base 10) integer equivalent.
-
-### Input Format
-- A 64-bit integer `n` whose decimal digits represent the digits in base `b`.
-- An integer `b` ($2 \le b \le 10$) representing the source base.
-
-### Output Format
-- An integer representing the decimal (base 10) value of `n`.
+Given a number `n` represented in base `b` ($2 \le b \le 10$), convert it into its decimal (base 10) integer equivalent and return the resulting value.

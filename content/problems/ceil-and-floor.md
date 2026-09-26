@@ -48,11 +48,4 @@ Given a sorted array of integers `nums` and a target value `target`:
 - **Ceil** is defined as the smallest element in `nums` that is greater than or equal to `target`. If no such element exists, ceil is `-1`.
 - **Floor** is defined as the greatest element in `nums` that is smaller than or equal to `target`. If no such element exists, floor is `-1`.
 
-Write an algorithm with $O(\log n)$ runtime complexity to find the ceil and floor of `target`.
-
-### Input Format
-- An array of integers `nums` sorted in ascending order.
-- An integer `target`.
-
-### Output Format
-- An integer array of size 2 containing `[ceil, floor]`.
+Write an algorithm with $O(\log n)$ runtime complexity to find the ceil and floor of `target`, and return an array of size 2 containing `[ceil, floor]`.

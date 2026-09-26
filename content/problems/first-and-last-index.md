@@ -48,10 +48,3 @@ Given an array of integers `nums` sorted in non-decreasing order, find the start
 If `target` is not found in the array, return `[-1, -1]`.
 
 You must write an algorithm with $O(\log n)$ runtime complexity.
-
-### Input Format
-- An array of integers `nums` sorted in non-decreasing order.
-- An integer `target`.
-
-### Output Format
-- An integer array of size 2 containing `[firstIndex, lastIndex]`, or `[-1, -1]` if `target` is not found.

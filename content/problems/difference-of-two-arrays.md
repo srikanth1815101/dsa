@@ -44,10 +44,3 @@ realWorld:
 <!-- All rights reserved to CSRGO DSA -->
 
 Given two arrays of decimal digits `a1` and `a2` representing two non-negative integers where `a1 >= a2`, calculate the difference `a1 - a2` and return the resulting number as an array of digits without leading zeros (except for the number `0` which is represented as `[0]`).
-
-### Input Format
-- An integer array `a1` representing the digits of the minuend (larger number).
-- An integer array `a2` representing the digits of the subtrahend (smaller number).
-
-### Output Format
-- An integer array representing the digits of the difference `a1 - a2`.

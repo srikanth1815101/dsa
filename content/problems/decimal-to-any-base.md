@@ -43,11 +43,4 @@ realWorld:
 ---
 <!-- All rights reserved to CSRGO DSA -->
 
-Given a non-negative decimal integer `n` and a target base `b` ($2 \le b \le 10$), convert the decimal number `n` into its equivalent numerical representation in base `b`.
-
-### Input Format
-- A decimal integer `n` ($0 \le n \le 10^9$).
-- A target base integer `b` ($2 \le b \le 10$).
-
-### Output Format
-- A 64-bit integer (`long`) representing the digits of `n` in base `b`.
+Given a non-negative decimal integer `n` and a target base `b` ($2 \le b \le 10$), convert the decimal number `n` into its equivalent numerical representation in base `b` and return the resulting number.

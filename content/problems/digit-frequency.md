@@ -44,10 +44,3 @@ realWorld:
 <!-- All rights reserved to CSRGO DSA -->
 
 Given a non-negative integer `n` and a single decimal digit `d` (from `0` to `9`), count and return how many times the digit `d` occurs in `n`.
-
-### Input Format
-- A 64-bit integer `n`.
-- A single decimal digit `d` ($0 \le d \le 9$).
-
-### Output Format
-- An integer representing the total count of times `d` appears in `n`.

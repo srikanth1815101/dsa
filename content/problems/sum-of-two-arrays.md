@@ -44,10 +44,3 @@ realWorld:
 <!-- All rights reserved to CSRGO DSA -->
 
 Given two arrays of integers `a1` and `a2`, where each element represents a single decimal digit ($0 \le digit \le 9$) of a number, calculate the sum of the two numbers and return the result as a new array of digits.
-
-### Input Format
-- An integer array `a1` representing the digits of the first number.
-- An integer array `a2` representing the digits of the second number.
-
-### Output Format
-- An integer array representing the digits of the sum.

@@ -43,11 +43,4 @@ realWorld:
 ---
 <!-- All rights reserved to CSRGO DSA -->
 
-Given an array of integers `arr` and an integer `k`, rotate the array `k` steps to the right. If `k` is negative, rotate the array `|k|` steps to the left. The rotation must be performed in-place with $O(1)$ extra memory.
-
-### Input Format
-- An array of integers `arr`.
-- An integer `k` representing the number of rotation steps.
-
-### Output Format
-- The array of integers `arr` after in-place rotation.
+Given an array of integers `arr` and an integer `k`, rotate the array `k` steps to the right. If `k` is negative, rotate the array `|k|` steps to the left. The rotation must be performed in-place with $O(1)$ extra memory, and return the modified array `arr`.

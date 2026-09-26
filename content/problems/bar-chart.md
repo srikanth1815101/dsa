@@ -44,9 +44,3 @@ realWorld:
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an array of non-negative integers `arr` representing bar heights, generate a vertical text-based **bar chart** representing the values of the array from top to bottom.
-
-### Input Format
-- An array of non-negative integers `arr`.
-
-### Output Format
-- A string representing the multi-line vertical bar chart.

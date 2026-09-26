@@ -44,9 +44,3 @@ realWorld:
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an array of integers `arr` of size `n` containing a valid permutation of numbers from `0` to `n - 1`, compute and return the **inverse** of the array. The inverse of an array is defined such that if value `v` is present at index `i` in `arr`, then in the inverted array `inv`, value `i` is stored at index `v` (`inv[v] = i`).
-
-### Input Format
-- An array of integers `arr` representing a permutation of `0` to `n - 1`.
-
-### Output Format
-- An array of integers representing the inverse of `arr`.

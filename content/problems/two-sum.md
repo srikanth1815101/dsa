@@ -46,10 +46,3 @@ realWorld:
 Given an array of integers `nums` and an integer `target`, return the 0-based indices of the two numbers such that they add up to `target`.
 
 You may not use the same element twice. If no valid pair exists, return `[-1, -1]`.
-
-### Input Format
-- An integer array `nums`.
-- An integer `target`.
-
-### Output Format
-- An integer array of size 2 containing the 0-based indices `[index1, index2]`, or `[-1, -1]` if no solution exists.

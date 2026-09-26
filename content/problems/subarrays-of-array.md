@@ -44,9 +44,3 @@ realWorld:
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an array of integers `arr`, generate and return all **contiguous subarrays** of the array in order of their starting and ending indices. Each subarray should be formatted on its own line with elements separated by a tab (`\t`).
-
-### Input Format
-- An array of integers `arr`.
-
-### Output Format
-- A string containing all subarrays, one per line, with elements tab-separated.

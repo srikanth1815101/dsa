@@ -44,11 +44,3 @@ realWorld:
 <!-- All rights reserved to CSRGO DSA -->
 
 Given two numbers `n1` and `n2` represented in base `b` ($2 \le b \le 10$), multiply the two numbers and return their product represented in the same base `b`.
-
-### Input Format
-- A 64-bit integer `n1` representing the first number in base `b`.
-- A 64-bit integer `n2` representing the second number in base `b`.
-- An integer `b` representing the base ($2 \le b \le 10$).
-
-### Output Format
-- A 64-bit integer (`long`) representing the product of `n1` and `n2` in base `b`.

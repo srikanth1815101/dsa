@@ -44,11 +44,3 @@ realWorld:
 <!-- All rights reserved to CSRGO DSA -->
 
 Given two numbers `n1` and `n2` represented in base `b` ($2 \le b \le 10$) where `n1 >= n2`, subtract `n2` from `n1` and return the resulting difference in the same base `b`.
-
-### Input Format
-- A 64-bit integer `n1` representing the larger operand in base `b`.
-- A 64-bit integer `n2` representing the smaller operand in base `b` ($n1 \ge n2$).
-- An integer `b` representing the base ($2 \le b \le 10$).
-
-### Output Format
-- A 64-bit integer (`long`) representing the difference `n1 - n2` in base `b`.

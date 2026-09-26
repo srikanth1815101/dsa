@@ -44,9 +44,3 @@ realWorld:
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an array of integers `arr`, reverse its elements in-place and return the reversed array.
-
-### Input Format
-- An array of integers `arr`.
-
-### Output Format
-- The array of integers `arr` after in-place reversal.

@@ -6,5 +6,5 @@
 "companies": {{ .Params.companies | jsonify }},
 "topics": {{ .Params.topics | jsonify }},
 "permalink": "{{ .RelPermalink }}",
-"starterCode": "{{ .Params.starterCode }}"
+"starterCode": {{ .Params.starterCode | jsonify }}
 }{{ end }}]

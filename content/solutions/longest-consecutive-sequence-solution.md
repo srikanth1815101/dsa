@@ -6,29 +6,30 @@ problemUrl: "/problems/longest-consecutive-sequence/"
 
 ## Explanation
 
-To determine the length of the longest consecutive sequence in $O(n)$ time without sorting, we use a **Hash Set**:
+To find the length of the longest consecutive sequence in $O(n)$ time:
+1. Store all elements of the array in a `HashSet` for $O(1)$ average time lookups.
+2. Iterate through each element in the set.
+3. Check whether the element is the starting point of a sequence:
+   - An element `num` is a starting point if and only if `set.contains(num - 1)` is `false`.
+4. If `num` is the start of a sequence:
+   - Check consecutively for `num + 1`, `num + 2`, etc., in the set while incrementing a current streak counter.
+   - Update the maximum streak found so far.
+5. Because each number is only visited as part of a streak expansion from its start point, each element is touched at most twice, guaranteeing $O(n)$ total time.
 
-1. **Hash Set Populating**:
-   - Insert all elements of `nums` into a `HashSet`. This enables $O(1)$ average time lookups and automatically eliminates duplicate values.
-
-2. **Identifying Sequence Beginnings**:
-   - For each number `num` in the set, check if `set.contains(num - 1)`:
-     - If `num - 1` is in the set, then `num` cannot be the start of a consecutive sequence (it would be counted as part of a sequence starting at an earlier value). We skip it.
-     - If `num - 1` is NOT in the set, then `num` is guaranteed to be the start of a new consecutive chain.
-
-3. **Counting Streak Length**:
-   - Starting from `currentNum = num`, repeatedly check if `set.contains(currentNum + 1)`.
-   - Increment `currentNum` and `currentStreak` until the chain ends.
-   - Update `longestStreak = Math.max(longestStreak, currentStreak)`.
-
-4. **Linear Time Guarantee**:
-   - Although there is a nested loop, each number is visited at most twice (once in the outer iteration and once inside the inner `while` loop when extending its sequence). Therefore, the overall time complexity is strictly $O(n)$.
-
-### Complexity Analysis
-- **Time Complexity**: $O(n)$, traversing each unique element at most twice with $O(1)$ set lookups.
-- **Space Complexity**: $O(n)$, required to store the distinct elements in the `HashSet`.
-
----
+### Step-by-Step Algorithm:
+1. If `nums.length == 0`, return `0`.
+2. Initialize `Set<Integer> set = new HashSet<>()`.
+3. Loop through `nums` from index `0` to `nums.length - 1` and add each `nums[i]` to `set`.
+4. Initialize `int maxStreak = 0`.
+5. For each integer `num` in `set`:
+   - If `!set.contains(num - 1)`:
+     - Initialize `int currentNum = num`.
+     - Initialize `int currentStreak = 1`.
+     - While `set.contains(currentNum + 1)`:
+       - Update `currentNum = currentNum + 1`.
+       - Update `currentStreak = currentStreak + 1`.
+     - Update `maxStreak = Math.max(maxStreak, currentStreak)`.
+6. Return `maxStreak`.
 
 ## Code
 
@@ -39,12 +40,11 @@ public static int solve(int[] nums) {
     }
 
     Set<Integer> set = new HashSet<>();
-    for (int i = 0; i < nums.length; i++) {
+    for (int i = 0; i < nums.length; i = i + 1) {
         set.add(nums[i]);
     }
 
-    int longestStreak = 0;
-
+    int maxStreak = 0;
     for (int num : set) {
         if (!set.contains(num - 1)) {
             int currentNum = num;
@@ -55,12 +55,15 @@ public static int solve(int[] nums) {
                 currentStreak = currentStreak + 1;
             }
 
-            if (currentStreak > longestStreak) {
-                longestStreak = currentStreak;
-            }
+            maxStreak = Math.max(maxStreak, currentStreak);
         }
     }
 
-    return longestStreak;
+    return maxStreak;
 }
 ```
+
+## Complexity Analysis
+
+- **Time Complexity:** $O(n)$ because each unique number is visited once during set insertion and at most once during sequence expansion loops.
+- **Space Complexity:** $O(n)$ auxiliary memory used by the hash set to store distinct numbers.

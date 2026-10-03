@@ -22,10 +22,10 @@ spaceComplexity: "O(n * max(arr))"
 
 examples:
   - input: "arr = [3, 1, 0, 7, 5]"
-    output: "\t\t\t*\t\t\n\t\t\t*\t\t\n\t\t\t*\t*\t\n\t\t\t*\t*\t\n*\t\t\t*\t*\t\n*\t\t\t*\t*\t\n*\t*\t\t*\t*\t\n"
+    output: "            *\n            *\n            *   *\n            *   *\n*           *   *\n*           *   *\n*   *       *   *"
     explanation: "Maximum height is 7. Floor 7 and 6 only contain a star at index 3. Lower floors contain stars where array heights reach or exceed that floor level."
   - input: "arr = [2, 3, 1]"
-    output: "\t*\t\t\n*\t*\t\t\n*\t*\t*\t\n"
+    output: "    *\n*   *\n*   *   *"
     explanation: "Maximum height is 3. Row 3 has a star at index 1. Row 2 has stars at indices 0 and 1. Row 1 has stars at all indices."
 
 constraints:

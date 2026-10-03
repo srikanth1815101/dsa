@@ -41,7 +41,6 @@ realWorld:
   - title: "Text Layout Justification"
     description: "Terminal pagers and text formatting engines compute prefix padding to justify hierarchical right-aligned callout cards."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an integer `n`, generate a mirrored (right-aligned) right-angled triangle pattern of asterisks (`*`) of height `n`.

@@ -36,9 +36,6 @@ constraints:
   - "0 <= edges.length <= 5000"
   - "edges[i].length == 3"
   - "0 <= edges[i][0], edges[i][1] < vtces"
-  - "-1000 <= edges[i][2] <= 1000"
-  - "0 <= src < vtces"
-realWorld:
   - title: "Distance-Vector Routing Protocols"
     description: "Network routing protocols like Routing Information Protocol (RIP) use Bellman-Ford to compute distributed routing tables."
   - title: "Currency Arbitrage Detection"
@@ -46,7 +43,6 @@ realWorld:
   - title: "Traffic Network Congestion Routing with Toll Credits"
     description: "Calculating lowest cost freight routes where certain highway corridors offer fuel rebates or negative cost transit credits."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given a directed weighted graph with `vtces` vertices numbered `0` to `vtces - 1`, a list of `edges` where `edges[i] = [u, v, wt]` represents a directed edge from vertex `u` to vertex `v` with weight `wt`, and a source vertex `src`.

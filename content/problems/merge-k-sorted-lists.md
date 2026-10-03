@@ -33,10 +33,6 @@ constraints:
   - "0 <= k <= 10^4"
   - "0 <= lists[i].length <= 500"
   - "-10^4 <= lists[i][j] <= 10^4"
-  - "lists[i] is sorted in ascending order."
-  - "Total elements N across all lists does not exceed 10^5."
-
-realWorld:
   - title: "Distributed Log Ingestion Merging"
     description: "Combining chronologically ordered log chunks generated independently by k microservice cluster instances."
   - title: "External Sort Run Consolidation"

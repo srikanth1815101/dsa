@@ -31,20 +31,11 @@ examples:
     output: |
       1
     explanation: "Signal travels from 1 to 2 in 1 unit of time."
-  - input: |
-      times = [[1, 2, 1]]
-      n = 2
-      k = 2
-    output: |
-      -1
-    explanation: "Node 1 is unreachable from node 2."
+
 constraints:
   - "1 <= k <= n <= 100"
   - "1 <= times.length <= 6000"
-  - "times[i].length == 3"
-  - "1 <= ui, vi <= n"
-  - "ui != vi"
-  - "0 <= wi <= 100"
+  - "1 <= ui, vi <= n; ui != vi; 0 <= wi <= 100"
   - "All the pairs (ui, vi) are unique."
 realWorld:
   - title: "Distributed Cluster Heartbeat Propagation"

@@ -41,7 +41,6 @@ realWorld:
   - title: "Text Carousel"
     description: "Shifting characters in a numerical display to create a scrolling or ticker effect in embedded systems."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given a number `n` and an integer `k`, your task is to rotate `n` by `k` digits. A positive `k` implies a right rotation (moving digits from the end to the front), while a negative `k` implies a left rotation. 

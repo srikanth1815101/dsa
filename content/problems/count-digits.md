@@ -41,7 +41,6 @@ realWorld:
   - title: "UI Layouts"
     description: "Calculating the space required to display a score or a counter in a mobile application interface."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given a whole number `n`, your task is to determine the total number of digits it contains. For instance, if the input is `7542`, the output should be `4`. If the input is `0`, the output should be `1`.

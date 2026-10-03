@@ -41,7 +41,6 @@ realWorld:
   - title: "UI Responsive Grids"
     description: "Calculating the optimal dimensions for grid layouts so they can tile perfectly across multiple screen resolutions."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given two positive integers `n1` and `n2`, your task is to find their Greatest Common Divisor (GCD) and Least Common Multiple (LCM). 

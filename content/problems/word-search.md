@@ -28,9 +28,6 @@ examples:
   - input: "board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"SEE\""
     output: "true"
     explanation: "The word 'SEE' exists along adjacent cells."
-  - input: "board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"ABCB\""
-    output: "false"
-    explanation: "Cannot reuse the cell 'B' already on the current path."
 
 constraints:
   - "m == board.length, n == board[i].length"

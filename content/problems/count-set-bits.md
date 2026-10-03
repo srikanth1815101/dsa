@@ -41,7 +41,6 @@ realWorld:
   - title: "Database Indexing"
     description: "Using bitsets to manage membership and filters where counting set bits helps in quickly calculating the size of an intersection."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given a non-negative integer `n`, your task is to count the number of '1's (set bits) in its binary representation.

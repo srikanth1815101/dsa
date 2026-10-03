@@ -41,7 +41,6 @@ realWorld:
   - title: "Signal Analysis"
     description: "Decomposing complex cyclic patterns into fundamental periodic components using mathematical factorization techniques."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given a positive integer `n`, your task is to find all of its prime factors. A prime factor is a prime number that divides the given integer exactly, leaving no remainder. The factors should be returned in non-decreasing order.

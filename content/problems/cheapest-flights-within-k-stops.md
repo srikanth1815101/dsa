@@ -35,25 +35,12 @@ examples:
     output: |
       200
     explanation: "Path 0 -> 1 -> 2 has 1 stop with cost 100 + 100 = 200, which is cheaper than direct flight 0 -> 2 (500)."
-  - input: |
-      n = 3
-      flights = [[0, 1, 100], [1, 2, 100], [0, 2, 500]]
-      src = 0
-      dst = 2
-      k = 0
-    output: |
-      500
-    explanation: "With k = 0 stops, only direct flights are allowed. Cost = 500."
+
 constraints:
   - "1 <= n <= 100"
   - "0 <= flights.length <= (n * (n - 1) / 2)"
-  - "flights[i].length == 3"
-  - "0 <= fromi, toi < n"
-  - "fromi != toi"
-  - "1 <= pricei <= 10^4"
-  - "There will not be any multiple flights between the same two airlines."
-  - "0 <= src, dst, k < n"
-  - "src != dst"
+  - "0 <= fromi, toi < n; 1 <= pricei <= 10^4; fromi != toi"
+  - "0 <= src, dst, k < n; src != dst"
 realWorld:
   - title: "Flight Booking Engine Stopover Optimization"
     description: "Commercial travel aggregate platforms (e.g., Kayak, Google Flights) balance ticket prices against maximum allowable layover legs."

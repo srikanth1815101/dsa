@@ -41,7 +41,6 @@ realWorld:
   - title: "Diamond Primitive Rasterization"
     description: "2D gaming display engines generate isometric tile bounds and diamond-shaped bounding boxes by tracking bilateral expanding and contracting spans."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an odd integer `n`, generate a solid symmetrical diamond pattern of asterisks (`*`) having `n` rows.

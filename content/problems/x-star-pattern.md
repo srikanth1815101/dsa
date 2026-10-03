@@ -41,7 +41,6 @@ realWorld:
   - title: "Intersection Ray Testing"
     description: "Spatial partitioning engines calculate dual-diagonal bounding box intersections to detect collision axes in grid-based environments."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an odd integer `n`, generate an `X` pattern of asterisks (`*`) spanning `n` rows and `n` columns.

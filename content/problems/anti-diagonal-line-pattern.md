@@ -41,7 +41,6 @@ realWorld:
   - title: "Inverse Ray-Box Intersections"
     description: "Rendering shaders calculate ray-bounding box hits along negative slope paths by tracking reverse-diagonal pixel raster positions."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an integer `n`, generate an anti-diagonal line pattern of asterisks (`*`) from the top-right to the bottom-left corner across `n` rows.

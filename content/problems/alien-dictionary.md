@@ -28,11 +28,7 @@ examples:
     output: |
       "zx"
     explanation: "From 'z' and 'x', 'z' comes before 'x'."
-  - input: |
-      words = ["z", "x", "z"]
-    output: |
-      ""
-    explanation: "From 'z' and 'x', 'z' comes before 'x'. From 'x' and 'z', 'x' comes before 'z'. This forms a cycle, so no valid ordering exists."
+
 constraints:
   - "1 <= words.length <= 100"
   - "1 <= words[i].length <= 100"

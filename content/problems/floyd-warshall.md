@@ -56,7 +56,6 @@ realWorld:
   - title: "Transitive Closure Computation in Knowledge Graphs"
     description: "Deducing indirect relationship links and semantic reachability across dense ontological entity graphs."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 The problem is to find the **all-pairs shortest path** in a given directed graph with `n` vertices labeled from `0` to `n - 1`. The graph is represented by an adjacency matrix `matrix` of size `n x n` where:

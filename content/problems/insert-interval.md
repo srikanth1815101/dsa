@@ -33,10 +33,6 @@ constraints:
   - "intervals[i].length == 2"
   - "0 <= start_i <= end_i <= 10^5"
   - "intervals is sorted by start_i in ascending order."
-  - "newInterval.length == 2"
-  - "0 <= start <= end <= 10^5"
-
-realWorld:
   - title: "Calendar Dynamic Schedule Inset"
     description: "Inserting high-priority meeting blocks into pre-sorted attendee schedules and coalescing resulting conflict time windows."
   - title: "Video Stream Frame GOP Infill"

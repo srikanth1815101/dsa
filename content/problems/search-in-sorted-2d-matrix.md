@@ -33,9 +33,6 @@ constraints:
   - "1 <= m, n <= 500"
   - "-10^9 <= mat[i][j], target <= 10^9"
   - "Elements in each row are sorted in ascending order"
-  - "Elements in each column are sorted in ascending order"
-
-realWorld:
   - title: "Database 2D B-Tree Composite Lookups"
     description: "Filtering record candidate sets in 2D indexed tables where attributes are monotonically ordered along both dimension keys."
   - title: "Semiconductor Thermal Anomaly Localization"

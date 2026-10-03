@@ -41,7 +41,6 @@ realWorld:
   - title: "Upper-Right Matrix Rasterization"
     description: "Graphics pipelines rasterize upper-triangular matrix regions by shifting the starting horizontal offset rightward on each consecutive row."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an integer `n`, generate an inverted mirrored (right-aligned descending) right-angled triangle pattern of asterisks (`*`) of height `n`.

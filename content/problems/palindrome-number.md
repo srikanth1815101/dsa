@@ -41,7 +41,6 @@ realWorld:
   - title: "Genomics"
     description: "Searching for palindromic DNA sequences which are critical in identifying restricted sites for enzyme binding."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an integer `n`, return `true` if `n` is a palindrome, and `false` otherwise. An integer is a palindrome when it reads the same forward and backward.

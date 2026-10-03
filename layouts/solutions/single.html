@@ -1,7 +1,10 @@
 {{ define "main" }}
 <div class="container mx-auto px-4 py-8 max-w-7xl animate-fade-in-up">
     <!-- Get Problem Context -->
-    {{ $problem := .Site.GetPage .Params.problemUrl }}
+    {{ $problem := false }}
+    {{ with .Params.problemUrl }}
+        {{ $problem = $.Site.GetPage . }}
+    {{ end }}
 
     <!-- HEADER CARD -->
     <div
@@ -41,7 +44,7 @@
                 <!-- RIGHT TOP: Navigation Button -->
                 <div class="flex items-center gap-3 self-start md:self-center">
                     <div class="group/tooltip relative">
-                        <a href="{{ .Params.problemUrl }}"
+                        <a href="{{ with .Params.problemUrl }}{{ . }}{{ else }}#{{ end }}"
                             class="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 group/back">
                             <i data-lucide="arrow-left"
                                 class="w-5 h-5 group-hover/back:-translate-x-1 transition-transform"></i>

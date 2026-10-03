@@ -34,8 +34,6 @@ constraints:
   - "1 <= edges.length <= 10^5"
   - "edges[i].length == 2"
   - "0 <= edges[i][0], edges[i][1] < vtces"
-  - "The graph is connected without self-loops or duplicate edges."
-realWorld:
   - title: "Telecommunication Single Point of Failure (SPOF)"
     description: "Telecom infrastructure engineers detect critical transmission links whose interruption would sever regional communication grids."
   - title: "Critical Road and Bridge Evacuation Corridors"
@@ -43,7 +41,6 @@ realWorld:
   - title: "Server Mesh Gateway Interconnects"
     description: "Cloud network topology checkers ensure high-availability routing by detecting non-redundant cross-datacenter fiber connections."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an undirected connected graph with `vtces` vertices numbered `0` to `vtces - 1` and an array `edges` where `edges[i] = [u, v]` represents an undirected edge between `u` and `v`.

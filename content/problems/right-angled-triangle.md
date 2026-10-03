@@ -41,7 +41,6 @@ realWorld:
   - title: "2D Primitive Rasterization"
     description: "Graphics pipelines rasterize triangular 2D geometric meshes by determining horizontal pixel spans row by row."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an integer `n`, generate a right-angled triangle pattern of asterisks (`*`) of height `n`.

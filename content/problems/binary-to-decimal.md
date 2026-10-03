@@ -41,7 +41,6 @@ realWorld:
   - title: "Data Encoding"
     description: "Decoding binary-encoded data formats like ASCII or Base64 into their original numerical or character representations."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given a binary number `n` (represented as a numeric integer containing only 0s and 1s), your task is to convert it into its decimal (base 10) representation.

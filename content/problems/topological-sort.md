@@ -34,8 +34,6 @@ constraints:
   - "0 <= edges.length <= 2 * 10^5"
   - "edges[i].length == 2"
   - "0 <= edges[i][0], edges[i][1] < vtces"
-  - "The graph is guaranteed to be a Directed Acyclic Graph (DAG)."
-realWorld:
   - title: "Build System Dependency Resolution"
     description: "Compilers and build orchestrators like Maven, Gradle, or Make sequence compilation steps according to dependency DAGs."
   - title: "Workflow Pipeline Orchestration"
@@ -43,7 +41,6 @@ realWorld:
   - title: "Database Schema Migration Order"
     description: "Determining table creation and foreign key constraint application order during database schema deployments."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given a Directed Acyclic Graph (DAG) with `vtces` vertices numbered from `0` to `vtces - 1` and a list of directed `edges` where `edges[i] = [u, v]` represents a directed edge from vertex `u` to vertex `v`.

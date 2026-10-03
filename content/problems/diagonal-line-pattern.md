@@ -41,7 +41,6 @@ realWorld:
   - title: "Raycasting Slope Tracing"
     description: "Game engines and raytracers step through uniform spatial voxel grids along 45-degree angle vectors by incrementing horizontal and vertical strides equally."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an integer `n`, generate a diagonal line pattern of asterisks (`*`) from the top-left to the bottom-right corner across `n` rows.

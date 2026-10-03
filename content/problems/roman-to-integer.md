@@ -27,9 +27,6 @@ examples:
   - input: "s = \"LVIII\""
     output: "58"
     explanation: "L = 50, V = 5, III = 3."
-  - input: "s = \"MCMXCIV\""
-    output: "1994"
-    explanation: "M = 1000, CM = 900, XC = 90 and IV = 4."
 
 constraints:
   - "1 <= s.length() <= 15"

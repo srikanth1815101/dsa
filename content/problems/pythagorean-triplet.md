@@ -41,7 +41,6 @@ realWorld:
   - title: "Computer Graphics"
     description: "Determining collision detection boundaries and rendering perspectives by solving triangle relationships."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given three positive integers `a`, `b`, and `c`, your task is to determine if they form a Pythagorean Triplet. A Pythagorean Triplet consists of three positive integers such that the square of the largest number is equal to the sum of the squares of the other two numbers.

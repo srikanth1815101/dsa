@@ -27,9 +27,6 @@ examples:
   - input: "num = 58"
     output: "\"LVIII\""
     explanation: "L = 50, V = 5, III = 3."
-  - input: "num = 1994"
-    output: "\"MCMXCIV\""
-    explanation: "M = 1000, CM = 900, XC = 90 and IV = 4."
 
 constraints:
   - "1 <= num <= 3999"

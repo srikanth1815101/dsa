@@ -41,7 +41,6 @@ realWorld:
   - title: "Geofence Perimeter Plotting"
     description: "GIS mapping terminals visualize diamond-shaped spatial geofence boundaries using character-drawn outline rings."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an odd integer `n`, generate a hollow rhombus (diamond outline) pattern of asterisks (`*`) spanning `n` rows.

@@ -41,7 +41,6 @@ realWorld:
   - title: "System Status Toggling"
     description: "Managing dashboard notifications that respond to multiple independent update cycles by tracking final states."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 You are given `n` bulbs which are initially all OFF. There are `n` persons who perform the following actions:

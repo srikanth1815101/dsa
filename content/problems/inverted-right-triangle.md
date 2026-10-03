@@ -41,7 +41,6 @@ realWorld:
   - title: "Rasterization Boundary Trimming"
     description: "Graphic clipping engines use inverted triangle raster algorithms to discard off-screen polygon zones row by row."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an integer `n`, generate an inverted right-angled triangle pattern of asterisks (`*`) of height `n`.

@@ -33,9 +33,6 @@ constraints:
   - "nums.length == n + 1"
   - "1 <= nums[i] <= n"
   - "All the integers in nums appear only once except for precisely one integer which appears two or more times."
-  - "You must solve the problem without modifying the array nums and using only O(1) extra space."
-
-realWorld:
   - title: "Memory Allocation Cycle Detection"
     description: "Detecting circular pointer referencing in managed runtime memory managers without mutating object headers."
   - title: "Data Pipeline Circular Loop Isolation"

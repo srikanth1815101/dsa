@@ -34,8 +34,6 @@ constraints:
   - "0 <= edges.length <= 2 * 10^5"
   - "edges[i].length == 2"
   - "0 <= edges[i][0], edges[i][1] < vtces"
-  - "The graph is connected without self-loops or duplicate edges."
-realWorld:
   - title: "Critical Network Gateway Router Identification"
     description: "Telecom infrastructure monitoring detects gateway switches whose failure partitions autonomous network subnets."
   - title: "Power Transmission Central Substation Vulnerability Analysis"
@@ -43,7 +41,6 @@ realWorld:
   - title: "Military Logistics Chokepoint Defense"
     description: "Supply chain resilience analysis identifies junction hubs whose disruption would strand forward supply depots."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an undirected connected graph with `vtces` vertices numbered `0` to `vtces - 1` and an array `edges` where `edges[i] = [u, v]` represents an undirected edge between `u` and `v`.

@@ -41,7 +41,6 @@ realWorld:
   - title: "Graphics Processing"
     description: "Applying spatial transformations to coordinates or pixel indices that require bit or digit-level manipulation."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given a non-negative integer `n`, your task is to reverse its digits and return the resulting number. For example, if the input is `1234`, the output should be `4321`. If the input is `500`, the output should be `5`.

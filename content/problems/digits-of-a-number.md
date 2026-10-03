@@ -41,7 +41,6 @@ realWorld:
   - title: "Digital Displays"
     description: "Splitting a number into its constituents to light up specific segments on a 7-segment display."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given a non-negative integer `n`, your task is to return a list of its individual digits in the order they appear (from left to right). For example, if the input is `1234`, the output should be `[1, 2, 3, 4]`.

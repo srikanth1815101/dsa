@@ -41,7 +41,6 @@ realWorld:
   - title: "Computer Graphics"
     description: "Adjusting color intensities or brightness using gamma correction, which involves raising pixel values to a certain power factor."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given two integers `x` and `n`, your task is to calculate the value of `x` raised to the power `n` ($x^n$) using recursion.

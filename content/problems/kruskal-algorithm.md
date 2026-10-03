@@ -34,8 +34,6 @@ constraints:
   - "0 <= edges.length <= 2 * 10^5"
   - "edges[i].length == 3"
   - "0 <= edges[i][0], edges[i][1] < vtces"
-  - "1 <= edges[i][2] <= 10^5"
-realWorld:
   - title: "Telecom Network Trunk Optimization"
     description: "Telecom infrastructure architects deploy minimum length fiber backbones connecting all telecommunication central hubs."
   - title: "Electrical Microgrid Power Distribution"
@@ -43,7 +41,6 @@ realWorld:
   - title: "Hierarchical Cluster Analysis in Machine Learning"
     description: "Single-linkage agglomerative clustering constructs minimum spanning trees to cluster high-dimensional feature datasets."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an undirected weighted connected graph with `vtces` vertices numbered `0` to `vtces - 1` and a list of `edges` where `edges[i] = [u, v, wt]` represents an undirected edge between vertex `u` and vertex `v` with weight `wt`.

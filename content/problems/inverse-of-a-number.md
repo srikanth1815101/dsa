@@ -41,7 +41,6 @@ realWorld:
   - title: "Image Steganography"
     description: "Rearranging pixel components based on a mathematical inverse to hide data within carrier files."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 The inverse of a number is defined by interchanging its digits and positions. If a digit `d` is at position `p` in the original number, then in the inverse number, the digit `p` will be at position `d`. Positions start from 1 (rightmost digit).

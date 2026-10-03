@@ -28,12 +28,6 @@ examples:
   - input: "s = \"   -42\""
     output: "-42"
     explanation: "Leading spaces are skipped and negative sign is applied."
-  - input: "s = \"4193 with words\""
-    output: "4193"
-    explanation: "Parsing stops at the first non-digit character ' '."
-  - input: "s = \"-91283472332\""
-    output: "-2147483648"
-    explanation: "Number is clamped to Integer.MIN_VALUE (-2^31)."
 
 constraints:
   - "0 <= s.length() <= 200"

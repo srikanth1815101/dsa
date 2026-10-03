@@ -1,6 +1,7 @@
 baseURL = "https://dsa.csrgo.com/"
 locale = "en-us"
 title = "CSRGO DSA"
+buildFuture = true
 
 # Enable emoji support
 enableEmoji = true

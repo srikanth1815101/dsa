@@ -27,9 +27,6 @@ examples:
   - input: "s = \"a\", t = \"a\""
     output: "\"a\""
     explanation: "The entire string is the minimum window."
-  - input: "s = \"a\", t = \"aa\""
-    output: "\"\""
-    explanation: "Both 'a's cannot be matched in s."
 
 constraints:
   - "1 <= s.length(), t.length() <= 10^5"

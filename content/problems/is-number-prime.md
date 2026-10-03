@@ -41,7 +41,6 @@ realWorld:
   - title: "Resource Scheduling"
     description: "Used in generating unique IDs and certain scheduling patterns to avoid synchronization issues."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself.

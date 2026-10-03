@@ -34,8 +34,6 @@ constraints:
   - "0 <= prerequisites.length <= 5000"
   - "prerequisites[i].length == 2"
   - "0 <= prerequisites[i][0], prerequisites[i][1] < numCourses"
-  - "All prerequisite pairs are unique."
-realWorld:
   - title: "Academic Curriculum Prerequisite Validation"
     description: "University enrollment platforms verify degree roadmaps to prevent circular prerequisite course dependencies."
   - title: "Package Management Dependency Tree Resolution"
@@ -43,7 +41,6 @@ realWorld:
   - title: "Spreadsheet Formula Cycle Detection"
     description: "Spreadsheet calculation engines evaluate cell reference dependency graphs to flag circular reference errors."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 There are a total of `numCourses` courses you have to take, labeled from `0` to `numCourses - 1`. You are given an array `prerequisites` where `prerequisites[i] = [a, b]` indicates that you **must** take course `b` first if you want to take course `a`.

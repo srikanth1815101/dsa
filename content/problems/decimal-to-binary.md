@@ -41,7 +41,6 @@ realWorld:
   - title: "Bitmasking"
     description: "Using binary representations to efficiently manage multiple boolean flags within a single integer variable."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given a non-negative decimal integer `n`, your task is to convert it into its binary (base 2) representation.

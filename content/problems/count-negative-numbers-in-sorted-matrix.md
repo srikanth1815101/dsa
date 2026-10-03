@@ -33,9 +33,6 @@ constraints:
   - "1 <= m, n <= 100"
   - "-100 <= grid[i][j] <= 100"
   - "Rows are sorted in non-increasing order"
-  - "Columns are sorted in non-increasing order"
-
-realWorld:
   - title: "Financial Loss Exposure Auditing"
     description: "Counting deficit asset positions across credit-rating vs duration asset portfolios sorted descending by creditworthiness."
   - title: "Cryogenic Sensor Cold-Zone Mapping"

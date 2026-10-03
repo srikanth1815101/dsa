@@ -41,7 +41,6 @@ realWorld:
   - title: "Hole-Punch Polygon Rasterization"
     description: "2D rendering systems rasterize hollow polygons and stencils by drawing paired lateral spans separated by transparent central gaps."
 ---
-
 <!-- All rights reserved to CSRGO DSA -->
 
 Given an odd integer `n`, generate a hollow diamond pattern of asterisks (`*`) having `n` rows.

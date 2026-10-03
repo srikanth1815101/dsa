@@ -29,17 +29,11 @@ examples:
     output: |
       [0, 1, 2, 3]
     explanation: "Course 0 must come before 1 and 2, which both must precede course 3."
-  - input: |
-      numCourses = 1
-      prerequisites = []
-    output: |
-      [0]
-    explanation: "There is only 1 course to take."
+
 constraints:
   - "1 <= numCourses <= 2000"
   - "0 <= prerequisites.length <= numCourses * (numCourses - 1)"
-  - "prerequisites[i].length == 2"
-  - "0 <= prerequisites[i][0], prerequisites[i][1] < numCourses"
+  - "prerequisites[i].length == 2; 0 <= ai, bi < numCourses"
   - "All prerequisite pairs are distinct."
 realWorld:
   - title: "Automated Microservice Deployment Sequencing"

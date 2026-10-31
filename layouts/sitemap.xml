@@ -1,0 +1,69 @@
+{{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  {{- range .Data.Pages -}}
+    {{- $rel := .RelPermalink -}}
+    {{- $sec := .Section -}}
+    {{- $kind := .Kind -}}
+    
+    {{/* Exclude conditions */}}
+    {{- $exclude := false -}}
+    
+    {{/* 1. Exclude Taxonomies and Terms (except /paths/) */}}
+    {{- if or (eq $kind "taxonomy") (eq $kind "term") -}}
+      {{- if ne $rel "/paths/" -}}
+        {{- $exclude = true -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{/* 2. Exclude solutions, companies, topics, datastructures, difficulties */}}
+    {{- if or (eq $sec "solutions") (eq $sec "companies") (eq $sec "topics") (eq $sec "datastructures") (eq $sec "difficulties") -}}
+      {{- $exclude = true -}}
+    {{- end -}}
+    {{- if or (strings.HasPrefix $rel "/solutions") (strings.HasPrefix $rel "/companies") (strings.HasPrefix $rel "/topics") (strings.HasPrefix $rel "/datastructures") (strings.HasPrefix $rel "/difficulties") -}}
+      {{- $exclude = true -}}
+    {{- end -}}
+
+    {{/* 3. Exclude non-page files and app states */}}
+    {{- if strings.HasSuffix $rel ".json" -}}
+      {{- $exclude = true -}}
+    {{- end -}}
+    {{- if or (eq $rel "/interview/session/") (eq $rel "/interview/review/") (eq $rel "/interview/history/") (eq $rel "/profile/") -}}
+      {{- $exclude = true -}}
+    {{- end -}}
+
+    {{/* 4. Output valid URLs */}}
+    {{- if not $exclude -}}
+      {{- $priority := "0.7" -}}
+      {{- $changefreq := "weekly" -}}
+
+      {{- if .IsHome -}}
+        {{- $priority = "1.0" -}}
+        {{- $changefreq = "daily" -}}
+      {{- else if or (eq $rel "/problems/") (eq $rel "/paths/") (eq $rel "/interview/") (eq $rel "/notes/") -}}
+        {{- $priority = "0.9" -}}
+        {{- $changefreq = "daily" -}}
+      {{- else if strings.HasPrefix $rel "/paths/" -}}
+        {{- $priority = "0.8" -}}
+        {{- $changefreq = "weekly" -}}
+      {{- else if strings.HasPrefix $rel "/problems/" -}}
+        {{- $priority = "0.8" -}}
+        {{- $changefreq = "weekly" -}}
+      {{- else if or (eq $rel "/guide/") (eq $rel "/support/") (eq $rel "/about/") (eq $rel "/contact/") -}}
+        {{- $priority = "0.7" -}}
+        {{- $changefreq = "monthly" -}}
+      {{- else if or (eq $rel "/privacy-policy/") (eq $rel "/terms/") (eq $rel "/cookie-policy/") (eq $rel "/disclaimer/") -}}
+        {{- $priority = "0.3" -}}
+        {{- $changefreq = "monthly" -}}
+      {{- end }}
+  <url>
+    <loc>{{ .Permalink }}</loc>
+    {{- if not .Lastmod.IsZero }}
+    <lastmod>{{ safeHTML ( .Lastmod.Format "2006-01-02T15:04:05-07:00" ) }}</lastmod>
+    {{- end }}
+    <changefreq>{{ $changefreq }}</changefreq>
+    <priority>{{ $priority }}</priority>
+  </url>
+    {{- end -}}
+  {{- end }}
+</urlset>

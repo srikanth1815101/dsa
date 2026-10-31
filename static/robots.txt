@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /interview/session/
+Disallow: /interview/review/
+Disallow: /interview/history/
+Disallow: /profile/
+Disallow: /solutions/
+
+Sitemap: https://dsa.csrgo.com/sitemap.xml
+

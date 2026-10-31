@@ -1,5 +1,14 @@
 // Theme Toggle Functionality
 function toggleTheme() {
+    // Disable all CSS transitions during theme switch so everything flips instantly and cleanly
+    const css = document.createElement('style');
+    css.appendChild(
+        document.createTextNode(
+            '*, *::before, *::after { -webkit-transition: none !important; -moz-transition: none !important; -o-transition: none !important; -ms-transition: none !important; transition: none !important; }'
+        )
+    );
+    document.head.appendChild(css);
+
     const html = document.documentElement;
     const currentTheme = html.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -16,11 +25,19 @@ function toggleTheme() {
     // Update icon
     const themeIcon = document.getElementById('theme-icon');
     if (themeIcon) {
-        // If the new theme is dark, the icon to switch back to light is 'sun'. 
-        // If the new theme is light, the icon to switch to dark is 'moon'.
         themeIcon.setAttribute('data-lucide', newTheme === 'dark' ? 'sun' : 'moon');
         if (window.lucide) lucide.createIcons();
     }
+
+    // Force reflow and re-enable transitions on the next animation frame
+    void window.getComputedStyle(document.body).opacity;
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            if (css.parentNode) {
+                document.head.removeChild(css);
+            }
+        });
+    });
 }
 
 // Mobile menu toggle

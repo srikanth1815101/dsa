@@ -81,6 +81,7 @@
 </header>
 
 <!-- Guide Prompt Modal (Global) -->
+{{ if .Site.Params.showGuide }}
 <div id="guide-prompt-modal"
     class="fixed inset-0 z-[100] hidden items-center justify-center bg-gray-900/60 backdrop-blur-md px-4">
     <div
@@ -112,6 +113,7 @@
         </div>
     </div>
 </div>
+{{ end }}
 
 <script>
     function getRandomNickname() {
@@ -193,9 +195,10 @@
         const hasSeenGuidePrompt = localStorage.getItem('dsa-seen-guide-prompt');
 
         if (isInternal && isProblemLink && !isHashOnly && !hasSeenGuidePrompt) {
+            const modal = document.getElementById('guide-prompt-modal');
+            if (!modal) return;
             e.preventDefault();
             pendingNavigationUrl = link.href;
-            const modal = document.getElementById('guide-prompt-modal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
         }

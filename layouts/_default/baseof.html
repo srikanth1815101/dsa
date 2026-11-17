@@ -253,10 +253,12 @@
                     Skip for Now
                 </button>
             </div>
+            {{ if .Site.Params.showGuide }}
             <p class="text-[11px] text-gray-400 dark:text-gray-500 text-center mt-4">
                 You can always download it later from the <a href="/guide/"
                     class="text-primary hover:underline font-medium">Guide page</a>.
             </p>
+            {{ end }}
         </div>
     </div>
 

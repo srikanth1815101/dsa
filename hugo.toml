@@ -79,6 +79,7 @@ enableGitInfo = false
 [params]
   description = "Master Data Structures and Algorithms with CSRGO DSA - Your comprehensive Java DSA learning platform"
   author = "CSRGO"
+  showGuide = false
   
   # Social links
   github = "https://github.com/csrgo"

@@ -112,6 +112,7 @@
                     </div>
                     {{ end }}
 
+                    {{ if .Site.Params.showGuide }}
                     <div class="group/tooltip relative">
                         <a href="/guide/"
                             class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-sky-600 text-white shadow-lg shadow-cyan-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
@@ -125,6 +126,7 @@
                             </div>
                         </div>
                     </div>
+                    {{ end }}
 
                     <!-- Share Feature -->
                     <div class="group/tooltip relative">

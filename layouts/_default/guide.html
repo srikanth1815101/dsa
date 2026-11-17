@@ -1,6 +1,16 @@
 {{ define "main" }}
 <div class="bg-gray-50 dark:bg-[#0A0E27] min-h-screen font-sans pb-6 selection:bg-cyan-500/30 selection:text-cyan-600">
 
+    {{ if not .Site.Params.showGuide }}
+    <section class="relative pt-12 md:pt-24 pb-8 md:pb-12 overflow-hidden animate-fade-in-up">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">Guide Temporarily Unavailable</h1>
+            <p class="text-base md:text-lg text-gray-600 dark:text-gray-400 mb-8">
+                The platform guide is currently under development. Please check back later!
+            </p>
+        </div>
+    </section>
+    {{ else }}
     <!-- COMPACT HERO SECTION -->
     <section class="relative pt-12 md:pt-24 pb-8 md:pb-12 overflow-hidden animate-fade-in-up">
         <div class="absolute inset-0 bg-[url('/img/grid.svg')] bg-center opacity-[0.03] dark:opacity-[0.05]"></div>
@@ -570,4 +580,5 @@
         }
     }
 </script>
+{{ end }}
 {{ end }}
